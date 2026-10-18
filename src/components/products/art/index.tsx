@@ -10,6 +10,12 @@ const ART: Record<string, () => ReactNode> = {
   P002: () => <HealthClinicArt />,
 };
 
+/** 카드 문구 없이 그림만 필요할 때(예: 메인의 TOP 2 카드) */
+export function renderProductScene(id: string): ReactNode | null {
+  const art = ART[id];
+  return art ? art() : null;
+}
+
 export function renderProductArt(p: Product): ReactNode | null {
   const art = ART[p.id];
   if (!art) return null;
