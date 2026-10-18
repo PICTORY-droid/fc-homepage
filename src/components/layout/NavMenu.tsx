@@ -32,7 +32,7 @@ export function NavMenu({ categories }: { categories: Item[] }) {
         메뉴
       </button>
       {open && (
-        <ul id="site-menu" className="absolute right-0 mt-2 w-56 rounded-xl border border-ink/10 bg-paper p-2 shadow-lg">
+        <ul id="site-menu" className="absolute right-0 mt-2 max-h-[calc(100dvh-5.5rem)] w-56 overflow-y-auto overscroll-contain rounded-xl border border-ink/10 bg-paper p-2 shadow-lg">
           {categories.map((c) => (
             <li key={c.slug}><Link href={`/c/${c.slug}`} onClick={close} className={link}>{c.title}</Link></li>
           ))}
