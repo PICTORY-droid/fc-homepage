@@ -1,27 +1,31 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { calcNotices } from "@/config/calculators";
 import { useCalc } from "@/features/calc/useCalc";
 import { computeMaturity, type MaturityRaw } from "@/lib/calc/maturity";
 import { formatYmd, todayKst } from "@/lib/calc/date";
 import { formatWon } from "@/lib/format";
-import { Buttons, CalcShell, ResultBox, Row, SelectField, TextField } from "./fields";
+import { Buttons, CalcShell, DateField, ResultBox, Row, SelectField, TextField } from "./fields";
 
 const INITIAL: MaturityRaw = { birth: "", contract: "", termType: "years", term: "", payType: "full", pay: "", monthlyPremium: "" };
 
 // 보험나이 · 만기 · 납입기간 계산기
 export function AgeMaturityCalc() {
   const { values: v, errors: e, result: r, setField, submit, reset } = useCalc(INITIAL, computeMaturity);
+  const [resetKey, setResetKey] = useState(0); // 날짜 입력칸을 비우기 위한 키
 
   // 오늘 날짜는 브라우저에서만 채웁니다 (서버/브라우저 날짜 불일치 방지)
   useEffect(() => { setField("contract", formatYmd(todayKst())); }, [setField]);
+
+  // '처음부터': 모두 비우되 계약일은 오늘로 다시 채웁니다.
+  const handleReset = () => { reset(); setField("contract", formatYmd(todayKst())); setResetKey((n) => n + 1); };
 
   return (
     <CalcShell id="age" title="보험나이 · 만기 · 납입기간" lead="생년월일과 계약일을 넣으면 보험나이와 만기·납입 종료 시점을 알려드려요.">
       <form noValidate onSubmit={(ev) => { ev.preventDefault(); submit(); }} className="space-y-5">
         <div className="grid gap-5 sm:grid-cols-2">
-          <TextField id="age-birth" label="생년월일" type="date" value={v.birth} onChange={(x) => setField("birth", x)} error={e.birth} />
-          <TextField id="age-contract" label="계약일(기준일)" type="date" value={v.contract} onChange={(x) => setField("contract", x)} error={e.contract} />
+          <DateField key={`b${resetKey}`} id="age-birth" label="생년월일" value={v.birth} onChange={(x) => setField("birth", x)} error={e.birth} />
+          <DateField key={`c${resetKey}`} id="age-contract" label="계약일(기준일)" value={v.contract} onChange={(x) => setField("contract", x)} error={e.contract} help="오늘 날짜가 자동으로 들어갑니다. 바꿀 수 있어요." />
         </div>
         <div className="grid gap-5 sm:grid-cols-2">
           <SelectField id="age-termType" label="보험기간 방식" value={v.termType} onChange={(x) => setField("termType", x as MaturityRaw["termType"])}
@@ -37,7 +41,7 @@ export function AgeMaturityCalc() {
         </div>
         <TextField id="age-premium" label="월 보험료 (선택)" value={v.monthlyPremium} onChange={(x) => setField("monthlyPremium", x)} error={e.monthlyPremium}
           unit="원" help="이미 알고 있는 월 보험료를 넣으면 총 납입액을 계산해요. 비워도 됩니다." />
-        <Buttons onReset={reset} />
+        <Buttons onReset={handleReset} />
       </form>
 
       {r && (

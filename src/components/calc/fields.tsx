@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 
 // 계산기 공통 UI 조각 — 표시만 담당
 export const inputCls =
@@ -79,5 +79,53 @@ export function Row({ label, value, strong }: { label: string; value: string; st
       <dt className="text-sm text-ink-sub">{label}</dt>
       <dd className={strong ? "text-lg font-extrabold text-ink" : "font-semibold text-ink"}>{value}</dd>
     </div>
+  );
+}
+
+// 날짜 입력: 연·월·일을 직접 입력 (브라우저 기본 달력은 생년월일 연도 선택이 불편해서 사용하지 않음)
+// 값은 완성되면 "yyyy-mm-dd", 미완성이면 "" 로 부모에 전달합니다.
+interface DateProps { id: string; label: string; value: string; onChange: (v: string) => void; error?: string; help?: string }
+const digits = (s: string, max: number) => s.replace(/\D/g, "").slice(0, max);
+const compose = (p: { y: string; m: string; d: string }) =>
+  p.y.length === 4 && p.m && p.d ? `${p.y}-${p.m.padStart(2, "0")}-${p.d.padStart(2, "0")}` : "";
+
+export function DateField({ id, label, value, onChange, error, help }: DateProps) {
+  const [parts, setParts] = useState({ y: "", m: "", d: "" });
+  const mRef = useRef<HTMLInputElement>(null);
+  const dRef = useRef<HTMLInputElement>(null);
+
+  // 부모에서 값이 바뀐 경우(오늘 날짜 자동 입력, 처음부터)에만 입력칸을 맞춥니다.
+  useEffect(() => {
+    const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value);
+    setParts((p) => {
+      if (compose(p) === value) return p;
+      return m ? { y: m[1], m: m[2], d: m[3] } : value === "" ? { y: "", m: "", d: "" } : p;
+    });
+  }, [value]);
+
+  const update = (next: typeof parts) => { setParts(next); onChange(compose(next)); };
+  const box = `${inputCls} text-center`;
+  const describedBy = [help ? `${id}-help` : "", error ? `${id}-err` : ""].filter(Boolean).join(" ") || undefined;
+
+  return (
+    <fieldset aria-describedby={describedBy}>
+      <legend className="font-semibold text-ink">{label}</legend>
+      <div className="flex items-center gap-2">
+        <input id={id} inputMode="numeric" autoComplete="off" placeholder="1990" maxLength={4} aria-label={`${label} 연도`} aria-invalid={Boolean(error)}
+          className={`${box} min-w-0 flex-[2]`} value={parts.y}
+          onChange={(e) => { const y = digits(e.target.value, 4); update({ ...parts, y }); if (y.length === 4) mRef.current?.focus(); }} />
+        <span className="mt-1 text-ink-sub">년</span>
+        <input ref={mRef} inputMode="numeric" autoComplete="off" placeholder="12" maxLength={2} aria-label={`${label} 월`} aria-invalid={Boolean(error)}
+          className={`${box} min-w-0 flex-1`} value={parts.m}
+          onChange={(e) => { const m = digits(e.target.value, 2); update({ ...parts, m }); if (m.length === 2 || Number(m) > 1) dRef.current?.focus(); }} />
+        <span className="mt-1 text-ink-sub">월</span>
+        <input ref={dRef} inputMode="numeric" autoComplete="off" placeholder="1" maxLength={2} aria-label={`${label} 일`} aria-invalid={Boolean(error)}
+          className={`${box} min-w-0 flex-1`} value={parts.d}
+          onChange={(e) => update({ ...parts, d: digits(e.target.value, 2) })} />
+        <span className="mt-1 text-ink-sub">일</span>
+      </div>
+      {help && <p id={`${id}-help`} className="mt-1 text-sm text-ink-sub">{help}</p>}
+      {error && <p id={`${id}-err`} role="alert" className="mt-1 text-sm text-alert">{error}</p>}
+    </fieldset>
   );
 }
