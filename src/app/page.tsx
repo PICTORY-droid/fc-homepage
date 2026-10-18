@@ -2,6 +2,7 @@ import { PageBanner } from "@/components/PageBanner";
 import { CategoryCard } from "@/components/CategoryCard";
 import { Section } from "@/components/ui/Section";
 import { ConsultForm } from "@/components/consult/ConsultForm";
+import { TopProducts } from "@/components/TopProducts";
 import { categories } from "@/config/categories";
 
 const STEPS = [
@@ -15,6 +16,7 @@ export default function HomePage() {
   return (
     <>
       <PageBanner bannerKey="home" />
+      <TopProducts />
       <Section title="추천 상담 분야" lead="먼저 살펴보시기 좋은 분야를 모았어요.">
         <div className="grid gap-4 sm:grid-cols-3">
           {featured.map((c) => <CategoryCard key={c.slug} category={c} />)}

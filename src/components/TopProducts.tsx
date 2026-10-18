@@ -1,0 +1,33 @@
+import { topProducts } from "@/config/topProducts";
+import { Section } from "@/components/ui/Section";
+import { ButtonLink } from "@/components/ui/Button";
+
+// 우체국보험 판매량 TOP 2 — 내용은 config/topProducts.ts 에서만 수정합니다.
+export function TopProducts() {
+  return (
+    <Section title={topProducts.title} lead={`${topProducts.source} · ${topProducts.asOf} 확인`} tone="card">
+      <ol className="grid gap-4 md:grid-cols-2">
+        {topProducts.items.map((p) => (
+          <li key={p.rank} className="flex flex-col justify-between rounded-card border border-ink/10 bg-paper p-6">
+            <div>
+              <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-brand text-lg font-extrabold text-ink">
+                {p.rank}
+              </span>
+              <h3 className="mt-3 text-xl font-bold text-ink">{p.name}</h3>
+              <ul className="mt-3 flex flex-wrap gap-2" aria-label="상품 특징">
+                {p.tags.map((t) => (
+                  <li key={t} className="rounded-full bg-paper-gray px-3 py-1 text-xs text-ink-sub">#{t}</li>
+                ))}
+              </ul>
+            </div>
+            <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+              <ButtonLink href={`/consult?topic=${p.topic}`}>상담하기</ButtonLink>
+              <ButtonLink href={p.officialUrl} variant="outline" external>공식 상세보기</ButtonLink>
+            </div>
+          </li>
+        ))}
+      </ol>
+      <p className="mt-4 text-xs text-ink-sub">{topProducts.note}</p>
+    </Section>
+  );
+}
