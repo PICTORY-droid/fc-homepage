@@ -25,7 +25,7 @@ export default function HomePage() {
         </div>
       </Section>
       <Section id="consult" title="간편 상담 신청">
-        <div className="max-w-xl"><ConsultForm initialTopic="health" /></div>
+        <ConsultForm initialTopic="health" />
       </Section>
     </>
   );

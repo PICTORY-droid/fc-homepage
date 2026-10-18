@@ -8,6 +8,8 @@ import { consentNote } from "@/features/consult/consentText";
 import { useConsultForm } from "@/features/consult/useConsultForm";
 
 const field = "mt-1 w-full min-h-[48px] rounded-xl border border-ink/25 bg-paper px-4 text-base text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-ink";
+// 분야 선택 카드 — '전체 상담 분야' 카드와 같은 모양(라디오는 화면에서 숨기고 오른쪽 위 표시로 대신함)
+const topicCard = "relative flex cursor-pointer flex-col rounded-xl border border-ink/15 bg-paper px-4 py-3 text-ink transition duration-200 hover:-translate-y-0.5 hover:border-brand hover:shadow-md has-[:checked]:border-brand-deep has-[:checked]:bg-brand-soft has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-ink";
 const choice = "flex min-h-[56px] cursor-pointer items-center gap-3 rounded-xl border border-ink/20 bg-paper px-4 py-3 text-ink has-[:checked]:border-brand-deep has-[:checked]:bg-brand-soft has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-ink";
 
 // 상담 신청 폼(3단계) — 화면 표시만 담당 (로직은 useConsultForm, 전송은 features/consult/api.ts)
@@ -24,7 +26,7 @@ export function ConsultForm({ initialTopic = "health" }: { initialTopic?: string
 
   if (status === "done") {
     return (
-      <div role="status" className="rounded-card bg-brand-soft p-8">
+      <div role="status" className="max-w-2xl rounded-card bg-brand-soft p-8">
         <div aria-hidden="true" className="fx-pop-in mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-brand text-3xl font-extrabold text-ink">✓</div>
         <h3 ref={titleRef} tabIndex={-1} className="text-center text-2xl font-bold text-ink outline-none">상담 신청이 접수되었어요</h3>
         <ol className="mx-auto mt-6 max-w-md space-y-3 text-ink">
@@ -64,13 +66,14 @@ export function ConsultForm({ initialTopic = "health" }: { initialTopic?: string
       {steps[step].key === "topic" && (
         <fieldset>
           <legend className="sr-only">관심 분야</legend>
-          <div className="grid gap-3 sm:grid-cols-2">
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
             {[...categories.map((c) => ({ slug: c.slug as string, title: c.title, short: c.short })),
               { slug: "other", title: "기타 / 잘 모르겠어요", short: "어떤 보장이 필요한지 함께 정리해 드립니다." }].map((c) => (
-              <label key={c.slug} className={choice}>
-                <input type="radio" name="topic" className="h-5 w-5 accent-brand" value={c.slug}
+              <label key={c.slug} className={topicCard}>
+                <input type="radio" name="topic" className="peer sr-only" value={c.slug}
                   checked={values.topic === c.slug} onChange={() => setField("topic", c.slug as typeof values.topic)} />
-                <span><b className="block">{c.title}</b><span className="text-sm text-ink-sub">{c.short}</span></span>
+                <span aria-hidden="true" className="absolute right-3 top-3 h-4 w-4 rounded-full border-2 border-ink/30 bg-paper peer-checked:border-brand-deep peer-checked:bg-brand-deep peer-checked:shadow-[inset_0_0_0_2.5px_#FFDAC1]" />
+                <span className="pr-5"><b className="block text-[15px] leading-snug">{c.title}</b><span className="mt-0.5 block text-xs leading-snug text-ink-sub">{c.short}</span></span>
               </label>
             ))}
           </div>
@@ -79,7 +82,7 @@ export function ConsultForm({ initialTopic = "health" }: { initialTopic?: string
       )}
 
       {steps[step].key === "who" && (
-        <div className="space-y-5">
+        <div className="max-w-xl space-y-5">
           <div>
             <label htmlFor="age" className="font-semibold text-ink">가입 대상 연령 (만 나이) <span className="text-alert">*</span></label>
             <input id="age" inputMode="numeric" placeholder="예: 8" className={field} value={values.age}
@@ -104,7 +107,7 @@ export function ConsultForm({ initialTopic = "health" }: { initialTopic?: string
       )}
 
       {steps[step].key === "detail" && (
-        <div className="space-y-6">
+        <div className="max-w-2xl space-y-6">
           <fieldset>
             <legend className="font-semibold text-ink">현재 가입 중인 보험이 있나요?</legend>
             <div className="mt-2 grid gap-3 sm:grid-cols-3">
@@ -202,7 +205,7 @@ export function ConsultForm({ initialTopic = "health" }: { initialTopic?: string
       )}
 
       {steps[step].key === "contact" && (
-        <div className="space-y-5">
+        <div className="max-w-xl space-y-5">
           <div>
             <label htmlFor="name" className="font-semibold text-ink">이름</label>
             <input id="name" autoComplete="name" className={field} value={values.name}
@@ -237,7 +240,7 @@ export function ConsultForm({ initialTopic = "health" }: { initialTopic?: string
 
       </div>
 
-      <div className="flex gap-3">
+      <div className="flex max-w-xl gap-3">
         {step > 0 && (
           <button type="button" onClick={back}
             className="min-h-[52px] rounded-xl border border-ink/30 bg-paper px-6 text-base font-semibold text-ink hover:bg-paper-gray">
