@@ -4,6 +4,7 @@ import { categories } from "@/config/categories";
 import { site } from "@/config/site";
 import { TIMES, TIME_LABEL } from "@/features/consult/schema";
 import { FAMILY_HISTORY, FAMILY_HISTORY_LABEL, INSURANCE_KINDS, INSURANCE_KIND_LABEL, YESNO, YESNO_LABEL } from "@/features/consult/detailOptions";
+import { consentNote } from "@/features/consult/consentText";
 import { useConsultForm } from "@/features/consult/useConsultForm";
 
 const field = "mt-1 w-full min-h-[48px] rounded-xl border border-ink/25 bg-paper px-4 text-base text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-ink";
@@ -221,15 +222,13 @@ export function ConsultForm({ initialTopic = "health" }: { initialTopic?: string
               onChange={(e) => setField("website", e.target.value)} /></label>
           </div>
 
-          <div className="rounded-xl bg-paper-card p-4 text-sm text-ink-sub">
-            <p className="font-semibold text-ink">개인정보 수집·이용 안내</p>
-            <p>목적: {site.privacy.purpose} / 항목: {site.privacy.items}</p>
-            <p><a className="underline" href="/privacy" target="_blank" rel="noopener noreferrer">자세히 보기<span className="sr-only"> (새 창으로 열림)</span></a></p>
-            <label className="mt-3 flex min-h-[44px] items-center gap-3 text-ink">
-              <input type="checkbox" className="h-5 w-5 accent-brand" checked={Boolean(values.consent)}
-                onChange={(e) => setField("consent", e.target.checked as unknown as true)} />
-              개인정보 수집·이용에 동의합니다. (필수)
+          <div>
+            <label className="flex min-h-[44px] cursor-pointer items-start gap-3 text-ink">
+              <input type="checkbox" className="mt-0.5 h-5 w-5 shrink-0 accent-brand" checked={Boolean(values.consent)}
+                onChange={(e) => setField("consent", e.target.checked as unknown as true)} aria-describedby="consent-note" />
+              <span><b>(필수)</b> 개인정보 수집·이용에 동의합니다. <a className="text-sm underline" href="/privacy" target="_blank" rel="noopener noreferrer">자세히<span className="sr-only"> (새 창으로 열림)</span></a></span>
             </label>
+            <p id="consent-note" className="mt-1 pl-8 text-xs leading-relaxed text-ink-sub">{consentNote(site.privacy.retentionMonths)}</p>
             <Err k="consent" />
           </div>
           {status === "error" && <p role="alert" className="text-alert">{serverMessage}</p>}
