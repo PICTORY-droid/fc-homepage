@@ -1,10 +1,10 @@
 "use client";
-import { useRef } from "react";
+import { useRef, type ReactNode } from "react";
 
-interface Props { src: string; alt: string; width: number; height: number }
+interface Props { src: string; alt: string; width: number; height: number; /** 있으면 미리보기 자리에 이 일러스트를 보여 주고, 누르면 공식 안내 이미지(src)를 크게 보여 줍니다. */ art?: ReactNode }
 
 // 상품 안내 이미지 — 작은 미리보기 카드, 누르면 크게 보기(네이티브 dialog: Esc·포커스 이동 기본 지원)
-export function ProductPoster({ src, alt, width, height }: Props) {
+export function ProductPoster({ src, alt, width, height, art }: Props) {
   const dialog = useRef<HTMLDialogElement>(null);
   const open = () => dialog.current?.showModal();
   const close = () => dialog.current?.close();
@@ -13,9 +13,11 @@ export function ProductPoster({ src, alt, width, height }: Props) {
     <div className="mx-auto w-full max-w-[15rem] lg:mx-0 lg:h-full lg:max-w-none">
       <button type="button" onClick={open} aria-haspopup="dialog"
         className="group relative block w-full overflow-hidden lg:h-full rounded-card border border-ink/10 bg-paper shadow-sm transition duration-300 hover:-translate-y-1 hover:border-brand hover:shadow-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={src} alt={alt} width={width} height={height} className="block w-full lg:h-full lg:object-cover lg:object-top" />
-        <span aria-hidden="true" className="absolute right-2 top-2 rounded-full bg-ink/75 px-3 py-1 text-xs font-bold text-white">🔍 크게 보기</span>
+        {art ?? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img src={src} alt={alt} width={width} height={height} className="block w-full lg:h-full lg:object-cover lg:object-top" />
+        )}
+        <span aria-hidden="true" className="absolute right-2 top-2 rounded-full bg-ink/75 px-3 py-1 text-xs font-bold text-white">{art ? "🔍 공식 안내 이미지" : "🔍 크게 보기"}</span>
       </button>
 
       <dialog ref={dialog} aria-label={`${alt} 크게 보기`}

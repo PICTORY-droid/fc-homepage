@@ -14,6 +14,7 @@ import { site } from "@/config/site";
 import { getProduct, productImage, relatedProducts } from "@/lib/products";
 import { CoverageSection } from "@/components/products/CoverageSection";
 import { ProductPoster } from "@/components/products/ProductPoster";
+import { renderProductArt } from "@/components/products/art";
 import { buildKeyFacts } from "@/lib/productKeyFacts";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { productJsonLd } from "@/lib/seo/jsonLd";
@@ -95,7 +96,7 @@ export default async function ProductPage({ params }: Props) {
             </div>
             <Notice>{site.notices.premium}</Notice>
           </div>
-          {img && <ProductPoster src={img.full} alt={`${p.displayName} 안내 이미지`} width={720} height={1280} />}
+          {img && <ProductPoster src={img.full} alt={`${p.displayName} 안내 이미지`} width={720} height={1280} art={renderProductArt(p)} />}
         </div>
       </Section>
 
