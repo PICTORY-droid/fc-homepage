@@ -18,7 +18,7 @@ export function PageBanner({ bannerKey }: { bannerKey: BannerKey }) {
           <p className="mt-4 max-w-xl text-lg text-ink-sub">{b.sub}</p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <ButtonLink href={`/consult?topic=${topic}`}>{b.cta}</ButtonLink>
-            <ButtonLink href={b.officialUrl} variant="outline" external>공식 상품 보기</ButtonLink>
+            <ButtonLink href={b.detailPath} variant="outline">상품 상세보기</ButtonLink>
           </div>
           <ul className="mt-6 flex flex-wrap gap-2" aria-label="상담 원칙">
             {site.trust.map((t) => (

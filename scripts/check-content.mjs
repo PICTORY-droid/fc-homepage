@@ -26,6 +26,7 @@ for (const f of [...walk("src/config"), ...walk("src/app"), ...walk("src/compone
 }
 
 // 1-b 배너 규칙
+const productsSrc = stripComments(read("src/config/products.ts"));
 const banners = stripComments(read("src/config/banners.ts"));
 const block = banners.slice(banners.indexOf("export const banners"));
 const products = [...block.matchAll(/product:\s*"([^"]+)"/g)].map((m) => m[1]);
@@ -42,6 +43,7 @@ const checks = [
   [/profileConfirmed:\s*false/.test(site), "프로필 미확정(site.profileConfirmed=false)"],
   [/retentionMonths:\s*null/.test(site), "개인정보 보유 기간(site.privacy.retentionMonths) 미확정"],
   [/contactEmail:\s*""/.test(site), "개인정보 문의 이메일(site.privacy.contactEmail) 비어 있음"],
+  [/eMarkVerified:\s*false/.test(productsSrc), "e마크(온라인 전용) 상품이 섞여 있지 않은지 확인 안 됨 (products.ts productsMeta.eMarkVerified)"],
   [/eMarkChecked:\s*false/.test(banners), "e마크(온라인 전용) 확인이 안 된 배너 상품이 있음 (banners.ts eMarkChecked)"],
 ];
 for (const [bad, msg] of checks) if (bad) (strict ? errors : warns).push(`[운영전] ${msg}`);

@@ -22,7 +22,7 @@ export function TopProducts() {
             </div>
             <div className="mt-6 flex flex-col gap-3 sm:flex-row">
               <ButtonLink href={`/consult?topic=${p.topic}`}>상담하기</ButtonLink>
-              <ButtonLink href={p.officialUrl} variant="outline" external>공식 상세보기</ButtonLink>
+              <ButtonLink href={p.detailPath} variant="outline">상세보기</ButtonLink>
             </div>
           </li>
         ))}

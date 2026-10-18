@@ -1,0 +1,234 @@
+[
+  {
+    "id": "P001",
+    "name": "우체국든든한건강종신보험",
+    "group": "보장성",
+    "effectiveDate": "2025-06-05"
+  },
+  {
+    "id": "P002",
+    "name": "우체국New건강클리닉보험",
+    "group": "보장성",
+    "effectiveDate": "2025-09-12"
+  },
+  {
+    "id": "P003",
+    "name": "우체국뇌심케어보험",
+    "group": "보장성",
+    "effectiveDate": "2025-06-05"
+  },
+  {
+    "id": "P004",
+    "name": "우체국암뇌심주요치료비보험(20년갱신형)",
+    "group": "보장성",
+    "effectiveDate": "2025-11-25"
+  },
+  {
+    "id": "P005",
+    "name": "우체국하나로OK건강종신보험",
+    "group": "보장성",
+    "effectiveDate": "2025-04-03"
+  },
+  {
+    "id": "P006",
+    "name": "우체국실속정기보험",
+    "group": "보장성",
+    "effectiveDate": "2025-04-03"
+  },
+  {
+    "id": "P007",
+    "name": "우체국암케어보험",
+    "group": "보장성",
+    "effectiveDate": "2025-04-03"
+  },
+  {
+    "id": "P008",
+    "name": "우체국더든든한자녀지킴이보험",
+    "group": "보장성",
+    "effectiveDate": "2025-04-03"
+  },
+  {
+    "id": "P009",
+    "name": "어깨동무보험",
+    "group": "보장성",
+    "effectiveDate": "2025-04-03"
+  },
+  {
+    "id": "P010",
+    "name": "에버리치상해보험",
+    "group": "보장성",
+    "effectiveDate": "2025-04-03",
+    "jobCheck": true
+  },
+  {
+    "id": "P011",
+    "name": "우체국예금제휴보험",
+    "group": "보장성",
+    "effectiveDate": "2025-04-03"
+  },
+  {
+    "id": "P012",
+    "name": "우체국단체보장보험",
+    "group": "보장성",
+    "effectiveDate": "2026-01-01"
+  },
+  {
+    "id": "P013",
+    "name": "우체국안전벨트보험",
+    "group": "보장성",
+    "effectiveDate": "2025-04-03",
+    "jobCheck": true
+  },
+  {
+    "id": "P014",
+    "name": "우체국급여실손의료비보험",
+    "group": "보장성",
+    "effectiveDate": "2025-04-03"
+  },
+  {
+    "id": "P015",
+    "name": "우체국급여실손의료비보험(계약전환·단체개인전환·개인중지재개용)",
+    "group": "보장성",
+    "effectiveDate": "2025-04-03"
+  },
+  {
+    "id": "P016",
+    "name": "우체국노후실손의료비보험",
+    "group": "보장성",
+    "effectiveDate": "2026-01-01"
+  },
+  {
+    "id": "P017",
+    "name": "우체국간편실손의료비보험",
+    "group": "보장성",
+    "effectiveDate": "2026-01-01"
+  },
+  {
+    "id": "P018",
+    "name": "만원의행복보험",
+    "group": "보장성",
+    "effectiveDate": "2025-04-03"
+  },
+  {
+    "id": "P019",
+    "name": "우체국나르미안전보험",
+    "group": "보장성",
+    "effectiveDate": "2025-04-03",
+    "jobCheck": true
+  },
+  {
+    "id": "P020",
+    "name": "우체국통합건강보험",
+    "group": "보장성",
+    "effectiveDate": "2025-04-03"
+  },
+  {
+    "id": "P021",
+    "name": "우체국간편건강보험(325·355)",
+    "group": "보장성",
+    "effectiveDate": "2025-04-03"
+  },
+  {
+    "id": "P022",
+    "name": "우체국더간편건강보험",
+    "group": "보장성",
+    "effectiveDate": "2025-04-03"
+  },
+  {
+    "id": "P023",
+    "name": "우체국치아보험",
+    "group": "보장성",
+    "effectiveDate": "2025-04-03"
+  },
+  {
+    "id": "P024",
+    "name": "우체국간병비보험",
+    "group": "보장성",
+    "effectiveDate": "2025-04-03"
+  },
+  {
+    "id": "P025",
+    "name": "우체국치매요양간병보험",
+    "group": "보장성",
+    "effectiveDate": "2025-09-12"
+  },
+  {
+    "id": "P026",
+    "name": "우체국당뇨안심보험",
+    "group": "보장성",
+    "effectiveDate": "2025-04-03"
+  },
+  {
+    "id": "P027",
+    "name": "내가만든희망보험",
+    "group": "보장성",
+    "effectiveDate": "2025-04-03"
+  },
+  {
+    "id": "P028",
+    "name": "win-win단체플랜보험",
+    "group": "보장성",
+    "effectiveDate": "2025-04-03",
+    "jobCheck": true
+  },
+  {
+    "id": "P030",
+    "name": "우체국대한민국엄마보험(부가 특약 항목)",
+    "group": "보장성",
+    "effectiveDate": "2025-04-03"
+  },
+  {
+    "id": "P031",
+    "name": "청소년꿈보험",
+    "group": "저축성",
+    "effectiveDate": "2025-04-03"
+  },
+  {
+    "id": "P034",
+    "name": "그린보너스저축보험플러스",
+    "group": "저축성",
+    "effectiveDate": "2025-04-03"
+  },
+  {
+    "id": "P035",
+    "name": "파워적립보험",
+    "group": "저축성",
+    "effectiveDate": "2025-04-03"
+  },
+  {
+    "id": "P041",
+    "name": "우체국연금보험(유배당)",
+    "group": "연금",
+    "effectiveDate": "2025-04-03"
+  },
+  {
+    "id": "P042",
+    "name": "우체국보너스팡팡연금보험",
+    "group": "연금",
+    "effectiveDate": "2025-11-25"
+  },
+  {
+    "id": "P043",
+    "name": "우체국연금저축보험",
+    "group": "연금",
+    "effectiveDate": "2025-04-03"
+  },
+  {
+    "id": "P044",
+    "name": "우체국연금저축보험(이전형)",
+    "group": "연금",
+    "effectiveDate": "2025-04-03"
+  },
+  {
+    "id": "P045",
+    "name": "우체국개인연금보험(이전형)",
+    "group": "연금",
+    "effectiveDate": "2025-04-03"
+  },
+  {
+    "id": "P046",
+    "name": "어깨동무연금보험",
+    "group": "연금",
+    "effectiveDate": "2025-04-03"
+  }
+]
