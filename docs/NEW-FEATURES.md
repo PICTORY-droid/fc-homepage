@@ -7,7 +7,6 @@
 ## 내가 채우면 완성되는 것
 | 할 일 | 위치 |
 |---|---|
-| 프로필 사진 넣기 | 본인 사진을 `public/profile.webp` 로 저장 → `src/config/site.ts` 의 `profile.photo` 에 `"/profile.webp"` 입력 |
 | 카톡 상담 버튼 켜기 | `src/config/site.ts` 의 `contact.kakaoUrl` 에 오픈프로필 주소 입력 |
 | 한 줄 소개·상담 방식 수정 | `src/config/site.ts` 의 `profile` |
 | 미리보기 이미지 다시 만들기 | 상품이 바뀌면 `node scripts/make-og.mjs` (최초 1회 `npm i -D playwright`) |
