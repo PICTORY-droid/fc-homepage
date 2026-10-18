@@ -39,6 +39,7 @@ export function NavMenu({ categories }: { categories: Item[] }) {
           <li className="mt-1 border-t border-ink/10 pt-1"><Link href="/products" onClick={close} className={`${link} font-semibold`}>보험 상품 전체</Link></li>
           <li><Link href="/find" onClick={close} className={`${link} font-semibold`}>내게 맞는 보장 찾기</Link></li>
           <li><Link href="/tools" onClick={close} className={`${link} font-semibold`}>간편 계산기</Link></li>
+          <li><Link href="/profile" onClick={close} className={`${link} font-semibold`}>담당 FC 소개</Link></li>
           <li><Link href="/guide" onClick={close} className={`${link} font-semibold`}>이용 안내</Link></li>
         </ul>
       )}
