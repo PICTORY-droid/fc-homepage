@@ -75,10 +75,6 @@ export default async function ComparePage({ searchParams }: Props) {
                   );
                 })}
               </tr>
-              <tr className="border-t border-ink/10">
-                <th scope="row" className={th}>자세히</th>
-                {list.map((p) => <td key={p.id} className={td}><Link href={productPath(p.id)} className="font-semibold underline">상세 보기</Link></td>)}
-              </tr>
             </tbody>
           </table>
         </div>
