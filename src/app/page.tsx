@@ -3,6 +3,7 @@ import { CategoryCard } from "@/components/CategoryCard";
 import { Section } from "@/components/ui/Section";
 import { ConsultForm } from "@/components/consult/ConsultForm";
 import { TopProducts } from "@/components/TopProducts";
+import { ButtonLink } from "@/components/ui/Button";
 import { categories } from "@/config/categories";
 
 const STEPS = [
@@ -27,7 +28,10 @@ export default function HomePage() {
           {categories.map((c) => <CategoryCard key={c.slug} category={c} />)}
         </div>
       </Section>
-      <Section title="상담은 이렇게 진행돼요">
+      <Section title="간편 계산기" lead="보험나이, 은퇴 후 생활비 부족분, 복리 적립을 직접 계산해 보세요.">
+        <ButtonLink href="/tools" variant="soft">계산기 열기</ButtonLink>
+      </Section>
+      <Section title="상담은 이렇게 진행돼요" tone="card">
         <ol className="grid gap-4 sm:grid-cols-3">
           {STEPS.map(([t, d], i) => (
             <li key={t} className="rounded-card bg-paper-card p-6">
@@ -38,7 +42,7 @@ export default function HomePage() {
           ))}
         </ol>
       </Section>
-      <Section id="consult" title="간편 상담 신청" tone="card">
+      <Section id="consult" title="간편 상담 신청">
         <div className="max-w-xl"><ConsultForm initialTopic="health" /></div>
       </Section>
     </>

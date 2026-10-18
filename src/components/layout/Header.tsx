@@ -37,6 +37,9 @@ export function Header() {
                 ))}
               </ul>
             </details>
+            <Link href="/tools" className="flex min-h-[44px] shrink-0 items-center whitespace-nowrap rounded-lg bg-paper-gray px-3 text-sm font-semibold text-ink">
+              계산기
+            </Link>
             <a
               href={`tel:${site.contact.fcPhone}`}
               className="flex min-h-[44px] shrink-0 items-center whitespace-nowrap rounded-lg bg-brand px-3 text-sm font-semibold text-ink"
