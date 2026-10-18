@@ -104,8 +104,6 @@ export function ConsultForm({ initialTopic = "health" }: { initialTopic?: string
 
       {steps[step].key === "detail" && (
         <div className="space-y-6">
-          <p className="rounded-xl bg-paper-card p-4 text-sm text-ink-sub">모두 선택 입력이에요. 모르시는 항목은 건너뛰어도 됩니다. 보장을 정리하는 데에만 사용합니다.</p>
-
           <fieldset>
             <legend className="font-semibold text-ink">현재 가입 중인 보험이 있나요?</legend>
             <div className="mt-2 grid gap-3 sm:grid-cols-3">
