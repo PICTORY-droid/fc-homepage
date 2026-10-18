@@ -15,9 +15,11 @@ export function Header() {
             <BrandMark />
             <span className="min-w-0">
               <span className="block truncate text-lg font-bold text-ink">{site.fcName}</span>
-              <span className="block truncate text-xs text-ink-sub">
-                {site.affiliation ? `${site.affiliation} · ` : ""}{site.tagline}
-              </span>
+              {(site.affiliation || site.tagline) && (
+                <span className="block truncate text-xs text-ink-sub">
+                  {site.affiliation}{site.affiliation && site.tagline ? " · " : ""}{site.tagline}
+                </span>
+              )}
             </span>
           </Link>
           <nav className="flex shrink-0 items-center gap-2" aria-label="주요 메뉴">
