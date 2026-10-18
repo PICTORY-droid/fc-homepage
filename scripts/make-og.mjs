@@ -15,8 +15,6 @@ const slogans = {};
 for (const m of src.matchAll(/(P\d{3}):\s*\{\s*tags:\s*\[([^\]]*)\],\s*headline:\s*"([^"]+)"/g)) {
   slogans[m[1]] = { tags: [...m[2].matchAll(/"([^"]+)"/g)].map((x) => x[1]), headline: m[3] };
 }
-const siteSrc = readFileSync(join(ROOT, "src/config/site.ts"), "utf8");
-const fcName = (siteSrc.match(/profile:\s*\{\s*name:\s*"([^"]+)"/) ?? [])[1] ?? "";
 
 const COLOR = { 보장성: "#E8591A", 저축성: "#C98A0B", 연금: "#2F7D5B" };
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
@@ -38,7 +36,7 @@ function card({ chip, title, sub, tags = [], color }) {
   </style><div class="c1"></div><div class="c2"></div><div class="wrap">
   <span class="chip">${esc(chip)}</span><h1>${esc(title)}</h1>${sub ? `<p class="sub">${esc(sub)}</p>` : ""}
   ${tags.length ? `<div class="tags">${tags.map((t) => `<span>#${esc(t)}</span>`).join("")}</div>` : ""}
-  <div class="foot"><span class="dot">우</span>우체국보험 FC ${esc(fcName)}</div></div>`;
+  <div class="foot"><span class="dot">우</span>우체국보험 FC</div></div>`;
 }
 
 mkdirSync(join(ROOT, "public/og"), { recursive: true });

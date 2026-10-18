@@ -6,7 +6,7 @@ export function agencyJsonLd() {
   return {
     "@context": "https://schema.org",
     "@type": "InsuranceAgency",
-    name: `${site.fcName} ${site.profile.name}`,
+    name: site.fcName,
     description: site.description,
     url: siteUrl,
     telephone: site.contact.fcPhone.replace(/^0/, "+82-"),

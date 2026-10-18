@@ -2,7 +2,7 @@
 export const site = {
   /** false 이면 '임시 프로필'로 간주되어 운영 빌드(REQUIRE_REVIEW=1)에서 차단됩니다. */
   profileConfirmed: false,
-  fcName: "우체국보험 FC", // TODO: 본인 이름
+  fcName: "우체국보험 FC",
   affiliation: "", // TODO: 소속 우체국 (예: ○○우체국). 비워두면 표시 안 함
   tagline: "",
   /** 로고: src 가 비어 있으면 자체 제작 마크 사용. 승인받은 로고를 public/ 에 넣고 경로(예: "/logo.png")를 입력 */
@@ -13,7 +13,6 @@ export const site = {
   description: "필요한 보장을 함께 살펴보세요. 우체국보험 상품 안내와 상담 신청을 도와드립니다.",
   /** 프로필 섹션 (사진 없이 이름·소개·상담 방식만 표시) */
   profile: {
-    name: "김서인",
     role: "우체국보험 FC",
     region: "경남 김해",
     intro: "필요한 보장을 차분히 비교해 보실 수 있도록 쉽게 설명드립니다.",

@@ -8,8 +8,8 @@ export function ProfileSection() {
   return (
     <Section title="담당 FC를 소개합니다" tone="card">
       <div className="max-w-3xl">
-        <p className="text-sm font-semibold text-brand-deep">{profile.region} · {profile.role}</p>
-        <h3 className="mt-1 text-3xl font-extrabold text-ink">{profile.name}</h3>
+        <p className="text-sm font-semibold text-brand-deep">{profile.region}</p>
+        <h3 className="mt-1 text-3xl font-extrabold text-ink">{profile.role}</h3>
         <p className="mt-3 text-lg text-ink-sub">{profile.intro}</p>
         <dl className="mt-5 grid gap-3 text-sm sm:grid-cols-2">
           <div className="rounded-xl bg-paper p-4">
