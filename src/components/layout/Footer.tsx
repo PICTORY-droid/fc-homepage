@@ -10,7 +10,15 @@ export function Footer() {
         <div className="grid gap-6 sm:grid-cols-2">
           <div>
             <p className="font-semibold text-ink">담당 FC 상담</p>
-            <a className="text-xl font-bold text-ink" href={`tel:${site.contact.fcPhone}`}>{site.contact.fcPhone}</a>
+            <div className="flex flex-wrap items-center gap-3">
+              <a className="text-xl font-bold text-ink" href={`tel:${site.contact.fcPhone}`}>{site.contact.fcPhone}</a>
+              <a
+                href={`tel:${site.contact.fcPhone}`}
+                className="flex min-h-[44px] items-center whitespace-nowrap rounded-lg bg-brand px-4 text-sm font-semibold text-ink"
+              >
+                전화 상담
+              </a>
+            </div>
             <p>{site.contact.hours}</p>
           </div>
           <div>

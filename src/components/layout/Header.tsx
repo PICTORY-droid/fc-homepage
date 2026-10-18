@@ -23,12 +23,6 @@ export function Header() {
           </Link>
           <nav className="flex shrink-0 items-center gap-2" aria-label="주요 메뉴">
             <NavMenu categories={categories.map((c) => ({ slug: c.slug, title: c.title }))} />
-            <a
-              href={`tel:${site.contact.fcPhone}`}
-              className="flex min-h-[44px] shrink-0 items-center whitespace-nowrap rounded-lg bg-brand px-3 text-sm font-semibold text-ink"
-            >
-              전화 상담
-            </a>
           </nav>
         </div>
       </header>
