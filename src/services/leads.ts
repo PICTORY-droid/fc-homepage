@@ -2,6 +2,7 @@ import "server-only";
 import { getServerEnv } from "@/lib/env";
 import { getSupabaseAdmin } from "@/lib/supabase";
 import type { ConsultData } from "@/features/consult/schema";
+import { syncLeadToSheet } from "@/services/sheetSync";
 
 export class ServiceUnavailableError extends Error {}
 
@@ -28,4 +29,6 @@ export async function saveLead(data: ConsultData): Promise<void> {
     status: "new",
   });
   if (error) throw new Error("lead insert failed"); // 상세 오류는 응답에 노출하지 않음
+
+  await syncLeadToSheet(data); // 구글 시트 입력 + 알림 메일 (실패해도 접수는 유지)
 }
