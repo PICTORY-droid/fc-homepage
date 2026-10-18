@@ -177,8 +177,8 @@ export default async function ProductPage({ params }: Props) {
         </ol>
       </Section>
 
-      <Section id="consult" title={`${p.displayName} 상담 신청`} lead="남겨주신 연락처로 희망하신 시간에 연락드립니다." tone="card">
-        <div className="max-w-xl"><ConsultForm initialTopic={p.topic} /></div>
+      <Section id="consult" title={`${p.displayName} 상담 신청`} lead="남겨주신 연락처로 희망하신 시간에 연락드립니다.">
+        <ConsultForm initialTopic={p.topic} />
       </Section>
 
       {related.length > 0 && (
