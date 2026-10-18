@@ -35,6 +35,11 @@ export default async function ComparePage({ searchParams }: Props) {
   return (
     <>
       <Section title="상품 나란히 비교" lead="가입 조건과 보장 항목을 같은 기준으로 놓고 살펴보세요. 우열을 매기는 표가 아니며, 가입 가능 여부는 상품요약서와 약관으로 확인해야 합니다.">
+        {/* 모바일 세로 화면에서만 표시 — 가로로 돌리면 사라집니다 */}
+        <p role="note" className="mb-4 hidden items-center gap-2 rounded-card bg-brand-soft px-4 py-3 text-sm font-semibold text-ink max-sm:portrait:flex">
+          <span aria-hidden="true">↻</span>
+          휴대폰을 가로로 돌려 보시면 비교하기 더 편리합니다.
+        </p>
         <div className="overflow-x-auto rounded-card border border-ink/10 bg-paper">
           <table className="w-full border-collapse">
             <caption className="sr-only">선택한 상품 비교표</caption>
