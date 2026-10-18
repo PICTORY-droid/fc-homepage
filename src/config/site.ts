@@ -3,6 +3,8 @@ export const site = {
   /** false 이면 '임시 프로필'로 간주되어 운영 빌드(REQUIRE_REVIEW=1)에서 차단됩니다. */
   profileConfirmed: false,
   fcName: "우체국보험 FC",
+  /** 상단 헤더에 보이는 이름 (FC 표기 없이) */
+  brandName: "우체국보험",
   affiliation: "", // TODO: 소속 우체국 (예: ○○우체국). 비워두면 표시 안 함
   tagline: "",
   /** 로고: src 가 비어 있으면 자체 제작 마크 사용. 승인받은 로고를 public/ 에 넣고 경로(예: "/logo.png")를 입력 */
