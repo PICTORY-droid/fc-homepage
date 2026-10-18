@@ -4,7 +4,7 @@ import { saveLead, ServiceUnavailableError } from "@/services/leads";
 import { failure, success } from "@/lib/api";
 import { isRateLimited } from "@/lib/rateLimit";
 
-const MAX_BODY = 4000;
+const MAX_BODY = 8000;
 
 function clientIp(req: NextRequest) {
   return req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";

@@ -13,6 +13,10 @@ export default function PrivacyPage() {
         <div><dt className="font-bold">1. 수집·이용 목적</dt><dd className="text-ink-sub">{p.purpose}</dd></div>
         <div><dt className="font-bold">2. 수집 항목</dt><dd className="text-ink-sub">{p.items}</dd></div>
         <div>
+          <dt className="font-bold">2-1. 민감정보 (선택 수집)</dt>
+          <dd className="text-ink-sub">{p.sensitiveItems} 일반 개인정보 동의와 별도로 동의를 받으며, 동의하지 않아도 상담 신청이 가능합니다. 목적은 보장 상담에 한정되며 목적 달성 시 지체 없이 파기합니다.</dd>
+        </div>
+        <div>
           <dt className="font-bold">3. 보유 및 이용 기간</dt>
           <dd className="text-ink-sub">
             {p.retentionMonths ? `상담 종료 후 ${p.retentionMonths}개월간 보관하며, 이후 지체 없이 파기합니다.` : "상담 목적이 달성되면 지체 없이 파기합니다. (구체적 기간은 확정 후 안내)"}

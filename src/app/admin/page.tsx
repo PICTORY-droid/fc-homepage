@@ -6,6 +6,7 @@ import { TIME_LABEL, TIMES } from "@/features/consult/schema";
 import { isAdminConfigured, isAdminLoggedIn } from "@/services/adminSession";
 import { LEAD_STATUSES, STATUS_LABEL, listLeads, type LeadRow } from "@/services/adminLeads";
 import { formatPhone } from "@/lib/phone";
+import { summarizeDetail } from "@/features/consult/detailOptions";
 import { LoginForm } from "./LoginForm";
 import { logoutAction, updateLeadAction } from "./actions";
 
@@ -33,6 +34,12 @@ function LeadCard({ lead, memoEnabled }: { lead: LeadRow; memoEnabled: boolean }
         {lead.phone ? <a className="font-semibold underline" href={`tel:${lead.phone}`}>{formatPhone(lead.phone)}</a> : "-"}
         <span className="ml-3 text-sm text-ink-sub">{interestLabel(lead.interest)}</span>
       </p>
+      {summarizeDetail(lead.detail).length > 0 && (
+        <details className="mt-2 rounded-xl bg-paper-card p-3 text-sm text-ink">
+          <summary className="cursor-pointer font-semibold">상세 문진 보기</summary>
+          <ul className="mt-2 space-y-1">{summarizeDetail(lead.detail).map((l) => <li key={l}>{l}</li>)}</ul>
+        </details>
+      )}
       <form action={updateLeadAction} className="mt-3 flex flex-col gap-2 sm:flex-row sm:items-end">
         <input type="hidden" name="id" value={lead.id} />
         <label className="text-sm font-semibold text-ink-sub">상태

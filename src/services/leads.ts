@@ -2,6 +2,7 @@ import "server-only";
 import { getServerEnv } from "@/lib/env";
 import { getSupabaseAdmin } from "@/lib/supabase";
 import type { ConsultData } from "@/features/consult/schema";
+import { buildDetailPayload } from "@/features/consult/detailOptions";
 import { syncLeadToSheet } from "@/services/sheetSync";
 
 export class ServiceUnavailableError extends Error {}
@@ -16,7 +17,8 @@ export async function saveLead(data: ConsultData): Promise<void> {
     }
     throw new ServiceUnavailableError("storage not configured");
   }
-  const { error } = await db.from("leads").insert({
+  const detail = buildDetailPayload(data); // 건강 항목은 별도 동의가 있을 때만 포함됨
+  const row: Record<string, unknown> = {
     owner_id: getServerEnv().FC_OWNER_ID,
     source: "landing",
     name: data.name,
@@ -27,8 +29,13 @@ export async function saveLead(data: ConsultData): Promise<void> {
     consent_at: new Date().toISOString(),
     consent_marketing: false,
     status: "new",
-  });
+  };
+  let { error } = await db.from("leads").insert(detail ? { ...row, detail } : row);
+  if (error && detail) { // detail 컬럼이 아직 없으면(db/leads_detail.sql 미실행) 상세는 시트로만 전달하고 접수는 유지
+    console.error("[consult] detail column missing?");
+    ({ error } = await db.from("leads").insert(row));
+  }
   if (error) throw new Error("lead insert failed"); // 상세 오류는 응답에 노출하지 않음
 
-  await syncLeadToSheet(data); // 구글 시트 입력 + 알림 메일 (실패해도 접수는 유지)
+  await syncLeadToSheet(data, detail); // 구글 시트 입력 + 알림 메일 (실패해도 접수는 유지)
 }

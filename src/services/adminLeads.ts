@@ -1,6 +1,7 @@
 import "server-only";
 import { getServerEnv } from "@/lib/env";
 import { getSupabaseAdmin } from "@/lib/supabase";
+import type { DetailPayload } from "@/features/consult/detailOptions";
 
 // 관리자용 상담 접수 조회·상태 변경 — DB 접근은 이 파일에서만 합니다.
 export const LEAD_STATUSES = ["new", "contacted", "done"] as const;
@@ -9,7 +10,7 @@ export const STATUS_LABEL: Record<LeadStatus, string> = { new: "대기", contact
 
 export type LeadRow = {
   id: string; name: string | null; phone: string | null; interest: string | null; insured_age: number | null;
-  status: string; created_at: string; memo: string | null;
+  status: string; created_at: string; memo: string | null; detail: DetailPayload | null;
 };
 
 const BASE_COLUMNS = "id,name,phone,interest,insured_age,status,created_at";
@@ -24,13 +25,14 @@ export async function listLeads(): Promise<{ rows: LeadRow[]; memoEnabled: boole
     db.from("leads").select(cols).eq("owner_id", owner).is("deleted_at", null).order("created_at", { ascending: false }).limit(LIST_LIMIT);
 
   let memoEnabled = true;
-  let res = await query(`${BASE_COLUMNS},memo`);
+  let res = await query(`${BASE_COLUMNS},memo,detail`);
+  if (res.error) res = await query(`${BASE_COLUMNS},memo`); // detail 컬럼 미생성(db/leads_detail.sql 미실행)
   if (res.error) { // memo 컬럼이 아직 없으면(db/leads_admin.sql 미실행) 메모 없이 조회
     memoEnabled = false;
     res = await query(BASE_COLUMNS);
   }
   if (res.error) return { rows: [], memoEnabled, error: "접수 목록을 불러오지 못했습니다." };
-  const rows = (res.data as unknown as Omit<LeadRow, "memo">[]).map((r) => ({ memo: null, ...r })) as LeadRow[];
+  const rows = (res.data as unknown as Omit<LeadRow, "memo" | "detail">[]).map((r) => ({ memo: null, detail: null, ...r })) as LeadRow[];
   return { rows, memoEnabled };
 }
 

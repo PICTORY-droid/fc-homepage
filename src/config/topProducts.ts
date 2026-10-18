@@ -11,7 +11,7 @@ export interface TopProduct {
 
 export const topProducts = {
   title: "우체국보험 TOP 2",
-  asOf: "2026-10-18",
+  asOf: "2026-10-17",
   source: "우체국보험 공식 사이트 '보험 판매량 Top 2' 표시 기준",
   note: "순위와 상품은 공식 사이트 기준이며 변경될 수 있습니다. 집계 기간 등 자세한 내용은 공식 사이트에서 확인하세요.",
   items: [

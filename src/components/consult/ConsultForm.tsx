@@ -3,7 +3,7 @@ import { useEffect, useRef } from "react";
 import { categories } from "@/config/categories";
 import { site } from "@/config/site";
 import { TIMES, TIME_LABEL } from "@/features/consult/schema";
-import { STEPS } from "@/features/consult/steps";
+import { FAMILY_HISTORY, FAMILY_HISTORY_LABEL, INSURANCE_KINDS, INSURANCE_KIND_LABEL, YESNO, YESNO_LABEL } from "@/features/consult/detailOptions";
 import { useConsultForm } from "@/features/consult/useConsultForm";
 
 const field = "mt-1 w-full min-h-[48px] rounded-xl border border-ink/25 bg-paper px-4 text-base text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-ink";
@@ -11,7 +11,7 @@ const choice = "flex min-h-[56px] cursor-pointer items-center gap-3 rounded-xl b
 
 // 상담 신청 폼(3단계) — 화면 표시만 담당 (로직은 useConsultForm, 전송은 features/consult/api.ts)
 export function ConsultForm({ initialTopic = "health" }: { initialTopic?: string }) {
-  const { values, errors, step, totalSteps, status, serverMessage, setField, next, back, submit } = useConsultForm(initialTopic);
+  const { values, errors, steps, step, totalSteps, status, serverMessage, setField, toggleInList, setHealthConsent, next, back, submit } = useConsultForm(initialTopic);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const mounted = useRef(false);
 
@@ -48,7 +48,7 @@ export function ConsultForm({ initialTopic = "health" }: { initialTopic?: string
       className="space-y-6 rounded-card border border-ink/10 bg-paper p-6 sm:p-8"
     >
       <ol className="flex items-center gap-2" aria-label="신청 단계">
-        {STEPS.map((s, i) => (
+        {steps.map((s, i) => (
           <li key={s.key} className="flex flex-1 items-center gap-2" aria-current={i === step ? "step" : undefined}>
             <span className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-sm font-bold ${i <= step ? "bg-brand text-ink" : "bg-paper-gray text-ink-sub"}`}>{i + 1}</span>
             <span className={`truncate text-sm ${i === step ? "font-bold text-ink" : "text-ink-sub"}`}>{s.label}</span>
@@ -56,9 +56,9 @@ export function ConsultForm({ initialTopic = "health" }: { initialTopic?: string
         ))}
       </ol>
 
-      <h3 ref={titleRef} tabIndex={-1} className="text-xl font-bold text-ink outline-none">{STEPS[step].title}</h3>
+      <h3 ref={titleRef} tabIndex={-1} className="text-xl font-bold text-ink outline-none">{steps[step].title}</h3>
 
-      {step === 0 && (
+      {steps[step].key === "topic" && (
         <fieldset>
           <legend className="sr-only">관심 분야</legend>
           <div className="grid gap-3 sm:grid-cols-2">
@@ -75,7 +75,7 @@ export function ConsultForm({ initialTopic = "health" }: { initialTopic?: string
         </fieldset>
       )}
 
-      {step === 1 && (
+      {steps[step].key === "who" && (
         <div className="space-y-5">
           <div>
             <label htmlFor="age" className="font-semibold text-ink">가입 대상 연령 (만 나이) <span className="text-alert">*</span></label>
@@ -100,7 +100,108 @@ export function ConsultForm({ initialTopic = "health" }: { initialTopic?: string
         </div>
       )}
 
-      {step === 2 && (
+      {steps[step].key === "detail" && (
+        <div className="space-y-6">
+          <p className="rounded-xl bg-paper-card p-4 text-sm text-ink-sub">모두 선택 입력이에요. 모르시는 항목은 건너뛰어도 됩니다. 보장을 정리하는 데에만 사용합니다.</p>
+
+          <fieldset>
+            <legend className="font-semibold text-ink">현재 가입 중인 보험이 있나요?</legend>
+            <div className="mt-2 grid gap-3 sm:grid-cols-3">
+              {YESNO.map((v) => (
+                <label key={v} className={choice}>
+                  <input type="radio" name="hasInsurance" className="h-5 w-5 accent-brand" value={v}
+                    checked={values.hasInsurance === v} onChange={() => setField("hasInsurance", v)} />
+                  <span className="text-sm">{YESNO_LABEL[v]}</span>
+                </label>
+              ))}
+            </div>
+            {values.hasInsurance === "yes" && (
+              <div className="mt-3 grid gap-3 sm:grid-cols-2">
+                {INSURANCE_KINDS.map((k) => (
+                  <label key={k} className={choice}>
+                    <input type="checkbox" className="h-5 w-5 accent-brand" checked={(values.insuranceKinds ?? []).includes(k)}
+                      onChange={() => toggleInList("insuranceKinds", k)} />
+                    <span className="text-sm">{INSURANCE_KIND_LABEL[k]}</span>
+                  </label>
+                ))}
+              </div>
+            )}
+          </fieldset>
+
+          <div className="rounded-xl border border-ink/15 p-4">
+            <p className="font-semibold text-ink">건강 관련 내용 (선택)</p>
+            <p className="mt-1 text-sm text-ink-sub">수술이력·치료·가족력은 민감정보입니다. 아래 동의를 하셔야 입력할 수 있고, 동의하지 않아도 상담은 신청할 수 있어요.</p>
+            <label className="mt-3 flex min-h-[44px] items-center gap-3 text-ink">
+              <input type="checkbox" className="h-5 w-5 accent-brand" checked={values.healthConsent}
+                onChange={(e) => setHealthConsent(e.target.checked)} />
+              건강 관련 민감정보 수집·이용에 동의합니다. (선택)
+            </label>
+            <Err k="healthConsent" />
+
+            {values.healthConsent && (
+              <div className="mt-4 space-y-5">
+                <fieldset>
+                  <legend className="font-semibold text-ink">최근 5년 내 입원 또는 수술 이력</legend>
+                  <div className="mt-2 grid gap-3 sm:grid-cols-3">
+                    {YESNO.map((v) => (
+                      <label key={v} className={choice}>
+                        <input type="radio" name="surgery" className="h-5 w-5 accent-brand" value={v}
+                          checked={values.surgery === v} onChange={() => setField("surgery", v)} />
+                        <span className="text-sm">{YESNO_LABEL[v]}</span>
+                      </label>
+                    ))}
+                  </div>
+                  {values.surgery === "yes" && (
+                    <input aria-label="입원·수술 내용" maxLength={200} placeholder="예: 3년 전 맹장 수술" className={field}
+                      value={values.surgeryNote} onChange={(e) => setField("surgeryNote", e.target.value)} />
+                  )}
+                  <Err k="surgeryNote" />
+                </fieldset>
+
+                <fieldset>
+                  <legend className="font-semibold text-ink">현재 치료·복약 중인 질환</legend>
+                  <div className="mt-2 grid gap-3 sm:grid-cols-3">
+                    {YESNO.map((v) => (
+                      <label key={v} className={choice}>
+                        <input type="radio" name="treatment" className="h-5 w-5 accent-brand" value={v}
+                          checked={values.treatment === v} onChange={() => setField("treatment", v)} />
+                        <span className="text-sm">{YESNO_LABEL[v]}</span>
+                      </label>
+                    ))}
+                  </div>
+                  {values.treatment === "yes" && (
+                    <input aria-label="치료·복약 내용" maxLength={200} placeholder="예: 고혈압 약 복용 중" className={field}
+                      value={values.treatmentNote} onChange={(e) => setField("treatmentNote", e.target.value)} />
+                  )}
+                  <Err k="treatmentNote" />
+                </fieldset>
+
+                <fieldset>
+                  <legend className="font-semibold text-ink">가족력 (해당하는 것 모두)</legend>
+                  <div className="mt-2 grid gap-3 sm:grid-cols-2">
+                    {FAMILY_HISTORY.map((f) => (
+                      <label key={f} className={choice}>
+                        <input type="checkbox" className="h-5 w-5 accent-brand" checked={(values.familyHistory ?? []).includes(f)}
+                          onChange={() => toggleInList("familyHistory", f, ["none", "unknown"])} />
+                        <span className="text-sm">{FAMILY_HISTORY_LABEL[f]}</span>
+                      </label>
+                    ))}
+                  </div>
+                </fieldset>
+              </div>
+            )}
+          </div>
+
+          <div>
+            <label htmlFor="memo" className="font-semibold text-ink">그 밖에 전하고 싶은 말 (선택)</label>
+            <textarea id="memo" rows={3} maxLength={300} className={`${field} py-3`} value={values.memo}
+              onChange={(e) => setField("memo", e.target.value)} />
+            <Err k="memo" />
+          </div>
+        </div>
+      )}
+
+      {steps[step].key === "contact" && (
         <div className="space-y-5">
           <div>
             <label htmlFor="name" className="font-semibold text-ink">이름</label>
