@@ -72,3 +72,24 @@
   .art-sway { transform-origin: 50% 0%; animation: artSway 4.5s ease-in-out infinite; }
   .art-breathe { animation: artBreathe 5s ease-in-out infinite; }
 }
+
+/* 상품 일러스트 공통 부품 움직임 */
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes artPop { from { opacity: 0; transform: scale(.55) translateY(10px); } 70% { transform: scale(1.06); } }
+  @keyframes artBob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+  @keyframes artFlip { 0%, 100% { transform: scaleX(1); } 50% { transform: scaleX(.25); } }
+  @keyframes artFlow { to { stroke-dashoffset: -22; } }
+  @keyframes artBounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+  @keyframes artDrive { 0%, 100% { transform: translateX(-4px); } 50% { transform: translateX(4px); } }
+  @keyframes artSpin { to { transform: rotate(360deg); } }
+
+  .art-in { transform-box: fill-box; transform-origin: 50% 100%; animation: artPop .8s cubic-bezier(.2,.7,.2,1) backwards; animation-delay: var(--d, 0s); }
+  .art-bob, .art-bob2, .art-float, .art-float-slow, .art-spin-y, .art-bounce, .art-drive { transform-box: fill-box; transform-origin: 50% 100%; }
+  .art-bob { animation: artBob 2.6s ease-in-out infinite; }
+  .art-bob2 { animation: artBob 2.6s ease-in-out .5s infinite; }
+  .art-spin-y { transform-origin: 50% 50%; animation: artFlip 2.8s ease-in-out infinite; }
+  .art-bounce { animation: artBounce 2s ease-in-out infinite; }
+  .art-drive { animation: artDrive 3s ease-in-out infinite; }
+  .art-flow { animation: artFlow 1.4s linear infinite; }
+  .art-wheel { transform-box: fill-box; transform-origin: center; animation: artSpin 1.6s linear infinite; }
+}
