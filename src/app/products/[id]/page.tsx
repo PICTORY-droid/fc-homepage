@@ -8,6 +8,7 @@ import { ConsultForm } from "@/components/consult/ConsultForm";
 import { ProductCard } from "@/components/products/ProductCard";
 import { productCopy } from "@/config/productCopy";
 import { products, productsMeta } from "@/config/products";
+import { getProductDetail, productDetailsMeta } from "@/config/productDetails";
 import { site } from "@/config/site";
 import { getProduct, productImage, relatedProducts } from "@/lib/products";
 
@@ -44,6 +45,7 @@ export default async function ProductPage({ params }: Props) {
   if (!p) notFound();
   const img = productImage(p);
   const related = relatedProducts(p.id, 4);
+  const detail = getProductDetail(p.id);
 
   return (
     <>
@@ -95,7 +97,7 @@ export default async function ProductPage({ params }: Props) {
             </ul>
           </div>
         )}
-        {!(p.ageRange || p.period || p.limit || p.coverage?.length) && (
+        {!(detail || p.ageRange || p.period || p.limit || p.coverage?.length) && (
           <p className="mt-4 text-ink-sub">{productCopy.detailPending}</p>
         )}
         {p.jobCheck && <div className="mt-4"><Notice tone="alert">{productCopy.jobNotice}</Notice></div>}
@@ -103,6 +105,41 @@ export default async function ProductPage({ params }: Props) {
           {productsMeta.source} 기준 · {productsMeta.asOf} 확인 · {productCopy.statusNote}
         </p>
       </Section>
+
+      {detail && (
+        <Section title="상품 상세 안내" lead={`${detail.docName} (${detail.docType}) 기준`}>
+          <dl className="rounded-card border border-ink/10 bg-paper px-5 py-2">
+            {detail.facts.map((f) => <Row key={f.label} label={f.label} value={f.value} />)}
+          </dl>
+          {detail.tables.map((t) => (
+            <div key={t.title} className="mt-6">
+              <h3 className="text-lg font-bold text-ink">{t.title}</h3>
+              <div className="mt-3 overflow-x-auto rounded-card border border-ink/10">
+                <table className="w-full min-w-[28rem] border-collapse text-left text-sm">
+                  <thead className="bg-brand-soft text-ink">
+                    <tr>{t.head.map((h) => <th key={h} scope="col" className="px-3 py-2 font-semibold">{h}</th>)}</tr>
+                  </thead>
+                  <tbody>
+                    {t.rows.map((r, i) => (
+                      <tr key={i} className="border-t border-ink/10">
+                        {r.map((c, j) => <td key={j} className="px-3 py-2 text-ink">{c}</td>)}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          ))}
+          {detail.notes.length > 0 && (
+            <ul className="mt-6 space-y-2 text-sm text-ink-sub">
+              {detail.notes.map((n) => <li key={n}>· {n}</li>)}
+            </ul>
+          )}
+          <p className="mt-4 text-xs text-ink-sub">
+            {productDetailsMeta.source} · {productDetailsMeta.asOf} 확인. 보험료·보장 내용은 가입 조건에 따라 달라질 수 있으니 상품요약서와 약관을 반드시 확인하세요.
+          </p>
+        </Section>
+      )}
 
       <Section title={productCopy.checklistTitle}>
         <ol className="grid gap-4 sm:grid-cols-2">
