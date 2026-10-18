@@ -7,7 +7,7 @@ export function Footer() {
   return (
     <footer className="border-t border-ink/10 bg-paper-card">
       <div className="mx-auto max-w-5xl space-y-6 px-4 py-10 text-sm text-ink-sub sm:px-6">
-        <div className="grid gap-6 sm:grid-cols-2">
+        <div>
           <div>
             <p className="font-semibold text-ink">담당 FC 상담</p>
             <div className="flex flex-wrap items-center gap-3">
@@ -20,15 +20,6 @@ export function Footer() {
               </a>
             </div>
             <p>{site.contact.hours}</p>
-          </div>
-          <div>
-            <p className="font-semibold text-ink">우체국보험 공식 고객센터</p>
-            <a className="text-xl font-bold text-ink" href={`tel:${site.contact.officialCenterPhone}`}>{site.contact.officialCenterPhone}</a>
-            <p>
-              <a className="underline" href={site.links.officialSite} target="_blank" rel="noopener noreferrer">
-                우체국보험 공식 사이트<span className="sr-only"> (새 창으로 열림)</span>
-              </a>
-            </p>
           </div>
         </div>
         {reviewText && <p className="border-t border-ink/10 pt-6">{reviewText}</p>}
