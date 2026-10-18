@@ -130,7 +130,6 @@ export function ConsultForm({ initialTopic = "health" }: { initialTopic?: string
 
           <div className="rounded-xl border border-ink/15 p-4">
             <p className="font-semibold text-ink">건강 관련 내용 (선택)</p>
-            <p className="mt-1 text-sm text-ink-sub">수술이력·치료·가족력은 민감정보입니다. 아래 동의를 하셔야 입력할 수 있고, 동의하지 않아도 상담은 신청할 수 있어요.</p>
             <label className="mt-3 flex min-h-[44px] items-center gap-3 text-ink">
               <input type="checkbox" className="h-5 w-5 accent-brand" checked={values.healthConsent}
                 onChange={(e) => setHealthConsent(e.target.checked)} />
