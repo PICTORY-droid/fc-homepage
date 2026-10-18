@@ -17,7 +17,7 @@ export function PageBanner({ bannerKey }: { bannerKey: BannerKey }) {
           <h1 style={{ "--d": ".1s" } as React.CSSProperties} className="hero-rise mt-5 text-3xl font-extrabold leading-tight text-ink sm:text-5xl">{b.headline}</h1>
           <p style={{ "--d": ".2s" } as React.CSSProperties} className="hero-rise mt-4 max-w-xl text-lg text-ink-sub">{b.sub}</p>
           <div style={{ "--d": ".3s" } as React.CSSProperties} className="hero-rise mt-8 flex flex-col gap-3 sm:flex-row">
-            <ButtonLink href={`/consult?topic=${topic}`}>{b.cta}</ButtonLink>
+            <ButtonLink href={b.ctaHref ?? `/consult?topic=${topic}`}>{b.cta}</ButtonLink>
             <ButtonLink href={b.detailPath} variant="outline">상품 상세보기</ButtonLink>
           </div>
           <ul style={{ "--d": ".4s" } as React.CSSProperties} className="hero-rise mt-6 flex flex-wrap gap-2" aria-label="상담 원칙">

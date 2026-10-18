@@ -10,6 +10,7 @@ export interface Banner {
   headline: string;
   sub: string;
   cta: string;
+  ctaHref?: string; // 없으면 상담 신청(/consult?topic=…)으로 연결
   detailPath: string; // 이 사이트의 상품 상세 페이지 (/products/<id>)
 }
 
@@ -17,7 +18,7 @@ export const banners: Record<BannerKey, Banner> = {
   home: {
     product: "무배당 우체국New건강클리닉보험 2509", nameVerified: true, eMarkChecked: false,
     headline: "필요한 보장, 함께 차근차근 살펴봐요", sub: "상담은 부담 없이, 결정은 충분히 비교한 뒤에.",
-    cta: "상담 신청하기", detailPath: "/products/P002",
+    cta: "전체 상품보기", ctaHref: "/products", detailPath: "/products/P002",
   },
   health: {
     product: "우체국암케어보험", nameVerified: true, eMarkChecked: false,
