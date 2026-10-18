@@ -8,6 +8,8 @@ import { useProductExplorer } from "@/features/products/useProductExplorer";
 import { MAX_COMPARE } from "@/features/compare/compare";
 
 const chip = "min-h-[44px] rounded-full px-4 text-sm font-semibold";
+const fieldLabel = "mb-2 block text-sm font-semibold text-ink";
+const fieldControl = "block w-full min-h-[48px] rounded-xl border border-ink/25 bg-paper px-4 text-base text-ink";
 
 // 상품 목록 — 검색·분류 필터·비교 담기 (표시 담당, 로직은 useProductExplorer)
 export function ProductExplorer({ products }: { products: Product[] }) {
@@ -19,29 +21,33 @@ export function ProductExplorer({ products }: { products: Product[] }) {
 
   return (
     <div>
-      <div className="space-y-4 rounded-card border border-ink/10 bg-paper p-4 sm:p-5">
-        <div>
-          <label htmlFor="product-q" className="font-semibold text-ink">상품 검색</label>
-          <input id="product-q" type="search" value={filter.q} onChange={(e) => setQ(e.target.value)}
-            placeholder="예: 암, 치아, 어린이, 연금" autoComplete="off"
-            className="mt-1 w-full min-h-[48px] rounded-xl border border-ink/25 bg-paper px-4 text-base text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-ink" />
+      <div className="space-y-5 rounded-card border border-ink/10 bg-paper p-4 sm:p-6">
+        <div className="grid gap-4 sm:grid-cols-[1fr_16rem]">
+          <div>
+            <label htmlFor="product-q" className={fieldLabel}>상품 검색</label>
+            <input id="product-q" type="search" value={filter.q} onChange={(e) => setQ(e.target.value)}
+              placeholder="예: 암, 치아, 어린이, 연금" autoComplete="off"
+              className={`${fieldControl} focus-visible:outline focus-visible:outline-2 focus-visible:outline-ink`} />
+          </div>
+          <div>
+            <label htmlFor="product-topic" className={fieldLabel}>상담 분야</label>
+            <select id="product-topic" value={filter.topic} onChange={(e) => setTopic(e.target.value)} className={fieldControl}>
+              <option value="all">전체 분야</option>
+              {categories.map((c) => <option key={c.slug} value={c.slug}>{c.title}</option>)}
+              <option value="other">기타</option>
+            </select>
+          </div>
         </div>
-        <div role="group" aria-label="분류" className="flex flex-wrap gap-2">
-          {(["all", ...GROUP_ORDER] as const).map((g) => (
-            <button key={g} type="button" aria-pressed={filter.group === g} onClick={() => setGroup(g)}
-              className={`${chip} ${filter.group === g ? "bg-brand text-ink" : "bg-paper-gray text-ink-sub"}`}>
-              {g === "all" ? "전체" : g}
-            </button>
-          ))}
-        </div>
         <div>
-          <label htmlFor="product-topic" className="text-sm font-semibold text-ink-sub">상담 분야</label>
-          <select id="product-topic" value={filter.topic} onChange={(e) => setTopic(e.target.value)}
-            className="mt-1 w-full min-h-[48px] rounded-xl border border-ink/25 bg-paper px-4 text-base text-ink sm:w-72">
-            <option value="all">전체 분야</option>
-            {categories.map((c) => <option key={c.slug} value={c.slug}>{c.title}</option>)}
-            <option value="other">기타</option>
-          </select>
+          <p id="product-group-label" className={fieldLabel}>분류</p>
+          <div role="group" aria-labelledby="product-group-label" className="flex flex-wrap gap-2">
+            {(["all", ...GROUP_ORDER] as const).map((g) => (
+              <button key={g} type="button" aria-pressed={filter.group === g} onClick={() => setGroup(g)}
+                className={`${chip} ${filter.group === g ? "bg-brand text-ink" : "bg-paper-gray text-ink-sub"}`}>
+                {g === "all" ? "전체" : g}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 
