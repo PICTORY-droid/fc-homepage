@@ -29,7 +29,7 @@ export const site = {
   },
   privacy: {
     purpose: "상담 신청에 대한 회신 및 상담 진행",
-    items: "이름, 연락처, 관심 분야, 희망 연락 시간",
+    items: "이름, 연락처, 가입 대상 연령, 관심 분야, 희망 연락 시간",
     retentionMonths: null as number | null, // TODO: 보유 기간(개월) 확정 필요
     contactEmail: "", // TODO: 개인정보 문의 이메일
   },

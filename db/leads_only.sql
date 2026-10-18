@@ -9,6 +9,7 @@ create table if not exists public.leads (
   name             text not null,
   phone            text not null,
   interest         text,
+  insured_age      smallint,
   consent_contact  boolean not null default false,
   consent_at       timestamptz,
   consent_marketing boolean not null default false,

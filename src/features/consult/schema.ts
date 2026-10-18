@@ -13,6 +13,12 @@ export const TIME_LABEL: Record<(typeof TIMES)[number], string> = {
 export const consultSchema = z.object({
   name: z.string().trim().min(2, "이름을 2자 이상 입력해 주세요.").max(30, "이름이 너무 깁니다."),
   phone: z.string().trim().refine(isValidKoreanPhone, "연락처를 정확히 입력해 주세요.").transform(onlyDigits),
+  age: z
+    .string({ message: "가입하실 분(부모님 또는 자녀)의 나이를 입력해 주세요." })
+    .trim()
+    .regex(/^\d{1,3}$/, "가입하실 분(부모님 또는 자녀)의 나이를 숫자로 입력해 주세요.")
+    .transform(Number)
+    .pipe(z.number().int().min(0, "0~110 사이의 나이를 입력해 주세요.").max(110, "0~110 사이의 나이를 입력해 주세요.")),
   topic: z.enum(TOPICS, { message: "관심 분야를 선택해 주세요." }),
   time: z.enum(TIMES, { message: "희망 시간을 선택해 주세요." }),
   consent: z.literal(true, { message: "개인정보 수집·이용에 동의해 주세요." }),

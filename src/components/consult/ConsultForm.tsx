@@ -40,6 +40,13 @@ export function ConsultForm({ initialTopic = "health" }: { initialTopic?: string
           value={values.phone} onChange={(e) => setField("phone", e.target.value)} aria-invalid={Boolean(errors.phone)} />
         <Err k="phone" />
       </div>
+      <div>
+        <label htmlFor="age" className="font-semibold text-ink">가입 대상 연령 (만 나이) <span className="text-alert">*</span></label>
+        <input id="age" inputMode="numeric" placeholder="예: 8" className={field} value={values.age}
+          onChange={(e) => setField("age", e.target.value)} aria-invalid={Boolean(errors.age)} aria-describedby="age-help" />
+        <p id="age-help" className="mt-1 text-sm text-ink-sub">가입하실 분(부모님 또는 자녀)의 나이를 입력해 주세요.</p>
+        <Err k="age" />
+      </div>
       <div className="grid gap-5 sm:grid-cols-2">
         <div>
           <label htmlFor="topic" className="font-semibold text-ink">관심 분야</label>

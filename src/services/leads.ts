@@ -21,6 +21,7 @@ export async function saveLead(data: ConsultData): Promise<void> {
     name: data.name,
     phone: data.phone,
     interest: `${data.topic}|${data.time}`,
+    insured_age: data.age,
     consent_contact: true,
     consent_at: new Date().toISOString(),
     consent_marketing: false,
