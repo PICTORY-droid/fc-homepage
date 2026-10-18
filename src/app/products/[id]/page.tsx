@@ -11,6 +11,9 @@ import { products, productsMeta } from "@/config/products";
 import { getProductDetail, productDetailsMeta } from "@/config/productDetails";
 import { site } from "@/config/site";
 import { getProduct, productImage, relatedProducts } from "@/lib/products";
+import { CoverageSection } from "@/components/products/CoverageSection";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { productJsonLd } from "@/lib/seo/jsonLd";
 
 type Props = { params: Promise<{ id: string }> };
 
@@ -22,11 +25,14 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const p = getProduct((await params).id);
   if (!p) return {};
-  const img = productImage(p);
+  const title = p.displayName;
+  const description = p.slogan?.headline ?? `${p.displayName} — ${p.group} 보험 상품 안내`;
   return {
-    title: p.displayName,
-    description: p.slogan?.headline ?? `${p.displayName} — ${p.group} 보험 상품 안내`,
-    ...(img ? { openGraph: { images: [{ url: img.full, width: 720, height: 1280 }] } } : {}),
+    title,
+    description,
+    alternates: { canonical: `/products/${p.id}` },
+    openGraph: { title, description, type: "article", images: [{ url: `/og/${p.id}.png`, width: 1200, height: 630, alt: title }] },
+    twitter: { card: "summary_large_image", title, description, images: [`/og/${p.id}.png`] },
   };
 }
 
@@ -49,6 +55,7 @@ export default async function ProductPage({ params }: Props) {
 
   return (
     <>
+      <JsonLd data={productJsonLd(p)} />
       <Section>
         <nav aria-label="현재 위치" className="mb-6 text-sm text-ink-sub">
           <Link href="/" className="underline">홈</Link> · <Link href="/products" className="underline">보험 상품</Link> · {p.displayName}
@@ -61,6 +68,10 @@ export default async function ProductPage({ params }: Props) {
             </ul>
             <h1 className="mt-4 text-3xl font-extrabold leading-tight text-ink sm:text-4xl">{p.displayName}</h1>
             {p.slogan && <p className="mt-3 text-lg text-ink-sub">{p.slogan.headline}</p>}
+            <p className="mt-3 inline-flex flex-wrap items-center gap-x-2 rounded-full bg-paper-gray px-4 py-1.5 text-sm text-ink-sub">
+              <span className="font-semibold text-ink">공시 기준</span>
+              {detail ? `${detail.docType} · ` : ""}고시 시행일 {p.effectiveDate} · {productsMeta.asOf} 확인
+            </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <ButtonLink href="#consult">이 상품 상담하기</ButtonLink>
               <ButtonLink href="/products" variant="outline">다른 상품 보기</ButtonLink>
@@ -140,6 +151,8 @@ export default async function ProductPage({ params }: Props) {
           </p>
         </Section>
       )}
+
+      <CoverageSection productId={p.id} />
 
       <Section title={productCopy.checklistTitle}>
         <ol className="grid gap-4 sm:grid-cols-2">

@@ -3,12 +3,18 @@ import "./globals.css";
 import { site, siteUrl } from "@/config/site";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { StickyActions } from "@/components/layout/StickyActions";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: { default: site.title, template: `%s | ${site.fcName}` },
   description: site.description,
-  openGraph: { title: site.title, description: site.description, type: "website", locale: "ko_KR" },
+  openGraph: {
+    title: site.title, description: site.description, type: "website", locale: "ko_KR", siteName: site.title,
+    images: [{ url: "/og/default.png", width: 1200, height: 630, alt: site.title }],
+  },
+  twitter: { card: "summary_large_image", title: site.title, description: site.description, images: ["/og/default.png"] },
+  alternates: { canonical: "/" },
   robots: { index: true, follow: true },
 };
 
@@ -24,6 +30,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Header />
         <main id="main">{children}</main>
         <Footer />
+        <StickyActions />
       </body>
     </html>
   );

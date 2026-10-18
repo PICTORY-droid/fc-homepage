@@ -6,6 +6,7 @@ import { join } from "node:path";
 
 const ROOT = new URL("..", import.meta.url).pathname;
 const FORBIDDEN = ["최고", "1위", "전액", "100%", "무조건", "확정수익", "원금보장", "원금 보장", "수익률", "업계 최", "국가가 보장"];
+const SOFT = ["보장합니다", "확실히", "반드시 받", "사은품", "경품", "특별 혜택", "절대"]; // 경고만 (빌드는 통과)
 const errors = [];
 const warns = [];
 
@@ -23,6 +24,7 @@ function walk(dir) {
 for (const f of [...walk("src/config"), ...walk("src/app"), ...walk("src/components")].filter((f) => /\.tsx?$/.test(f))) {
   const text = stripComments(read(f));
   for (const w of FORBIDDEN) if (text.includes(w)) errors.push(`[금지표현] ${f} 에 "${w}" 포함 — 광고 심의/오인 위험`);
+  for (const w of SOFT) if (text.includes(w)) warns.push(`[주의표현] ${f} 에 "${w}" 포함 — 광고 심의 전 확인 (docs/AD-CHECKLIST.md)`);
 }
 
 // 1-b 배너 규칙

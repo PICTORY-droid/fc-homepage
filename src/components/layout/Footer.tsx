@@ -23,16 +23,19 @@ export function Footer() {
           </div>
         </div>
         <div className="space-y-1 border-t border-ink/10 pt-6">
-          <p className="font-semibold text-alert">{site.notices.notOfficial}</p>
           <p>{site.notices.premium}</p>
           <p>{site.notices.promise}</p>
           <p>
             {site.reviewNo ? `심의필 ${site.reviewNo}` : process.env.NODE_ENV !== "production" ? "심의번호 미입력 (개발용 표시)" : ""}
           </p>
         </div>
-        <p>
+        <nav aria-label="하단 메뉴" className="flex flex-wrap gap-x-5 gap-y-2 font-semibold text-ink">
+          <Link href="/guide" className="underline">이용 안내</Link>
           <Link href="/privacy" className="underline">개인정보처리방침</Link>
-        </p>
+          <Link href="/products" className="underline">보험 상품</Link>
+          <Link href="/find" className="underline">보장 찾기</Link>
+        </nav>
+        <p className="text-xs">{site.notices.basis}</p>
       </div>
     </footer>
   );

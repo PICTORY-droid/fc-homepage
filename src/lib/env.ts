@@ -34,3 +34,20 @@ export function getSheetEnv(): { url: string; secret: string } | null {
   }
   return null;
 }
+
+// 관리자 화면(선택) 설정 — 둘 다 올바르게 입력돼야 /admin 이 활성화됩니다. (값은 로그에 남기지 않음)
+const adminSchema = z.object({
+  ADMIN_PASSWORD: z.string().min(12),
+  ADMIN_SESSION_SECRET: z.string().min(32),
+});
+
+export function getAdminEnv(): { password: string; secret: string } | null {
+  const parsed = adminSchema.safeParse(process.env);
+  return parsed.success ? { password: parsed.data.ADMIN_PASSWORD, secret: parsed.data.ADMIN_SESSION_SECRET } : null;
+}
+
+// 정기 호출(Vercel Cron) 인증용 비밀 값
+export const getCronSecret = (): string | null => {
+  const v = process.env.CRON_SECRET;
+  return v && v.length >= 16 ? v : null;
+};

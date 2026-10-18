@@ -3,8 +3,11 @@ import { CategoryCard } from "@/components/CategoryCard";
 import { Section } from "@/components/ui/Section";
 import { ConsultForm } from "@/components/consult/ConsultForm";
 import { TopProducts } from "@/components/TopProducts";
+import { ProfileSection } from "@/components/profile/ProfileSection";
 import { ButtonLink } from "@/components/ui/Button";
 import { categories } from "@/config/categories";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { agencyJsonLd } from "@/lib/seo/jsonLd";
 
 const STEPS = [
   ["상담 신청", "이름과 연락처, 궁금한 분야를 남겨 주세요."],
@@ -16,8 +19,10 @@ export default function HomePage() {
   const featured = categories.filter((c) => c.featured);
   return (
     <>
+      <JsonLd data={agencyJsonLd()} />
       <PageBanner bannerKey="home" />
       <TopProducts />
+      <ProfileSection />
       <Section title="추천 상담 분야" lead="먼저 살펴보시기 좋은 분야를 모았어요.">
         <div className="grid gap-4 sm:grid-cols-3">
           {featured.map((c) => <CategoryCard key={c.slug} category={c} />)}
