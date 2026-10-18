@@ -17,7 +17,6 @@ export const metadata: Metadata = {
 };
 
 type Props = { searchParams: Promise<{ ids?: string | string[] }> };
-const MAX_ITEMS = 8;
 
 // 상품 비교 — 사실 정보만 나란히 보여주며 우열이나 추천은 표시하지 않습니다.
 export default async function ComparePage({ searchParams }: Props) {
@@ -71,12 +70,7 @@ export default async function ComparePage({ searchParams }: Props) {
                   const names = coverageItemNames(p.id);
                   return (
                     <td key={p.id} className={td}>
-                      {names.length === 0 ? "—" : (
-                        <>
-                          <BulletList className="space-y-1" items={names.slice(0, MAX_ITEMS)} />
-                          {names.length > MAX_ITEMS && <p className="mt-1 text-ink-sub">외 {names.length - MAX_ITEMS}개 (상세 페이지에서 확인)</p>}
-                        </>
-                      )}
+                      {names.length === 0 ? "—" : <BulletList className="space-y-1" items={names} />}
                     </td>
                   );
                 })}
