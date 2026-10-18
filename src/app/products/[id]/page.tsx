@@ -64,31 +64,36 @@ export default async function ProductPage({ params }: Props) {
         <nav aria-label="현재 위치" className="mb-6 text-sm text-ink-sub">
           <Link href="/" className="underline">홈</Link> · <Link href="/products" className="underline">보험 상품</Link> · {p.displayName}
         </nav>
-        <div className="grid items-start gap-8 md:grid-cols-[1fr_15rem] md:gap-12">
-          <div>
-            <ul className="flex flex-wrap gap-2" aria-label="상품 분류">
-              <li className="rounded-full bg-brand-soft px-3 py-1 text-sm font-semibold text-brand-deep">{p.group}</li>
-              {p.slogan?.tags.map((t) => <li key={t} className="rounded-full bg-paper-gray px-3 py-1 text-sm text-ink-sub">{t}</li>)}
-            </ul>
-            <h1 className="mt-4 text-3xl font-extrabold leading-tight text-ink sm:text-4xl">{p.displayName}</h1>
-            {p.slogan && <p className="mt-3 text-lg text-ink-sub">{p.slogan.headline}</p>}
-            <p className="mt-3 inline-flex flex-wrap items-center gap-x-2 rounded-full bg-paper-gray px-4 py-1.5 text-sm text-ink-sub">
-              <span className="font-semibold text-ink">공시 기준</span>
-              {detail ? `${detail.docType} · ` : ""}고시 시행일 {p.effectiveDate} · {productsMeta.asOf} 확인
-            </p>
-            <dl aria-label="핵심 정보" data-reveal="stagger" className="mt-6 grid grid-cols-2 gap-3">
-              {keyFacts.map((f, i) => (
-                <div key={f.label} className={`rounded-xl border border-ink/10 bg-paper-card p-4${keyFacts.length % 2 === 1 && i === keyFacts.length - 1 ? " col-span-2" : ""}`}>
-                  <dt className="text-xs font-semibold text-brand-deep">{f.label}</dt>
-                  <dd className="mt-1 font-bold leading-snug text-ink">{f.value}</dd>
-                </div>
-              ))}
-            </dl>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <ButtonLink href="#consult">이 상품 상담하기</ButtonLink>
-              <ButtonLink href="/products" variant="outline">다른 상품 보기</ButtonLink>
+        {/* 왼쪽 글 영역과 오른쪽 이미지의 위·아래 선을 맞춥니다: 큰 화면에서 두 칸을 같은 높이로 늘리고, 글은 위·가운데·아래로 나눠 배치 */}
+        <div className="grid gap-8 lg:grid-cols-[1fr_18rem] lg:items-stretch lg:gap-12">
+          <div className="flex flex-col gap-6 lg:justify-between">
+            <div>
+              <ul className="flex flex-wrap gap-2" aria-label="상품 분류">
+                <li className="rounded-full bg-brand-soft px-3 py-1 text-sm font-semibold text-brand-deep">{p.group}</li>
+                {p.slogan?.tags.map((t) => <li key={t} className="rounded-full bg-paper-gray px-3 py-1 text-sm text-ink-sub">{t}</li>)}
+              </ul>
+              <h1 className="mt-4 text-3xl font-extrabold leading-tight text-ink sm:text-4xl">{p.displayName}</h1>
+              {p.slogan && <p className="mt-3 text-lg text-ink-sub">{p.slogan.headline}</p>}
+              <p className="mt-3 inline-flex flex-wrap items-center gap-x-2 rounded-full bg-paper-gray px-4 py-1.5 text-sm text-ink-sub">
+                <span className="font-semibold text-ink">공시 기준</span>
+                {detail ? `${detail.docType} · ` : ""}고시 시행일 {p.effectiveDate} · {productsMeta.asOf} 확인
+              </p>
             </div>
-            <div className="mt-6"><Notice>{site.notices.premium}</Notice></div>
+            <div>
+              <dl aria-label="핵심 정보" data-reveal="stagger" className="grid grid-cols-2 gap-3">
+                {keyFacts.map((f, i) => (
+                  <div key={f.label} className={`rounded-xl border border-ink/10 bg-paper-card px-4 py-2.5${keyFacts.length % 2 === 1 && i === keyFacts.length - 1 ? " col-span-2" : ""}`}>
+                    <dt className="text-xs font-semibold text-brand-deep">{f.label}</dt>
+                    <dd className="mt-0.5 font-bold leading-snug text-ink">{f.value}</dd>
+                  </div>
+                ))}
+              </dl>
+              <div className="mt-5 flex flex-col gap-3 sm:flex-row">
+                <ButtonLink href="#consult">이 상품 상담하기</ButtonLink>
+                <ButtonLink href="/products" variant="outline">다른 상품 보기</ButtonLink>
+              </div>
+            </div>
+            <Notice>{site.notices.premium}</Notice>
           </div>
           {img && <ProductPoster src={img.full} alt={`${p.displayName} 안내 이미지`} width={720} height={1280} />}
         </div>

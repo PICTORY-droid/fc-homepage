@@ -10,16 +10,13 @@ export function ProductPoster({ src, alt, width, height }: Props) {
   const close = () => dialog.current?.close();
 
   return (
-    <div className="mx-auto w-full max-w-[15rem] md:mx-0">
+    <div className="mx-auto w-full max-w-[15rem] lg:mx-0 lg:h-full lg:max-w-none">
       <button type="button" onClick={open} aria-haspopup="dialog"
-        className="group relative block w-full overflow-hidden rounded-card border border-ink/10 bg-paper shadow-sm transition duration-300 hover:-translate-y-1 hover:border-brand hover:shadow-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">
+        className="group relative block w-full overflow-hidden lg:h-full rounded-card border border-ink/10 bg-paper shadow-sm transition duration-300 hover:-translate-y-1 hover:border-brand hover:shadow-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={src} alt={alt} width={width} height={height} className="block w-full" />
-        <span aria-hidden="true" className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/70 to-transparent px-3 pb-3 pt-8 text-center text-sm font-bold text-white opacity-0 transition group-hover:opacity-100 group-focus-visible:opacity-100 max-md:opacity-100">
-          🔍 크게 보기
-        </span>
+        <img src={src} alt={alt} width={width} height={height} className="block w-full lg:h-full lg:object-cover lg:object-top" />
+        <span aria-hidden="true" className="absolute right-2 top-2 rounded-full bg-ink/75 px-3 py-1 text-xs font-bold text-white">🔍 크게 보기</span>
       </button>
-      <p className="mt-2 text-center text-xs text-ink-sub">이미지를 누르면 크게 볼 수 있어요</p>
 
       <dialog ref={dialog} aria-label={`${alt} 크게 보기`}
         onClick={(e) => { if (e.target === dialog.current) close(); }} // 바깥(배경)을 누르면 닫힘
