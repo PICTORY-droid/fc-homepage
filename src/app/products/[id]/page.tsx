@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Section } from "@/components/ui/Section";
 import { Notice } from "@/components/ui/Notice";
+import { BulletList } from "@/components/ui/BulletList";
 import { ButtonLink } from "@/components/ui/Button";
 import { ConsultForm } from "@/components/consult/ConsultForm";
 import { ProductCard } from "@/components/products/ProductCard";
@@ -142,9 +143,7 @@ export default async function ProductPage({ params }: Props) {
             </div>
           ))}
           {detail.notes.length > 0 && (
-            <ul className="mt-6 space-y-2 text-sm text-ink-sub">
-              {detail.notes.map((n) => <li key={n}>· {n}</li>)}
-            </ul>
+            <BulletList className="mt-6 text-sm text-ink-sub" items={detail.notes} />
           )}
           <p className="mt-4 text-xs text-ink-sub">
             {productDetailsMeta.source} · {productDetailsMeta.asOf} 확인. 보험료·보장 내용은 가입 조건에 따라 달라질 수 있으니 상품요약서와 약관을 반드시 확인하세요.

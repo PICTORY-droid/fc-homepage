@@ -1,4 +1,5 @@
 import { Section } from "@/components/ui/Section";
+import { BulletList } from "@/components/ui/BulletList";
 import { coverageMeta, getCoverage } from "@/config/productCoverage";
 
 // 보험금 지급사유·지급액 — 상품요약서의 '보험금 지급사유 및 지급제한 사항' 정리 (표시 전용, 서버 컴포넌트)
@@ -38,7 +39,7 @@ export function CoverageSection({ productId }: { productId: string }) {
       {c.notes.length > 0 && (
         <div className="mt-6">
           <h3 className="font-bold text-ink">보장 관련 유의사항</h3>
-          <ul className="mt-3 space-y-2 text-sm text-ink-sub">{c.notes.map((n) => <li key={n}>· {n}</li>)}</ul>
+          <BulletList className="mt-3 text-sm text-ink-sub" items={c.notes} />
         </div>
       )}
       <p className="mt-6 text-xs text-ink-sub">{coverageMeta.source} 기준 · {coverageMeta.asOf} 정리. 실제 지급 여부와 금액은 약관과 가입 조건에 따라 달라지니 상품요약서와 약관을 반드시 확인하세요.</p>

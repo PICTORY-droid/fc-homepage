@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Section } from "@/components/ui/Section";
+import { BulletList } from "@/components/ui/BulletList";
 import { ButtonLink } from "@/components/ui/Button";
 import { site } from "@/config/site";
 import { productsMeta } from "@/config/products";
@@ -33,12 +34,12 @@ export default function GuidePage() {
         </ol>
       </Section>
       <Section title="상품 정보는 이렇게 정리했어요" tone="card">
-        <ul className="space-y-3 text-ink">
-          <li>· {site.notices.basis}</li>
-          <li>· 판매 중인 상품 목록 출처: {productsMeta.source} ({productsMeta.asOf} 확인)</li>
-          <li>· 온라인 전용(e마크) 상품과 판매가 중지된 상품은 이 페이지에 싣지 않습니다.</li>
-          <li>· 보험금 지급 보장 등 법적 효력이 있는 내용은 각 상품의 약관과 상품설명서가 기준입니다.</li>
-        </ul>
+        <BulletList className="space-y-3 text-ink" items={[
+          site.notices.basis,
+          `판매 중인 상품 목록 출처: ${productsMeta.source} (${productsMeta.asOf} 확인)`,
+          "온라인 전용(e마크) 상품과 판매가 중지된 상품은 이 페이지에 싣지 않습니다.",
+          "보험금 지급 보장 등 법적 효력이 있는 내용은 각 상품의 약관과 상품설명서가 기준입니다.",
+        ]} />
         <p className="mt-4 text-sm text-ink-sub">{site.notices.premium}</p>
       </Section>
       <Section title="공식 채널에서 확인하세요">

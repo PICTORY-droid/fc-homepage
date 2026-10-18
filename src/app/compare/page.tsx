@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Section } from "@/components/ui/Section";
 import { Notice } from "@/components/ui/Notice";
+import { BulletList } from "@/components/ui/BulletList";
 import { ButtonLink } from "@/components/ui/Button";
 import { getCoverage, coverageItemNames } from "@/config/productCoverage";
 import { productsMeta } from "@/config/products";
@@ -71,10 +72,10 @@ export default async function ComparePage({ searchParams }: Props) {
                   return (
                     <td key={p.id} className={td}>
                       {names.length === 0 ? "—" : (
-                        <ul className="space-y-1">
-                          {names.slice(0, MAX_ITEMS).map((n) => <li key={n}>· {n}</li>)}
-                          {names.length > MAX_ITEMS && <li className="text-ink-sub">외 {names.length - MAX_ITEMS}개 (상세 페이지에서 확인)</li>}
-                        </ul>
+                        <>
+                          <BulletList className="space-y-1" items={names.slice(0, MAX_ITEMS)} />
+                          {names.length > MAX_ITEMS && <p className="mt-1 text-ink-sub">외 {names.length - MAX_ITEMS}개 (상세 페이지에서 확인)</p>}
+                        </>
                       )}
                     </td>
                   );
