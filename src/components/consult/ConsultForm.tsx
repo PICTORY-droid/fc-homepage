@@ -24,6 +24,7 @@ export function ConsultForm({ initialTopic = "health" }: { initialTopic?: string
   if (status === "done") {
     return (
       <div role="status" className="rounded-card bg-brand-soft p-8">
+        <div aria-hidden="true" className="fx-pop-in mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-brand text-3xl font-extrabold text-ink">✓</div>
         <h3 ref={titleRef} tabIndex={-1} className="text-center text-2xl font-bold text-ink outline-none">상담 신청이 접수되었어요</h3>
         <ol className="mx-auto mt-6 max-w-md space-y-3 text-ink">
           <li className="flex gap-3"><span className="font-bold text-brand-deep">1</span>접수된 순서대로 내용을 확인합니다.</li>
@@ -56,6 +57,7 @@ export function ConsultForm({ initialTopic = "health" }: { initialTopic?: string
         ))}
       </ol>
 
+      <div key={steps[step].key} className="step-enter space-y-6">
       <h3 ref={titleRef} tabIndex={-1} className="text-xl font-bold text-ink outline-none">{steps[step].title}</h3>
 
       {steps[step].key === "topic" && (
@@ -235,6 +237,8 @@ export function ConsultForm({ initialTopic = "health" }: { initialTopic?: string
           {status === "error" && <p role="alert" className="text-alert">{serverMessage}</p>}
         </div>
       )}
+
+      </div>
 
       <div className="flex gap-3">
         {step > 0 && (

@@ -2,9 +2,9 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 
 const base =
-  "inline-flex min-h-[48px] items-center justify-center rounded-xl px-6 text-base font-semibold transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink";
+  "inline-flex min-h-[48px] items-center justify-center rounded-xl px-6 text-base font-semibold transition duration-200 hover:-translate-y-0.5 active:translate-y-0 active:scale-[.97] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink";
 const variants = {
-  primary: "bg-brand text-ink hover:brightness-95",
+  primary: "btn-shine bg-brand text-ink hover:shadow-md hover:brightness-95",
   soft: "bg-brand-soft text-ink hover:brightness-95",
   outline: "border border-ink/30 bg-paper text-ink hover:bg-paper-gray",
 } as const;

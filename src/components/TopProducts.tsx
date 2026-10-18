@@ -5,10 +5,10 @@ import { ButtonLink } from "@/components/ui/Button";
 // 우체국보험 판매량 TOP 2 — 내용은 config/topProducts.ts 에서만 수정합니다.
 export function TopProducts() {
   return (
-    <Section title={topProducts.title} lead={`${topProducts.source} · ${topProducts.asOf} 확인`} tone="card">
-      <ol className="grid gap-4 md:grid-cols-2">
+    <Section title={topProducts.title} lead={`${topProducts.source} · ${topProducts.asOf} 확인`} tone="card" reveal={false}>
+      <ol data-reveal="stagger" className="grid gap-4 md:grid-cols-2">
         {topProducts.items.map((p) => (
-          <li key={p.rank} className="flex flex-col justify-between rounded-card border border-ink/10 bg-paper p-6">
+          <li key={p.rank} className="flex flex-col justify-between rounded-card border border-ink/10 bg-paper p-6 transition duration-300 hover:-translate-y-1 hover:border-brand hover:shadow-lg">
             <div>
               <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-brand text-lg font-extrabold text-ink">
                 {p.rank}

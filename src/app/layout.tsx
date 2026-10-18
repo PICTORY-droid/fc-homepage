@@ -4,6 +4,8 @@ import { site, siteUrl } from "@/config/site";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { StickyActions } from "@/components/layout/StickyActions";
+import { RevealObserver } from "@/components/motion/RevealObserver";
+import { ScrollProgress } from "@/components/motion/ScrollProgress";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -27,6 +29,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:left-2 focus:top-2 focus:z-50 focus:rounded focus:bg-paper focus:p-3">
           본문 바로가기
         </a>
+        <ScrollProgress />
+        <RevealObserver />
         <Header />
         <main id="main">{children}</main>
         <Footer />

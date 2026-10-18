@@ -6,7 +6,7 @@ import { ProductThumb } from "./ProductThumb";
 // 상품 목록 카드 — 표시만 담당
 export function ProductCard({ product, compare }: { product: Product; compare?: { checked: boolean; disabled: boolean; onToggle: () => void } }) {
   return (
-    <li className="flex flex-col overflow-hidden rounded-card border border-ink/10 bg-paper">
+    <li className="flex flex-col overflow-hidden rounded-card border border-ink/10 bg-paper transition duration-300 hover:-translate-y-1 hover:border-brand hover:shadow-lg">
       <ProductThumb product={product} />
       <div className="flex flex-1 flex-col p-5">
         <p className="text-xs font-semibold text-brand-deep">{product.group}</p>

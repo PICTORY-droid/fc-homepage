@@ -23,21 +23,21 @@ export default function HomePage() {
       <PageBanner bannerKey="home" />
       <TopProducts />
       <ProfileSection />
-      <Section title="추천 상담 분야" lead="먼저 살펴보시기 좋은 분야를 모았어요.">
-        <div className="grid gap-4 sm:grid-cols-3">
+      <Section title="추천 상담 분야" lead="먼저 살펴보시기 좋은 분야를 모았어요." reveal={false}>
+        <div data-reveal="stagger" className="grid gap-4 sm:grid-cols-3">
           {featured.map((c) => <CategoryCard key={c.slug} category={c} />)}
         </div>
       </Section>
-      <Section title="전체 상담 분야" tone="card">
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <Section title="전체 상담 분야" tone="card" reveal={false}>
+        <div data-reveal="stagger" className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {categories.map((c) => <CategoryCard key={c.slug} category={c} />)}
         </div>
       </Section>
       <Section title="간편 계산기" lead="보험나이, 은퇴 후 생활비 부족분, 복리 적립을 직접 계산해 보세요.">
         <ButtonLink href="/tools" variant="soft">계산기 열기</ButtonLink>
       </Section>
-      <Section title="상담은 이렇게 진행돼요" tone="card">
-        <ol className="grid gap-4 sm:grid-cols-3">
+      <Section title="상담은 이렇게 진행돼요" tone="card" reveal={false}>
+        <ol data-reveal="stagger" className="grid gap-4 sm:grid-cols-3">
           {STEPS.map(([t, d], i) => (
             <li key={t} className="rounded-card bg-paper-card p-6">
               <span className="flex h-8 w-8 items-center justify-center rounded-full bg-brand font-bold text-ink">{i + 1}</span>

@@ -7,3 +7,49 @@
   body { @apply bg-paper font-sans text-ink antialiased; word-break: keep-all; }
   summary::-webkit-details-marker { display: none; }
 }
+
+/* ───────── 움직임 효과 ─────────
+   '동작 줄이기' 설정을 켠 사용자에게는 모든 효과를 끕니다. */
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes rise { from { opacity: 0; transform: translateY(26px); } }
+  @keyframes fade { from { opacity: 0; } }
+  @keyframes pop { 0% { opacity: 0; transform: scale(.82); } 70% { transform: scale(1.04); } }
+  @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+  @keyframes floatSlow { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(8px); } }
+  @keyframes draw { from { stroke-dashoffset: 120; } to { stroke-dashoffset: 0; } }
+  @keyframes shine { from { transform: translateX(-120%) skewX(-20deg); } to { transform: translateX(320%) skewX(-20deg); } }
+  @keyframes pulseRing { 0% { box-shadow: 0 0 0 0 rgb(255 136 58 / .45); } 100% { box-shadow: 0 0 0 14px rgb(255 136 58 / 0); } }
+
+  .page-enter { animation: fade .45s ease-out backwards; }
+
+  /* 스크롤 등장 */
+  [data-reveal][data-rs="pending"]:not([data-reveal="stagger"]) { opacity: 0; transform: translateY(26px); }
+  [data-reveal][data-rs="in"]:not([data-reveal="stagger"]) { animation: rise .7s cubic-bezier(.2,.7,.2,1) backwards; }
+  [data-reveal="stagger"][data-rs="pending"] > * { opacity: 0; }
+  [data-reveal="stagger"][data-rs="in"] > * { animation: rise .7s cubic-bezier(.2,.7,.2,1) backwards; }
+  [data-reveal="stagger"][data-rs="in"] > :nth-child(2) { animation-delay: .09s; }
+  [data-reveal="stagger"][data-rs="in"] > :nth-child(3) { animation-delay: .18s; }
+  [data-reveal="stagger"][data-rs="in"] > :nth-child(4) { animation-delay: .27s; }
+  [data-reveal="stagger"][data-rs="in"] > :nth-child(5) { animation-delay: .36s; }
+  [data-reveal="stagger"][data-rs="in"] > :nth-child(n+6) { animation-delay: .45s; }
+
+  /* 첫 화면(배너) 등장 */
+  .hero-rise { animation: rise .8s cubic-bezier(.2,.7,.2,1) backwards; animation-delay: var(--d, 0s); }
+
+  /* 배너 그림 */
+  .fx-float { animation: float 5s ease-in-out infinite; }
+  .fx-float-slow { animation: floatSlow 6.5s ease-in-out infinite; }
+  .fx-pop { animation: pop .9s cubic-bezier(.2,.7,.2,1) .25s backwards; transform-box: fill-box; transform-origin: center; }
+  .fx-draw { stroke-dasharray: 120; animation: draw .9s ease-out .9s backwards; }
+  .fx-float, .fx-float-slow { transform-box: fill-box; transform-origin: center; }
+
+  /* 버튼: 눌림 + 빛 지나감 */
+  .btn-shine { position: relative; overflow: hidden; }
+  .btn-shine::after { content: ""; position: absolute; inset: 0 auto 0 0; width: 40%; background: linear-gradient(90deg, transparent, rgb(255 255 255 / .45), transparent); transform: translateX(-120%) skewX(-20deg); pointer-events: none; }
+  .btn-shine:hover::after { animation: shine .8s ease-out; }
+  .btn-pulse { animation: pulseRing 2.2s ease-out infinite; }
+
+  /* 상담 폼 단계 전환 / 완료 */
+  .step-enter { animation: rise .45s cubic-bezier(.2,.7,.2,1) backwards; }
+  .fx-pop-in { animation: pop .7s cubic-bezier(.2,.7,.2,1) backwards; }
+}
