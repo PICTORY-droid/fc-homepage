@@ -2,13 +2,11 @@ import Link from "next/link";
 import { site } from "@/config/site";
 import { categories } from "@/config/categories";
 import { BrandMark } from "@/components/brand/BrandMark";
-import { TopBar } from "@/components/layout/TopBar";
 
 // 상단 헤더 — 모바일 메뉴는 JS 없이 <details> 로 동작
 export function Header() {
   return (
     <>
-      <TopBar />
       <header className="sticky top-0 z-20 border-b border-ink/10 bg-paper/95 backdrop-blur">
         <div className="mx-auto flex max-w-5xl items-center justify-between gap-3 px-4 py-3 sm:px-6">
           <Link href="/" className="flex min-w-0 items-center gap-3">
