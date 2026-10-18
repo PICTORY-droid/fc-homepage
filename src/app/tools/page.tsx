@@ -25,6 +25,9 @@ export default function ToolsPage() {
             <a key={h} href={h} className="rounded-full bg-paper-gray px-4 py-2 font-semibold text-ink">{t}</a>
           ))}
         </nav>
+        <p className="text-sm text-ink-sub">
+          맨 위 계산기만 펼쳐져 있어요. 나머지는 <strong className="text-ink">제목을 클릭하세요.</strong> 다시 클릭하면 접힙니다.
+        </p>
         <AgeMaturityCalc />
         <RetirementCalc />
         <CompoundCalc />

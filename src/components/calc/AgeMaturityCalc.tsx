@@ -21,7 +21,7 @@ export function AgeMaturityCalc() {
   const handleReset = () => { reset(); setField("contract", formatYmd(todayKst())); setResetKey((n) => n + 1); };
 
   return (
-    <CalcShell id="age" title="보험나이 · 만기 · 납입기간" lead="생년월일과 계약일을 넣으면 보험나이와 만기·납입 종료 시점을 알려드려요.">
+    <CalcShell id="age" defaultOpen title="보험나이 · 만기 · 납입기간" lead="생년월일과 계약일을 넣으면 보험나이와 만기·납입 종료 시점을 알려드려요.">
       <form noValidate onSubmit={(ev) => { ev.preventDefault(); submit(); }} className="space-y-5">
         <div className="grid gap-5 sm:grid-cols-2">
           <DateField key={`b${resetKey}`} id="age-birth" label="생년월일" value={v.birth} onChange={(x) => setField("birth", x)} error={e.birth} />

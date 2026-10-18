@@ -18,8 +18,11 @@ function GroupFields({ g, open, values, errors, setField }: {
 }) {
   const hasError = g.items.some((i) => errors[i.key]);
   const subtotal = previewGroupMonthly(values, g);
+  const ref = useRef<HTMLDetailsElement>(null);
+  // 오류가 생기면 접혀 있던 그룹을 펼칩니다. (open 속성은 고정해 두어 사용자가 접는 동작을 막지 않음)
+  useEffect(() => { if (hasError && ref.current) ref.current.open = true; }, [hasError]);
   return (
-    <details open={open || hasError} className="rounded-xl border border-ink/15 bg-paper">
+    <details ref={ref} open={open} className="rounded-xl border border-ink/15 bg-paper">
       <summary className="flex min-h-[52px] cursor-pointer flex-wrap items-center justify-between gap-2 px-4 py-3">
         <span className="font-bold text-ink">{g.title}</span>
         <span className="text-sm text-ink-sub">

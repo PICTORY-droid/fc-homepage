@@ -50,12 +50,41 @@ export function SelectField({ id, label, value, onChange, options, error }: Sele
   );
 }
 
-export function CalcShell({ id, title, lead, children }: { id: string; title: string; lead: string; children: ReactNode }) {
+// 접고 펼 수 있는 계산기 카드. 접어도 안의 입력값은 유지됩니다. (닫힐 때 숨기기만 하고 지우지 않음)
+export function CalcShell({ id, title, lead, children, defaultOpen = false }: {
+  id: string; title: string; lead: string; children: ReactNode; defaultOpen?: boolean;
+}) {
+  const [open, setOpen] = useState(defaultOpen);
+
+  // 바로가기(#id) 링크나 주소의 #id 로 들어오면 해당 계산기를 펼칩니다.
+  useEffect(() => {
+    const openIfHash = () => {
+      if (window.location.hash !== `#${id}`) return;
+      setOpen(true);
+      requestAnimationFrame(() => document.getElementById(id)?.scrollIntoView());
+    };
+    const onClick = (e: MouseEvent) => {
+      if ((e.target as Element | null)?.closest?.(`a[href="#${id}"]`)) setOpen(true);
+    };
+    openIfHash();
+    window.addEventListener("hashchange", openIfHash);
+    document.addEventListener("click", onClick);
+    return () => { window.removeEventListener("hashchange", openIfHash); document.removeEventListener("click", onClick); };
+  }, [id]);
+
   return (
-    <section id={id} aria-labelledby={`${id}-title`} className="rounded-card border border-ink/10 bg-paper p-6 sm:p-8">
-      <h2 id={`${id}-title`} className="text-xl font-bold text-ink sm:text-2xl">{title}</h2>
-      <p className="mt-1 text-sm text-ink-sub sm:text-base">{lead}</p>
-      <div className="mt-6">{children}</div>
+    <section id={id} className="scroll-mt-24 rounded-card border border-ink/10 bg-paper">
+      <h2>
+        <button type="button" aria-expanded={open} aria-controls={`${id}-panel`} onClick={() => setOpen((o) => !o)}
+          className="flex min-h-[64px] w-full items-center justify-between gap-4 rounded-card px-6 py-5 text-left sm:px-8 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">
+          <span className="text-xl font-bold text-ink sm:text-2xl">{title}</span>
+          <span className="shrink-0 rounded-full bg-paper-gray px-3 py-1 text-sm font-semibold text-ink">
+            {open ? "접기 ▲" : "클릭하여 열기 ▼"}
+          </span>
+        </button>
+      </h2>
+      <p className="px-6 pb-4 text-sm text-ink-sub sm:px-8 sm:text-base">{lead}</p>
+      <div id={`${id}-panel`} hidden={!open} className="px-6 pb-6 sm:px-8 sm:pb-8">{children}</div>
     </section>
   );
 }
