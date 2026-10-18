@@ -82,7 +82,7 @@ export function ConsultForm({ initialTopic = "health" }: { initialTopic?: string
       )}
 
       {steps[step].key === "who" && (
-        <div className="max-w-xl space-y-5">
+        <div className="mx-auto max-w-xl space-y-5">
           <div>
             <label htmlFor="age" className="font-semibold text-ink">가입 대상 연령 (만 나이) <span className="text-alert">*</span></label>
             <input id="age" inputMode="numeric" placeholder="예: 8" className={field} value={values.age}
@@ -107,7 +107,7 @@ export function ConsultForm({ initialTopic = "health" }: { initialTopic?: string
       )}
 
       {steps[step].key === "detail" && (
-        <div className="max-w-2xl space-y-6">
+        <div className="mx-auto max-w-2xl space-y-6">
           <fieldset>
             <legend className="font-semibold text-ink">현재 가입 중인 보험이 있나요?</legend>
             <div className="mt-2 grid gap-3 sm:grid-cols-3">
@@ -205,7 +205,7 @@ export function ConsultForm({ initialTopic = "health" }: { initialTopic?: string
       )}
 
       {steps[step].key === "contact" && (
-        <div className="max-w-xl space-y-5">
+        <div className="mx-auto max-w-xl space-y-5">
           <div>
             <label htmlFor="name" className="font-semibold text-ink">이름</label>
             <input id="name" autoComplete="name" className={field} value={values.name}
@@ -240,7 +240,7 @@ export function ConsultForm({ initialTopic = "health" }: { initialTopic?: string
 
       </div>
 
-      <div className="flex max-w-xl gap-3">
+      <div className="mx-auto flex max-w-xl gap-3">
         {step > 0 && (
           <button type="button" onClick={back}
             className="min-h-[52px] rounded-xl border border-ink/30 bg-paper px-6 text-base font-semibold text-ink hover:bg-paper-gray">
