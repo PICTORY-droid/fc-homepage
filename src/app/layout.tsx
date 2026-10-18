@@ -3,7 +3,6 @@ import "./globals.css";
 import { site, siteUrl } from "@/config/site";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
-import { StickyActions } from "@/components/layout/StickyActions";
 import { RevealObserver } from "@/components/motion/RevealObserver";
 import { ScrollProgress } from "@/components/motion/ScrollProgress";
 
@@ -34,7 +33,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Header />
         <main id="main">{children}</main>
         <Footer />
-        <StickyActions />
       </body>
     </html>
   );
