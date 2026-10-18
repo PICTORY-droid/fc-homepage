@@ -19,12 +19,7 @@ export default function HomePage() {
           {featured.map((c) => <CategoryCard key={c.slug} category={c} />)}
         </div>
       </Section>
-      <Section title="전체 상담 분야" tone="card" reveal={false}>
-        <div data-reveal="stagger" className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {categories.map((c) => <CategoryCard key={c.slug} category={c} />)}
-        </div>
-      </Section>
-      <Section id="consult" title="간편 상담 신청">
+      <Section id="consult" title="간편 상담 신청" tone="card">
         <ConsultForm initialTopic="health" />
       </Section>
     </>
