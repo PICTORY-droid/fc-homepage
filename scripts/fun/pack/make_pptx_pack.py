@@ -6,6 +6,8 @@ import subprocess
 import sys
 import tempfile
 
+import json
+
 import copy_pptx
 import pack_kit as pk
 import pptx_items as I
@@ -18,6 +20,15 @@ ITEMS = {
     "review": (I.build_review, I.review_flavor, "보장점검"),
     "news": (I.build_news, I.news_flavor, "카드뉴스"),
 }
+ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
+LABEL = {"talk": "PRESENTATION", "family": "FAMILY ALBUM", "birthday": "FIRST BIRTHDAY", "wedding": "WEDDING", "review": "INSURANCE CHECK", "news": "CARD NEWS"}
+MARKS = ["서울", "대전", "광주", "부산", "춘천", "전주", "강릉", "속초", "여수", "경주"]
+# 테마(이름) 순서와 같은 표지 그림 — 계절 감성에 맞춘 소재
+HERO = ("sp.magnolia sp.sprout sp.cherry sp.rapeseed au.rice sp.umbrella sp.azalea sp.swallow sp.lunch sp.carnation sp.lilac sp.butterfly sp.bicycle "
+        "su.rain su.hydrangea su.watermelon su.sunflower su.shell su.firefly sp.rainbow su.fan su.surfboard su.cicada su.windchime su.lotus "
+        "au.cosmos au.songpyeon au.persimmon au.pampas ob.mailbox au.ginkgo au.books ob.camera au.dragonfly au.chestnut au.scarecrow ob.pencils ob.roastpotato "
+        "wi.snowflake wi.bun wi.fireplace wi.camellia wi.pouch su.milkyway au.teacup wi.tangerine wi.tree wi.cabin wi.snowman wi.sunrise").split()
+assert len(HERO) == 50
 PROFILE = os.path.join(tempfile.gettempdir(), "lo_pptx_profile")
 
 
@@ -38,10 +49,26 @@ def thumbs(files, out_dir, width):
     shutil.rmtree(tmp, ignore_errors=True)
 
 
+def make_covers(key, offset):
+    """표지 그림 50장을 만들어 임시 폴더에 둡니다(Playwright + Chromium 필요: PW_PATH, CHROMIUM_PATH)."""
+    out = tempfile.mkdtemp(prefix=f"cover_{key}_")
+    specs = []
+    for i in range(50):
+        p = pk.palette(i)
+        specs.append({"id": f"{key}-{i + 1:02d}", "wide": key != "news", "style": (i + offset) % 4, "label": LABEL[key], "mark": MARKS[(i + offset) % len(MARKS)],
+                      "main": p["main"], "soft": p["soft"], "dark": p["dark"], "pale": p["pale"], "accent": p["accent"], "hero": HERO[i]})
+    spec_path = os.path.join(out, "spec.json")
+    with open(spec_path, "w", encoding="utf-8") as f:
+        json.dump(specs, f, ensure_ascii=False)
+    subprocess.run(["node", os.path.join(ROOT, "scripts", "fun", "memory", "covers.mjs"), spec_path, out], check=True, cwd=ROOT)
+    return out
+
+
 def run(keys):
     for key in keys:
         build, flavor, label = ITEMS[key]
         messages = copy_pptx.COPY[key]
+        I.COVER["dir"], I.COVER["key"] = make_covers(key, list(ITEMS).index(key)), key
         pk.check_unique(messages, key)
         d = pk.out_dir("pptx", key)
         shutil.rmtree(d, ignore_errors=True)
@@ -49,6 +76,7 @@ def run(keys):
         files, entries = [], []
         for i in range(50):
             pal = pk.palette(i)
+            pal["name"] = copy_pptx.NAMES[i]
             f = os.path.join(d, f"{key}-{i + 1:02d}.pptx")
             build(f, i, pal, messages[i])
             files.append(f)

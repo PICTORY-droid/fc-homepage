@@ -1,11 +1,20 @@
 """PPT 6항목 — 발표 템플릿·가족 소개·돌잔치·결혼식·보험 점검 양식·카드뉴스. 항목마다 5가지 구성 × 10가지 프레임 = 50종."""
+import os
+
 from pptx_blocks import badge, cards, cover, heading, note, person, photo_grid, rows, timeline, two_col
 from pptx_kit import Deck
 
 
+COVER = {"dir": None, "key": None}  # make_pptx_pack 이 표지 그림 폴더와 항목 키를 넣어 줍니다
+
+
 def new(i, pal, title, size="wide"):
     style = (i // 5 + 3 * (i % 5)) % 10  # (프레임, 구성) 조합이 50종 모두 다르다
-    return Deck(pal, style, i, size, title)
+    img = None
+    if COVER["dir"]:
+        img = os.path.join(COVER["dir"], f"{COVER['key']}-{i + 1:02d}.jpg")
+        assert os.path.exists(img), f"표지 그림이 없습니다: {img}"
+    return Deck(pal, style, i, size, title, cover_img=img)
 
 
 def _rows_text(n, text="내용을 입력하세요"):
@@ -29,7 +38,7 @@ def talk_flavor(i):
 def build_talk(path, i, pal, message):
     fl, toc, points, cmp_, heads = TALK[i % 5]
     d = new(i, pal, f"{fl} 발표 템플릿")
-    cover(d, "발표 제목을 입력하세요", [f"{fl} · 발표자 이름", "2026. 00. 00"], message)
+    cover(d, "발표 제목을 입력하세요", [f"{fl} · 발표자 이름", "2027. 00. 00"], message)
     heading(d, "목차")
     rows(d, [(t, "한 줄로 내용을 적어 주세요") for t in toc], h_each=1.0)
     heading(d, "핵심 메시지")
@@ -41,7 +50,7 @@ def build_talk(path, i, pal, message):
     heading(d, "일정·현황")
     l, t, r, b = d.rect
     d.table(l, t, r - l, [heads] + [[f"{k}", "내용 입력", "", ""] for k in range(1, 6)], row_h=0.7, size=15, first_col=True)
-    cover(d, "감사합니다", ["문의 · 연락처를 입력하세요"], "들어 주셔서 고맙습니다")
+    cover(d, "감사합니다", ["문의 · 연락처를 입력하세요"], "끝까지 들어 주셔서 고맙습니다")
     d.save(path)
 
 
@@ -72,7 +81,7 @@ def family_flavor(i):
 def build_family(path, i, pal, message):
     fl, members, steps, promises = FAMILY[i % 5]
     d = new(i, pal, f"{fl} 가족 소개")
-    cover(d, "우리 가족을 소개합니다", [f"{fl} · 2026. 00. 00"], message)
+    cover(d, "우리 가족을 소개합니다", [f"{fl} · 2027. 00. 00"], message)
     heading(d, "가족 구성원")
     l, t, r, b = d.rect
     n, gap = len(members), 0.25
@@ -85,7 +94,7 @@ def build_family(path, i, pal, message):
     rows(d, [(f"약속 {k + 1}", p_) for k, p_ in enumerate(promises)], h_each=1.1, size=17)
     heading(d, "가족 사진")
     photo_grid(d, 3, 2)
-    cover(d, "우리 가족을 소개했어요", ["고맙습니다 · 가족 이름"], "함께여서 늘 든든합니다")
+    cover(d, "우리 가족 소개를 마칩니다", ["고맙습니다 · 가족 이름"], "읽어 주셔서 고맙습니다")
     d.save(path)
 
 
@@ -107,7 +116,7 @@ def build_birthday(path, i, pal, message):
     fl, ta, tb = BDAY[i % 5]
     f = i % 5
     d = new(i, pal, f"돌잔치 슬라이드({fl})")
-    cover(d, "첫 번째 생일", ["아기 이름 · 2026. 00. 00", "장소를 입력하세요"], message, size=40)
+    cover(d, "첫 번째 생일", ["아기 이름 · 2027. 00. 00", "장소를 입력하세요"], message, size=40)
     heading(d, "우리 아기를 소개합니다")
     l, t, r, b = d.rect
     d.photo(l, t, 4.2, b - t - 0.2, "아기 사진을 넣어 주세요", size=14)
@@ -124,7 +133,7 @@ def build_birthday(path, i, pal, message):
         d.photo(l + (r - l + 0.3) / 2, t, (r - l - 0.3) / 2, b - t, "대표 사진 2", size=14)
     elif f == 3:
         d.box(l, t, r - l, b - t, fill=pal["pale"], line=pal["soft"], name="초대 글 칸")
-        d.text(l + 0.5, t + 0.4, r - l - 1.0, b - t - 0.8, ["소중한 분들을 초대합니다.", "", "저희 아기가 첫 번째 생일을 맞이했습니다.", "함께해 주시면 큰 기쁨이 되겠습니다.", "", "일시 · 장소를 입력하세요"], size=20, align="c", anchor="m", spacing=1.4, name="초대 글")
+        d.text(l + 0.5, t + 0.4, r - l - 1.0, b - t - 0.8, ["저희 아이의 첫 생일에 모십니다.", "", "오셔서 같이 밥 한 끼 해 주세요.", "", "일시 · 장소를 입력하세요"], size=20, align="c", anchor="m", spacing=1.4, name="초대 글")
     else:
         timeline(d, [("임신", "소식을 들은 날", "기억을 적어 주세요"), ("출산", "태어난 날", "기억을 적어 주세요"), ("첫 만남", "품에 안은 순간", "기억을 적어 주세요"), ("집으로", "함께 돌아온 날", "기억을 적어 주세요")])
     heading(d, tb)
@@ -144,7 +153,7 @@ def build_birthday(path, i, pal, message):
         cards(d, [("첫 웃음", "언제였나요?"), ("첫 뒤집기", "언제였나요?"), ("첫 이", "언제였나요?"), ("첫 걸음", "언제였나요?")], h=b - t, size=15)
     heading(d, "사진 모음")
     photo_grid(d, 4, 2)
-    cover(d, "함께해 주셔서 감사합니다", ["아기 이름 · 부모 이름"], "첫 번째 생일을 축하해 주셔서 고맙습니다", size=34)
+    cover(d, "와 주셔서 고맙습니다", ["아기 이름 · 부모 이름"], "아이가 한 살이 되었습니다", size=34)
     d.save(path)
 
 
@@ -166,7 +175,7 @@ def build_wedding(path, i, pal, message):
     fl, ta, tb = WED[i % 5]
     f = i % 5
     d = new(i, pal, f"결혼식 슬라이드({fl})")
-    cover(d, "두 사람이 하나 되는 날", ["신랑 이름 ♥ 신부 이름", "2026. 00. 00 · 예식장 이름"], message, size=36)
+    cover(d, "저희 결혼합니다", ["신랑 이름 ♥ 신부 이름", "2027. 00. 00 · 예식장 이름"], message, size=36)
     heading(d, "신랑 · 신부 소개")
     l, t, r, b = d.rect
     pw = (r - l - 1.0) / 2
@@ -185,7 +194,7 @@ def build_wedding(path, i, pal, message):
         d.table(l + 7.0, t, r - l - 7.0, [["예식장", "입력하세요"], ["주소", "입력하세요"], ["일시", "입력하세요"], ["연락처", "입력하세요"]], col_w=[1.5, r - l - 8.5], row_h=0.9, size=14, head=False, first_col=True)
     else:
         d.box(l, t, r - l, b - t, fill=pal["pale"], line=pal["soft"], name="감사 글 칸")
-        d.text(l + 0.5, t + 0.4, r - l - 1.0, b - t - 0.8, ["바쁘신 중에도 귀한 걸음 해 주셔서 감사합니다.", "", "보내 주신 축복 잊지 않고", "서로 아끼며 예쁘게 살겠습니다.", "", "신랑 · 신부 드림"], size=20, align="c", anchor="m", spacing=1.4, name="감사 글")
+        d.text(l + 0.5, t + 0.4, r - l - 1.0, b - t - 0.8, ["바쁘신 중에 와 주셔서 고맙습니다.", "", "보내 주신 마음 잊지 않고", "잘 살겠습니다.", "", "신랑 · 신부 드림"], size=20, align="c", anchor="m", spacing=1.4, name="감사 글")
     heading(d, tb)
     l, t, r, b = d.rect
     if f == 0:
@@ -200,7 +209,7 @@ def build_wedding(path, i, pal, message):
         cards(d, [("답례품", "입력하세요"), ("방명록", "입력하세요"), ("사진 · 영상", "입력하세요")], h=b - t, size=15)
     heading(d, "웨딩 사진")
     photo_grid(d, 3, 2)
-    cover(d, "함께해 주셔서 감사합니다", ["신랑 이름 ♥ 신부 이름"], "오늘의 축복을 오래도록 간직하겠습니다", size=34)
+    cover(d, "와 주셔서 고맙습니다", ["신랑 이름 ♥ 신부 이름"], "잘 살겠습니다", size=34)
     d.save(path)
 
 
@@ -222,7 +231,7 @@ def review_flavor(i):
 def build_review(path, i, pal, message):
     fl, cur = REVIEW[i % 5]
     d = new(i, pal, f"보험 보장 점검 발표자료({fl})")
-    cover(d, "우리 보험 점검 시간", [f"{fl} · 2026. 00. 00", "가입 내용을 정리하고 함께 확인하는 양식"], message, size=36)
+    cover(d, "우리 보험 점검 시간", [f"{fl} · 2027. 00. 00", "가입 내용을 정리하고 함께 확인하는 양식"], message, size=36)
     heading(d, "점검 대상 현황")
     l, t, r, b = d.rect
     d.table(l, t, r - l, cur, row_h=0.8, size=16, first_col=True)
@@ -248,8 +257,8 @@ NEWS = [
     ("알뜰 생활 팁", [("이번 달 고정지출부터 적어요", "월세·통신비·구독료처럼 매달 나가는 돈부터 한곳에 적어 보면 새는 곳이 보여요."), ("카드 대신 현금 한 주", "일주일만 현금으로 써 보면 충동구매가 눈에 띄게 줄어요."), ("장보기 전 냉장고 사진", "있는 재료를 확인하고 가면 같은 식재료를 또 사는 일이 줄어요."), ("작은 목표 통장 만들기", "여행·선물·비상금처럼 이름을 붙이면 모으는 재미가 커져요."), ("주말 5분 가계부", "영수증을 모아 두었다가 주말에 5분만 적어 보세요.")]),
     ("건강·안심 습관", [("아침 물 한 잔", "일어나자마자 미지근한 물 한 잔으로 하루를 시작해 보세요."), ("하루 십 분 걷기", "점심 식사 후 십 분만 걸어도 몸이 한결 가벼워져요."), ("검진 날짜 적어 두기", "달력에 검진 예정일을 적어 두면 미루지 않게 돼요."), ("잠들기 전 스마트폰 내려놓기", "잠자리에 들기 삼십 분 전에는 화면을 꺼 보세요."), ("가족 건강 이야기 나누기", "일주일에 한 번, 서로의 안부와 컨디션을 물어보세요.")]),
     ("계절 안부", [("겉옷 한 벌 챙기세요", "아침저녁 기온 차가 큰 때에는 얇은 겉옷이 든든해요."), ("계절 인사 한 줄 보내기", "안부를 묻는 짧은 메시지가 하루를 따뜻하게 해요."), ("제철 음식으로 기운 채우기", "지금 가장 맛있는 제철 음식을 가족과 나눠 보세요."), ("창문 열고 환기하기", "하루 두 번 십 분씩 환기하면 집 안 공기가 달라져요."), ("계절 사진 한 장 남기기", "같은 자리에서 계절마다 사진을 찍어 보세요.")]),
-    ("감사·칭찬", [("고맙다는 말 먼저 건네기", "작은 일에도 ‘고마워요’를 먼저 말해 보세요."), ("칭찬 한 줄 적어 주기", "메모지에 칭찬 한 줄을 적어 가족 책상에 붙여 보세요."), ("수고했다는 인사 전하기", "하루를 마치고 돌아온 사람에게 따뜻한 한마디를."), ("감사 일기 세 줄", "오늘 감사했던 일 세 가지를 적어 보세요."), ("손편지 한 통 쓰기", "짧아도 좋아요. 손으로 쓴 마음은 오래 남아요.")]),
-    ("오늘의 한마디", [("천천히 가도 괜찮아요", "오늘 하루도 충분히 잘하고 있어요."), ("쉬어 가도 괜찮아요", "잠깐 멈추는 것도 앞으로 가는 방법이에요."), ("이미 잘하고 있어요", "남과 비교하지 말고 어제의 나와 비교해 보세요."), ("작은 기쁨을 놓치지 마세요", "따뜻한 차 한 잔, 좋은 노래 한 곡이면 충분해요."), ("내일은 내일의 해가 떠요", "오늘은 푹 쉬고 내일 다시 시작해요.")]),
+    ("감사·칭찬", [("고맙다는 말 먼저 건네기", "작은 일에도 ‘고마워요’를 먼저 말해 보세요."), ("칭찬 한 줄 적어 주기", "메모지에 칭찬 한 줄을 적어 가족 책상에 붙여 보세요."), ("퇴근한 사람에게 한마디", "‘오늘도 고생했어’ 한마디면 충분해요."), ("감사 일기 세 줄", "오늘 고마웠던 일 세 가지를 적어 보세요."), ("엽서 한 장 쓰기", "짧아도 좋아요. 우체통에 넣는 순간 설레요.")]),
+    ("오늘의 한마디", [("점심은 거르지 마세요", "바빠도 한 끼는 앉아서 먹어요. 오후가 달라져요."), ("전화 한 통 걸어 보세요", "문자보다 목소리가 먼저 떠오르는 사람이 있다면 지금 걸어 보세요."), ("메모 한 장 남기기", "생각났을 때 적어 두면 다음 주의 내가 고마워해요."), ("퇴근길 한 정거장 걷기", "한 정거장 먼저 내려 걸으면 머리가 정리돼요."), ("오늘은 일찍 자기", "미룬 일은 내일 해도 돼요. 오늘은 불을 일찍 끄세요.")]),
 ]
 
 

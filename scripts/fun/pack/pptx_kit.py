@@ -55,8 +55,9 @@ def _mix(a, b, t):
 class Deck:
     """한 개의 PPT 파일. style: 프레임 번호(0~9), theme_i: 테마 번호(0~49), size: 'wide'(16:9) | 'square'(1:1)"""
 
-    def __init__(self, pal, style, theme_i, size="wide", title="PPT"):
+    def __init__(self, pal, style, theme_i, size="wide", title="PPT", cover_img=None):
         self.pal, self.style, self.ti = pal, style, theme_i
+        self.cover_img = cover_img
         self.prs = Presentation()
         self.W, self.H = (13.333, 7.5) if size == "wide" else (7.5, 7.5)
         self._resize()
@@ -65,7 +66,7 @@ class Deck:
         self.tbox = (0.7, 0.45, self.W - 2.6, 0.95)
         self.sbox = (0.7, 2.0, 6.0, 1.0)
         self.title_color = pal["dark"]
-        self.cal = "c" if style in (3, 6, 8) else "l"  # 표지 글 정렬
+        self.cal = "l" if cover_img else ("c" if style in (3, 6, 8) else "l")  # 표지 글 정렬
         self.cover_size = 36 if size == "wide" else 30
         self.prs.core_properties.author = AUTHOR
         self.prs.core_properties.title = title
@@ -109,8 +110,23 @@ class Deck:
     def slide(self, cover=False):
         s = self.prs.slides.add_slide(self.prs.slide_layouts[5])
         self.s = s
-        self._frame(s, cover)
+        if cover and self.cover_img:
+            self._image_cover(s)
+        else:
+            self._frame(s, cover)
         return s
+
+    def _image_cover(self, s):
+        """그림 한 장(우표·폴라로이드·항공우편·승차권)을 깔고 그 위에 제목 글을 올립니다. 글자는 그대로 고칠 수 있어요."""
+        W, H = self.W, self.H
+        s.shapes.add_picture(self.cover_img, 0, 0, Inches(W), Inches(H)).name = "표지 그림"
+        self.title_color = self.pal["dark"]
+        if W > H:
+            self.tbox = (W * 0.07, H * 0.3, W * 0.5, 1.7)
+            self.sbox = (W * 0.07, H * 0.3 + 1.85, W * 0.5, 1.2)
+        else:
+            self.tbox = (W * 0.1, H * 0.14, W * 0.8, 1.6)
+            self.sbox = (W * 0.1, H * 0.14 + 1.75, W * 0.8, 1.2)
 
     def save(self, path):
         self.prs.save(path)
@@ -415,4 +431,5 @@ class Deck:
         else:
             self.tbox = tb
             mx, my, ms, _ = mo
-            self.motif(mx, my, ms)
+            if not self.cover_img:  # 그림 표지를 쓰는 덱은 안쪽 쪽에 클립아트를 넣지 않습니다
+                self.motif(mx, my, ms)
