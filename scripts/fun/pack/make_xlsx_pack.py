@@ -23,7 +23,9 @@ def run(keys):
         pk.check_unique(messages, key)
         d = pk.out_dir("xlsx", key)
         for old in os.listdir(d):
-            os.remove(os.path.join(d, old))
+            path = os.path.join(d, old)
+            if os.path.isfile(path):  # thumbs/·large/ 미리보기 폴더는 남깁니다
+                os.remove(path)
         entries = []
         for i in range(50):
             pal = pk.palette(i)
