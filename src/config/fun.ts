@@ -10,4 +10,5 @@ export interface FunItem {
 
 export const funItems: FunItem[] = [
   { slug: "stationery", title: "감성 편지지 10종", short: "우체국 감성의 편지지를 무료로 받아 인쇄하거나 폰으로 써 보세요.", href: "/fun/stationery", icon: "✉️" },
+  { slug: "forms", title: "이력서·자기소개서 양식 10종", short: "이력서 5종·자기소개서 5종 빈 양식을 PDF로 무료로 받아 가세요.", href: "/fun/forms", icon: "📄" },
 ];
