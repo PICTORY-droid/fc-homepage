@@ -66,7 +66,7 @@ export function ConsultForm({ initialTopic = "health" }: { initialTopic?: string
       {steps[step].key === "topic" && (
         <fieldset>
           <legend className="sr-only">관심 분야</legend>
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
             {[...categories.map((c) => ({ slug: c.slug as string, title: c.title, short: c.short })),
               { slug: "other", title: "기타 / 잘 모르겠어요", short: "어떤 보장이 필요한지 함께 정리해 드립니다." }].map((c) => (
               <label key={c.slug} className={topicCard}>
