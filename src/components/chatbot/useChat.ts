@@ -37,11 +37,22 @@ export function useChat() {
     }, 450);
   }, [typing]);
 
+  // 한 단계 이전으로 — 마지막 질문과 그 답변을 지웁니다 (인사말은 남김). 답을 기다리는 중이면 그 질문만 지웁니다.
+  const back = useCallback(() => {
+    if (timer.current) clearTimeout(timer.current);
+    setTyping(false);
+    setMessages((m) => {
+      if (m.length <= 1) return m;
+      const drop = m[m.length - 1].role === "bot" ? 2 : 1;
+      return m.slice(0, Math.max(1, m.length - drop));
+    });
+  }, []);
+
   const reset = useCallback(() => {
     if (timer.current) clearTimeout(timer.current);
     setTyping(false);
     setMessages([greeting()]);
   }, []);
 
-  return { messages, typing, send, reset };
+  return { messages, typing, send, back, reset };
 }

@@ -94,7 +94,7 @@ export function ChatWidget() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [text, setText] = useState("");
-  const { messages, typing, send, reset } = useChat();
+  const { messages, typing, send, back, reset } = useChat();
   const listRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const launcherRef = useRef<HTMLButtonElement>(null);
@@ -128,10 +128,11 @@ export function ChatWidget() {
       {open && (
         <section id="chat-panel" role="dialog" aria-label={chatbotCopy.title}
           className="flex h-[min(32rem,calc(100dvh-8rem))] w-[calc(100vw-2rem)] max-w-[22rem] flex-col overflow-hidden rounded-2xl border border-ink/10 bg-paper shadow-2xl">
-          <header className="flex items-center gap-2 bg-brand-soft px-3 py-2">
-            <span className="flex h-8 w-8 items-center justify-center rounded-full bg-paper"><ChatCharacter className="h-6 w-6" /></span>
-            <h2 className="flex-1 text-[15px] font-bold text-ink">{chatbotCopy.shortTitle}</h2>
-            <button type="button" onClick={reset} className="h-9 rounded-lg px-2 text-[13px] text-ink-sub hover:text-ink">처음으로</button>
+          <header className="flex items-center gap-1 bg-brand-soft px-3 py-2">
+            <span className="mr-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-paper"><ChatCharacter className="h-6 w-6" /></span>
+            <h2 className="min-w-0 flex-1 whitespace-nowrap max-[359px]:sr-only text-[15px] font-bold text-ink">{chatbotCopy.shortTitle}</h2>
+            <button type="button" onClick={back} disabled={messages.length <= 1} className="ml-auto h-9 rounded-lg px-1.5 text-[13px] text-ink-sub hover:text-ink disabled:opacity-40 disabled:hover:text-ink-sub">이전으로</button>
+            <button type="button" onClick={reset} disabled={messages.length <= 1} className="h-9 rounded-lg px-1.5 text-[13px] text-ink-sub hover:text-ink disabled:opacity-40 disabled:hover:text-ink-sub">처음으로</button>
             <button type="button" onClick={close} aria-label="안내 도우미 닫기" className="flex h-9 w-9 items-center justify-center rounded-lg text-lg text-ink hover:bg-paper/60">✕</button>
           </header>
           <div ref={listRef} className="relative flex-1 space-y-2.5 overflow-y-auto px-3 py-3" aria-live="polite" aria-relevant="additions">
