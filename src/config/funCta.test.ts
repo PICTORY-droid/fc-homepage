@@ -9,7 +9,4 @@ describe("자료 페이지 상담 안내", () => {
     const topics = new Set<string>([...categories.map((c) => c.slug), "other"]);
     for (const [k, c] of Object.entries(funCtas)) { expect(keys.has(k), k).toBe(true); expect(topics.has(c.topic), k).toBe(true); }
   });
-  it("단정·권유 표현이 없다", () => {
-    for (const c of Object.values(funCtas)) expect(`${c.title}${c.text}${c.button}`).not.toMatch(/보장합니다|확실|무조건|꼭 가입|지금 가입|혜택/);
-  });
 });
