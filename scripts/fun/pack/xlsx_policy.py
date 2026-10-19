@@ -61,7 +61,7 @@ def build(path, i, pal, message):
     for col, w in zip("ABCDEFGHIJKLMN", [5, 12, 14, 24, 11, 12, 12, 10, 12, 12, 8, 14, 30, 20]):
         wt.set_column(f"{col}:{col}", w)
     wt.merge_range("A1:N1", f"{name} 보험 증권 정리표", fm.title(18))
-    wt.merge_range("A2:N2", f"“{message}”", fm.sub())
+    wt.merge_range("A2:N2", (f"“{message}”" if message else ""), fm.sub())
     kp = [("유지 중인 건수", f'=COUNTIF($K${F1}:$K${FN},"유지")', "0"), ("월 환산 보험료 합계", f"=SUM($J${F1}:$J${FN})", "#,##0"),
           ("만기 30일 이내", f'=COUNTIFS($L${F1}:$L${FN},">=0",$L${F1}:$L${FN},"<=30")', "0"), ("만기 90일 이내", f'=COUNTIFS($L${F1}:$L${FN},">=0",$L${F1}:$L${FN},"<=90")', "0")]
     for k, (lab, fo, nf) in enumerate(kp):

@@ -34,7 +34,7 @@ def build(path, i, pal, message):
     wp.hide_gridlines(2); wp.set_tab_color(pal["main"])
     wp.set_column("A:A", 3); wp.set_column("B:B", 22); wp.set_column("C:C", 18); wp.set_column("D:D", 3); wp.set_column("E:E", 24); wp.set_column("F:F", 18)
     wp.merge_range("B1:F1", f"{goal} 저축 플래너", fm.title(18))
-    wp.merge_range("B2:F2", f"“{message}”", fm.sub())
+    wp.merge_range("B2:F2", (f"“{message}”" if message else ""), fm.sub())
     wp.merge_range("B3:C3", "입력 칸", fm.head())
     rows = [("목표 이름", goal, fm.inp(align="center")), ("목표 금액(원)", target, fm.inp(num_format="#,##0")), ("시작일", dt.datetime(2026, 1, 1), fm.inp(num_format="yyyy-mm-dd", align="center")),
             ("월 납입액(원)", monthly, fm.inp(num_format="#,##0")), ("연 이율", rate, fm.inp(num_format="0.0%")), ("기간(개월, 최대 60)", months, fm.inp(num_format='0"개월"', align="center")),

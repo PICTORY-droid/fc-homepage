@@ -46,7 +46,7 @@ def build(path, i, pal, message):
     for col, w in zip("ABCDEFGH", [12, 9, 14, 14, 10, 14, 11, 26]):
         wl.set_column(f"{col}:{col}", w)
     wl.merge_range("A1:H1", f"경조사비 장부 · {focus_name}", fm.title(18))
-    wl.merge_range("A2:H2", f"“{message}”", fm.sub())
+    wl.merge_range("A2:H2", (f"“{message}”" if message else ""), fm.sub())
     for c, h in enumerate(["날짜", "구분", "경조 종류", "이름", "관계", "금액(원)", "답례", "메모"]):
         wl.write(3, c, h, fm.head())
     ex = []

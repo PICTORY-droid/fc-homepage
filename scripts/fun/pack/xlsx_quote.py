@@ -63,7 +63,7 @@ def build(path, i, pal, message):
     wq.set_row(0, 14)
     wq.merge_range("B2:H2", "견   적   서", fm.f(bold=True, font_size=24, font_color=pal["dark"], align="center", bottom=2, bottom_color=pal["main"]))
     wq.set_row(1, 40)
-    wq.merge_range("B3:H3", f"“{message}”", fm.f(italic=True, font_size=10, font_color=pal["main"], align="center"))
+    wq.merge_range("B3:H3", (f"“{message}”" if message else ""), fm.f(italic=True, font_size=10, font_color=pal["main"], align="center"))
     lab = lambda: fm.f(bold=True, font_color="#FFFFFF", bg_color=pal["main"], align="center", border=1, border_color=pal["dark"])
     L = [("수신", "상호"), ("참조", "대표자"), ("견적일", "사업자번호"), ("유효기간", "연락처"), ("건명", "주소")]
     import datetime as dt
@@ -112,7 +112,7 @@ def build(path, i, pal, message):
     nr = r0 + 5
     wq.write(nr - 1, 1, "비고", lab())
     wq.merge_range(nr - 1, 2, nr + 2, 7, NOTES[i % 5], fm.inp(text_wrap=True, valign="top"))
-    wq.merge_range(nr + 4, 1, nr + 4, 7, f"믿고 맡겨 주셔서 감사합니다.  ·  {message}", fm.f(font_size=9, italic=True, font_color=pal["main"], align="center"))
+    wq.merge_range(nr + 4, 1, nr + 4, 7, (f"믿고 맡겨 주셔서 감사합니다.  ·  {message}" if message else "믿고 맡겨 주셔서 감사합니다."), fm.f(font_size=9, italic=True, font_color=pal["main"], align="center"))
     wq.print_area(0, 1, nr + 4, 7)
     wq.set_paper(9); wq.set_portrait(); wq.fit_to_pages(1, 1); wq.center_horizontally(); wq.set_margins(0.5, 0.5, 0.6, 0.6)
     wq.activate()

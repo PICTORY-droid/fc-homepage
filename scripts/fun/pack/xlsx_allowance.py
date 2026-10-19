@@ -37,7 +37,7 @@ def build(path, i, pal, message):
     wl.merge_range("A1:F1", f"{age} 용돈기입장", fm.title(18))
     wl.write("A2", "기준 연도", fm.head()); wl.write("B2", 2026, fm.inp(num_format="0", align="center"))
     wl.write("A3", "시작 잔액(원)", fm.head()); wl.write("B3", 0, fm.inp(num_format="#,##0"))
-    wl.merge_range("C2:F3", f"“{message}”", fm.f(italic=True, font_color=pal["main"], text_wrap=True, align="center"))
+    wl.merge_range("C2:F3", (f"“{message}”" if message else ""), fm.f(italic=True, font_color=pal["main"], text_wrap=True, align="center"))
     wb.define_name("Year", "=" + rng("기입장", "$B$2")); wb.define_name("StartBal", "=" + rng("기입장", "$B$3"))
     wb.define_name("AllowCats", "=" + rng("월요약", "$H$5:$H$" + str(4 + len(cats))))
     for c, h in enumerate(["날짜", "내용", "분류", "들어온 돈", "나간 돈", "잔액"]):

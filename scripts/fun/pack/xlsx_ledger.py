@@ -159,7 +159,7 @@ def build(path, i, pal, message):
     wdash.set_tab_color(pal["accent"]); wdash.hide_gridlines(2)
     wdash.set_column("A:A", 2); wdash.set_column("B:G", 17)
     wdash.merge_range("B1:G1", f"{t['name']} 가계부 대시보드", fm.title(18))
-    wdash.merge_range("B2:G2", f"“{message}”", fm.sub())
+    wdash.merge_range("B2:G2", (f"“{message}”" if message else ""), fm.sub())
     kp = [("올해 수입", f"={q('월별요약')}!N16", "#,##0"), ("올해 지출", f"={q('월별요약')}!N15", "#,##0"), ("수지", f"={q('월별요약')}!N17", "#,##0;[Red]-#,##0"),
           ("저축률", f"={q('월별요약')}!N18", "0%"), ("예상 잔액", f"={q('설정')}!C4+{q('월별요약')}!N17", "#,##0;[Red]-#,##0"),
           ("가장 큰 지출", f"=IF({q('월별요약')}!N15=0,\"-\",INDEX({q('월별요약')}!A5:A14,MATCH(MAX({q('월별요약')}!N5:N14),{q('월별요약')}!N5:N14,0)))", "@")]
