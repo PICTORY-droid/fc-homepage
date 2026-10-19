@@ -29,6 +29,7 @@ export function Footer() {
           <Link href="/products" className="underline">보험 상품</Link>
           <Link href="/find" className="underline">보장 찾기</Link>
         </nav>
+        <p className="text-xs font-semibold text-ink">{site.affiliation ? `${site.affiliation} · ` : ""}{site.notices.identity} 공식 정보는 <a className="underline" href={site.links.officialSite} target="_blank" rel="noopener noreferrer">우체국보험 공식 사이트<span className="sr-only"> (새 창으로 열림)</span></a>에서 확인하세요.</p>
         <p className="text-xs">{site.notices.basis}</p>
       </div>
     </footer>

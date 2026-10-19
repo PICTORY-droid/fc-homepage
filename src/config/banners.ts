@@ -17,7 +17,7 @@ export interface Banner {
 export const banners: Record<BannerKey, Banner> = {
   home: {
     product: "무배당 우체국New건강클리닉보험 2509", nameVerified: true, eMarkChecked: false,
-    headline: "아가를 위해, 부모를 위해\n든든한 노후를 보장하는\n온가족 건강파트너",
+    headline: "아가를 위해, 부모를 위해\n온 가족의 보장을\n차근차근 함께 살펴보세요",
     sub: "나에게 꼭 맞는 보장을 우체국보험과 천천히, 함께 찾아보세요.",
     cta: "전체 상품보기", ctaHref: "/products", detailPath: "/products/P002",
   },
