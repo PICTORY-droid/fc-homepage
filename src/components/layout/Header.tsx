@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { site } from "@/config/site";
-import { categories } from "@/config/categories";
+import { navGroups } from "@/config/nav";
 import { NavMenu } from "./NavMenu";
 
 // 상단 헤더 — 메뉴 열고 닫기는 NavMenu(클라이언트 컴포넌트)가 담당
@@ -22,7 +22,7 @@ export function Header() {
             </span>
           </Link>
           <nav className="flex shrink-0 items-center gap-2" aria-label="주요 메뉴">
-            <NavMenu categories={categories.map((c) => ({ slug: c.slug, title: c.title }))} />
+            <NavMenu groups={navGroups} />
           </nav>
         </div>
       </header>
