@@ -12,7 +12,7 @@ export default async function ConsultPage({ searchParams }: Props) {
   const { topic } = await searchParams;
   const initial = topic && (topic === "other" || getCategory(topic)) ? topic : "health";
   return (
-    <Section title="간편 상담 신청" lead="남겨주신 연락처로 희망하신 시간에 연락드립니다.">
+    <Section title="간편 상담 신청" lead="상담부터 계약까지 카카오톡으로!">
       <div className="mb-6"><KakaoButton className="sm:max-w-xs" /></div>
       <ConsultForm initialTopic={initial} />
     </Section>

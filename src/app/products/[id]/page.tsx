@@ -178,7 +178,7 @@ export default async function ProductPage({ params }: Props) {
         </ol>
       </Section>
 
-      <Section id="consult" title={`${p.displayName} 상담 신청`} lead="남겨주신 연락처로 희망하신 시간에 연락드립니다.">
+      <Section id="consult" title={`${p.displayName} 상담 신청`} lead="상담부터 계약까지 카카오톡으로!">
         <div className="mb-6"><KakaoButton className="sm:max-w-xs" /></div>
         <ConsultForm initialTopic={p.topic} />
       </Section>
