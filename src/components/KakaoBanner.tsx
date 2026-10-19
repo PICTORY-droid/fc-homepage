@@ -15,7 +15,7 @@ export function KakaoBanner() {
         <p className="text-sm font-bold text-brand-deep">비대면 카카오톡 상담</p>
         <h3 className="mt-1 break-keep text-xl font-extrabold leading-snug text-ink sm:text-2xl">상담부터 계약까지 카카오톡으로!</h3>
         <p className="mt-2 break-keep text-base text-ink-sub">집이나 직장 어디서든, 방문 없이 대화로 편하게 진행하세요.</p>
-        <KakaoButton className="mt-4 w-full sm:w-auto" />
+        <KakaoButton className="mt-4 w-full sm:w-96" />
       </div>
     </aside>
   );

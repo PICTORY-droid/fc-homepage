@@ -240,21 +240,21 @@ export function ConsultForm({ initialTopic = "health" }: { initialTopic?: string
 
       </div>
 
-      <div className="mx-auto flex max-w-xl gap-3">
+      <div className="mx-auto flex max-w-xl gap-3 sm:max-w-sm">
         {step > 0 && (
           <button type="button" onClick={back}
-            className="min-h-[52px] rounded-xl border border-ink/30 bg-paper px-6 text-base font-semibold text-ink hover:bg-paper-gray">
+            className="min-h-[48px] rounded-xl border border-ink/30 bg-paper px-6 text-base font-semibold text-ink hover:bg-paper-gray">
             이전
           </button>
         )}
         {isLast ? (
           <button type="submit" disabled={status === "submitting"}
-            className="min-h-[52px] flex-1 rounded-xl bg-brand text-lg font-bold text-ink hover:brightness-95 disabled:opacity-60">
+            className="min-h-[48px] flex-1 rounded-xl bg-brand text-base font-bold text-ink hover:brightness-95 disabled:opacity-60">
             {status === "submitting" ? "접수 중..." : "상담 신청하기"}
           </button>
         ) : (
           <button type="button" onClick={next}
-            className="min-h-[52px] flex-1 rounded-xl bg-brand text-lg font-bold text-ink hover:brightness-95">
+            className="min-h-[48px] flex-1 rounded-xl bg-brand text-base font-bold text-ink hover:brightness-95">
             다음
           </button>
         )}
