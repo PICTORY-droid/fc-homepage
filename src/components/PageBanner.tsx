@@ -19,7 +19,7 @@ export function PageBanner({ bannerKey }: { bannerKey: BannerKey }) {
             <p style={delay("0s")} className="hero-rise inline-block rounded-full bg-paper px-3 py-1 text-xs font-semibold text-brand-deep sm:text-sm md:px-4">
               대표 상품 · {b.product}
             </p>
-            <h1 style={delay(".1s")} className="hero-rise mt-4 break-keep text-[1.75rem] font-extrabold leading-snug text-ink sm:text-5xl md:mt-5 md:leading-tight">{b.headline}</h1>
+            <h1 style={delay(".1s")} className="hero-rise mt-4 whitespace-pre-line break-keep text-[1.75rem] font-extrabold leading-snug text-ink sm:text-5xl md:mt-5 md:leading-tight">{b.headline}</h1>
             <p style={delay(".2s")} className="hero-rise mt-3 max-w-xl break-keep text-base text-ink-sub md:mt-4 md:text-lg">{b.sub}</p>
             <div className="mx-auto mt-2 h-48 w-full max-w-[18rem] md:hidden"><BannerVisual /></div>
           </div>
