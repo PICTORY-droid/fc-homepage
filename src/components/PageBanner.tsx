@@ -2,6 +2,7 @@ import { getBanner, type BannerKey } from "@/config/banners";
 import { site } from "@/config/site";
 import { ButtonLink } from "@/components/ui/Button";
 import { BannerVisual } from "@/components/brand/BannerVisual";
+import { HeroActions } from "@/components/HeroActions";
 
 const delay = (s: string) => ({ "--d": s }) as React.CSSProperties;
 
@@ -23,9 +24,15 @@ export function PageBanner({ bannerKey }: { bannerKey: BannerKey }) {
             <p style={delay(".2s")} className="hero-rise mt-3 max-w-xl break-keep text-base text-ink-sub md:mt-4 md:text-lg">{b.sub}</p>
             <div className="mx-auto mt-2 h-48 w-full max-w-[18rem] md:hidden"><BannerVisual /></div>
           </div>
-          <div style={delay(".3s")} className="hero-rise mt-6 flex flex-col gap-3 sm:flex-row md:mt-8">
-            <ButtonLink href={b.ctaHref ?? `/consult?topic=${topic}`}>{b.cta}</ButtonLink>
-            <ButtonLink href={b.detailPath} variant="outline">상품 상세보기</ButtonLink>
+          <div style={delay(".3s")} className="hero-rise mt-6 md:mt-8">
+            {bannerKey === "home" ? (
+              <HeroActions productsLabel={b.cta} productsHref={b.ctaHref ?? "/products"} />
+            ) : (
+              <div className="flex flex-col gap-3 sm:flex-row">
+                <ButtonLink href={b.ctaHref ?? `/consult?topic=${topic}`}>{b.cta}</ButtonLink>
+                <ButtonLink href={b.detailPath} variant="outline">상품 상세보기</ButtonLink>
+              </div>
+            )}
           </div>
           <ul style={delay(".4s")} className="hero-rise mt-6 flex flex-wrap gap-2" aria-label="상담 원칙">
             {site.trust.map((t) => (
