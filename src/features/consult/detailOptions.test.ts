@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { buildDetailPayload, summarizeDetail } from "./detailOptions";
 import { consultSchema } from "./schema";
 
-const base = { name: "홍길동", phone: "010-1234-5678", age: "40", topic: "other", time: "anytime", consent: true, website: "" };
+const base = { name: "홍길동", phone: "010-1234-5678", age: "40", memo: "보험이 궁금해요", topic: "other", time: "anytime", consent: true, website: "" };
 
 describe("상세 문진", () => {
   it("건강 항목은 동의가 없으면 저장 묶음에서 빠진다", () => {
@@ -18,6 +18,14 @@ describe("상세 문진", () => {
     expect(consultSchema.safeParse({ ...base, surgery: "yes" }).success).toBe(false);
     expect(consultSchema.safeParse({ ...base, surgery: "yes", healthConsent: true }).success).toBe(true);
     expect(consultSchema.safeParse(base).success).toBe(true);
+  });
+  it("스키마: 필수는 이름·연락처·궁금한 점·동의뿐, 연령·시간은 비워도 된다", () => {
+    const min = { name: "홍길동", phone: "010-1234-5678", memo: "궁금해요", topic: "health", consent: true, website: "" };
+    expect(consultSchema.safeParse(min).success).toBe(true);
+    expect(consultSchema.safeParse({ ...min, memo: "" }).success).toBe(false);
+    expect(consultSchema.safeParse({ ...min, age: "abc" }).success).toBe(false);
+    const ok = consultSchema.safeParse({ ...min, age: "" });
+    expect(ok.success && ok.data.age).toBeUndefined();
   });
   it("스키마: 허용되지 않은 값 거부", () => {
     expect(consultSchema.safeParse({ ...base, hasInsurance: "maybe" }).success).toBe(false);

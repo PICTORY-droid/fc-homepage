@@ -30,8 +30,8 @@ export function ConsultForm({ initialTopic = "health" }: { initialTopic?: string
         <div aria-hidden="true" className="fx-pop-in mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-brand text-3xl font-extrabold text-ink">✓</div>
         <h3 ref={titleRef} tabIndex={-1} className="text-center text-2xl font-bold text-ink outline-none">상담 신청이 접수되었어요</h3>
         <ol className="mx-auto mt-6 max-w-md space-y-3 text-ink">
-          <li className="flex gap-3"><span className="font-bold text-brand-deep">1</span>접수된 순서대로 내용을 확인합니다.</li>
-          <li className="flex gap-3"><span className="font-bold text-brand-deep">2</span>희망하신 시간({TIME_LABEL[values.time]})에 {site.contact.fcPhone} 번호로 전화드립니다.</li>
+          <li className="flex gap-3"><span className="font-bold text-brand-deep">1</span>접수된 순서대로 내용을 확인합니다. ({site.contact.responseTime} 안에 연락드립니다)</li>
+          <li className="flex gap-3"><span className="font-bold text-brand-deep">2</span>{site.contact.fcPhone} 번호로 전화드립니다. (희망 시간: {TIME_LABEL[values.time ?? "anytime"]})</li>
           <li className="flex gap-3"><span className="font-bold text-brand-deep">3</span>상담만으로 가입이 진행되지 않으니 편하게 물어보세요.</li>
         </ol>
         <p className="mt-6 text-center text-sm text-ink-sub">
@@ -85,10 +85,33 @@ export function ConsultForm({ initialTopic = "health" }: { initialTopic?: string
         </fieldset>
       )}
 
-      {steps[step].key === "who" && (
+      {steps[step].key === "contact" && (
         <div className="mx-auto max-w-xl space-y-5">
           <div>
-            <label htmlFor="age" className="font-semibold text-ink">가입 대상 연령 (만 나이) <span className="text-alert">*</span></label>
+            <label htmlFor="name" className="font-semibold text-ink">이름</label>
+            <input id="name" autoComplete="name" className={field} value={values.name}
+              onChange={(e) => setField("name", e.target.value)} aria-invalid={Boolean(errors.name)} />
+            <Err k="name" />
+          </div>
+          <div>
+            <label htmlFor="phone" className="font-semibold text-ink">연락처</label>
+            <input id="phone" inputMode="tel" autoComplete="tel" placeholder="010-0000-0000" className={field}
+              value={values.phone} onChange={(e) => setField("phone", e.target.value)} aria-invalid={Boolean(errors.phone)} />
+            <Err k="phone" />
+          </div>
+
+          <div>
+            <label htmlFor="memo" className="font-semibold text-ink">궁금한 점</label>
+            <textarea id="memo" rows={3} maxLength={300} placeholder="예: 가입한 보험이 잘 맞는지 궁금해요" className={`${field} py-3`} value={values.memo}
+              onChange={(e) => setField("memo", e.target.value)} aria-invalid={Boolean(errors.memo)} />
+            <Err k="memo" />
+          </div>
+
+          <details className="rounded-xl border border-ink/15 p-4">
+            <summary className="cursor-pointer font-semibold text-ink">더 알려 주실 내용이 있다면 (선택)</summary>
+            <div className="mt-4 space-y-6">
+          <div>
+            <label htmlFor="age" className="font-semibold text-ink">가입 대상 연령 (만 나이, 선택)</label>
             <input id="age" inputMode="numeric" placeholder="예: 8" className={field} value={values.age}
               onChange={(e) => setField("age", e.target.value)} aria-invalid={Boolean(errors.age)} aria-describedby={`age-help${errors.age ? " age-err" : ""}`} />
             <p id="age-help" className="mt-1 text-sm text-ink-sub">가입하실 분(본인·부모님·자녀)의 나이를 입력해 주세요.</p>
@@ -107,11 +130,7 @@ export function ConsultForm({ initialTopic = "health" }: { initialTopic?: string
             </div>
             <Err k="time" />
           </fieldset>
-        </div>
-      )}
-
-      {steps[step].key === "detail" && (
-        <div className="mx-auto max-w-2xl space-y-6">
+        
           <fieldset>
             <legend className="font-semibold text-ink">현재 가입 중인 보험이 있나요?</legend>
             <div className="mt-2 grid gap-3 sm:grid-cols-3">
@@ -198,30 +217,8 @@ export function ConsultForm({ initialTopic = "health" }: { initialTopic?: string
               </div>
             )}
           </div>
-
-          <div>
-            <label htmlFor="memo" className="font-semibold text-ink">그 밖에 전하고 싶은 말 (선택)</label>
-            <textarea id="memo" rows={3} maxLength={300} className={`${field} py-3`} value={values.memo}
-              onChange={(e) => setField("memo", e.target.value)} />
-            <Err k="memo" />
-          </div>
-        </div>
-      )}
-
-      {steps[step].key === "contact" && (
-        <div className="mx-auto max-w-xl space-y-5">
-          <div>
-            <label htmlFor="name" className="font-semibold text-ink">이름</label>
-            <input id="name" autoComplete="name" className={field} value={values.name}
-              onChange={(e) => setField("name", e.target.value)} aria-invalid={Boolean(errors.name)} />
-            <Err k="name" />
-          </div>
-          <div>
-            <label htmlFor="phone" className="font-semibold text-ink">연락처</label>
-            <input id="phone" inputMode="tel" autoComplete="tel" placeholder="010-0000-0000" className={field}
-              value={values.phone} onChange={(e) => setField("phone", e.target.value)} aria-invalid={Boolean(errors.phone)} />
-            <Err k="phone" />
-          </div>
+            </div>
+          </details>
 
           {/* 스팸 방지용 숨김 입력: 사람에게는 보이지 않음 */}
           <div className="absolute -left-[9999px]" aria-hidden="true">
@@ -252,18 +249,18 @@ export function ConsultForm({ initialTopic = "health" }: { initialTopic?: string
           </button>
         )}
         {isLast ? (
-          <button type="submit" disabled={status === "submitting"}
+          <button key="submit" type="submit" disabled={status === "submitting"}
             className="min-h-[48px] flex-1 rounded-xl bg-brand text-base font-bold text-ink hover:brightness-95 disabled:opacity-60">
             {status === "submitting" ? "접수 중..." : "상담 신청하기"}
           </button>
         ) : (
-          <button type="button" onClick={next}
+          <button key="next" type="button" onClick={next}
             className="min-h-[48px] flex-1 rounded-xl bg-brand text-base font-bold text-ink hover:brightness-95">
             다음
           </button>
         )}
       </div>
-      <p className="text-center text-xs text-ink-sub">{site.notices.promise}</p>
+      <p className="text-center text-xs text-ink-sub">신청하시면 {site.contact.responseTime} 안에 연락드립니다. {site.notices.promise}</p>
     </form>
   );
 }

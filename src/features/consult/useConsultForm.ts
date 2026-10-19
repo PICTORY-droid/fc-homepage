@@ -8,7 +8,7 @@ import { errorsForStep, firstStepWithError, stepsFor } from "./steps";
 
 const normalize = <K extends keyof ConsultInput>(key: K, value: ConsultInput[K]): ConsultInput[K] => {
   if (key === "phone") return formatPhone(String(value)) as ConsultInput[K];
-  if (key === "age") return String(value).replace(/\D/g, "").slice(0, 3) as ConsultInput[K]; // 숫자만, 최대 3자리
+  if (key === "age") return String(value ?? "").replace(/\D/g, "").slice(0, 3) as ConsultInput[K]; // 숫자만, 최대 3자리
   return value;
 };
 
@@ -35,7 +35,7 @@ export function useConsultForm(initialTopic: string) {
   const [step, setStep] = useState(0);
   const [status, setStatus] = useState<FormStatus>("idle");
   const [serverMessage, setServerMessage] = useState("");
-  const steps = useMemo(() => stepsFor(values.topic), [values.topic]);
+  const steps = useMemo(() => stepsFor(), []);
   const last = steps.length - 1;
   const started = useRef(false);
   const markStarted = () => { if (!started.current) { started.current = true; track("consult_start"); } };
