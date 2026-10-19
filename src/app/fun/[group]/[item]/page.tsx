@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
+import { funMetadata, searchTitles } from "@/lib/seo/funMeta";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Section } from "@/components/ui/Section";
 import { SeasonChooser } from "@/components/fun/SeasonChooser";
-import { NewsletterOptIn } from "@/components/fun/NewsletterOptIn";
+import { FunPageExtras } from "@/components/fun/FunPageExtras";
 import { FunCtaBox } from "@/components/fun/FunCtaBox";
 import { getFunCta } from "@/config/funCta";
 import { entriesBySeason, getGroup, getItem, packEntries, packGroups, packSeasons, packThumb, seasonSlug } from "@/config/pack";
@@ -27,7 +28,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const f = await find(params);
   if (!f) return {};
   const n = packEntries(f.item).length;
-  return { title: `${f.item.title} ${n}종`, description: f.item.short, alternates: { canonical: `/fun/${f.group.slug}/${f.item.key}` } };
+  return funMetadata({ title: `${searchTitles[`${f.group.slug}/${f.item.key}`] ?? f.item.title} ${n}종`, description: f.item.short, path: `/fun/${f.group.slug}/${f.item.key}`, ogKey: `${f.group.slug}-${f.item.key}` });
 }
 
 // 항목 페이지 — 봄·여름·가을·겨울 중 하나를 고르는 입구. 실제 양식은 계절별 상세페이지에 있어요.
@@ -52,7 +53,7 @@ export default async function PackItemPage({ params }: Props) {
         <p className="text-sm text-ink-sub">{group.howto}</p>
         <p className="mt-3 text-ink-sub"><Link href={`/fun/${group.slug}`} className="font-semibold text-brand-deep underline">{group.title} 목록으로</Link> · <Link href="/fun" className="font-semibold text-brand-deep underline">즐길거리 전체 보기</Link></p>
       </Section>
-      <Section><NewsletterOptIn from={`/fun/${group.slug}/${item.key}`} /></Section>
+      <Section><FunPageExtras path={`/fun/${group.slug}/${item.key}`} /></Section>
     </>
   );
 }

@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
+import { funMetadata } from "@/lib/seo/funMeta";
 import Link from "next/link";
 import { Section } from "@/components/ui/Section";
 import { funItems } from "@/config/fun";
 
-export const metadata: Metadata = {
-  title: "즐길거리",
+export const metadata: Metadata = funMetadata({
+  title: "무료 양식 모음 — 엑셀·PPT·편지지·명함",
   description: "가계부 엑셀, 이력서·자기소개서 양식, 감성 편지지까지 — 우체국 감성의 무료 자료를 모았어요.",
-  alternates: { canonical: "/fun" },
-};
+  path: "/fun", ogKey: "fun",
+});
 
 // 즐길거리 허브 — 목록은 config/fun.ts 에서만 관리합니다.
 export default function FunPage() {

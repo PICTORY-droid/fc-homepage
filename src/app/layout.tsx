@@ -18,6 +18,11 @@ export const metadata: Metadata = {
   },
   twitter: { card: "summary_large_image", title: site.title, description: site.description, images: ["/og/default.png"] },
   alternates: { canonical: "/" },
+  // 검색 등록용 소유 확인 — Vercel 환경변수 GOOGLE_SITE_VERIFICATION / NAVER_SITE_VERIFICATION 에 각 서비스가 준 값을 넣으면 태그가 붙습니다. (비밀값 아님)
+  verification: {
+    ...(process.env.GOOGLE_SITE_VERIFICATION ? { google: process.env.GOOGLE_SITE_VERIFICATION } : {}),
+    ...(process.env.NAVER_SITE_VERIFICATION ? { other: { "naver-site-verification": process.env.NAVER_SITE_VERIFICATION } } : {}),
+  },
   robots: { index: true, follow: true },
 };
 

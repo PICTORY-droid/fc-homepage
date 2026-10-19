@@ -1,14 +1,15 @@
 import type { Metadata } from "next";
+import { funMetadata } from "@/lib/seo/funMeta";
 import Image from "next/image";
 import Link from "next/link";
 import { Section } from "@/components/ui/Section";
 import { CARD_ASPECT, cardCategories, cardThumb } from "@/config/cards";
 
-export const metadata: Metadata = {
-  title: "명함 템플릿 — 직종별 PPT·SVG 무료 양식",
+export const metadata: Metadata = funMetadata({
+  title: "명함 템플릿 무료 다운로드 — 직종별 PPT·SVG",
   description: "직장인·가게 사장님·프리랜서·선생님·공무원·병원·금융까지 10분류, 서로 다른 앞뒤 명함 디자인을 PPT와 SVG로 내려받아 이름과 연락처만 고쳐 쓰세요.",
-  alternates: { canonical: "/fun/cards" },
-};
+  path: "/fun/cards", ogKey: "fun",
+});
 
 export default function CardsPage() {
   return (

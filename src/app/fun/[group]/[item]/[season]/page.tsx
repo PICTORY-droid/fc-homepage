@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
+import { funMetadata, searchTitles } from "@/lib/seo/funMeta";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Section } from "@/components/ui/Section";
 import { PackCard } from "@/components/fun/PackCard";
-import { NewsletterOptIn } from "@/components/fun/NewsletterOptIn";
+import { FunPageExtras } from "@/components/fun/FunPageExtras";
 import { FunCtaBox } from "@/components/fun/FunCtaBox";
 import { SeasonLinks } from "@/components/fun/SeasonLinks";
 import { getFunCta } from "@/config/funCta";
@@ -29,7 +30,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const f = await find(params);
   if (!f) return {};
   const n = entriesBySeason(f.item, f.season).length;
-  return { title: `${f.season} ${f.item.title} ${n}종`, description: `${f.season}의 감성으로 만든 ${f.item.title} ${n}종. ${f.item.short}`, alternates: { canonical: `/fun/${f.group.slug}/${f.item.key}/${seasonSlug[f.season]}` } };
+  return funMetadata({ title: `${f.season} ${searchTitles[`${f.group.slug}/${f.item.key}`] ?? f.item.title} ${n}종`, description: `${f.season}의 감성으로 만든 ${f.item.title} ${n}종. ${f.item.short}`, path: `/fun/${f.group.slug}/${f.item.key}/${seasonSlug[f.season]}`, ogKey: `${f.group.slug}-${f.item.key}-${seasonSlug[f.season]}` });
 }
 
 // 계절 상세페이지 — 그 계절의 양식만 모아 보여 줍니다. 그림을 누르면 큰 미리보기가 열리고, 상담 안내·클릭 기록도 이 페이지 단위로 쌓여요.
@@ -55,7 +56,7 @@ export default async function PackSeasonPage({ params }: Props) {
         <p className="text-sm text-ink-sub">{group.howto}</p>
         <p className="mt-3 text-ink-sub"><Link href={`/fun/${group.slug}/${item.key}`} className="font-semibold text-brand-deep underline">{item.title} 계절 고르기</Link> · <Link href={`/fun/${group.slug}`} className="font-semibold text-brand-deep underline">{group.title} 목록으로</Link> · <Link href="/fun" className="font-semibold text-brand-deep underline">즐길거리 전체 보기</Link></p>
       </Section>
-      <Section><NewsletterOptIn from={`/fun/${group.slug}/${item.key}/${seasonSlug[season]}`} /></Section>
+      <Section><FunPageExtras path={`/fun/${group.slug}/${item.key}/${seasonSlug[season]}`} /></Section>
     </>
   );
 }

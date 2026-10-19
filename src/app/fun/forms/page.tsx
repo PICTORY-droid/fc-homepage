@@ -1,14 +1,15 @@
 import type { Metadata } from "next";
+import { funMetadata } from "@/lib/seo/funMeta";
 import Image from "next/image";
 import Link from "next/link";
 import { Section } from "@/components/ui/Section";
 import { formFile, jobGroups } from "@/config/forms";
 
-export const metadata: Metadata = {
-  title: "직업별 이력서·자기소개서 Word 양식 200종",
+export const metadata: Metadata = funMetadata({
+  title: "이력서·자기소개서 양식 무료 다운로드 — 직업별 Word 200종",
   description: "직업 10군, 포지션 20개마다 서로 다른 이력서 5종·자기소개서 5종을 무료 Word 파일로 내려받아 바로 편집하세요.",
-  alternates: { canonical: "/fun/forms" },
-};
+  path: "/fun/forms", ogKey: "forms",
+});
 
 export default function FormsPage() {
   return (

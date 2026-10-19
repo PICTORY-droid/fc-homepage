@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { funMetadata } from "@/lib/seo/funMeta";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Section } from "@/components/ui/Section";
@@ -14,7 +15,7 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const g = getGroup((await params).group);
-  return g ? { title: g.title, description: g.short, alternates: { canonical: `/fun/${g.slug}` } } : {};
+  return g ? funMetadata({ title: `${g.title} 무료 다운로드`, description: g.short, path: `/fun/${g.slug}`, ogKey: "fun" }) : {};
 }
 
 // 자료 꾸러미 묶음 페이지 — 항목(가계부·견적서 …) 목록. 항목마다 50종 페이지로 이어집니다.
