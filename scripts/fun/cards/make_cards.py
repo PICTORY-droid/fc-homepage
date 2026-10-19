@@ -11,8 +11,9 @@ sys.path.insert(0, HERE)
 sys.path.insert(0, os.path.join(HERE, "..", "pack"))
 
 from cards_data import CATS, TAGS  # noqa: E402
-from layouts import BACKS, FRONTS, NB, NF, NFLAV, Ctx, contrast  # noqa: E402
-from pack_kit import ROOT, THEMES, palette, safe_name  # noqa: E402
+from modern import BACKS, FRONTS, NB, NF, NFLAV, PAL, Ctx  # noqa: E402
+from pack_kit import ROOT, safe_name  # noqa: E402
+from layouts import mix  # noqa: E402
 from scene import add_to_slide, blank_slide, new_pptx, to_svg  # noqa: E402
 
 OUT = os.path.join(ROOT, "public", "fun", "cards")
@@ -83,14 +84,13 @@ def build(plan):
     for it in plan:
         cat, j = it["cat"], it["j"]
         d = card_data(cat, j)
-        pal = palette(it["p"])
-        nfont = "serif" if (j + it["f"]) % 3 == 0 else "sans"
-        cf = Ctx(pal, it["v"], d, nfont)
-        cb = Ctx(palette(it["pb"]), it["vb"], d, nfont)
+        nfont = "sans"
+        cf = Ctx(it["p"], it["v"], d)
+        cb = Ctx(it["pb"], it["vb"], d)
         fe, be = FRONTS[it["f"]](cf), BACKS[it["b"]](cb)
         title = f"{d['name']} {d['title']} 명함"
         fsvg, bsvg = to_svg(fe, cf.bg, title + " 앞면"), to_svg(be, cb.bg, title + " 뒷면")
-        base = f"명함_{CAT_KO[cat]}_{j + 1:02d}_{safe_name(THEMES[it['p']][0])}"  # 내려받을 때 보이는 한글 이름
+        base = f"명함_{CAT_KO[cat]}_{j + 1:02d}_{safe_name(PAL[it['p']][0])}"  # 내려받을 때 보이는 한글 이름
         fid = f"{cat}-{j + 1:02d}"  # 실제 파일 이름(영문·숫자)
         assert base not in names_seen, base
         names_seen.add(base)
@@ -119,8 +119,8 @@ def build(plan):
                 f'<rect x="20" y="373" width="600" height="333.33" fill="none" stroke="#D5CFC4"/></svg>')
         with open(os.path.join(PREVIEW_DIR, fid + ".svg"), "w", encoding="utf-8") as f:
             f.write(comp)
-        manifest[cat].append(dict(no=j + 1, name=base, title=d["title"], tag=d["tagline"], main=pal["main"], soft=pal["soft"],
-                                  theme=THEMES[it["p"]][0]))
+        manifest[cat].append(dict(no=j + 1, name=base, title=d["title"], tag=d["tagline"], main=PAL[it["p"]][1], soft=mix(PAL[it["p"]][1], "#FFFFFF", .88),
+                                  theme=PAL[it["p"]][0]))
     assert len(names_seen) == 500 and len(hashes) == 500 and len(sigs) == 500
     meta = {cat: dict(label=CATS[cat]["name"], items=manifest[cat]) for cat in CAT_ORDER}
     with open(MANIFEST, "w", encoding="utf-8") as f:
