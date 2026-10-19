@@ -1,4 +1,4 @@
-// 이력서·자기소개서 빈 양식 10종 생성 — 결과: public/fun/forms/<id>.pdf, thumbs/<id>.jpg
+// 이력서·자기소개서 빈 양식 10종 생성 — 결과: public/fun/forms/thumbs/<id>.jpg (미리보기 그림만 — 내려받는 파일은 scripts/fun/docx 의 Word 파일)
 // 실행: PW_PATH=<playwright 폴더> CHROMIUM_PATH=<크롬 경로> node scripts/fun/make-forms.mjs
 import { mkdirSync, writeFileSync } from "node:fs";
 import { createRequire } from "node:module";
@@ -20,7 +20,6 @@ for (const f of forms) {
   // 점검: 각 쪽의 내용이 아래쪽 안내 줄과 겹치거나(>1073) 너무 비어 있으면(<900) 알려줍니다.
   const fill = await p.evaluate(() => [...document.querySelectorAll(".page")].map((pg) => { const top = pg.getBoundingClientRect().top; let b = 0; pg.querySelectorAll(":scope > *:not(.foot)").forEach((c) => { b = Math.max(b, c.getBoundingClientRect().bottom - top); }); return Math.round(b); }));
   if (!f.id.includes("profile") && fill.some((b) => b > 1073 || b < 900)) console.warn("  ⚠ 내용 끝 위치", f.id, fill.join(", "));
-  writeFileSync(join(out, `${f.id}.pdf`), await p.pdf({ width: `${W}px`, height: `${H}px`, printBackground: true }));
   await tp.setContent(doc(f.html()), { waitUntil: "load" });
   writeFileSync(join(out, `thumbs/${f.id}.jpg`), await tp.screenshot({ type: "jpeg", quality: 82, clip: { x: 0, y: 0, width: W, height: H } }));
   console.log("✔", f.id, f.name);

@@ -1,5 +1,5 @@
-// 이력서·자기소개서 빈 양식 10종 — 인쇄해서 쓰거나 PDF 앱에서 입력할 수 있는 A4 양식입니다.
-// scripts/fun/make-forms.mjs 가 이 파일을 불러 PDF·미리보기를 만듭니다. (우체국 공식 로고는 쓰지 않습니다)
+// 이력서·자기소개서 빈 양식 10종 — Word 양식(scripts/fun/docx)과 같은 구성의 A4 미리보기 그림입니다.
+// scripts/fun/make-forms.mjs 가 이 파일을 불러 미리보기 그림을 만듭니다. (우체국 공식 로고는 쓰지 않습니다)
 export const W = 794, H = 1123;
 const O = "#2F5D9E", D = "#1F3A5F", LINE = "#b9c4d3", SOFT = "#EEF3FA";
 

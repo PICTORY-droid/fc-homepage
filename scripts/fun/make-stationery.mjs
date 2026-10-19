@@ -1,4 +1,4 @@
-// 감성 편지지 10종 생성 — 결과: public/fun/stationery/<번호-이름>.png / .pdf, thumbs/<번호-이름>.jpg (미리보기)
+// 감성 편지지 10종 생성 — 결과: public/fun/stationery/<번호-이름>.png, thumbs/<번호-이름>.jpg (미리보기)
 // 실행: PW_PATH=<playwright 폴더> CHROMIUM_PATH=<크롬 경로> node scripts/fun/make-stationery.mjs
 import { mkdirSync, writeFileSync } from "node:fs";
 import { createRequire } from "node:module";
@@ -24,7 +24,6 @@ const tp = await thumbCtx.newPage();
 for (const d of designs) {
   await p.setContent(page(d.html()), { waitUntil: "load" });
   writeFileSync(join(out, `${d.id}.png`), await p.screenshot({ type: "png" }));
-  writeFileSync(join(out, `${d.id}.pdf`), await p.pdf({ width: `${W}px`, height: `${H}px`, printBackground: true, pageRanges: "1" }));
   await tp.setContent(page(d.html()), { waitUntil: "load" });
   writeFileSync(join(out, `thumbs/${d.id}.jpg`), await tp.screenshot({ type: "jpeg", quality: 80 }));
   console.log("✔", d.id, d.name);

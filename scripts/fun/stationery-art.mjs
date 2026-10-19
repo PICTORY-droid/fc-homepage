@@ -1,5 +1,5 @@
 // 감성 편지지 10종의 그림·배치 — 모두 직접 그린 오리지널 SVG/CSS 입니다. (우체국 공식 로고·캐릭터는 쓰지 않습니다)
-// 쪽 크기: A4 = 794 x 1123 CSS px. scripts/fun/make-stationery.mjs 가 이 파일을 불러 PNG·PDF 를 만듭니다.
+// 쪽 크기: A4 = 794 x 1123 CSS px. scripts/fun/make-stationery.mjs 가 이 파일을 불러 PNG 를 만듭니다.
 export const W = 794, H = 1123;
 const BRAND = "#FF883A", DEEP = "#C4540A", RED = "#E8591A";
 
