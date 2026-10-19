@@ -49,14 +49,29 @@ def thumbs(files, out_dir, width):
     shutil.rmtree(tmp, ignore_errors=True)
 
 
+def fresh_palette(i, pal):
+    """봄(0~12)은 싱그럽고 향기롭게, 여름(13~24)은 청량하고 맑게 — 색을 더 밝고 또렷하게 바꿉니다. 가을·겨울은 그대로."""
+    import colorsys
+    name, h, s, l = pk.THEMES[i]
+    hx = lambda hh, ss, ll: pk._hex(hh, ss, ll)
+    if i < 13:  # 봄: 꽃잎 색 + 새잎 초록
+        s2 = min(0.72, s + 0.14)
+        pal.update(main=hx(h, s2, 0.55), dark=hx(h, min(0.6, s2), 0.28), soft=hx(h, 0.7, 0.9), pale=hx(h, 0.6, 0.97), accent=hx(128, 0.5, 0.40))
+    elif i < 25:  # 여름: 하늘·바다빛으로 한 톤 끌어 오고 맑게
+        diff = (195 - h + 540) % 360 - 180  # 하늘·바다 빛(195°) 쪽으로 가장 가까운 방향
+        hh = h if 160 <= h <= 260 else (h + diff * 0.6) % 360
+        pal.update(main=hx(hh, 0.68, 0.46), dark=hx(hh, 0.7, 0.22), soft=hx(hh, 0.8, 0.9), pale=hx(hh, 0.7, 0.96), accent=hx(190, 0.7, 0.42))
+    return pal
+
+
 def make_covers(key, offset):
     """표지 그림 50장을 만들어 임시 폴더에 둡니다(Playwright + Chromium 필요: PW_PATH, CHROMIUM_PATH)."""
     out = tempfile.mkdtemp(prefix=f"cover_{key}_")
     specs = []
     for i in range(50):
-        p = pk.palette(i)
+        p = fresh_palette(i, pk.palette(i))
         specs.append({"id": f"{key}-{i + 1:02d}", "wide": key != "news", "style": (i + offset) % 4, "label": LABEL[key], "mark": MARKS[(i + offset) % len(MARKS)],
-                      "main": p["main"], "soft": p["soft"], "dark": p["dark"], "pale": p["pale"], "accent": p["accent"], "hero": HERO[i]})
+                      "main": p["main"], "soft": p["soft"], "dark": p["dark"], "pale": p["pale"], "accent": p["accent"], "hero": HERO[i], "season": pk.season_of(i)})
     spec_path = os.path.join(out, "spec.json")
     with open(spec_path, "w", encoding="utf-8") as f:
         json.dump(specs, f, ensure_ascii=False)
@@ -75,7 +90,7 @@ def run(keys):
         d = pk.out_dir("pptx", key)
         files, entries = [], []
         for i in range(50):
-            pal = pk.palette(i)
+            pal = fresh_palette(i, pk.palette(i))
             pal["name"] = copy_pptx.NAMES[i]
             f = os.path.join(d, f"{key}-{i + 1:02d}.pptx")
             build(f, i, pal, messages[i])

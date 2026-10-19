@@ -62,18 +62,44 @@ const bgSvg = (w, h, p, id) => `<defs>
   <filter id="gr${id}" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" seed="${3 + (id % 9)}"/><feColorMatrix type="matrix" values="0 0 0 0 .42  0 0 0 0 .32  0 0 0 0 .2  0 0 0 .5 -.1"/></filter>
   <radialGradient id="vg${id}" cx="50%" cy="48%" r="78%"><stop offset=".6" stop-color="#6b4a2b" stop-opacity="0"/><stop offset="1" stop-color="#6b4a2b" stop-opacity=".18"/></radialGradient></defs>`;
 
+const sr = (seed) => { let v = seed * 9301 + 49297; return () => ((v = (v * 9301 + 49297) % 233280) / 233280); };
+
+/** 봄 — 싱그러운 연두빛 공기 + 흩날리는 꽃잎·새잎 + 햇살 */
+const springBg = (w, h, p, i) => {
+  const r = sr(i + 7);
+  const petals = Array.from({ length: 26 }, () => { const x = r() * w, y = r() * h, s = 0.6 + r() * 1.1, rot = r() * 360; return `<g transform="translate(${x.toFixed(0)} ${y.toFixed(0)}) rotate(${rot.toFixed(0)}) scale(${s.toFixed(2)})" opacity="${(0.35 + r() * 0.45).toFixed(2)}"><ellipse rx="9" ry="14" fill="${r() > 0.35 ? p.b : p.a}"/><path d="M0 -14 q3 14 0 28" stroke="#fff" stroke-width="1.2" fill="none" opacity=".6"/></g>`; }).join("");
+  const leaves = Array.from({ length: 12 }, () => { const x = r() * w, y = r() * h, s = 0.7 + r() * 1.0, rot = r() * 360; return `<g transform="translate(${x.toFixed(0)} ${y.toFixed(0)}) rotate(${rot.toFixed(0)}) scale(${s.toFixed(2)})" opacity="${(0.35 + r() * 0.35).toFixed(2)}"><path d="M0 -16 C12 -8 12 8 0 16 C-12 8 -12 -8 0 -16Z" fill="#8CC97B"/><path d="M0 -14 V14" stroke="#fff" stroke-width="1.3" opacity=".7"/></g>`; }).join("");
+  return `<defs><linearGradient id="sg${i}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F3FBE6"/><stop offset=".55" stop-color="#FFFFFF"/><stop offset="1" stop-color="${mix(p.b, "#FFFFFF", 0.65)}"/></linearGradient>
+    <radialGradient id="sun${i}" cx=".12" cy=".08" r=".75"><stop offset="0" stop-color="#FFF6C2" stop-opacity=".95"/><stop offset=".5" stop-color="#FFF6C2" stop-opacity=".25"/><stop offset="1" stop-color="#FFF6C2" stop-opacity="0"/></radialGradient></defs>
+    ${rect(0, 0, w, h, `url(#sg${i})`)}${rect(0, 0, w, h, `url(#sun${i})`)}${leaves}${petals}`;
+};
+
+/** 여름 — 맑고 시원한 하늘빛 + 물결·물방울·빛줄기 */
+const summerBg = (w, h, p, i) => {
+  const r = sr(i + 11);
+  const bubbles = Array.from({ length: 18 }, () => { const x = r() * w, y = r() * h * 0.85, rr = 6 + r() * 26; return `<circle cx="${x.toFixed(0)}" cy="${y.toFixed(0)}" r="${rr.toFixed(0)}" fill="#fff" fill-opacity=".35" stroke="#fff" stroke-opacity=".8" stroke-width="2"/><circle cx="${(x - rr * 0.3).toFixed(0)}" cy="${(y - rr * 0.3).toFixed(0)}" r="${(rr * 0.22).toFixed(1)}" fill="#fff" opacity=".9"/>`; }).join("");
+  const wv = (y, c, o, amp) => `<path d="M0 ${y} ${Array.from({ length: 9 }, (_, k) => `Q${(k * 2 + 1) * w / 16} ${y + (k % 2 ? amp : -amp)} ${(k + 1) * w / 8} ${y}`).join(" ")} V${h} H0Z" fill="${c}" opacity="${o}"/>`;
+  return `<defs><linearGradient id="sg${i}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E4F6FB"/><stop offset=".6" stop-color="#FFFFFF"/><stop offset="1" stop-color="#D6F0F5"/></linearGradient>
+    <linearGradient id="ray${i}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".85"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient></defs>
+    ${rect(0, 0, w, h, `url(#sg${i})`)}
+    <g opacity=".7"><path d="M${w * 0.05} 0 L${w * 0.26} 0 L${w * 0.5} ${h} L${w * 0.2} ${h}Z" fill="url(#ray${i})"/><path d="M${w * 0.3} 0 L${w * 0.4} 0 L${w * 0.62} ${h} L${w * 0.5} ${h}Z" fill="url(#ray${i})"/></g>
+    ${bubbles}${wv(h * 0.86, "#9ED8E6", 0.45, 22)}${wv(h * 0.9, "#6CC3D8", 0.4, 18)}${wv(h * 0.95, "#3FAFCB", 0.35, 14)}`;
+};
+
 export const cover = (d, i) => {
   const w = d.wide ? 1600 : 1000, h = d.wide ? 900 : 1000;
-  const p = pal({ a: mix(d.main, "#a8894f", 0.16), b: d.soft, c: mix(d.accent, "#c9a05a", 0.25), d: d.dark, bg: d.pale });
+  const fresh = d.season === "봄" || d.season === "여름";
+  const p = fresh ? pal({ a: d.main, b: d.soft, c: d.accent, d: d.dark, bg: d.pale }) : pal({ a: mix(d.main, "#a8894f", 0.16), b: d.soft, c: mix(d.accent, "#c9a05a", 0.25), d: d.dark, bg: d.pale });
+  if (fresh) { p.paper = "#FFFFFF"; p.ink = mix(d.dark, "#1f2a2a", 0.4); }
   const hero = pickHero(d.hero);
   const art = ART[d.style](hero, p, d);
   const place = d.wide ? `translate(${w - BOX.w * 1.18 - 70} ${(h - BOX.h * 1.18) / 2}) scale(1.18)` : `translate(${(w - BOX.w * 0.66) / 2 - 30} ${h - BOX.h * 0.66 - 50}) scale(.66)`;
   const label = d.wide
-    ? txt(112, 100, d.label, { size: 22, weight: 700, fill: p.d, spacing: 8, opacity: 0.7, serif: false }) + rect(112, 120, 64, 3, p.a) + txt(112, h - 70, "우체국보험 상담 안내  ·  2027", { size: 17, fill: p.d, spacing: 3, opacity: 0.5, serif: false })
+    ? txt(112, 100, d.label, { size: 22, weight: 700, fill: p.d, spacing: 8, opacity: 0.7, serif: false }) + rect(112, 120, 64, 3, p.a) + txt(112, d.season === "여름" ? h - 150 : h - 70, "우체국보험 상담 안내  ·  2027", { size: 17, fill: p.d, spacing: 3, opacity: 0.5, serif: false })
     : txt(100, 90, d.label, { size: 22, weight: 700, fill: p.d, spacing: 8, opacity: 0.7, serif: false }) + rect(100, 110, 64, 3, p.a);
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}">${bgSvg(w, h, p, i)}
-    ${rect(0, 0, w, h, p.paper)}${rect(0, 0, w, h, p.b, 0, 'opacity=".22"')}${label}<g transform="${place}">${art}</g>
-    <rect width="${w}" height="${h}" filter="url(#gr${i})" opacity=".5"/><rect width="${w}" height="${h}" fill="url(#vg${i})"/></svg>`;
+    ${fresh ? (d.season === "봄" ? springBg(w, h, p, i) : summerBg(w, h, p, i)) : `${rect(0, 0, w, h, p.paper)}${rect(0, 0, w, h, p.b, 0, 'opacity=".22"')}`}${label}<g transform="${place}">${art}</g>
+    ${fresh ? "" : `<rect width="${w}" height="${h}" filter="url(#gr${i})" opacity=".5"/><rect width="${w}" height="${h}" fill="url(#vg${i})"/>`}</svg>`;
 };
 
 if (process.argv[1] && process.argv[1].endsWith("covers.mjs")) {
