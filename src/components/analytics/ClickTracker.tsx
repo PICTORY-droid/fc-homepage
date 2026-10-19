@@ -11,7 +11,8 @@ export function ClickTracker() {
       const a = (e.target as Element | null)?.closest?.("a");
       if (!a) return;
       const href = a.getAttribute("href") ?? "";
-      if (a.hasAttribute("download")) {
+      if (a.dataset.track === "cta") track("cta_click", a.dataset.label);
+      else if (a.hasAttribute("download")) {
         const name = a.getAttribute("download");
         track("download", name || decodeURIComponent(href.split("/").pop() ?? ""));
       } else if (href.startsWith("tel:")) track("phone_click");
