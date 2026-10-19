@@ -28,8 +28,8 @@ export const site = {
     fcPhone: "010-2192-1599", // 사용자 제공 번호 (본인 상담 번호 확인 필요)
     officialCenterPhone: "1599-0100", // 우체국보험 공식 고객센터 (공식 사이트 화면으로 확인)
     hours: "평일 09:00~18:00 (점심 12:00~13:00)",
-    /** 카카오톡 오픈프로필/채널 주소 — 입력하면 모바일 하단 버튼에 '카톡 상담'이 나타납니다. 비워두면 표시 안 함 */
-    kakaoUrl: "",
+    /** 카카오톡 오픈프로필/채널 주소 — 입력하면 홈 첫 화면에 '카톡 상담' 버튼이 나타납니다. 비워두면 표시 안 함 */
+    kakaoUrl: "https://qr.kakao.com/talk/VYw0MTJ1r5dyrzFUjCyEfsbtefg-",
   },
   links: {
     officialSite: "https://www.epostlife.go.kr",
