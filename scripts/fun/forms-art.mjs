@@ -1,29 +1,29 @@
 // 이력서·자기소개서 빈 양식 10종 — 인쇄해서 쓰거나 PDF 앱에서 입력할 수 있는 A4 양식입니다.
 // scripts/fun/make-forms.mjs 가 이 파일을 불러 PDF·미리보기를 만듭니다. (우체국 공식 로고는 쓰지 않습니다)
 export const W = 794, H = 1123;
-const O = "#FF883A", D = "#C4540A", LINE = "#c9b9a6", SOFT = "#FFF1E4";
+const O = "#2F5D9E", D = "#1F3A5F", LINE = "#b9c4d3", SOFT = "#EEF3FA";
 
 export const css = `
 @page{size:${W}px ${H}px;margin:0}*{box-sizing:border-box;margin:0}
-html,body{font-family:"Pretendard","Noto Sans CJK KR","Malgun Gothic",sans-serif;color:#2b2118;font-size:13px}
+html,body{font-family:"Pretendard","Noto Sans CJK KR","Malgun Gothic",sans-serif;color:#1d2733;font-size:13px}
 .page{position:relative;width:${W}px;height:${H}px;padding:46px 52px 40px;overflow:hidden;page-break-after:always;background:#fff}
 .page:last-child{page-break-after:auto}
 h1{font-size:34px;font-weight:900;letter-spacing:14px;text-align:center;color:${D}}
-h1 small{display:block;margin-top:6px;font-size:12px;letter-spacing:2px;color:#a08868;font-weight:500}
+h1 small{display:block;margin-top:6px;font-size:12px;letter-spacing:2px;color:#7a8798;font-weight:500}
 .sec{margin:15px 0 6px;font-weight:900;color:${D};font-size:15px;border-left:5px solid ${O};padding-left:8px}
 table{width:100%;border-collapse:collapse;table-layout:fixed}
 td,th{border:1px solid ${LINE};padding:5px 8px;height:33px;vertical-align:middle;font-size:12.5px}
-th{background:${SOFT};color:#8a4310;font-weight:700;text-align:center}
-.tall td{height:66px}.photo{border:1.5px dashed ${LINE};width:113px;height:151px;display:flex;align-items:center;justify-content:center;color:#b3a38e;font-size:12px;text-align:center;line-height:1.5}
+th{background:${SOFT};color:#1F3A5F;font-weight:700;text-align:center}
+.tall td{height:66px}.photo{border:1.5px dashed ${LINE};width:113px;height:151px;display:flex;align-items:center;justify-content:center;color:#9aa6b5;font-size:12px;text-align:center;line-height:1.5}
 .top{display:flex;gap:16px;margin-top:14px}.top table{flex:1}
 .box{border:1px solid ${LINE};border-radius:6px;position:relative}
-.ruled{background:repeating-linear-gradient(to bottom,transparent 0 31px,#e7dccd 31px 32px);}
-.q{margin:14px 0 6px;font-weight:900;font-size:14px;color:#2b2118}.q span{color:${D};margin-right:6px}.q em{font-style:normal;font-weight:500;color:#a08868;font-size:11.5px;margin-left:6px}
-.foot{position:absolute;left:52px;right:52px;bottom:22px;text-align:center;font-size:11px;color:#b3a38e}
+.ruled{background:repeating-linear-gradient(to bottom,transparent 0 31px,#dde4ee 31px 32px);}
+.q{margin:14px 0 6px;font-weight:900;font-size:14px;color:#1d2733}.q span{color:${D};margin-right:6px}.q em{font-style:normal;font-weight:500;color:#7a8798;font-size:11.5px;margin-left:6px}
+.foot{position:absolute;left:52px;right:52px;bottom:22px;text-align:center;font-size:11px;color:#9aa6b5}
 .sign{margin-top:14px;text-align:center;font-size:13px;line-height:2}
-.cb{display:inline-block;width:12px;height:12px;border:1.3px solid #8a7a68;margin:0 4px -2px 10px}
+.cb{display:inline-block;width:12px;height:12px;border:1.3px solid #6b7889;margin:0 4px -2px 10px}
 .hd{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:3px solid ${O};padding-bottom:8px;margin-bottom:6px}
-.hd b{font-size:26px;font-weight:900;color:${D};letter-spacing:6px}.hd span{font-size:12px;color:#a08868}
+.hd b{font-size:26px;font-weight:900;color:${D};letter-spacing:6px}.hd span{font-size:12px;color:#7a8798}
 `;
 
 const rows = (n, cols, extra = "") => Array.from({ length: n }, () => `<tr ${extra}>${cols.map(() => "<td></td>").join("")}</tr>`).join("");
@@ -103,7 +103,7 @@ export const forms = [
       ${q(4, "나의 강점과 보완하고 싶은 점", "(500자 이내)")}${ruledBox(200)}${q(5, "지원 이유 · 앞으로의 계획", "(500자 이내)")}${ruledBox(200)}${sign}`) },
   { id: "cover-05-free", kind: "자기소개서", name: "자유 서술형", desc: "줄 노트 형식으로 자유롭게 쓰는 2쪽 자기소개서", pages: 2,
     html: () => pageOf(`<div class="hd"><b>자기소개서</b><span>제목 : ______________________________</span></div>
-      <div style="margin-top:8px;font-size:12px;color:#a08868">성명 : ____________ &nbsp; 지원 분야 : ____________ &nbsp; 작성일 : 20__ . __ . __</div>
+      <div style="margin-top:8px;font-size:12px;color:#7a8798">성명 : ____________ &nbsp; 지원 분야 : ____________ &nbsp; 작성일 : 20__ . __ . __</div>
       <div class="box ruled" style="margin-top:12px;height:880px"></div>`) +
       pageOf(`<div class="box ruled" style="margin-top:6px;height:940px"></div><div class="sign" style="margin-top:12px">작성자 : ______________ (서명)</div>`) },
 ];
