@@ -21,3 +21,8 @@
 ## Supabase 일시중지 방지 (자동)
 - `vercel.json` 의 cron 이 매주 월요일 `/api/cron/keepalive` 를 호출합니다.
 - Vercel 환경변수에 `CRON_SECRET`(16자 이상 무작위)을 등록해야 동작합니다.
+
+## 상담 신청자 보관 기간(3년) 만료 알림
+- 상담 신청일로부터 36개월(`site.privacy.retentionMonths`)이 되기 30일 전부터, 매주 월요일 `/api/cron/retention` 이 담당 FC 이메일로 대상자의 이름·연락처 끝 4자리·접수일·만료일을 보냅니다. 한 번 알린 건은 다시 보내지 않습니다.
+- 준비: ① Supabase 에서 `db/leads_retention.sql` 실행 ② Vercel 환경변수 `RESEND_API_KEY`, `RETENTION_MAIL_TO`(받을 이메일), `CRON_SECRET` 등록. (`MAIL_FROM` 은 선택)
+- 메일을 받으면 Supabase `leads` 표(와 구글 시트)에서 해당 줄을 직접 삭제합니다.

@@ -46,6 +46,17 @@ export function getAdminEnv(): { password: string; secret: string } | null {
   return parsed.success ? { password: parsed.data.ADMIN_PASSWORD, secret: parsed.data.ADMIN_SESSION_SECRET } : null;
 }
 
+// 메일 발송(Resend) 설정 — 보관 기간 만료 알림용. 키가 없으면 알림 메일은 보내지 않습니다. (값은 로그에 남기지 않음)
+const mailSchema = z.object({
+  RESEND_API_KEY: z.string().min(10),
+  RETENTION_MAIL_TO: z.string().email(),
+  MAIL_FROM: z.string().min(3).optional(),
+});
+export function getMailEnv(): { key: string; to: string; from: string } | null {
+  const p = mailSchema.safeParse(process.env);
+  return p.success ? { key: p.data.RESEND_API_KEY, to: p.data.RETENTION_MAIL_TO, from: p.data.MAIL_FROM ?? "우체국보험 FC 홈페이지 <onboarding@resend.dev>" } : null;
+}
+
 // 정기 호출(Vercel Cron) 인증용 비밀 값
 export const getCronSecret = (): string | null => {
   const v = process.env.CRON_SECRET;

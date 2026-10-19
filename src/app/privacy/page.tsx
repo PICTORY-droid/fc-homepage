@@ -19,7 +19,7 @@ export default function PrivacyPage() {
         <div>
           <dt className="font-bold">3. 보유 및 이용 기간</dt>
           <dd className="text-ink-sub">
-            {p.retentionMonths ? `상담 종료 후 ${p.retentionMonths}개월간 보관하며, 이후 지체 없이 파기합니다.` : "상담 목적이 달성되면 지체 없이 파기합니다. (구체적 기간은 확정 후 안내)"}
+            {p.retentionMonths ? `상담 신청일로부터 ${p.retentionMonths}개월간 보관하며, 이후 지체 없이 파기합니다.` : "상담 목적이 달성되면 지체 없이 파기합니다. (구체적 기간은 확정 후 안내)"}
           </dd>
         </div>
         <div><dt className="font-bold">4. 제3자 제공</dt><dd className="text-ink-sub">법령에 근거가 있는 경우를 제외하고 제3자에게 제공하지 않습니다.</dd></div>

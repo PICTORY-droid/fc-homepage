@@ -54,7 +54,9 @@ export const site = {
     purpose: "상담 신청에 대한 회신 및 상담 진행",
     items: "이름, 연락처, 궁금한 점, 관심 분야 (선택: 가입 대상 연령, 희망 연락 시간)",
     sensitiveItems: "(선택) 가입 중인 보험, 입원·수술 이력, 치료·복약 중인 질환, 가족력 등 건강 관련 정보 — '기타 / 잘 모르겠어요' 선택 시 별도 동의를 받은 경우에만 수집",
-    retentionMonths: null as number | null, // TODO: 보유 기간(개월) 확정 필요
+    retentionMonths: 36 as number | null, // 확정(2026-10-20): 상담 접수일부터 36개월 보관. 만료 전 담당 FC에게 이름을 메일로 알려 삭제합니다.
+    /** 만료 며칠 전부터 담당 FC에게 알릴지 */
+    retentionNoticeDays: 30,
     contactEmail: "", // TODO: 개인정보 문의 이메일
   },
 } as const;
