@@ -1,4 +1,6 @@
 import { describe, expect, it } from "vitest";
+import { faq } from "../../config/chatbot";
+import { officialFaq } from "../../config/officialFaq";
 import { products } from "../../config/products";
 import { looksSensitive, reply } from "./engine";
 
@@ -31,24 +33,39 @@ describe("안내 도우미", () => {
       expect(reply(s).text).toContain("개인정보");
     }
   });
-  it("공식 고객센터 번호(1599-0100)는 어떤 답에도 넣지 않는다", () => {
-    for (const q of ["전화", "고객센터", "연락처", "공식", "보험금"]) {
-      const r = reply(q);
-      expect(JSON.stringify(r)).not.toContain("1599-0100");
-    }
+  it("직접 쓴 안내 문구에는 공식 고객센터 번호(1599-0100)를 넣지 않는다 (다이렉트 안내만 예외)", () => {
+    for (const f of faq.filter((x) => x.id !== "direct")) expect(JSON.stringify(f)).not.toContain("1599-0100");
   });
   it("모든 연결 주소는 사이트 안 경로·전화·카카오뿐", () => {
-    const qs = ["상품찾기", "가입조건", "보험료", "상담", "카톡", "전화", "비교", "자동이체", "보험금청구", "개인정보", "출처", "가입방법", "담당자", "안녕", "감사", "아이", "암", "연금", "산모", "저축", "치매", "병력", "회사", "zzzz", ...products.map((p) => p.displayName)];
+    const qs = ["상품찾기", "가입조건", "보험료", "상담", "카톡", "전화", "비교", "자동이체", "보험금청구", "환급금대출", "개인정보", "출처", "가입방법", "담당자", "안녕", "감사", "아이", "암", "연금", "산모", "저축", "치매", "병력", "회사", "zzzz", ...products.map((p) => p.displayName)];
     for (const q of qs) for (const l of reply(q).links) expect(l.href).toMatch(/^(\/|tel:|https:\/\/open\.kakao\.com\/|https:\/\/epostlife\.go\.kr\/IPCCFQ0001\.do$)/);
   });
   it("상품 링크는 실제 상품 ID", () => {
     const ids = new Set(products.map((p) => p.id));
     for (const l of reply("아이").links.filter((l) => l.href.startsWith("/products/"))) expect(ids.has(l.href.split("/")[2])).toBe(true);
   });
-  it("계약 관리 질문은 공식 자주하는 질문으로 안내하고 답을 지어내지 않는다", () => {
-    const r = reply("자동이체 변경");
+  it("공식 질문 111개를 그대로 입력하면 각각 자기 답변 원문이 나온다", () => {
+    expect(officialFaq).toHaveLength(111);
+    for (const f of officialFaq) expect(reply(f.question).text, f.id).toContain(f.answer);
+  });
+  it("공식 답변에는 출처 줄과 공식 FAQ 링크가 붙는다", () => {
+    const r = reply("청약 철회하고 싶습니다.");
+    expect(r.text).toContain("출처: 우체국보험 공식 자주하는 질문");
     expect(r.links.map((l) => l.href)).toContain("https://epostlife.go.kr/IPCCFQ0001.do");
-    expect(r.text).not.toMatch(/\d+일|\d+원/);
+  });
+  it("분류 이름을 입력하면 그 분류의 질문 목록", () => {
+    const r = reply("납입·자동이체");
+    expect(r.suggestions.length).toBeGreaterThan(0);
+    for (const s of r.suggestions) expect(officialFaq.find((f) => f.question === s)?.category).toBe("납입·자동이체");
+  });
+  it("애매한 입력은 한 가지 답을 고르지 않고 관련 질문 목록을 보여준다", () => {
+    const r = reply("환급금대출");
+    expect(r.text).toContain("관련된 질문");
+    expect(r.suggestions.length).toBeGreaterThan(1);
+  });
+  it("자동이체 변경·보험금 청구 서류는 공식 답변으로 연결", () => {
+    expect(reply("자동이체 변경").suggestions[0]).toContain("자동이체 신청, 변경");
+    expect(reply("보험금 청구 서류").links.map((l) => l.href)).toContain("https://epostlife.go.kr/IPCCFQ0001.do");
   });
   it("다이렉트 보험은 1599-0100 문의로 안내", () => {
     const r = reply("다이렉트 보험 상담 가능해요?");

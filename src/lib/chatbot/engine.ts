@@ -1,18 +1,23 @@
 import Fuse from "fuse.js";
 import { categories, getCategory, type CategorySlug } from "../../config/categories";
-import { categoryKeywords, chatbotCopy, faq, type ChatLink } from "../../config/chatbot";
+import { categoryKeywords, chatbotCopy, faq, OFFICIAL_FAQ_URL, type ChatLink } from "../../config/chatbot";
+import { officialFaq, officialFaqCategories } from "../../config/officialFaq";
 import { products, type Product } from "../../config/products";
 import { site } from "../../config/site";
 import { filterProducts } from "../productSearch";
+import { buildFaqIndex, isDecisive, normFaq, queryGrams, searchFaq } from "./faqSearch";
 
 // 안내 도우미 두뇌 — 화면과 무관한 순수 함수. 입력 글자를 어디로도 보내거나 저장하지 않습니다.
 export interface ChatReply { text: string; links: ChatLink[]; suggestions: string[] }
 
 const norm = (s: string) => s.toLowerCase().replace(/[\s.,!?~·'"()\-_/]+/g, "");
 const MAX_PRODUCTS = 3;
+const MAX_QUERY = 300; // 추천 질문(공식 질문 원문)도 그대로 받을 수 있게 입력칸 제한보다 넉넉히
+const faqIndex = buildFaqIndex(officialFaq);
+const officialLink: ChatLink = { label: "공식 자주하는 질문 전체 보기", href: OFFICIAL_FAQ_URL, external: true };
 
 // 주민번호·전화번호·카드/계좌 번호처럼 보이는 숫자, 또는 관련 단어
-const SENSITIVE = [/\d{6}\s*-?\s*[1-4]\d{6}/, /01[016789][-\s]?\d{3,4}[-\s]?\d{4}/, /\d{4}[-\s]?\d{4}[-\s]?\d{4}[-\s]?\d{4}/, /\d{9,}/, /주민\s*(등록)?\s*번호|계좌\s*번호|카드\s*번호|비밀번호/];
+const SENSITIVE = [/\d{6}\s*-?\s*[1-4]\d{6}/, /01[016789][-\s]?\d{3,4}[-\s]?\d{4}/, /\d{4}[-\s]?\d{4}[-\s]?\d{4}[-\s]?\d{4}/, /\d{9,}/, /주민\s*(등록)?\s*번호|계좌\s*번호|카드\s*번호/];
 export const looksSensitive = (input: string) => SENSITIVE.some((re) => re.test(input));
 
 const consultLink = (topic?: string): ChatLink => ({ label: "상담 신청하기", href: topic ? `/consult?topic=${topic}` : "/consult" });
@@ -56,11 +61,36 @@ function categoryReply(slug: CategorySlug): ChatReply {
 const fuse = new Fuse(products, { keys: ["displayName", "slogan.headline", "slogan.tags"], threshold: 0.3, ignoreLocation: true, minMatchCharLength: 2 });
 
 export function reply(rawInput: string): ChatReply {
-  const input = rawInput.trim().slice(0, chatbotCopy.maxInputLength);
+  const input = rawInput.trim().slice(0, MAX_QUERY);
   if (!input) return { text: chatbotCopy.empty, links: [], suggestions: [] };
   if (looksSensitive(input)) return { text: chatbotCopy.sensitive.text, links: [consultLink()], suggestions: [] };
 
   const q = norm(input);
+
+  // 0) 공식 자주하는 질문 — 분류 이름 그대로, 또는 질문과 거의 같은 입력
+  const catName = officialFaqCategories.find((c) => normFaq(c) === normFaq(input));
+  if (catName) {
+    const inCat = officialFaq.filter((f) => f.category === catName);
+    return { text: chatbotCopy.faqListText, links: [officialLink], suggestions: inCat.slice(0, 8).map((f) => f.question) };
+  }
+  const hits = searchFaq(faqIndex, input, 4);
+  const grams = queryGrams(input).size;
+  const exactQuestion = hits[0] && normFaq(hits[0].item.question) === normFaq(input);
+
+  // 정해진 안내 문구가 있는 항목(예: 다이렉트 보험)은 입력이 짧을 때 공식 질문보다 먼저
+  if (!exactQuestion && grams < 6) {
+    const pri = faq.filter((f) => f.priority);
+    for (const f of pri) if (score(q, f.keywords) > 0) return { text: f.text, links: f.links ?? [], suggestions: f.suggestions ?? [] };
+  }
+
+  if (isDecisive(hits, input)) {
+    const rest = hits.slice(1).filter((h) => h.score >= 0.4).map((h) => h.item.question);
+    return { text: `${hits[0].item.answer}\n\n${chatbotCopy.faqSourceLine}`, links: [officialLink], suggestions: rest.slice(0, 3) };
+  }
+  // 구체적으로 입력했고 공식 질문과 많이 겹치면 목록으로
+  if (grams >= 3 && hits[0] && hits[0].coverage >= 0.75) {
+    return { text: chatbotCopy.faqListText, links: [officialLink], suggestions: hits.filter((h) => h.coverage >= 0.5).map((h) => h.item.question) };
+  }
 
   // 1) 자주 묻는 질문 (가장 긴 키워드가 맞은 것)
   let bestFaq = null as (typeof faq)[number] | null, bestScore = 0;
@@ -92,6 +122,10 @@ export function reply(rawInput: string): ChatReply {
     if (near.length > 0) return productReply(near);
   }
 
-  // 5) 모르는 질문 → 상담 연결
+  // 5) 공식 질문 중 비슷한 것들을 목록으로
+  const near = searchFaq(faqIndex, input, 5).filter((h) => h.coverage >= 0.5);
+  if (near.length > 0) return { text: chatbotCopy.faqListText, links: [officialLink], suggestions: near.map((h) => h.item.question) };
+
+  // 6) 모르는 질문 → 상담 연결
   return { text: chatbotCopy.fallback.text, links: [consultLink(), ...kakaoLinks()], suggestions: [...chatbotCopy.fallback.suggestions] };
 }

@@ -31,7 +31,7 @@ function Bubble({ m, onNavigate, onSuggest, isLast }: { m: ChatMessage; onNaviga
         {m.links.length > 0 && <div className="mt-2 flex flex-wrap gap-2">{m.links.map((l) => <LinkChip key={l.href + l.label} link={l} onNavigate={onNavigate} />)}</div>}
         {isLast && m.suggestions.length > 0 && (
           <div className="mt-2 flex flex-wrap gap-2" role="group" aria-label="추천 질문">
-            {m.suggestions.map((s) => <button key={s} type="button" onClick={() => onSuggest(s)} className="min-h-[40px] rounded-full border border-brand-deep/40 bg-paper px-3.5 text-sm font-medium text-brand-deep hover:bg-brand-soft">{s}</button>)}
+            {m.suggestions.map((s) => <button key={s} type="button" onClick={() => onSuggest(s)} className="min-h-[40px] rounded-2xl border border-brand-deep/40 bg-paper px-3.5 py-1.5 text-left text-sm font-medium leading-snug text-brand-deep hover:bg-brand-soft">{s}</button>)}
           </div>
         )}
       </div>

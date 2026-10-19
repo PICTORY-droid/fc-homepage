@@ -3,6 +3,7 @@
 // 주의: 문구를 바꾸면 광고 심의 대상이 될 수 있습니다. 공식 고객센터 번호(1599-0100)는 '다이렉트 보험' 안내에만 사용합니다(사용자 지시).
 import { site } from "./site";
 import type { CategorySlug } from "./categories";
+import { officialFaqCategories } from "./officialFaq";
 
 export interface ChatLink { label: string; href: string; external?: boolean }
 
@@ -13,11 +14,13 @@ export interface FaqEntry {
   text: string;
   links?: ChatLink[];
   suggestions?: string[];
+  /** true 이면 입력이 짧을 때 공식 질문보다 먼저 보여줍니다 (정해진 안내 문구가 있는 항목) */
+  priority?: boolean;
 }
 
 const kakao: ChatLink[] = site.contact.kakaoUrl ? [{ label: "카카오톡으로 문의하기", href: site.contact.kakaoUrl, external: true }] : [];
 const consult: ChatLink = { label: "상담 신청하기", href: "/consult" };
-/** 우체국보험 공식 홈페이지 '자주하는 질문' — 납입·환급금·보험금 청구·세제·앱 등 계약 관리 질문은 답을 옮겨 적지 않고 이곳으로 안내합니다. */
+/** 우체국보험 공식 홈페이지 '자주하는 질문' 주소 (답변 원문은 officialFaq.data.json 에 있습니다) */
 export const OFFICIAL_FAQ_URL = "https://epostlife.go.kr/IPCCFQ0001.do";
 
 export const chatbotCopy = {
@@ -29,8 +32,11 @@ export const chatbotCopy = {
   privacyNote: "이름·연락처·주민번호는 입력하지 마세요.",
   greeting: "안녕하세요! 우체국보험 안내 도우미예요. 상품 찾기와 상담 연결을 도와드려요.",
   greetingSub: "보험료·가입 가능 여부처럼 정확해야 하는 내용은 상담에서 안내해 드려요.",
-  quickReplies: ["내게 맞는 상품 찾기", "가입 조건·나이", "보험료가 궁금해요", "상담 신청하기", "카카오톡 문의"],
+  quickReplies: ["내게 맞는 상품 찾기", "가입 조건·나이", "보험료가 궁금해요", "자주 묻는 질문", "상담 신청하기", "카카오톡 문의"],
   maxInputLength: 100,
+  /** 공식 답변 아래에 붙는 출처 줄 */
+  faqSourceLine: "출처: 우체국보험 공식 자주하는 질문",
+  faqListText: "관련된 질문을 찾았어요. 궁금한 질문을 눌러 보세요.",
   fallback: {
     text: "그 질문은 제가 정확히 안내하기 어려워요. 상담으로 연결해 드릴게요.",
     suggestions: ["내게 맞는 상품 찾기", "상담 신청하기"],
@@ -45,15 +51,17 @@ export const chatbotCopy = {
 export const faq: FaqEntry[] = [
   {
     id: "direct",
+    priority: true,
     keywords: ["다이렉트", "다이렉트보험", "인터넷보험", "온라인보험", "온라인전용"],
     text: "다이렉트 보험은 이곳에서 상담이 어렵습니다. 1599-0100으로 문의주세요.",
     links: [{ label: "1599-0100 전화하기", href: "tel:1599-0100" }],
   },
   {
-    id: "official-faq",
-    keywords: ["자주하는질문", "자주묻는질문", "faq", "납입", "자동이체", "환급금", "해약", "대출", "보험금청구", "사고보험금", "생존보험금", "세제", "소득공제", "세액공제", "계약사항", "로그인", "인증", "앱이용", "폰뱅킹"],
-    text: "납입·자동이체, 환급금·대출, 보험금 청구, 세제, 앱 이용처럼 이미 가입한 계약 관리에 관한 질문은 우체국보험 공식 홈페이지의 '자주하는 질문'에서 확인하실 수 있어요. 새로 알아보시는 보장이나 상품은 저희 상담으로 도와드려요.",
-    links: [{ label: "공식 자주하는 질문 보기", href: OFFICIAL_FAQ_URL, external: true }, consult],
+    id: "faq-list",
+    keywords: ["자주하는질문", "자주묻는질문", "faq", "질문목록"],
+    text: "우체국보험 공식 '자주하는 질문'을 분류별로 찾아보실 수 있어요. 궁금한 분류를 골라 보세요. '자동이체 변경', '청약 철회'처럼 직접 입력하셔도 돼요.",
+    links: [{ label: "공식 자주하는 질문 전체 보기", href: OFFICIAL_FAQ_URL, external: true }],
+    suggestions: [...officialFaqCategories],
   },
   {
     id: "find",
@@ -145,7 +153,7 @@ export const faq: FaqEntry[] = [
 
 /** 분야별로 입력에서 찾을 단어 — 분야 slug 는 config/categories.ts 와 같아야 합니다. */
 export const categoryKeywords: Record<CategorySlug, string[]> = {
-  health: ["건강", "암", "질병", "입원", "수술", "뇌", "심장", "진단", "실손", "치아", "병원"],
+  health: ["건강", "암", "질병", "입원", "수술", "뇌", "심장", "진단", "치아", "병원"],
   pension: ["연금", "노후", "은퇴", "퇴직"],
   kids: ["아이", "자녀", "어린이", "아기", "아가", "태아", "청소년", "가족", "학생"],
   mom: ["임신", "출산", "산모", "신생아", "엄마", "태교"],
