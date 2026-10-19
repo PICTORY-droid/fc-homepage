@@ -2,34 +2,38 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Section } from "@/components/ui/Section";
 import { DownloadCard } from "@/components/fun/DownloadCard";
-import { formTemplates, formFile } from "@/config/forms";
+import { formDownloadName, formFile, jobGroups, kindLabel, type DocKind } from "@/config/forms";
 
 export const metadata: Metadata = {
-  title: "이력서·자기소개서 양식 10종",
-  description: "이력서 5종, 자기소개서 5종 빈 양식을 Word 파일로 무료로 내려받아 컴퓨터에서 바로 입력하고 고쳐 보세요.",
+  title: "직업별 이력서·자기소개서 Word 양식",
+  description: "직업 10군, 포지션 20개별 이력서·자기소개서 Word 양식 40종을 무료로 내려받아 컴퓨터에서 바로 입력하세요.",
   alternates: { canonical: "/fun/forms" },
 };
 
-const groups = [
-  { kind: "이력서" as const, title: "이력서 5종", lead: "상황에 맞게 골라 쓰세요. 신입·경력·한 장 요약까지 준비했어요." },
-  { kind: "자기소개서" as const, title: "자기소개서 5종", lead: "문항형부터 자유 서술형까지, 줄과 칸이 잡혀 있어 쓰기 편해요." },
-];
+const kinds: DocKind[] = ["resume", "cover"];
 
 export default function FormsPage() {
   return (
     <>
-      {groups.map((g, i) => (
-        <Section key={g.kind} tone={i === 1 ? "card" : undefined} title={g.title} lead={g.lead}>
-          <ul data-reveal="stagger" className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
-            {formTemplates.filter((f) => f.kind === g.kind).map((f) => (
-              <DownloadCard key={f.id} title={f.name} desc={`${f.desc} · A4 ${f.pages}쪽`} thumb={formFile(f.id, "jpg")}
-                links={[{ label: "Word", href: formFile(f.id, "docx"), filename: `${f.kind}양식-${f.name}.docx` }]} />
-            ))}
+      <Section title="직업별 이력서·자기소개서" lead="직업 10군 · 포지션 20개마다 항목과 질문이 다른 Word 양식이에요. 칸을 눌러 바로 입력하면 칸이 자동으로 늘어나요.">
+        <nav aria-label="직업군 바로가기" className="flex flex-wrap gap-2">
+          {jobGroups.map((g) => (
+            <a key={g.key} href={`#${g.key}`} className="flex min-h-[44px] items-center rounded-full border border-ink/25 bg-paper px-4 text-sm font-bold text-ink hover:bg-paper-gray">{g.label}</a>
+          ))}
+        </nav>
+      </Section>
+      {jobGroups.map((g, i) => (
+        <Section key={g.key} id={g.key} tone={i % 2 ? "card" : undefined} title={g.label} lead={`${g.positions[0].name} · ${g.positions[1].name}`}>
+          <ul data-reveal="stagger" className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+            {g.positions.flatMap((p) => kinds.map((k) => (
+              <DownloadCard key={`${k}-${p.id}`} title={`${p.name} ${kindLabel[k]}`} desc={k === "resume" ? p.desc : `${p.name}에게 자주 묻는 질문 5가지`} thumb={formFile(p.id, k, "jpg")}
+                links={[{ label: "Word", href: formFile(p.id, k, "docx"), filename: formDownloadName(p, k) }]} />
+            )))}
           </ul>
         </Section>
       ))}
       <Section>
-        <p className="text-sm text-ink-sub">A4 크기 빈 양식이에요. Word 파일을 열어 칸을 눌러 입력하면 칸이 자동으로 늘어나요. 인쇄해서 손으로 쓸 때도 Word에서 인쇄하면 돼요. 주민등록번호 등 민감한 개인정보는 제출할 때 꼭 필요한 경우에만 적으세요.</p>
+        <p className="text-sm text-ink-sub">A4 크기 빈 양식이에요. Word 파일을 열어 칸을 눌러 입력하세요. 주민등록번호 등 민감한 개인정보는 제출할 때 꼭 필요한 경우에만 적으세요.</p>
         <p className="mt-3 text-ink-sub">다른 즐길거리도 둘러보세요. <Link href="/fun" className="font-semibold text-brand-deep underline">즐길거리 전체 보기</Link></p>
       </Section>
     </>

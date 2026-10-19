@@ -10,5 +10,5 @@ export interface FunItem {
 
 export const funItems: FunItem[] = [
   { slug: "stationery", title: "계절 편지지 80장", short: "봄·여름·가을·겨울 각 20장, 서로 다른 그림의 편지지를 Word로 받아 바로 쓰세요.", href: "/fun/stationery", icon: "✉️" },
-  { slug: "forms", title: "이력서·자기소개서 양식 10종", short: "이력서 5종·자기소개서 5종 빈 양식을 Word 파일로 무료로 받아 바로 입력하세요.", href: "/fun/forms", icon: "📄" },
+  { slug: "forms", title: "직업별 이력서·자기소개서 40종", short: "직업 10군·포지션 20개별 이력서와 자기소개서 Word 양식을 무료로 받아 바로 입력하세요.", href: "/fun/forms", icon: "📄" },
 ];
