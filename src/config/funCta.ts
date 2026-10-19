@@ -29,3 +29,6 @@ export const cardCtas: Record<string, FunCta> = {
 };
 
 export const getCardCta = (category: string): FunCta | undefined => cardCtas[category];
+
+// 계절 편지지 상세페이지 끝 안내 — 편지를 쓰는 마음과 이어지는 가벼운 한 줄만 둡니다. (상담 분야: 기타)
+export const stationeryCta: FunCta = { title: "안부 편지를 쓰다 가족이 떠올랐다면", text: "가족의 보장은 잘 챙겨져 있는지 궁금할 때 편하게 물어보세요. 살펴보고 쉽게 안내해 드립니다.", topic: "other", button: "가족 보장 문의하기" };

@@ -1,7 +1,7 @@
 import { existsSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
-import { entriesBySeason, packDownloadName, packEntries, packFile, packGroups, packSeasons, packThumb } from "./pack";
+import { entriesBySeason, packDownloadName, packEntries, packFile, packGroups, packLarge, packSeasons, packThumb } from "./pack";
 
 const pub = (p: string) => join(process.cwd(), "public", p);
 
@@ -24,6 +24,8 @@ describe("자료 꾸러미: 항목마다 50종", () => {
             expect(existsSync(pub(packFile(item, e))), packFile(item, e)).toBe(true);
             const t = packThumb(item, e.no);
             if (t) expect(existsSync(pub(t)), t).toBe(true);
+            const big = packLarge(item, e.no); // 눌렀을 때 열리는 큰 미리보기
+            if (t) expect(big && existsSync(pub(big)), big).toBe(true);
           }
         });
         it("내려받는 파일 이름은 한글이고 쓸 수 없는 글자가 없다", () => {

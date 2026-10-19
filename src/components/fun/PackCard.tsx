@@ -1,18 +1,16 @@
-import Image from "next/image";
-import { packDownloadName, packFile, packThumb, type PackEntry, type PackItem } from "@/config/pack";
+import { ZoomThumb } from "./ZoomThumb";
+import { packDownloadName, packFile, packLarge, packThumb, type PackEntry, type PackItem } from "@/config/pack";
 
 const BUTTON: Record<PackItem["ext"], string> = { xlsx: "엑셀", pptx: "PPT", docx: "Word", svg: "SVG" };
 
-// 자료 꾸러미 카드 — 미리보기 그림이 있으면 그림, 없으면 테마 색 견본을 보여 주고 한글 파일 이름으로 내려받게 합니다.
+// 자료 꾸러미 카드 — 미리보기 그림을 누르면 큰 미리보기 창이 열립니다. 그림이 없으면 테마 색 견본을 보여 주고 한글 파일 이름으로 내려받게 합니다.
 export function PackCard({ item, entry }: { item: PackItem; entry: PackEntry }) {
   const thumb = packThumb(item, entry.no);
   const no = String(entry.no).padStart(2, "0");
   return (
     <li className="flex flex-col overflow-hidden rounded-card border border-ink/10 bg-paper">
       {thumb ? (
-        <div className="relative w-full bg-paper-gray" style={{ aspectRatio: item.aspect ?? 794 / 1123 }}>
-          <Image src={thumb} alt={`${item.title} ${entry.name} 미리보기`} fill unoptimized={item.thumb === "svg"} sizes="(min-width:1024px) 22vw, (min-width:640px) 33vw, 50vw" className="object-cover" />
-        </div>
+        <ZoomThumb thumb={thumb} large={packLarge(item, entry.no) ?? thumb} alt={`${item.title} ${entry.name} 미리보기`} title={`${no}. ${entry.name}`} aspect={item.aspect} />
       ) : (
         <div className="relative flex aspect-[4/3] flex-col justify-between p-4" style={{ backgroundColor: entry.soft }}>
           <span className="text-xs font-bold" style={{ color: entry.dark }}>{entry.season} · {entry.flavor}</span>
