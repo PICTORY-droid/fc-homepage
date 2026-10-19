@@ -33,6 +33,20 @@ export const packGroups: PackGroup[] = [
       { key: "quote", title: "자동 계산 견적서", short: "단가표에서 고르면 금액·부가세·합계가 자동으로 나오는 A4 한 장 견적서", fileLabel: "견적서", ext: "xlsx" },
     ],
   },
+  {
+    slug: "ppt", title: "PPT 템플릿 300종", icon: "🎞️",
+    short: "발표·가족 소개·돌잔치·결혼식·보험 점검 양식·카드뉴스, 각 50종. 글과 사진 자리를 바로 고쳐 쓸 수 있는 PowerPoint 파일이에요.",
+    lead: "항목마다 50가지 한국 감성 테마로 만든 PowerPoint 템플릿이에요. 글·색·사진 자리를 마음대로 고쳐서 발표, 초대, 소개 자료로 쓰세요.",
+    howto: "PowerPoint·한컴오피스 한쇼·구글 슬라이드에서 열 수 있어요. 사진을 넣으려면 점선 칸을 누르고 ‘도형 채우기 → 그림’을 고르세요. 글꼴은 맑은 고딕이에요.",
+    items: [
+      { key: "talk", title: "발표 템플릿", short: "사업 제안·교육·업무 보고·모임 소개·연말 결산 5가지 구성의 6장 발표 자료", fileLabel: "발표템플릿", ext: "pptx", thumb: "jpg", aspect: 16 / 9 },
+      { key: "family", title: "가족 소개 슬라이드", short: "부부·아이와 함께·3대 가족·1인 가구·반려동물, 구성원 소개와 가족 이야기", fileLabel: "가족소개", ext: "pptx", thumb: "jpg", aspect: 16 / 9 },
+      { key: "birthday", title: "돌잔치 슬라이드", short: "성장 기록·돌잡이·사진·감사 인사·첫 번째 이야기 중심의 돌잔치 영상용 슬라이드", fileLabel: "돌잔치", ext: "pptx", thumb: "jpg", aspect: 16 / 9 },
+      { key: "wedding", title: "결혼식 슬라이드", short: "소개·러브스토리·식순·오시는 길·감사 인사 중심의 결혼식 상영용 슬라이드", fileLabel: "결혼식", ext: "pptx", thumb: "jpg", aspect: 16 / 9 },
+      { key: "review", title: "보험 보장 점검 양식", short: "본인·부부·가족·부모님·사업장별로 가입 내용을 정리하는 빈칸 채우기형 발표 자료(정리용)", fileLabel: "보장점검양식", ext: "pptx", thumb: "jpg", aspect: 16 / 9 },
+      { key: "news", title: "카드뉴스", short: "알뜰 팁·건강 습관·계절 안부·감사·오늘의 한마디, 정사각 7장 카드뉴스", fileLabel: "카드뉴스", ext: "pptx", thumb: "jpg", aspect: 1 },
+    ],
+  },
 ];
 
 const all = data as unknown as Record<string, PackEntry[]>;
