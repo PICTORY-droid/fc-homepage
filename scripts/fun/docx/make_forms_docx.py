@@ -20,6 +20,7 @@ from skins import SANS, SERIF, skin  # noqa: E402
 ROOT = HERE.parents[2]
 OUT = ROOT / "public" / "fun" / "forms"
 THUMBS = OUT / "thumbs"
+LARGE = THUMBS / "large"  # 클릭하면 보이는 큰 미리보기 — 모든 쪽을 세로로 이어 붙인 그림
 
 
 def skin_for(kind, p, v):
@@ -50,6 +51,20 @@ def main(thumbs):
         make_thumbs()
 
 
+def make_large(pdf, n):
+    from PIL import Image
+    pre = pdf.with_suffix("")
+    subprocess.run(["pdftoppm", "-jpeg", "-scale-to-x", "900", "-scale-to-y", "-1", str(pdf), str(pre)], check=True)
+    imgs = [Image.open(f) for f in sorted(pdf.parent.glob(f"{pdf.stem}-*.jpg"))]
+    sheet = Image.new("RGB", (900, sum(i.height for i in imgs) + 12 * (len(imgs) - 1)), "#E9ECEF")
+    y = 0
+    for i in imgs:
+        sheet.paste(i, (0, y)); y += i.height + 12
+    sheet.save(LARGE / f"{pdf.stem}.jpg", quality=80, optimize=True)
+    for f in pdf.parent.glob(f"{pdf.stem}-*.jpg"):
+        f.unlink()
+
+
 def make_thumbs():
     tmp = Path("/tmp/forms_thumbs"); shutil.rmtree(tmp, ignore_errors=True); tmp.mkdir()
     THUMBS.mkdir(exist_ok=True)
@@ -57,9 +72,11 @@ def make_thumbs():
     subprocess.run(["soffice", "--headless", "-env:UserInstallation=file:///tmp/lo_forms_profile", "--convert-to", "pdf", "--outdir", str(tmp), *files],
                    check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     pages = {}
+    LARGE.mkdir(exist_ok=True)
     for pdf in sorted(tmp.glob("*.pdf")):
         n = int(subprocess.run(["pdfinfo", str(pdf)], capture_output=True, text=True).stdout.split("Pages:")[1].split()[0])
         pages[pdf.stem] = n
+        make_large(pdf, n)
         subprocess.run(["pdftoppm", "-jpeg", "-jpegopt", "quality=82", "-f", "1", "-l", "1", "-scale-to-x", "420", "-scale-to-y", "-1", str(pdf), str(THUMBS / pdf.stem), "-singlefile"], check=True)
     bad = {k: v for k, v in pages.items() if v > 3}
     print("쪽 수 분포:", {n: sum(1 for v in pages.values() if v == n) for n in sorted(set(pages.values()))}, "| 3쪽 초과:", bad or "없음")

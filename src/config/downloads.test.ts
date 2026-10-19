@@ -1,7 +1,7 @@
 import { existsSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
-import { allPositions, formDownloadName, formFile, jobGroups, variantNames, variants } from "./forms";
+import { allPositions, formDownloadName, formFile, formLargeFile, jobGroups, variantNames, variants } from "./forms";
 import { seasons, stationery, stationeryBySeason, stationeryDownloadName, stationeryFile } from "./stationery";
 
 const pub = (p: string) => join(process.cwd(), "public", p);
@@ -15,6 +15,7 @@ describe("내려받기 파일이 모두 있다", () => {
     let n = 0;
     for (const p of allPositions) for (const k of ["resume", "cover"] as const) for (const v of variants) for (const ext of ["docx", "jpg"] as const) { expect(existsSync(pub(formFile(p.id, k, v, ext))), `${k}-${p.id}-${v}.${ext}`).toBe(true); n++; }
     expect(n).toBe(400);
+    for (const p of allPositions) for (const k of ["resume", "cover"] as const) for (const v of variants) expect(existsSync(pub(formLargeFile(p.id, k, v))), `large ${k}-${p.id}-${v}`).toBe(true);
   });
   it("양식 5종은 이름이 서로 다르고, 내려받는 파일 이름은 한글이며 겹치지 않는다", () => {
     for (const k of ["resume", "cover"] as const) expect(new Set(variantNames[k]).size).toBe(5);

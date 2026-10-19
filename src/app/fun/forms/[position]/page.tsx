@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Section } from "@/components/ui/Section";
 import { DownloadCard } from "@/components/fun/DownloadCard";
-import { allPositions, formDownloadName, formFile, getPosition, groupOf, kindLabel, variantDesc, variantNames, variants, type DocKind } from "@/config/forms";
+import { allPositions, formDownloadName, formFile, formLargeFile, getPosition, groupOf, kindLabel, variantDesc, variantNames, variants, type DocKind } from "@/config/forms";
 
 type Props = { params: Promise<{ position: string }> };
 
@@ -39,7 +39,7 @@ export default async function PositionFormsPage({ params }: Props) {
         <Section key={k} id={k} tone={i % 2 ? "card" : undefined} title={`${kindLabel[k]} 5종`}>
           <ul data-reveal="stagger" className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
             {variants.map((v) => (
-              <DownloadCard key={v} title={`${v}. ${variantNames[k][v - 1]}`} desc={variantDesc[k][v - 1]} thumb={formFile(p.id, k, v, "jpg")} thumbAlt={`${p.name} ${kindLabel[k]} ${variantNames[k][v - 1]} 미리보기`}
+              <DownloadCard key={v} title={`${v}. ${variantNames[k][v - 1]}`} desc={variantDesc[k][v - 1]} thumb={formFile(p.id, k, v, "jpg")} zoom={formLargeFile(p.id, k, v)} thumbAlt={`${p.name} ${kindLabel[k]} ${variantNames[k][v - 1]} 미리보기`}
                 links={[{ label: "Word", href: formFile(p.id, k, v, "docx"), filename: formDownloadName(p, k, v) }]} />
             ))}
           </ul>
