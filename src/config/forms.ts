@@ -1,5 +1,5 @@
-// 직업별 이력서·자기소개서 Word 파일 — 직업군 10개 × 포지션 2개, 이력서·자기소개서 각 20종(총 40개).
-// 파일은 public/fun/forms/ 에 있고 scripts/fun/docx/make_resumes_docx.py · make_covers_docx.py 로 만듭니다. (id 는 두 스크립트와 같아야 합니다)
+// 직업별 이력서·자기소개서 Word 파일 — 직업군 10개 × 포지션 2개 × 양식 5종 × (이력서·자기소개서) = 200개.
+// 파일은 public/fun/forms/ 에 있고 scripts/fun/docx/make_forms_docx.py 로 만듭니다. (포지션 id 는 resume_data.py 와 같아야 합니다)
 export type DocKind = "resume" | "cover";
 export interface Position { id: string; name: string; desc: string }
 export interface JobGroup { key: string; label: string; positions: [Position, Position] }
@@ -40,7 +40,22 @@ export const jobGroups: JobGroup[] = [
 export const kindLabel: Record<DocKind, string> = { resume: "이력서", cover: "자기소개서" };
 export const allPositions = jobGroups.flatMap((g) => g.positions);
 
-export const formFile = (id: string, kind: DocKind, ext: "docx" | "jpg") => (ext === "jpg" ? `/fun/forms/thumbs/${kind}-${id}.jpg` : `/fun/forms/${kind}-${id}.docx`);
+/** 양식 5종 — 이력서·자기소개서 모두 번호(1~5)마다 짜임이 완전히 다릅니다. */
+export const variantNames: Record<DocKind, readonly string[]> = {
+  resume: ["정석형", "사이드바형", "타임라인형", "요약형", "카드형"],
+  cover: ["문항형", "줄노트형", "좌우2단형", "STAR형", "서술형"],
+};
+export const variantDesc: Record<DocKind, readonly string[]> = {
+  resume: ["칸마다 채우는 표준 서식", "왼쪽에 연락처·기술을 모은 2단 구성", "기간을 왼쪽 선에 이어 쓰는 서체 중심 구성", "상단 띠와 핵심 요약으로 한눈에 보이는 구성", "경력·프로젝트를 카드로 나눠 쓰는 구성"],
+  cover: ["문항마다 상자에 쓰는 기본형", "줄 노트에 이어 쓰는 담백한 구성", "질문은 왼쪽, 답변은 오른쪽에 쓰는 2단 구성", "상황·과제·행동·결과로 정리하는 구성", "편지처럼 흐름 있게 쓰는 서술형"],
+};
+export const variants = [1, 2, 3, 4, 5] as const;
+export type Variant = (typeof variants)[number];
 
-/** 내려받을 때 보이는 한글 파일 이름 — 예) 이력서_백엔드개발자.docx */
-export const formDownloadName = (p: Position, kind: DocKind) => `${kindLabel[kind]}_${p.name.replace(/\s+/g, "").replace(/\//g, "·")}.docx`;
+export const getPosition = (id: string) => allPositions.find((p) => p.id === id);
+export const groupOf = (id: string) => jobGroups.find((g) => g.positions.some((p) => p.id === id));
+
+export const formFile = (id: string, kind: DocKind, n: Variant, ext: "docx" | "jpg") => (ext === "jpg" ? `/fun/forms/thumbs/${kind}-${id}-${n}.jpg` : `/fun/forms/${kind}-${id}-${n}.docx`);
+
+/** 내려받을 때 보이는 한글 파일 이름 — 예) 이력서_백엔드개발자_1_정석형.docx */
+export const formDownloadName = (p: Position, kind: DocKind, n: Variant) => `${kindLabel[kind]}_${p.name.replace(/\s+/g, "").replace(/\//g, "·")}_${n}_${variantNames[kind][n - 1]}.docx`;
