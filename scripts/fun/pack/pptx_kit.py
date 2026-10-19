@@ -59,8 +59,12 @@ class Deck:
         self.pal, self.style, self.ti = pal, style, theme_i
         self.cover_img = cover_img
         self.modern, self.hero, self.label = modern, hero, label
-        self.cover_mesh = self.page_mesh = None
-        self.occ = 0  # 같은 구도가 몇 번째로 나오는지(0~4) — 좌우 반전·카드 모양을 바꿔 서로 다르게  # modern: 파스텔·미니멀 새 디자인
+        self.occ = 0  # 같은 구도가 몇 번째로 나오는지(0~4) — 좌우 반전·바탕색을 바꿔 서로 다르게
+        self.item = 0
+        self.card_style, self.badge_style, self.tal = 0, 0, "l"
+        self.on_main = "#FFFFFF"  # 강조색 위에 올리는 글자색(새 디자인은 진한 먹색)
+        if modern:
+            self.on_main = pal["ink"]  # modern: 파스텔·미니멀 새 디자인
         self.prs = Presentation()
         self.W, self.H = (13.333, 7.5) if size == "wide" else (7.5, 7.5)
         self._resize()
@@ -72,7 +76,7 @@ class Deck:
         self.cal = "l" if cover_img else ("c" if style in (3, 6, 8) else "l")  # 표지 글 정렬
         if modern:
             self.cal = "c" if size != "wide" else "l"
-        self.cover_size = 36 if size == "wide" else 30
+        self.cover_size = (40 if modern else 36) if size == "wide" else 30
         self.prs.core_properties.author = AUTHOR
         self.prs.core_properties.title = title
         self.prs.core_properties.comments = "자유롭게 편집해서 사용하세요."
@@ -115,6 +119,8 @@ class Deck:
     def slide(self, cover=False):
         s = self.prs.slides.add_slide(self.prs.slide_layouts[5])
         self.s = s
+        self._cover_now = cover
+        self.tal = "l"
         if self.modern:
             self._frame_modern(s, cover)
         elif cover and self.cover_img:
@@ -202,15 +208,28 @@ class Deck:
         tree.remove(el); tree.append(el)  # 장식 도형 위로 올린다(카드·리본 안에서도 제목이 보이게)
         x, y, w, h = box or self.tbox
         t.left, t.top, t.width, t.height = Inches(x), Inches(y), Inches(w), Inches(h)
+        if self.modern and self.tal == "c" and align == "l" and self.s is not None and not getattr(self, "_cover_now", False):
+            align = "c"
         self._fill_text(t.text_frame, content, size, True, color or self.title_color, align, "m", False, 1.05, False)
         return t
 
     def box(self, x, y, w, h, fill=None, line=None, lw=1.0, radius=0.08, dash=False, name=None):
-        if self.modern:  # 유리 카드: 반투명 + 흰 테두리 + 부드러운 그림자
-            b = self.shape(SH.ROUNDED_RECTANGLE, x, y, w, h, fill="#FFFFFF", line="#FFFFFF", lw=1.5, dash=dash, name=name, adj=min(0.14, radius * 1.6))
-            self.alpha(b, 72)
-            self.shadow(b, color=_mix(self.pal["main"], "#000000", 0.5), blur=20, dist=6, alpha=16)
-            return b
+        if self.modern:
+            p, cs = self.pal, self.card_style
+            r_ = min(0.07, radius)
+            if cs == 0:    # 납작한 파스텔 면
+                return self.shape(SH.ROUNDED_RECTANGLE, x, y, w, h, fill or p["pale"], None, 0, name=name, adj=r_)
+            if cs == 1:    # 흰 면 + 얇은 윤곽
+                return self.shape(SH.ROUNDED_RECTANGLE, x, y, w, h, "#FFFFFF", p["tint"], 1.0, name=name, adj=r_)
+            if cs == 2:    # 파스텔 면 + 왼쪽 포인트 막대
+                b_ = self.shape(SH.ROUNDED_RECTANGLE, x, y, w, h, fill or p["pale"], None, 0, name=name, adj=min(0.04, r_))
+                self.shape(SH.RECTANGLE, x, y + 0.12, 0.06, h - 0.24, fill=p["main"], name="포인트 막대")
+                return b_
+            if cs == 3:    # 윤곽만
+                return self.shape(SH.ROUNDED_RECTANGLE, x, y, w, h, None, p["main"], 1.25, name=name, adj=r_)
+            b_ = self.shape(SH.ROUNDED_RECTANGLE, x, y, w, h, "#FFFFFF", p["soft"], 0.75, name=name, adj=min(0.03, r_))  # 흰 면 + 위쪽 색 띠
+            self.shape(SH.RECTANGLE, x + 0.01, y + 0.01, w - 0.02, 0.09, fill=p["main"], name="위쪽 띠")
+            return b_
         return self.shape(SH.ROUNDED_RECTANGLE, x, y, w, h, fill, line, lw, dash=dash, name=name, adj=radius)
 
     def photo(self, x, y, w, h, label="사진을 넣어 주세요", size=12, shape="round"):
@@ -218,8 +237,9 @@ class Deck:
         p = self.pal
         kind = SH.OVAL if shape == "oval" else SH.ROUNDED_RECTANGLE
         shp = self.shape(kind, x, y, w, h, fill=p["soft"], line=p["main"], lw=1.5, dash=True, name="사진 자리", adj=0.06 if shape != "oval" else None)
-        if self.modern:
-            self.alpha(shp, 60)
+        if self.modern:  # 사진 자리: 파스텔 면 + 작은 글자(점선 없음)
+            shp.line.fill.background()
+            self._fill_text(shp.text_frame, label, size, False, "#8E8780", "c", "m", False, 1.0, False)
         self._fill_text(shp.text_frame, label, size, False, p["dark"], "c", "m", False, 1.0, False)
         return shp
 
@@ -251,7 +271,7 @@ class Deck:
                 _borders(c, p["soft"] if not hd else p["main"])
                 run = para.add_run(); run.text = str(v)
                 run.font.size = Pt(size); run.font.bold = bool(hd or fc)
-                run.font.color.rgb = rgb("#FFFFFF" if hd else p["dark"] if fc else p["ink"])
+                run.font.color.rgb = rgb(self.on_main if hd else p["dark"] if fc else p["ink"])
         return gf
 
     # ── 모티프
@@ -322,150 +342,144 @@ class Deck:
                 add(SH.RECTANGLE, x0 + lw_ * 0.25, y0 - size * 0.05, lw_ * 0.5, size * 0.05, c3 if k != 2 else c1)
                 add(SH.RECTANGLE, x0 + lw_ * 0.25, y0 + lh, lw_ * 0.5, size * 0.05, c3 if k != 2 else c1)
 
-    # ── 새 디자인: 화려한 파스텔 — 번지는 빛 배경 + 유리 카드 + 반짝이는 구슬·별 + 계절 소재 도형
-    def _xml(self, shp):
-        return shp._element.spPr
-
-    def grad(self, shp, c1, c2, angle=90, a1=100, a2=100, radial=False, c3=None):
-        """도형 채우기를 그라데이션으로 (radial=True 면 구슬처럼 빛나는 둥근 그라데이션)."""
-        sp = self._xml(shp)
-        for t in ("solidFill", "noFill", "gradFill"):
-            for el in sp.findall(f"{{{A}}}{t}"):
-                sp.remove(el)
-        stops = [(0, c1, a1)] + ([(50, c3, (a1 + a2) // 2)] if c3 else []) + [(100, c2, a2)]
-        g = etree.Element(f"{{{A}}}gradFill", rotWithShape="1")
-        lst = etree.SubElement(g, f"{{{A}}}gsLst")
-        for pos, c, a in stops:
-            gs = etree.SubElement(lst, f"{{{A}}}gs", pos=str(pos * 1000))
-            cl = etree.SubElement(gs, f"{{{A}}}srgbClr", val=_hex(c))
-            if a < 100:
-                etree.SubElement(cl, f"{{{A}}}alpha", val=str(int(a * 1000)))
-        if radial:
-            pa = etree.SubElement(g, f"{{{A}}}path", path="circle")
-            etree.SubElement(pa, f"{{{A}}}fillToRect", l="30000", t="25000", r="70000", b="75000")
-        else:
-            etree.SubElement(g, f"{{{A}}}lin", ang=str(int(angle * 60000)), scaled="0")
-        geom = sp.find(f"{{{A}}}prstGeom")
-        (geom if geom is not None else sp[0]).addnext(g)
-        return shp
-
+    # ── 새 디자인: 깨끗한 에디토리얼(인스타 감성) — 여백·큰 글자·얇은 선·한 가지 파스텔 면
     def alpha(self, shp, pct):
         """단색 채우기의 투명도(pct = 불투명 %)"""
-        cl = self._xml(shp).find(f"{{{A}}}solidFill/{{{A}}}srgbClr")
+        cl = shp._element.spPr.find(f"{{{A}}}solidFill/{{{A}}}srgbClr")
         if cl is not None:
             for x in cl.findall(f"{{{A}}}alpha"):
                 cl.remove(x)
             etree.SubElement(cl, f"{{{A}}}alpha", val=str(int(pct * 1000)))
         return shp
 
-    def shadow(self, shp, color="#000000", blur=14, dist=5, alpha=22, dir_=90, glow=None):
-        """부드러운 그림자(또는 glow=색 으로 빛 번짐)"""
-        sp = self._xml(shp)
-        for el in sp.findall(f"{{{A}}}effectLst"):
-            sp.remove(el)
-        ef = etree.SubElement(sp, f"{{{A}}}effectLst")
-        if glow:
-            gl = etree.SubElement(ef, f"{{{A}}}glow", rad=str(int(blur * 12700)))
-            cl = etree.SubElement(gl, f"{{{A}}}srgbClr", val=_hex(glow))
-            etree.SubElement(cl, f"{{{A}}}alpha", val=str(int(alpha * 1000)))
-        else:
-            sh_ = etree.SubElement(ef, f"{{{A}}}outerShdw", blurRad=str(int(blur * 12700)), dist=str(int(dist * 12700)), dir=str(int(dir_ * 60000)), algn="ctr", rotWithShape="0")
-            cl = etree.SubElement(sh_, f"{{{A}}}srgbClr", val=_hex(color))
-            etree.SubElement(cl, f"{{{A}}}alpha", val=str(int(alpha * 1000)))
+    def track(self, shp, spc=200):
+        """글자 사이 간격(100 = 1pt) — 작은 영문 라벨을 고급스럽게"""
+        for para in shp.text_frame.paragraphs:
+            for r in para.runs:
+                r._r.get_or_add_rPr().set("spc", str(spc))
         return shp
 
-    def orb(self, cx, cy, d, color, s=None, a=100):
-        """구슬 — 빛이 맺힌 둥근 그라데이션 + 그림자"""
-        o = self.shape(SH.OVAL, cx - d / 2, cy - d / 2, d, d, fill=color, name="구슬", s=s)
-        self.grad(o, _mix(color, "#FFFFFF", 0.7), _mix(color, "#000000", 0.08), radial=True, a1=a, a2=a, c3=color)
-        self.shadow(o, color=_mix(color, "#000000", 0.45), blur=d * 9, dist=d * 3.5, alpha=26)
-        return o
+    def _glyph(self, s, kind, cx, cy, d, color):
+        """아주 작은 포인트 도형(별·원·더하기·물결·반원) — 한 장에 하나만"""
+        k = {"star": SH.STAR_4_POINT, "dot": SH.OVAL, "plus": SH.MATH_PLUS, "ring": SH.DONUT, "heart": SH.HEART, "moon": SH.MOON,
+             "sun": SH.SUN, "drop": SH.TEAR, "wave": SH.WAVE, "arch": SH.ROUND_2_SAME_RECTANGLE}[kind]
+        shp = self.shape(k, cx - d / 2, cy - d / 2, d, d if kind != "wave" else d * 0.4, fill=color, name="포인트", s=s, rot=315 if kind == "drop" else 0)
+        return shp
 
-    def sparkle(self, cx, cy, d, color="#FFFFFF", s=None):
-        o = self.shape(SH.STAR_4_POINT, cx - d / 2, cy - d / 2, d, d, fill=color, name="반짝임", s=s, adj=0.18)
-        self.shadow(o, blur=d * 10, alpha=70, glow=color)
-        return o
-
-    def glass(self, x, y, w, h, radius=0.1, s=None, name="유리 카드"):
-        """반투명 흰 카드 + 얇은 흰 테두리 + 부드러운 그림자"""
-        c = self.shape(SH.ROUNDED_RECTANGLE, x, y, w, h, fill="#FFFFFF", line="#FFFFFF", lw=1.5, adj=radius, name=name, s=s)
-        self.alpha(c, 62)
-        self.shadow(c, color=_mix(self.pal["main"], "#000000", 0.5), blur=26, dist=8, alpha=18)
-        return c
-
-    def _mesh(self, s, path):
-        if path:
-            s.shapes.add_picture(path, 0, 0, Inches(self.W), Inches(self.H)).name = "배경"
-
-    def _cluster(self, s, cx, cy, k, seed):
-        """테마 소재(꽃·눈·달 …) + 구슬 몇 개 + 반짝임 — 한 덩어리 장식"""
-        p = self.pal
-        r = random.Random(self.ti * 17 + seed)
-        cols = [p["main"], p["accent"], p["tint"], _mix(p["main"], p["accent"], 0.5)]
-        self.motif(cx, cy, 2.3 * k, cols=(p["main"], p["tint"], p["accent"]), seed=seed)
-        for n in range(3):
-            self.orb(cx + r.uniform(-1.3, 1.3) * k, cy + r.uniform(-1.2, 1.2) * k, r.uniform(0.3, 0.8) * k, cols[n % 4], s=s)
-        for n in range(3):
-            self.sparkle(cx + r.uniform(-1.6, 1.6) * k, cy + r.uniform(-1.4, 1.4) * k, r.uniform(0.18, 0.4) * k, s=s)
+    GLYPH = ["star", "dot", "plus", "ring", "heart", "moon", "sun", "drop", "wave", "arch"]
 
     def _frame_modern(self, s, cover):
         p, W, H, v = self.pal, self.W, self.H, self.style % 10
         wide = W > H
+        sh = lambda *a, **k: self.shape(*a, s=s, name="장식", **k)
         s.background.fill.solid()
-        s.background.fill.fore_color.rgb = rgb(p["paper"])
-        self._mesh(s, self.cover_mesh if cover else self.page_mesh)
         if cover:
-            self._cover_modern(s, v, wide)
+            self._cover_modern(s, v, wide, sh)
             return
-        corner = [(W - 1.2, 0.8, 0.62), (W - 2.2, 0.72, 0.5), (W - 1.0, 0.9, 0.7), (W - 3.0, 0.7, 0.46), (W - 1.7, 0.85, 0.58), (W - 2.6, 0.9, 0.55), (W - 0.9, 0.65, 0.52), (W - 1.5, 0.75, 0.66), (W - 2.0, 0.95, 0.6), (W - 1.3, 0.7, 0.56)][v]
-        self._cluster(s, corner[0], corner[1], corner[2], 1 + (self.occ % 3))
-        self.title_color, self.tbox = p["dark"], (0.7, 0.5, W - 3.2, 0.95)
-        self.rect = (0.7, 1.75, W - 0.7, H - 0.65)
-        pill = self.shape(SH.ROUNDED_RECTANGLE, 0.7, H - 0.5, 3.6, 0.3, fill="#FFFFFF", line=None, adj=0.5, name="꼬리말 칩", s=s)
-        self.alpha(pill, 60)
-        self.text(0.8, H - 0.5, 3.5, 0.3, self.label, size=9, bold=True, color=p["dark"], anchor="m", name="꼬리말", s=s)
+        occ = self.occ % 5
+        bgc = [p["paper"], "#FFFFFF", p["pale"], p["soft"], "#FFFFFF"][occ]
+        s.background.fill.fore_color.rgb = rgb(bgc)
+        if occ == 4:
+            sh(SH.RECTANGLE, 0, H - 0.32, W, 0.32, fill=p["tint"])
+        hd = v % 5
+        gk = self.GLYPH[(v + self.occ + 3 * self.item) % 10]
+        self.title_color = p["ink"]
+        self.rect = (0.7, 1.95, W - 0.7, H - (0.75 if occ == 4 else 0.55))
+        if hd == 0:    # 위 얇은 선 + 작은 영문 라벨 + 포인트
+            sh(SH.RECTANGLE, 0.7, 0.62, W - 1.4, 0.012, fill=p["ink"])
+            self.track(self.text(0.7, 0.26, 6.0, 0.3, self.label, size=9, bold=True, color=p["ink"], anchor="m", name="상단 라벨", s=s), 250)
+            self._glyph(s, gk, W - 0.95, 0.4, 0.26, p["main"])
+            self.tbox = (0.7, 0.8, W - 1.4, 0.9)
+        elif hd == 1:  # 제목 옆 세로 막대
+            sh(SH.ROUNDED_RECTANGLE, 0.7, 0.62, 0.07, 0.95, fill=p["main"], adj=0.5)
+            self.track(self.text(0.95, 0.3, 6.0, 0.3, self.label, size=9, bold=True, color="#8E8780", anchor="m", name="상단 라벨", s=s), 250)
+            self._glyph(s, gk, W - 0.95, 0.9, 0.34, p["tint"])
+            self.tbox = (0.95, 0.62, W - 3.0, 0.95)
+        elif hd == 2:  # 가운데 정렬 제목 + 작은 포인트 + 짧은 선
+            self._glyph(s, gk, W / 2, 0.42, 0.3, p["main"])
+            sh(SH.RECTANGLE, W / 2 - 0.45, 1.72, 0.9, 0.025, fill=p["main"])
+            self.track(self.text(0.7, 0.2, 4.0, 0.3, self.label, size=8, bold=True, color="#8E8780", anchor="m", name="상단 라벨", s=s), 250)
+            self.tbox = (1.5, 0.7, W - 3.0, 0.95)
+            self.tal = "c"
+        elif hd == 3:  # 아래 얇은 선 + 라벨(아래), 위는 제목만
+            sh(SH.RECTANGLE, 0.7, H - 0.5, W - 1.4, 0.012, fill=p["ink"])
+            self.track(self.text(0.7, H - 0.46, 6.0, 0.3, self.label, size=9, bold=True, color=p["ink"], anchor="m", name="하단 라벨", s=s), 250)
+            self._glyph(s, gk, W - 0.95, H - 0.3, 0.24, p["main"])
+            self.tbox = (0.7, 0.55, W - 1.4, 1.0)
+            self.rect = (0.7, 1.75, W - 0.7, H - 0.75)
+        else:          # 모서리 큰 연한 원 + 라벨
+            sh(SH.OVAL, W - 2.2, -1.8, 3.8, 3.8, fill=p["tint"])
+            self.track(self.text(0.7, 0.3, 6.0, 0.3, self.label, size=9, bold=True, color=p["ink"], anchor="m", name="상단 라벨", s=s), 250)
+            self._glyph(s, gk, W - 1.1, 0.7, 0.3, "#FFFFFF")
+            self.tbox = (0.7, 0.72, W - 3.4, 0.95)
+        self.card_style = (v // 2) % 5
+        self.badge_style = v % 5
 
-    def _cover_modern(self, s, v, wide):
-        p, W, H = self.pal, self.W, self.H
-        if not wide:  # 정사각 카드뉴스
-            self._cluster(s, W * 0.5, 2.5, 1.35, 3)
-            self.glass(0.6, 4.7, W - 1.2, 2.3, s=s)
-            self.text(0.9, 4.78, W - 1.8, 0.35, self.label, size=11, bold=True, color=p["main"], align="c", name="계절 라벨", s=s)
-            self.tbox, self.sbox = (0.9, 5.15, W - 1.8, 1.0), (0.9, 6.15, W - 1.8, 0.7)
-            self.title_color, self.cal = p["dark"], "c"
+    def _cover_modern(self, s, v, wide, sh):
+        p, W, H, occ = self.pal, self.W, self.H, self.occ
+        inv = occ in (2, 3)          # 어두운 바탕 표지
+        mirror = occ in (1, 3)       # 좌우 반전
+        tinted = occ == 4            # 파스텔 바탕 표지
+        ink = "#FFFFFF" if inv else p["ink"]
+        bg = p["dark"] if inv else (p["soft"] if tinted else p["pale"])
+        shape_c = p["main"] if not tinted else "#FFFFFF"
+        shape2 = p["tint"] if not inv else _mix(p["main"], p["dark"], 0.35)
+        s.background.fill.fore_color.rgb = rgb(bg)
+        fx = (lambda x, w=0: W - x - w) if mirror else (lambda x, w=0: x)
+        lab = f"{self.label}"
+        if not wide:  # 정사각(카드뉴스): 위에 큰 도형, 아래 제목
+            sh(SH.OVAL, W / 2 - 2.0, 0.9, 4.0, 4.0, fill=shape_c)
+            sh(SH.OVAL, W / 2 - 0.2, 0.55, 0.9, 0.9, fill=shape2)
+            self.track(self.text(0.8, 5.0, W - 1.6, 0.3, lab, size=10, bold=True, color=ink, align="c", name="라벨", s=s), 250)
+            self.tbox, self.sbox = (0.8, 5.35, W - 1.6, 1.0), (0.8, 6.35, W - 1.6, 0.7)
+            self.title_color, self.cal = ink, "c"
+            self.cover_sub = ink
             return
-        # 큰 반투명 숫자(2027) — 뒤에서 은은하게
-        # (카드 x,y,w,h, 글 정렬, 장식 중심 x,y, 크기) — 카드는 라벨·제목·문구·안내 줄이 모두 들어가도록 높이 3.9in 이상
-        L = [(0.07, 0.2, 0.5, 0.6, "l", 0.8, 0.5, 1.5), (0.06, 0.4, 0.62, 0.52, "l", 0.82, 0.36, 1.4), (0.2, 0.24, 0.6, 0.56, "c", 0.1, 0.2, 1.0),
-             (0.43, 0.18, 0.5, 0.64, "l", 0.2, 0.5, 1.5), (0.14, 0.4, 0.72, 0.52, "c", 0.5, 0.2, 1.3), (0.06, 0.12, 0.55, 0.56, "l", 0.82, 0.65, 1.6),
-             (0.05, 0.1, 0.42, 0.8, "l", 0.78, 0.5, 1.6), (0.4, 0.1, 0.52, 0.56, "l", 0.2, 0.6, 1.5), (0.1, 0.26, 0.58, 0.54, "l", 0.84, 0.3, 1.3), (0.15, 0.4, 0.7, 0.52, "c", 0.5, 0.18, 1.4)][v]
-        cx_, cy_, cw_, ch_, al, ox, oy, ok = L
-        mir = self.occ in (1, 3)
-        if al == "l":  # 카드 반대편에 큰 숫자를 은은하게
-            cxn = (1 - cx_ - cw_) if mir else cx_
-            n = self.text(W * (0.5 if cxn < 0.3 else 0.02), H * 0.66, W * 0.48, 2.6, "2027", size=150, bold=True, color="#FFFFFF", align="r" if cxn < 0.3 else "l", name="큰 숫자", s=s)
-            for r_ in n.text_frame.paragraphs[0].runs:
-                cl = r_._r.find(f".//{{{A}}}srgbClr")
-                etree.SubElement(cl, f"{{{A}}}alpha", val="55000")
-        mirror, nocard, double = self.occ in (1, 3), self.occ in (2, 3), self.occ == 4
-        if mirror:
-            cx_, ox = 1 - cx_ - cw_, 1 - ox
-        self._cluster(s, W * ox, H * oy, ok, 2 + self.occ)
-        if double:
-            back = self.shape(SH.ROUNDED_RECTANGLE, W * cx_ + 0.35, H * cy_ + 0.35, W * cw_, H * ch_, fill=p["main"], line="#FFFFFF", lw=1.5, adj=0.1, name="겹친 카드", s=s)
-            self.alpha(back, 22)
-        if nocard:
-            chip = self.shape(SH.ROUNDED_RECTANGLE, W * cx_ + 0.3, H * cy_ + 0.28, 3.4, 0.42, fill="#FFFFFF", line=None, adj=0.5, name="라벨 칩", s=s)
-            self.alpha(chip, 70)
-            self.shape(SH.RECTANGLE, W * cx_ + 0.3, H * cy_ + 2.45, 1.2 if al == "l" else 0.0001, 0.05, fill=p["main"], name="밑줄", s=s)
-        else:
-            self.glass(W * cx_, H * cy_, W * cw_, H * ch_, s=s)
-        pad = 0.5
-        tx, tw = W * cx_ + pad, W * cw_ - pad * 2
-        ty = H * cy_ + 0.45
-        self.text(tx, ty, tw, 0.35, self.label, size=12, bold=True, color=p["main"], align=al, name="계절 라벨", s=s)
-        self.tbox, self.sbox = (tx, ty + 0.45, tw, 1.3), (tx, ty + 1.85, tw, 1.2)
-        self.title_color, self.cal = p["dark"], al
+        tx, ty, tw = 0.9, H * 0.38, W * 0.46
+        al = "l"
+        if v == 0:   # 아치
+            sh(SH.ROUND_2_SAME_RECTANGLE, fx(W * 0.62, W * 0.26), H * 0.1, W * 0.26, H * 0.8, fill=shape_c, adj=0.5)
+            sh(SH.OVAL, fx(W * 0.56, 1.1), H * 0.62, 1.1, 1.1, fill=shape2)
+        elif v == 1:  # 큰 원 두 겹
+            sh(SH.OVAL, fx(W * 0.52, 7.2), H * 0.5 - 3.6, 7.2, 7.2, fill=shape2)
+            sh(SH.OVAL, fx(W * 0.6, 4.6), H * 0.5 - 2.3, 4.6, 4.6, fill=shape_c)
+        elif v == 2:  # 오른쪽 색 면 + 안쪽 얇은 선 프레임
+            sh(SH.RECTANGLE, fx(W * 0.64, W * 0.36), 0, W * 0.36, H, fill=shape_c)
+            sh(SH.RECTANGLE, fx(W * 0.67, W * 0.3), 0.4, W * 0.3, H - 0.8, fill=None, line=ink if not inv else "#FFFFFF", lw=0.75)
+        elif v == 3:  # 위쪽 색 면 + 걸친 원
+            sh(SH.RECTANGLE, 0, 0, W, H * 0.46, fill=shape_c)
+            sh(SH.OVAL, fx(W * 0.72, 2.6), H * 0.46 - 1.3, 2.6, 2.6, fill=shape2)
+            tx, ty, tw = 0.9, H * 0.6, W * 0.6
+        elif v == 4:  # 어긋난 사각 + 선 프레임
+            sh(SH.ROUNDED_RECTANGLE, fx(W * 0.58, W * 0.3), H * 0.14, W * 0.3, H * 0.66, fill=shape_c, adj=0.04)
+            sh(SH.ROUNDED_RECTANGLE, fx(W * 0.62, W * 0.3), H * 0.18, W * 0.3, H * 0.66, fill=None, line=ink if not inv else "#FFFFFF", lw=0.75, adj=0.04)
+        elif v == 5:  # 아치 세 개
+            for k, c in enumerate((shape2, shape_c, p["soft"] if not inv else shape2)):
+                sh(SH.ROUND_2_SAME_RECTANGLE, fx(W * (0.56 + k * 0.13), W * 0.12), H * (0.3 - 0.07 * k), W * 0.12, H * (0.7 + 0.07 * k), fill=c, adj=0.5)
+        elif v == 6:  # 글만 가운데 — 작은 원 하나와 선
+            sh(SH.OVAL, W / 2 - 0.45, H * 0.16, 0.9, 0.9, fill=shape_c)
+            sh(SH.RECTANGLE, W / 2 - 0.6, H * 0.68, 1.2, 0.02, fill=ink)
+            tx, ty, tw, al = W * 0.15, H * 0.34, W * 0.7, "c"
+        elif v == 7:  # 왼쪽 색 면
+            sh(SH.RECTANGLE, fx(0, W * 0.3), 0, W * 0.3, H, fill=shape_c)
+            sh(SH.OVAL, fx(W * 0.3 - 0.6, 1.2), H * 0.5 - 0.6, 1.2, 1.2, fill=shape2)
+            tx, ty, tw = W * 0.38, H * 0.38, W * 0.55
+            if mirror:
+                tx = 0.9
+        elif v == 8:  # 모서리 큰 원 + 작은 점
+            sh(SH.OVAL, fx(-1.6, 6.0), H - 3.4, 6.0, 6.0, fill=shape_c)
+            sh(SH.OVAL, fx(W * 0.82, 0.5), H * 0.2, 0.5, 0.5, fill=shape2)
+            sh(SH.OVAL, fx(W * 0.9, 0.2), H * 0.36, 0.2, 0.2, fill=shape_c)
+            tx, ty = 0.9 if not mirror else W * 0.42, H * 0.3
+        else:         # 반쪽 원
+            sh(SH.OVAL, fx(W * 0.58, 7.0), -3.5, 7.0, 7.0, fill=shape2)
+            sh(SH.OVAL, fx(W * 0.7, 3.6), -1.0, 3.6, 3.6, fill=shape_c)
+        if mirror and v in (0, 1, 2, 4, 5, 9):  # 도형이 왼쪽으로 옮겨 갔으니 글은 오른쪽에
+            tx, tw = W * 0.56, W * 0.38
+        self.track(self.text(tx, ty - 0.5, tw, 0.3, lab, size=10, bold=True, color=ink, align=al, name="라벨", s=s), 250)
+        self.tbox, self.sbox = (tx, ty, tw, 1.3), (tx, ty + 1.4, tw, 1.4)
+        self.title_color, self.cal = ink, al
+        self.cover_sub = ink
 
     # ── 프레임(10가지)
     def _frame(self, s, cover):

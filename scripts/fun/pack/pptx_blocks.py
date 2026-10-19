@@ -6,9 +6,9 @@ def cover(d, title, extra=(), message="", size=None):
     d.slide(cover=True)
     d.title(title, size=size or d.cover_size, align=d.cal)
     x, y, w, h = d.sbox
-    d.text(x, y, w, 0.9, message, size=17 if d.W > d.H else 15, italic=not d.modern, color=d.pal["dark"], align=d.cal, name="한 줄 문구")
+    d.text(x, y, w, 0.9, message, size=17 if d.W > d.H else 15, italic=not d.modern, color=getattr(d, "cover_sub", None) if d.modern else d.pal["dark"], align=d.cal, name="한 줄 문구")
     if extra:
-        d.text(x, y + 0.95, w, 1.0, list(extra), size=14 if d.W > d.H else 12, color="#666666", align=d.cal, name="안내 문구")
+        d.text(x, y + 0.95, w, 1.0, list(extra), size=14 if d.W > d.H else 12, color=(getattr(d, "cover_sub", None) if d.modern else "#666666"), align=d.cal, name="안내 문구")
 
 
 def heading(d, text, size=30):
@@ -18,11 +18,17 @@ def heading(d, text, size=30):
 
 def badge(d, x, y, n, dia=0.5, size=16):
     p = d.pal
-    o = d.shape(SH.OVAL, x, y, dia, dia, fill=p["main"], name=f"번호 {n}")
-    if d.modern:
-        d.grad(o, p["accent"], p["main"], angle=45)
-        d.shadow(o, color=p["main"], blur=8, dist=3, alpha=35)
-    d._fill_text(o.text_frame, str(n), size, True, "#FFFFFF", "c", "m", False, 1.0, False)
+    bs = d.badge_style if d.modern else 0
+    if bs == 2:    # 큰 숫자만
+        d.text(x - 0.1, y - 0.05, dia + 0.5, dia + 0.1, f"{n:02d}", size=size + 8, bold=True, color=p["main"], anchor="m", name=f"번호 {n}")
+        return
+    if bs == 1:    # 윤곽 동그라미
+        o = d.shape(SH.OVAL, x, y, dia, dia, fill=None, line=p["main"], lw=1.5, name=f"번호 {n}")
+        d._fill_text(o.text_frame, str(n), size, True, p["dark"], "c", "m", False, 1.0, False)
+        return
+    kind = SH.ROUNDED_RECTANGLE if bs == 3 else SH.OVAL
+    o = d.shape(kind, x, y, dia, dia, fill=p["accent"] if bs == 4 else p["main"], name=f"번호 {n}", adj=0.25 if bs == 3 else None)
+    d._fill_text(o.text_frame, str(n), size, True, d.on_main, "c", "m", False, 1.0, False)
 
 
 def cards(d, items, y=None, h=None, size=16, head_size=18, numbered=True, fill=None):
@@ -101,7 +107,7 @@ def two_col(d, left, right, y=None, h=None, size=15):
         x = l + k * (cw + gap)
         d.box(x, y, cw, h, fill=p["pale"] if k == 0 else p["soft"], line=p["soft"], name=f"{'왼쪽' if k == 0 else '오른쪽'} 칸")
         d.shape(SH.ROUNDED_RECTANGLE, x, y, cw, 0.7, fill=p["main"] if k == 0 else p["dark"], adj=0.25, name="칸 제목 바")
-        d.text(x + 0.2, y, cw - 0.4, 0.7, head, size=18 if d.W > d.H else 16, bold=True, color="#FFFFFF", anchor="m")
+        d.text(x + 0.2, y, cw - 0.4, 0.7, head, size=18 if d.W > d.H else 16, bold=True, color=d.on_main if k == 0 else "#FFFFFF", anchor="m")
         d.text(x + 0.25, y + 0.9, cw - 0.5, h - 1.0, body, size=size, bullet=True, spacing=1.3, space_after=6)
 
 

@@ -6,7 +6,7 @@ from pptx_kit import Deck
 
 
 COVER = {"dir": None, "key": None}
-MODERN = {"on": False, "mesh_dir": None, "label": ""}  # 새 디자인(파스텔·미니멀)  # make_pptx_pack 이 표지 그림 폴더와 항목 키를 넣어 줍니다
+MODERN = {"on": False, "item": 0, "label": ""}  # 새 디자인(파스텔·미니멀)  # make_pptx_pack 이 표지 그림 폴더와 항목 키를 넣어 줍니다
 
 
 def new(i, pal, title, size="wide"):
@@ -17,11 +17,11 @@ def new(i, pal, title, size="wide"):
         assert os.path.exists(img), f"표지 그림이 없습니다: {img}"
     if MODERN["on"]:
         import pptx_style as ST
-        k = "" if size == "wide" else "s"
-        d = Deck(pal, style, i, size, title, modern=True, label=f"{ST.SEASON_EN[pal['season']]} · {MODERN['label']}")
-        d.occ = sum(1 for j in range(i) if (j // 5 + 3 * (j % 5)) % 10 == style)  # 같은 구도 중 몇 번째인지
-        d.cover_mesh = os.path.join(MODERN["mesh_dir"], f"c{k}{i + 1:02d}.jpg")
-        d.page_mesh = os.path.join(MODERN["mesh_dir"], f"p{k}{i + 1:02d}.jpg")
+        shift = 3 * MODERN["item"]  # 항목(발표·가족·…)마다 구도를 돌려서, 같은 테마도 항목마다 다른 모습이 되게 합니다
+        st = (style + shift) % 10
+        d = Deck(pal, st, i, size, title, modern=True, label=f"{ST.SEASON_EN[pal['season']]}  ·  {MODERN['label']}")
+        d.occ = sum(1 for j in range(i) if ((j // 5 + 3 * (j % 5)) + shift) % 10 == st)  # 같은 구도 중 몇 번째인지(0~4)
+        d.item = MODERN["item"]
         return d
     return Deck(pal, style, i, size, title, cover_img=img)
 

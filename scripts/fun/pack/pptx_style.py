@@ -9,10 +9,10 @@ import pack_kit as pk
 
 # 계절별 (채도, main 밝기, 포인트 hue, 포인트 채도)
 SEASON = {
-    "봄": (0.66, 0.64, 150, 0.45),
-    "여름": (0.70, 0.54, 48, 0.85),
-    "가을": (0.52, 0.52, 38, 0.65),
-    "겨울": (0.50, 0.58, 262, 0.50),
+    "봄": (0.70, 0.76, 150, 0.45),
+    "여름": (0.72, 0.70, 48, 0.85),
+    "가을": (0.55, 0.66, 38, 0.65),
+    "겨울": (0.55, 0.74, 262, 0.50),
 }
 SEASON_EN = {"봄": "SPRING", "여름": "SUMMER", "가을": "AUTUMN", "겨울": "WINTER"}
 # 이 테마들은 hue 가 어두운 갈색·회색에 가까워 계절 규칙을 그대로 쓰면 탁해 보여서 hue 를 조금 옮깁니다
@@ -20,22 +20,22 @@ HUE_FIX = {}
 
 
 def palette(i):
+    """테마 i → 팔레트. 먹색 글자 + 한 가지 선명한 파스텔 + 아주 연한 크림 바탕"""
     name, h, s, l = pk.THEMES[i]
     season = pk.season_of(i)
     ss, ml, ah, asat = SEASON[season]
-    h = HUE_FIX.get(i, h)
     hx = pk._hex
     return {
         "name": name,
         "season": season,
         "main": hx(h, ss, ml),
-        "dark": hx(h, min(0.5, ss * 0.7), 0.24),
-        "soft": hx(h, min(0.85, ss + 0.1), 0.91),
-        "pale": hx(h, min(0.85, ss + 0.1), 0.965),
-        "tint": hx(h, min(0.8, ss), 0.82),   # 표지 큰 면에 쓰는 한 단계 진한 파스텔
-        "accent": hx(ah, asat, 0.62),
-        "paper": "#FFFEFC",
-        "ink": "#2F2A28",
+        "dark": hx(h, 0.30, 0.22),
+        "tint": hx(h, min(0.85, ss + 0.05), 0.80),
+        "soft": hx(h, min(0.85, ss + 0.1), 0.90),
+        "pale": hx(h, min(0.8, ss + 0.1), 0.955),
+        "paper": hx(h, 0.40, 0.985),
+        "accent": hx(h + 28, ss, ml + 0.08),
+        "ink": "#26231F",
     }
 
 
