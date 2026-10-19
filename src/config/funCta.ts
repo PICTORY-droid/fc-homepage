@@ -18,3 +18,14 @@ export const funCtas: Record<string, FunCta> = {
 };
 
 export const getFunCta = (group: string, item: string): FunCta | undefined => funCtas[`${group}/${item}`];
+
+// 명함 분류 페이지 끝 안내 — 가게·프리랜서처럼 보험과 이어지는 분류에만 둡니다. (키: 명함 분류)
+export const cardCtas: Record<string, FunCta> = {
+  food: { title: "가게를 운영하신다면", text: "사장님이 챙기면 좋은 보험은 무엇인지 알기 쉽게 안내해 드려요.", topic: "business", button: "사장님 보험 상담" },
+  beauty: { title: "샵을 운영하신다면", text: "일하는 분들과 가게를 위해 확인할 점을 편하게 물어보세요.", topic: "business", button: "사업장 보험 상담" },
+  life: { title: "동네 가게 사장님께", text: "가게와 가족을 위해 살펴볼 보험을 쉽게 설명해 드립니다.", topic: "business", button: "사장님 보험 상담" },
+  creative: { title: "프리랜서로 일하신다면", text: "회사의 보호 없이 일할 때 확인하면 좋은 점을 안내해 드려요.", topic: "other", button: "프리랜서 보험 상담" },
+  expert: { title: "혼자 일하는 전문가께", text: "소득과 건강을 스스로 챙겨야 할 때 살펴볼 점을 안내해 드립니다.", topic: "other", button: "보장 점검 상담" },
+};
+
+export const getCardCta = (category: string): FunCta | undefined => cardCtas[category];

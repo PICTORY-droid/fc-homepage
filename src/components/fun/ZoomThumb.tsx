@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
 // 미리보기 그림을 누르면 큰 그림이 창으로 열리고, 닫기 버튼·바깥 클릭·Esc 키로 닫힙니다.
-export function ZoomThumb({ thumb, large, alt, title }: { thumb: string; large: string; alt: string; title: string }) {
+export function ZoomThumb({ thumb, large, alt, title, aspect = 794 / 1123 }: { thumb: string; large: string; alt: string; title: string; aspect?: number }) {
   const ref = useRef<HTMLDialogElement>(null);
   const [open, setOpen] = useState(false);
 
@@ -17,7 +17,7 @@ export function ZoomThumb({ thumb, large, alt, title }: { thumb: string; large: 
 
   return (
     <>
-      <button type="button" onClick={() => setOpen(true)} aria-label={`${title} 미리보기 크게 보기`} className="relative block aspect-[794/1123] w-full cursor-zoom-in bg-paper-gray">
+      <button type="button" onClick={() => setOpen(true)} aria-label={`${title} 미리보기 크게 보기`} style={{ aspectRatio: aspect }} className="relative block w-full cursor-zoom-in bg-paper-gray">
         <Image src={thumb} alt={alt} fill sizes="(min-width:1024px) 20vw, (min-width:640px) 33vw, 50vw" className="object-cover" />
       </button>
       <dialog ref={ref} onClose={() => setOpen(false)} onClick={(e) => { if (e.target === ref.current) setOpen(false); }} aria-label={`${title} 미리보기`}

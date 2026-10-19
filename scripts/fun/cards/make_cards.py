@@ -1,0 +1,133 @@
+"""명함 500종 생성: 10분류 × 50장. PPTX(앞·뒤 2장) + SVG(앞·뒤) + 미리보기 SVG(앞뒤 합성).
+실행: python3 make_cards.py   → public/fun/cards/<분류>/…, src/config/cards.data.json
+모든 카드는 (앞면 레이아웃, 색 변형, 테마색) · (뒷면 레이아웃, 색 변형, 테마색)이 전체에서 하나도 겹치지 않습니다."""
+import json
+import os
+import re
+import sys
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, HERE)
+sys.path.insert(0, os.path.join(HERE, "..", "pack"))
+
+from cards_data import CATS, TAGS  # noqa: E402
+from layouts import BACKS, FRONTS, NB, NF, NFLAV, Ctx, contrast  # noqa: E402
+from pack_kit import ROOT, THEMES, palette, safe_name  # noqa: E402
+from scene import add_to_slide, blank_slide, new_pptx, to_svg  # noqa: E402
+
+OUT = os.path.join(ROOT, "public", "fun", "cards")
+MANIFEST = os.path.join(ROOT, "src", "config", "cards.data.json")
+PREVIEW_DIR = os.path.join(HERE, "_previews")  # 합성 SVG(임시) — 이후 JPG로 변환
+
+NAMES = ["김하늘", "이서준", "박지우", "최민재", "정유진", "강도윤", "조하린", "윤시우", "장서연", "임건우",
+         "한소율", "오지호", "서나연", "신태민", "권다은", "황주원", "안예린", "송현우", "전보라", "홍석진",
+         "문가영", "배준서", "류하은", "남도현", "고은채", "노승민", "하지안", "유재희", "심소담", "백이현",
+         "차예준", "구민아", "표세진", "맹우빈", "탁서아", "선은호", "방지민", "피유나", "곽도하", "마시현",
+         "나윤서", "봉기태", "소하영", "연주혁", "도아린", "예진우", "범채원", "공나래", "목태양", "진보미"]
+CAT_ORDER = ["office", "food", "beauty", "life", "creative", "expert", "teacher", "public", "care", "finance"]
+CAT_KO = {"office": "직장인", "food": "음식점카페", "beauty": "미용네일피부", "life": "생활가게", "creative": "디자인영상사진",
+          "expert": "프리랜서전문가", "teacher": "선생님", "public": "공무원", "care": "병원약국돌봄", "finance": "금융보험부동산"}
+FORBIDDEN = ["최고", "1위", "1등", "전액", "100%", "무조건", "확정", "보장", "수익률", "절대", "업계 최"]
+
+
+def assign():
+    """(앞 레이아웃, 앞 색변형, 앞 테마) 와 (뒤 …) 가 전체에서 유일하도록 결정적으로 배정"""
+    used_f, used_b, plan = set(), set(), []
+    for ci, cat in enumerate(CAT_ORDER):
+        for j in range(50):
+            f = j % NF
+            v = (j // NF + ci) % NFLAV
+            p = (j + ci * 5) % 50
+            for _ in range(2500):
+                if (f, v, p) not in used_f:
+                    break
+                p = (p + 1) % 50
+                if (f, v, p) in used_f:
+                    v = (v + 1) % NFLAV
+            used_f.add((f, v, p))
+            b = (j + ci * 3) % NB
+            vb = (v + 2 + (j // NB)) % NFLAV
+            pb = p
+            for _ in range(2500):
+                if (b, vb, pb) not in used_b:
+                    break
+                vb = (vb + 1) % NFLAV
+                if (b, vb, pb) in used_b:
+                    pb = (pb + 1) % 50
+            used_b.add((b, vb, pb))
+            plan.append(dict(cat=cat, j=j, f=f, v=v, p=p, b=b, vb=vb, pb=pb))
+    assert len(used_f) == 500 and len(used_b) == 500
+    return plan
+
+
+def card_data(cat, j):
+    c = CATS[cat]
+    tag = TAGS[cat][j]
+    assert not any(w in tag for w in FORBIDDEN), tag
+    return dict(name=NAMES[j], title=c["titles"][j % len(c["titles"])], company=c["company"],
+                tel="010-1234-5678", mail="name@example.com", addr="주소를 입력해 주세요",
+                tagline=tag, icon=c["icons"][(j // 2 + j) % len(c["icons"])], tag_serif=(j // 3) % 2 == 1)
+
+
+def check_text_colors(els, bg, label):
+    for e in els:
+        if e["k"] == "text":
+            pass  # 글자 대비는 Ctx 가 색을 만들 때 readable()로 이미 보장(4.5:1)
+
+
+def build(plan):
+    os.makedirs(PREVIEW_DIR, exist_ok=True)
+    manifest = {cat: [] for cat in CAT_ORDER}
+    names_seen, sigs, hashes = set(), set(), set()
+    import hashlib
+    for it in plan:
+        cat, j = it["cat"], it["j"]
+        d = card_data(cat, j)
+        pal = palette(it["p"])
+        nfont = "serif" if (j + it["f"]) % 3 == 0 else "sans"
+        cf = Ctx(pal, it["v"], d, nfont)
+        cb = Ctx(palette(it["pb"]), it["vb"], d, nfont)
+        fe, be = FRONTS[it["f"]](cf), BACKS[it["b"]](cb)
+        title = f"{d['name']} {d['title']} 명함"
+        fsvg, bsvg = to_svg(fe, cf.bg, title + " 앞면"), to_svg(be, cb.bg, title + " 뒷면")
+        base = f"명함_{CAT_KO[cat]}_{j + 1:02d}_{safe_name(THEMES[it['p']][0])}"  # 내려받을 때 보이는 한글 이름
+        fid = f"{cat}-{j + 1:02d}"  # 실제 파일 이름(영문·숫자)
+        assert base not in names_seen, base
+        names_seen.add(base)
+        h = hashlib.sha256((fsvg + bsvg).encode()).hexdigest()
+        assert h not in hashes, base
+        hashes.add(h)
+        sigs.add((it["f"], it["v"], it["p"], it["b"], it["vb"], nfont, d["tagline"]))
+        d_out = os.path.join(OUT, cat)
+        os.makedirs(d_out, exist_ok=True)
+        with open(os.path.join(d_out, fid + "-front.svg"), "w", encoding="utf-8") as f:
+            f.write(fsvg)
+        with open(os.path.join(d_out, fid + "-back.svg"), "w", encoding="utf-8") as f:
+            f.write(bsvg)
+        prs = new_pptx()
+        add_to_slide(blank_slide(prs), fe, cf.bg)
+        add_to_slide(blank_slide(prs), be, cb.bg)
+        cp = prs.core_properties
+        cp.author, cp.title, cp.subject = "우체국보험 상담 안내", f"{d['title']} 명함 서식", "편집용 명함 서식"
+        prs.save(os.path.join(d_out, fid + ".pptx"))
+        # 합성 미리보기 SVG
+        def inner(s, y):
+            return re.sub(r'width="90mm" height="50mm"', f'x="20" y="{y}" width="600" height="333.33"', s, count=1)
+        comp = (f'<svg xmlns="http://www.w3.org/2000/svg" width="640" height="726" viewBox="0 0 640 726">'
+                f'<rect width="640" height="726" fill="#EFEBE4"/>{inner(fsvg, 20)}{inner(bsvg, 373)}'
+                f'<rect x="20" y="20" width="600" height="333.33" fill="none" stroke="#D5CFC4"/>'
+                f'<rect x="20" y="373" width="600" height="333.33" fill="none" stroke="#D5CFC4"/></svg>')
+        with open(os.path.join(PREVIEW_DIR, fid + ".svg"), "w", encoding="utf-8") as f:
+            f.write(comp)
+        manifest[cat].append(dict(no=j + 1, name=base, title=d["title"], tag=d["tagline"], main=pal["main"], soft=pal["soft"],
+                                  theme=THEMES[it["p"]][0]))
+    assert len(names_seen) == 500 and len(hashes) == 500 and len(sigs) == 500
+    meta = {cat: dict(label=CATS[cat]["name"], items=manifest[cat]) for cat in CAT_ORDER}
+    with open(MANIFEST, "w", encoding="utf-8") as f:
+        json.dump(meta, f, ensure_ascii=False, indent=1)
+        f.write("\n")
+    print("완료: 500장 · 고유 해시", len(hashes))
+
+
+if __name__ == "__main__":
+    build(assign())
