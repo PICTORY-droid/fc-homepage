@@ -28,10 +28,10 @@ const nn = (n: number) => String(n).padStart(2, "0");
 const base = (c: CardCategoryKey, no: number) => `/fun/cards/${c}/${c}-${nn(no)}`;
 
 export const cardPptx = (c: CardCategoryKey, no: number) => `${base(c, no)}.pptx`;
-export const cardSvg = (c: CardCategoryKey, no: number, side: "front" | "back") => `${base(c, no)}-${side}.svg`;
+export const cardSvg = (c: CardCategoryKey, no: number) => `${base(c, no)}.svg`; // 앞면·뒷면이 한 파일에 위아래로 들어 있음
 export const cardThumb = (c: CardCategoryKey, no: number) => `/fun/cards/${c}/thumbs/${c}-${nn(no)}.jpg`;
 
-/** 내려받을 때 보이는 한글 이름 — 예) 명함_직장인_01_매화피는아침.pptx / …_앞면.svg */
-export const cardDownloadName = (e: CardEntry, ext: "pptx" | "front" | "back") => (ext === "pptx" ? `${e.name}.pptx` : `${e.name}_${ext === "front" ? "앞면" : "뒷면"}.svg`);
+/** 내려받을 때 보이는 한글 이름 — 예) 명함_직장인_01_매화피는아침.pptx / .svg */
+export const cardDownloadName = (e: CardEntry, ext: "pptx" | "svg") => `${e.name}.${ext}`;
 
 export const CARD_ASPECT = 640 / 726;

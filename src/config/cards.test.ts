@@ -16,26 +16,26 @@ describe("명함 템플릿: 10분류 × 50장", () => {
     expect(new Set(all.map((e) => e.tag)).size).toBe(500);
     expect(new Set(all.map((e) => e.name)).size).toBe(500);
   });
-  it("파일(PPT·SVG 앞뒤·미리보기)이 모두 있고 앞뒤 SVG가 서로 다르다", () => {
+  it("파일(PPT·SVG·미리보기)이 모두 있다", () => {
     for (const c of cardCategories) {
       for (const e of c.items) {
-        for (const f of [cardPptx(c.key, e.no), cardSvg(c.key, e.no, "front"), cardSvg(c.key, e.no, "back"), cardThumb(c.key, e.no)]) expect(existsSync(pub(f)), f).toBe(true);
+        for (const f of [cardPptx(c.key, e.no), cardSvg(c.key, e.no), cardThumb(c.key, e.no)]) expect(existsSync(pub(f)), f).toBe(true);
       }
     }
   });
   it("500장의 앞뒤 디자인(SVG)이 서로 하나도 같지 않다", () => {
     const seen = new Set<string>();
     for (const c of cardCategories) for (const e of c.items) {
-      const k = readFileSync(pub(cardSvg(c.key, e.no, "front")), "utf8") + readFileSync(pub(cardSvg(c.key, e.no, "back")), "utf8");
+      const k = readFileSync(pub(cardSvg(c.key, e.no)), "utf8");
       expect(seen.has(k), `${c.key}-${e.no}`).toBe(false);
       seen.add(k);
     }
     expect(seen.size).toBe(500);
   });
   it("내려받는 파일 이름은 한글이고 500개가 모두 다르다", () => {
-    const names = cardCategories.flatMap((c) => c.items.flatMap((e) => (["pptx", "front", "back"] as const).map((x) => cardDownloadName(e, x))));
-    for (const n of names) expect(n).toMatch(/^[가-힣A-Za-z0-9_]+(_앞면|_뒷면)?\.(pptx|svg)$/);
-    expect(new Set(names).size).toBe(1500);
+    const names = cardCategories.flatMap((c) => c.items.flatMap((e) => (["pptx", "svg"] as const).map((x) => cardDownloadName(e, x))));
+    for (const n of names) expect(n).toMatch(/^[가-힣A-Za-z0-9_]+\.(pptx|svg)$/);
+    expect(new Set(names).size).toBe(1000);
   });
   it("색상 값이 올바르다", () => {
     for (const c of cardCategories) for (const e of c.items) for (const col of [e.main, e.soft]) expect(col).toMatch(/^#[0-9A-Fa-f]{6}$/);

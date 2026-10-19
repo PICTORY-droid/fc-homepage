@@ -101,10 +101,12 @@ def build(plan):
         sigs.add((it["f"], it["v"], it["p"], it["b"], it["vb"], nfont, d["tagline"]))
         d_out = os.path.join(OUT, cat)
         os.makedirs(d_out, exist_ok=True)
-        with open(os.path.join(d_out, fid + "-front.svg"), "w", encoding="utf-8") as f:
-            f.write(fsvg)
-        with open(os.path.join(d_out, fid + "-back.svg"), "w", encoding="utf-8") as f:
-            f.write(bsvg)
+        def inner(sv):  # <svg …> 껍데기와 <title> 을 벗기고 안쪽만 꺼냅니다
+            return re.sub(r"<title>.*?</title>", "", re.sub(r"^<svg[^>]*>|</svg>$", "", sv), flags=re.S)
+        both = (f'<svg xmlns="http://www.w3.org/2000/svg" width="90mm" height="105mm" viewBox="0 0 900 1050"><title>{title} (앞면·뒷면)</title>'
+                f'<g id="front">{inner(fsvg)}</g><g id="back" transform="translate(0 550)">{inner(bsvg)}</g></svg>')
+        with open(os.path.join(d_out, fid + ".svg"), "w", encoding="utf-8") as f:
+            f.write(both)
         prs = new_pptx()
         add_to_slide(blank_slide(prs), fe, cf.bg)
         add_to_slide(blank_slide(prs), be, cb.bg)
