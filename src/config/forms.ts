@@ -14,4 +14,4 @@ export const formTemplates: FormTemplate[] = [
   { id: "cover-05-free", kind: "자기소개서", name: "자유 서술형", desc: "줄 노트 형식으로 자유롭게 쓰는 2쪽 자기소개서", pages: 2 },
 ];
 
-export const formFile = (id: string, ext: "pdf" | "jpg") => (ext === "jpg" ? `/fun/forms/thumbs/${id}.jpg` : `/fun/forms/${id}.pdf`);
+export const formFile = (id: string, ext: "pdf" | "docx" | "jpg") => (ext === "jpg" ? `/fun/forms/thumbs/${id}.jpg` : `/fun/forms/${id}.pdf`);

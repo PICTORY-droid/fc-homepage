@@ -14,4 +14,4 @@ export const stationery: Stationery[] = [
   { id: "10-simple", name: "심플 오렌지", desc: "깔끔한 보내는 사람·받는 사람 칸" },
 ];
 
-export const stationeryFile = (id: string, ext: "png" | "pdf" | "jpg") => (ext === "jpg" ? `/fun/stationery/thumbs/${id}.jpg` : `/fun/stationery/${id}.${ext}`);
+export const stationeryFile = (id: string, ext: "png" | "pdf" | "docx" | "jpg") => (ext === "jpg" ? `/fun/stationery/thumbs/${id}.jpg` : `/fun/stationery/${id}.${ext}`);

@@ -23,13 +23,13 @@ export default function FormsPage() {
           <ul data-reveal="stagger" className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
             {formTemplates.filter((f) => f.kind === g.kind).map((f) => (
               <DownloadCard key={f.id} title={f.name} desc={`${f.desc} · A4 ${f.pages}쪽`} thumb={formFile(f.id, "jpg")}
-                links={[{ label: "PDF", href: formFile(f.id, "pdf"), filename: `${f.kind}양식-${f.name}.pdf` }]} />
+                links={[{ label: "PDF", href: formFile(f.id, "pdf"), filename: `${f.kind}양식-${f.name}.pdf` }, { label: "Word", href: formFile(f.id, "docx"), filename: `${f.kind}양식-${f.name}.docx` }]} />
             ))}
           </ul>
         </Section>
       ))}
       <Section>
-        <p className="text-sm text-ink-sub">A4 크기 빈 양식이에요. 인쇄해서 손으로 쓰거나, PDF 앱에서 글자를 입력해 작성할 수 있어요. 주민등록번호 등 민감한 개인정보는 제출할 때 꼭 필요한 경우에만 적으세요.</p>
+        <p className="text-sm text-ink-sub">A4 크기 빈 양식이에요. 컴퓨터에서 바로 입력하려면 Word 파일을, 인쇄해서 손으로 쓰려면 PDF를 받으세요. Word 파일은 칸을 눌러 입력하면 칸이 자동으로 늘어나요. 주민등록번호 등 민감한 개인정보는 제출할 때 꼭 필요한 경우에만 적으세요.</p>
         <p className="mt-3 text-ink-sub">다른 즐길거리도 둘러보세요. <Link href="/fun" className="font-semibold text-brand-deep underline">즐길거리 전체 보기</Link></p>
       </Section>
     </>

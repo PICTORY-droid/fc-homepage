@@ -61,10 +61,13 @@ const bike = (x, y, s = 1) =>
 const flowers = (cx, cy, s = 1, colors = ["#FFB4B4", "#FFD9A8", "#FFE9A8"]) =>
   [0, 1, 2, 3, 4, 5].map((i) => `<g transform="translate(${cx + Math.cos(i) * 40 * s} ${cy + Math.sin(i * 1.7) * 40 * s}) scale(${s})">${[0, 72, 144, 216, 288].map((a) => `<circle cx="${Math.cos((a * Math.PI) / 180) * 14}" cy="${Math.sin((a * Math.PI) / 180) * 14}" r="11" fill="${colors[i % 3]}"/>`).join("")}<circle r="7" fill="#FFF3C4"/></g>`).join("");
 
-// 글쓰기 줄
+// 글쓰기 줄 — setBare(true) 이면 받는 사람/날짜/보내는 사람 글자만 빼고(글쓰기 줄은 유지) 그립니다(Word 파일 배경용)
+let BARE = false;
+export const setBare = (v) => { BARE = v; };
+const WRITING_TEXT = /^(받는 사람|보내는 사람|날짜|To\.|From\.|20__)/;
 const rules = ({ x, y, w, rows, gap = 44, color = "#d9cbb8", dash = false }) =>
   `<div style="position:absolute;left:${x}px;top:${y}px;width:${w}px;height:${rows * gap}px;background:repeating-linear-gradient(to bottom,transparent 0 ${gap - 2}px,${color} ${gap - 2}px ${gap}px);${dash ? "" : ""}"></div>`;
-const t = (x, y, text, { size = 22, color = "#6b5b4d", weight = 700, w, align } = {}) =>
+const t = (x, y, text, { size = 22, color = "#6b5b4d", weight = 700, w, align } = {}) => BARE && WRITING_TEXT.test(text) ? "" :
   `<div style="position:absolute;left:${x}px;top:${y}px;${w ? `width:${w}px;` : ""}font-size:${size}px;font-weight:${weight};color:${color};${align ? `text-align:${align};` : ""}white-space:nowrap">${text}</div>`;
 const fields = (x, y, w, color = "#6b5b4d") =>
   t(x, y, "받는 사람 : ______________", { size: 20, color }) + t(x + w - 280, y, "날짜 : 20__ . __ . __", { size: 20, color });
@@ -152,8 +155,8 @@ export const designs = [
     html: () => `<div style="position:absolute;inset:0;background:#FFFFFF"></div>
       <div style="position:absolute;left:0;top:0;bottom:0;width:22px;background:${BRAND}"></div>
       ${t(70, 70, "Letter", { size: 52, color: BRAND, weight: 900 })}
-      <div style="position:absolute;left:70px;top:150px;width:300px;height:70px;border:2px solid ${BRAND};border-radius:12px"></div>${t(86, 142, "To.", { size: 16, color: DEEP })}
-      <div style="position:absolute;left:394px;top:150px;width:300px;height:70px;border:2px solid #ddd;border-radius:12px"></div>${t(410, 142, "From.", { size: 16, color: "#999" })}
+      ${BARE ? "" : `<div style="position:absolute;left:70px;top:150px;width:300px;height:70px;border:2px solid ${BRAND};border-radius:12px"></div>${t(86, 142, "To.", { size: 16, color: DEEP })}
+      <div style="position:absolute;left:394px;top:150px;width:300px;height:70px;border:2px solid #ddd;border-radius:12px"></div>${t(410, 142, "From.", { size: 16, color: "#999" })}`}
       ${t(560, 74, "20__ . __ . __", { size: 22, color: "#888", weight: 600 })}
       ${rules({ x: 70, y: 262, w: 624, rows: 18, color: "#ececec" })}${credit("#bbb", 36)}`,
   },
