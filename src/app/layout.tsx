@@ -5,6 +5,7 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { RevealObserver } from "@/components/motion/RevealObserver";
 import { ScrollProgress } from "@/components/motion/ScrollProgress";
+import { ChatWidget } from "@/components/chatbot/ChatWidget";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -33,6 +34,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Header />
         <main id="main">{children}</main>
         <Footer />
+        <ChatWidget />
       </body>
     </html>
   );

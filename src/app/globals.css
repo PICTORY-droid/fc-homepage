@@ -126,3 +126,11 @@
   .kk .kk-spark2 { animation-delay: .7s; }
   .kk .kk-spark3 { animation-delay: 1.3s; }
 }
+
+/* 안내 도우미 캐릭터(ChatCharacter) — 모션 줄이기 설정이면 가만히 있습니다 */
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes cbBob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+  @keyframes cbBlink { 0%, 92%, 100% { transform: scaleY(1); } 96% { transform: scaleY(.1); } }
+  .cb-bob { animation: cbBob 3s ease-in-out infinite; }
+  .cb-char .cb-eyes { transform-box: fill-box; transform-origin: center; animation: cbBlink 4s ease-in-out infinite; }
+}
