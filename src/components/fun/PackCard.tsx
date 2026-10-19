@@ -24,7 +24,7 @@ export function PackCard({ item, entry }: { item: PackItem; entry: PackEntry }) 
         <h3 className="text-base font-bold text-ink">{no}. {entry.name}</h3>
         {thumb && <p className="mt-0.5 text-xs font-semibold text-ink-sub">{entry.flavor}</p>}
         <p className="mt-1 flex-1 text-sm leading-snug text-ink-sub">{entry.tag}</p>
-        <a href={packFile(item, entry.no)} download={packDownloadName(item, entry)}
+        <a href={packFile(item, entry)} download={packDownloadName(item, entry)}
           className="mt-3 flex min-h-[44px] items-center justify-center rounded-xl bg-brand px-2 text-sm font-bold text-ink hover:brightness-95">
           {BUTTON[item.ext]}<span className="sr-only"> ({item.title} {entry.name} 내려받기)</span>
         </a>

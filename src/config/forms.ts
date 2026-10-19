@@ -55,10 +55,13 @@ export type Variant = (typeof variants)[number];
 export const getPosition = (id: string) => allPositions.find((p) => p.id === id);
 export const groupOf = (id: string) => jobGroups.find((g) => g.positions.some((p) => p.id === id));
 
-export const formFile = (id: string, kind: DocKind, n: Variant, ext: "docx" | "jpg") => (ext === "jpg" ? `/fun/forms/thumbs/${kind}-${id}-${n}.jpg` : `/fun/forms/${kind}-${id}-${n}.docx`);
+export const formFile = (id: string, kind: DocKind, n: Variant, _ext: "jpg") => `/fun/forms/thumbs/${kind}-${id}-${n}.jpg`;
 
 /** 그림을 눌렀을 때 보이는 큰 미리보기(모든 쪽을 세로로 이어 붙인 그림) */
 export const formLargeFile = (id: string, kind: DocKind, n: Variant) => `/fun/forms/thumbs/large/${kind}-${id}-${n}.jpg`;
 
 /** 내려받을 때 보이는 한글 파일 이름 — 예) 이력서_백엔드개발자_1_정석형.docx */
 export const formDownloadName = (p: Position, kind: DocKind, n: Variant) => `${kindLabel[kind]}_${p.name.replace(/\s+/g, "").replace(/\//g, "·")}_${n}_${variantNames[kind][n - 1]}.docx`;
+
+/** 실제 Word 파일 주소 — 파일 이름 자체가 한글이에요 */
+export const formDocx = (p: Position, kind: DocKind, n: Variant) => `/fun/forms/${formDownloadName(p, kind, n)}`;

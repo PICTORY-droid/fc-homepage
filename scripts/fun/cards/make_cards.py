@@ -105,14 +105,14 @@ def build(plan):
             return re.sub(r"<title>.*?</title>", "", re.sub(r"^<svg[^>]*>|</svg>$", "", sv), flags=re.S)
         both = (f'<svg xmlns="http://www.w3.org/2000/svg" width="90mm" height="105mm" viewBox="0 0 900 1050"><title>{title} (앞면·뒷면)</title>'
                 f'<g id="front">{inner(fsvg)}</g><g id="back" transform="translate(0 550)">{inner(bsvg)}</g></svg>')
-        with open(os.path.join(d_out, fid + ".svg"), "w", encoding="utf-8") as f:
+        with open(os.path.join(d_out, base + ".svg"), "w", encoding="utf-8") as f:
             f.write(both)
         prs = new_pptx()
         add_to_slide(blank_slide(prs), fe, cf.bg)
         add_to_slide(blank_slide(prs), be, cb.bg)
         cp = prs.core_properties
         cp.author, cp.title, cp.subject = "우체국보험 상담 안내", f"{d['title']} 명함 서식", "편집용 명함 서식"
-        prs.save(os.path.join(d_out, fid + ".pptx"))
+        prs.save(os.path.join(d_out, base + ".pptx"))
         # 합성 미리보기 SVG
         def inner(s, y):
             return re.sub(r'width="90mm" height="50mm"', f'x="20" y="{y}" width="600" height="333.33"', s, count=1)

@@ -59,8 +59,10 @@ export const entriesBySeason = (item: PackItem, season: Season) => packEntries(i
 const nn = (n: number) => String(n).padStart(2, "0");
 const clean = (s: string) => s.replace(/[\\/:*?"<>|\s]+/g, "");
 
-export const packFile = (item: PackItem, no: number) => `/fun/pack/${item.ext}/${item.key}/${item.key}-${nn(no)}.${item.ext}`;
 export const packThumb = (item: PackItem, no: number) => (item.thumb ? `/fun/pack/${item.ext}/${item.key}/thumbs/${item.key}-${nn(no)}.${item.thumb}` : undefined);
 
-/** 내려받을 때 보이는 한글 파일 이름 — 예) 가계부_01_1인가구_매화피는아침.xlsx */
+/** 한글 파일 이름 — 예) 가계부_01_1인가구_매화피는아침.xlsx */
 export const packDownloadName = (item: PackItem, e: PackEntry) => `${item.fileLabel}_${nn(e.no)}_${clean(e.flavor)}_${clean(e.name)}.${item.ext}`;
+
+/** 실제 파일 주소 — 파일 이름 자체가 한글이라, download 속성을 무시하는 브라우저에서도 한글 이름으로 저장돼요 */
+export const packFile = (item: PackItem, e: PackEntry) => `/fun/pack/${item.ext}/${item.key}/${packDownloadName(item, e)}`;

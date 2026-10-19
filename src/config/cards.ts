@@ -25,10 +25,9 @@ export const cardCategories: CardCategory[] = (Object.keys(meta) as CardCategory
 export const getCardCategory = (key: string) => cardCategories.find((c) => c.key === key);
 
 const nn = (n: number) => String(n).padStart(2, "0");
-const base = (c: CardCategoryKey, no: number) => `/fun/cards/${c}/${c}-${nn(no)}`;
 
-export const cardPptx = (c: CardCategoryKey, no: number) => `${base(c, no)}.pptx`;
-export const cardSvg = (c: CardCategoryKey, no: number) => `${base(c, no)}.svg`; // 앞면·뒷면이 한 파일에 위아래로 들어 있음
+export const cardPptx = (c: CardCategoryKey, e: CardEntry) => `/fun/cards/${c}/${e.name}.pptx`;
+export const cardSvg = (c: CardCategoryKey, e: CardEntry) => `/fun/cards/${c}/${e.name}.svg`; // 앞면·뒷면이 한 파일에 위아래로 들어 있음(파일 이름도 한글)
 export const cardThumb = (c: CardCategoryKey, no: number) => `/fun/cards/${c}/thumbs/${c}-${nn(no)}.jpg`;
 
 /** 내려받을 때 보이는 한글 이름 — 예) 명함_직장인_01_매화피는아침.pptx / .svg */

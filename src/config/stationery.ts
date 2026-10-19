@@ -16,10 +16,11 @@ export const seasons: Season[] = [
 export const stationery = data as Stationery[];
 export const stationeryBySeason = (key: SeasonKey) => stationery.filter((s) => s.season === key);
 
-export const stationeryFile = (id: string, ext: "png" | "docx" | "jpg") => (ext === "jpg" ? `/fun/stationery/thumbs/${id}.jpg` : `/fun/stationery/${id}.${ext}`);
-
-/** 내려받을 때 보이는 한글 파일 이름 — 예) 편지지_봄01_벚꽃편지.docx */
+/** 내려받을 때 보이는 한글 파일 이름 — 예) 편지지_봄01_벚꽃편지.docx (실제 파일 이름도 같아요) */
 export const stationeryDownloadName = (s: Stationery, ext: "png" | "docx") => {
   const label = seasons.find((x) => x.key === s.season)?.label ?? "";
   return `편지지_${label}${String(s.no).padStart(2, "0")}_${s.name.replace(/\s+/g, "")}.${ext}`;
 };
+
+/** 파일 주소 — Word·PNG 는 한글 이름 그대로, 미리보기 그림만 영문 id */
+export const stationeryFile = (s: Stationery, ext: "png" | "docx" | "jpg") => (ext === "jpg" ? `/fun/stationery/thumbs/${s.id}.jpg` : `/fun/stationery/${stationeryDownloadName(s, ext)}`);

@@ -19,14 +19,14 @@ describe("명함 템플릿: 10분류 × 50장", () => {
   it("파일(PPT·SVG·미리보기)이 모두 있다", () => {
     for (const c of cardCategories) {
       for (const e of c.items) {
-        for (const f of [cardPptx(c.key, e.no), cardSvg(c.key, e.no), cardThumb(c.key, e.no)]) expect(existsSync(pub(f)), f).toBe(true);
+        for (const f of [cardPptx(c.key, e), cardSvg(c.key, e), cardThumb(c.key, e.no)]) expect(existsSync(pub(f)), f).toBe(true);
       }
     }
   });
   it("500장의 앞뒤 디자인(SVG)이 서로 하나도 같지 않다", () => {
     const seen = new Set<string>();
     for (const c of cardCategories) for (const e of c.items) {
-      const k = readFileSync(pub(cardSvg(c.key, e.no)), "utf8");
+      const k = readFileSync(pub(cardSvg(c.key, e)), "utf8");
       expect(seen.has(k), `${c.key}-${e.no}`).toBe(false);
       seen.add(k);
     }

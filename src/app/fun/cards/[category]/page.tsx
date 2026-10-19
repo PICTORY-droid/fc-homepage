@@ -34,8 +34,8 @@ export default async function CardCategoryPage({ params }: Props) {
             <DownloadCard key={e.no} title={`${String(e.no).padStart(2, "0")}. ${e.title}`} desc={e.tag} thumb={cardThumb(c.key, e.no)} zoom={cardThumb(c.key, e.no)} aspect={CARD_ASPECT}
               thumbAlt={`${c.label} 명함 ${e.no}번 ${e.theme} 앞면과 뒷면 미리보기`}
               links={[
-                { label: "PPT", href: cardPptx(c.key, e.no), filename: cardDownloadName(e, "pptx") },
-                { label: "SVG", href: cardSvg(c.key, e.no), filename: cardDownloadName(e, "svg") },
+                { label: "PPT", href: cardPptx(c.key, e), filename: cardDownloadName(e, "pptx") },
+                { label: "SVG", href: cardSvg(c.key, e), filename: cardDownloadName(e, "svg") },
               ]} />
           ))}
         </ul>

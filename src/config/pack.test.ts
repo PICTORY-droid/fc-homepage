@@ -21,7 +21,7 @@ describe("자료 꾸러미: 항목마다 50종", () => {
         });
         it("파일(과 미리보기)이 모두 있다", () => {
           for (const e of list) {
-            expect(existsSync(pub(packFile(item, e.no))), packFile(item, e.no)).toBe(true);
+            expect(existsSync(pub(packFile(item, e))), packFile(item, e)).toBe(true);
             const t = packThumb(item, e.no);
             if (t) expect(existsSync(pub(t)), t).toBe(true);
           }

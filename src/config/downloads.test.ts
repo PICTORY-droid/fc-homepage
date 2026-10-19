@@ -1,7 +1,7 @@
 import { existsSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
-import { allPositions, formDownloadName, formFile, formLargeFile, jobGroups, variantNames, variants } from "./forms";
+import { allPositions, formDocx, formDownloadName, formFile, formLargeFile, jobGroups, variantNames, variants } from "./forms";
 import { seasons, stationery, stationeryBySeason, stationeryDownloadName, stationeryFile } from "./stationery";
 
 const pub = (p: string) => join(process.cwd(), "public", p);
@@ -13,7 +13,7 @@ describe("내려받기 파일이 모두 있다", () => {
     expect(new Set(allPositions.map((p) => p.id)).size).toBe(20);
     expect(new Set(allPositions.map((p) => p.desc)).size).toBe(20);
     let n = 0;
-    for (const p of allPositions) for (const k of ["resume", "cover"] as const) for (const v of variants) for (const ext of ["docx", "jpg"] as const) { expect(existsSync(pub(formFile(p.id, k, v, ext))), `${k}-${p.id}-${v}.${ext}`).toBe(true); n++; }
+    for (const p of allPositions) for (const k of ["resume", "cover"] as const) for (const v of variants) { expect(existsSync(pub(formDocx(p, k, v))), `${k}-${p.id}-${v}.docx`).toBe(true); expect(existsSync(pub(formFile(p.id, k, v, "jpg"))), `${k}-${p.id}-${v}.jpg`).toBe(true); n += 2; }
     expect(n).toBe(400);
     for (const p of allPositions) for (const k of ["resume", "cover"] as const) for (const v of variants) expect(existsSync(pub(formLargeFile(p.id, k, v))), `large ${k}-${p.id}-${v}`).toBe(true);
   });
@@ -26,7 +26,7 @@ describe("내려받기 파일이 모두 있다", () => {
   it("편지지: 계절별 20장, Word·PNG·미리보기", () => {
     expect(stationery).toHaveLength(80);
     for (const s of seasons) expect(stationeryBySeason(s.key)).toHaveLength(20);
-    for (const s of stationery) for (const ext of ["docx", "png", "jpg"] as const) expect(existsSync(pub(stationeryFile(s.id, ext))), `${s.id}.${ext}`).toBe(true);
+    for (const s of stationery) for (const ext of ["docx", "png", "jpg"] as const) expect(existsSync(pub(stationeryFile(s, ext))), `${s.id}.${ext}`).toBe(true);
   });
   it("편지지 이름이 서로 겹치지 않고, 내려받는 파일 이름은 한글", () => {
     expect(new Set(stationery.map((s) => s.name)).size).toBe(80);
