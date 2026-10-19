@@ -6,6 +6,7 @@ from icons import arc_pts
 from scene import PT, ellipse, line, poly, rect, text
 
 NF, NB, NFLAV = 12, 10, 5
+L = 70  # 좌우 여백
 INK, WHITE, DARK_BG, GRAY_BG = "#12151C", "#FFFFFF", "#0E1116", "#F3F4F6"
 
 PAL = [  # (이름, 대표색) — 한국에서 사랑받는 맑은 원색 위주
@@ -57,17 +58,27 @@ def T(x, y, w, s, size, color, bold=False, align="l", spacing=0, anchor="t", h=N
     return text(x, y, w, h or size * PT * 1.5, s, size, color, bold, align, "sans", spacing, anchor, op)
 
 
-def rows(c, x, y, pitch=38, size=7, w=420, labw=92, align="l", n=3):
-    d = c.d
-    items = [("TEL", d["tel"]), ("MAIL", d["mail"]), ("ADDR", d["addr"])][:n]
+def hl(x1, x2, y, color, sw=1.0):
+    return line(x1, y, x2, y, color, sw)
+
+
+def vl(x, y1, y2, color, sw=1.0):
+    return line(x, y1, x, y2, color, sw)
+
+
+def tick(x, y, color, n=9):
+    return [line(x - n, y, x + n, y, color, 1.0), line(x, y - n, x, y + n, color, 1.0)]
+
+
+def ticks(c, m=34):
     out = []
-    for i, (lab, val) in enumerate(items):
-        yy = y + i * pitch
-        if align == "l":
-            out += [T(x, yy + 3, labw, lab, 5.2, c.sub, True, spacing=1.2), T(x + labw, yy, w, val, size, c.fg)]
-        else:
-            out += [T(x - w, yy, w, val, size, c.fg, align="r")]
+    for x, y in ((m, m), (900 - m, m), (m, 500 - m), (900 - m, 500 - m)):
+        out += tick(x, y, c.line if c.flavor != 2 else c.sub, 8)
     return out
+
+
+def frame(c, m=26, color=None):
+    return rect(m, m, 900 - 2 * m, 500 - 2 * m, stroke=color or c.line, sw=1.0)
 
 
 def mono(c):
@@ -78,163 +89,293 @@ def sector(cx, cy, r, a0, a1, fill, op=1):
     return poly([(cx, cy)] + arc_pts(cx, cy, r, r, a0, a1, 24), fill=fill, op=op)
 
 
+def ring(cx, cy, r, color, sw=1.0):
+    return ellipse(cx, cy, r, r, stroke=color, sw=sw)
+
+
+def hatch(x, y, w, h, color, gap=16, sw=1.0):
+    """사선 빗금(상자 안에 갇히도록 가장자리에서 잘라 그림)"""
+    out = []
+    k = -h
+    while k < w:
+        x1, y1, x2, y2 = x + k, y + h, x + k + h, y
+        if x1 < x:
+            y1 -= (x - x1); x1 = x
+        if x2 > x + w:
+            y2 += (x2 - (x + w)); x2 = x + w
+        if y1 > y and y2 < y + h + 1 and x2 > x1:
+            out.append(line(x1, y1, x2, y2, color, sw))
+        k += gap
+    return out
+
+
+# ───── 연락처 묶음
+def name_title(c, x, y, name_w=500, align="l"):
+    d = c.d
+    return [T(x, y, name_w, d["name"], 13.5, c.fg, True, align, spacing=1.2, h=66), T(x, y + 70, name_w, d["title"], 7, c.sub, False, align, spacing=.6)]
+
+
+def rows(c, x, y, pitch=34, size=6.5, w=400, labw=92, n=3, lab_color=None):
+    d = c.d
+    items = [("TEL", d["tel"]), ("MAIL", d["mail"]), ("ADDR", d["addr"])][:n]
+    out = []
+    for i, (lab, val) in enumerate(items):
+        yy = y + i * pitch
+        out += [T(x, yy + 3, labw, lab, 4.8, lab_color or c.sub, True, spacing=1.4), T(x + labw, yy, w, val, size, c.fg)]
+    return out
+
+
+def cols(c, x, y, widths, size=6.5, color=None, lab_color=None, sep=None):
+    d = c.d
+    items = [("TEL", d["tel"]), ("MAIL", d["mail"]), ("ADDR", d["addr"])]
+    out, cx = [], x
+    for (lab, val), w in zip(items, widths):
+        out += [T(cx, y, w, lab, 4.8, lab_color or c.sub, True, spacing=1.4), T(cx, y + 28, w, val, size, color or c.fg)]
+        cx += w
+        if sep and cx < x + sum(widths) - 1:
+            out.append(vl(cx - 22, y, y + 56, sep))
+    return out
+
+
+def co(c, x, y, w=420, color=None, align="l"):
+    return T(x, y, w, c.d["company"], 6.5, color or c.sub, True, align, spacing=2.2)
+
+
 # ───────── 앞면 12종
-def f_swiss(c):
-    d = c.d
-    return [T(70, 62, 560, d["company"], 7, c.sub, True, spacing=2), ellipse(830, 76, 9, 9, c.acc),
-            T(70, 188, 700, d["name"], 22, c.fg, True, h=100), T(70, 300, 700, d["title"], 9, c.sub),
-            line(70, 372, 830, 372, c.line, 1.6),
-            T(70, 392, 220, d["tel"], 6.8, c.fg), T(300, 392, 250, d["mail"], 6.8, c.fg), T(570, 392, 270, d["addr"], 6.8, c.fg),
-            T(70, 424, 60, "TEL", 5, c.sub, True, spacing=1.2), T(300, 424, 60, "MAIL", 5, c.sub, True, spacing=1.2), T(570, 424, 60, "ADDR", 5, c.sub, True, spacing=1.2)]
+def f_grid(c):
+    return [frame(c), rect(L, 70, 22, 22, c.acc), co(c, L + 40, 72, 420), hl(L, 830, 124, c.line),
+            *name_title(c, L, 268), vl(520, 262, 430, c.line), *rows(c, 560, 284, 40, 6.5, 270, 84), *ticks(c, 26)[:0]]
 
 
-def f_split(c):
+def f_side(c):
     d = c.d
-    return [rect(0, 0, 320, 500, c.panel), ellipse(160, 250, 78, 78, stroke=c.onp, sw=3), T(60, 190, 200, d["name"][:1], 34, c.onp, True, "c", anchor="m", h=120),
-            T(390, 62, 440, d["company"], 7, c.sub, True, spacing=2), T(390, 150, 440, d["name"], 22, c.fg, True, h=100),
-            T(390, 262, 440, d["title"], 9, c.sub), rect(390, 332, 40, 5, c.acc), *rows(c, 390, 366, 36, 7, 400)]
+    return [rect(0, 0, 210, 500, c.panel), *hatch(0, 340, 210, 160, c.onp if c.flavor != 2 else c.sub, 14, 1.0), ring(105, 150, 46, c.onp, 1.6), T(55, 105, 100, mono(c), 16, c.onp, True, "c", anchor="m", h=90),
+            co(c, 260, 70, 430), hl(260, 830, 118, c.line), *name_title(c, 260, 190), hl(260, 830, 362, c.line), *rows(c, 260, 384, 34, 6.5, 330, 92)]
 
 
 def f_center(c):
     d = c.d
-    return [ellipse(450, 66, 8, 8, c.acc), T(100, 130, 700, d["name"], 22, c.fg, True, "c", h=100), T(100, 244, 700, d["title"], 9, c.sub, False, "c"),
-            rect(425, 316, 50, 4, c.acc), T(100, 352, 700, f'{d["tel"]}      {d["mail"]}', 7, c.fg, False, "c"), T(100, 396, 700, d["addr"], 7, c.sub, False, "c"),
-            T(100, 438, 700, d["company"], 5.5, c.sub, True, "c", spacing=3)]
+    return [*ticks(c), ring(450, 92, 26, c.acc, 1.4), T(410, 66, 80, mono(c), 9, c.acc if c.flavor != 2 else c.fg, True, "c", anchor="m", h=52),
+            T(100, 150, 700, d["name"], 13.5, c.fg, True, "c", spacing=1.2, h=66), T(100, 220, 700, d["title"], 7, c.sub, False, "c", spacing=.6),
+            hl(400, 500, 282, c.acc, 2.2), co(c, 100, 306, 700, None, "c"),
+            T(100, 372, 700, f'{d["tel"]}     |     {d["mail"]}', 6.5, c.fg, False, "c"), T(100, 410, 700, d["addr"], 6.5, c.sub, False, "c")]
 
 
-def f_initial(c):
+def f_block(c):
     d = c.d
-    return [T(440, 10, 460, d["name"][:1], 128, c.deco, True, "c", anchor="m", h=480),
-            T(70, 62, 400, d["company"], 7, c.sub, True, spacing=2), T(70, 168, 460, d["name"], 22, c.fg, True, h=100), T(70, 280, 460, d["title"], 9, c.sub),
-            rect(70, 342, 40, 5, c.acc), *rows(c, 70, 372, 34, 6.8, 360)]
+    return [rect(560, 0, 340, 210, c.panel), *hatch(560, 0, 340, 210, c.onp if c.flavor != 2 else c.sub, 18, 1.0), co(c, L, 70, 420),
+            hl(L, 500, 104, c.line), *name_title(c, L, 188), *cols(c, L, 372, [250, 270, 270], 6.5, sep=c.line)]
 
 
-def f_arc(c):
+def f_arcs(c):
     d = c.d
-    return [sector(900, 0, 270, 90, 180, c.acc), sector(900, 0, 160, 90, 180, c.deco if c.flavor != 2 else c.panel),
-            T(70, 150, 540, d["name"], 22, c.fg, True, h=100), T(70, 262, 540, d["title"], 9, c.sub),
-            T(70, 62, 400, d["company"], 7, c.sub, True, spacing=2), *rows(c, 70, 340, 38, 7, 420)]
+    cx, cy = 700, 250
+    return [*[ring(cx, cy, r, c.acc if r == 180 else c.line, 1.2) for r in (60, 110, 150, 180)], ellipse(cx, cy, 14, 14, c.acc), ellipse(cx + 127, cy - 127, 6, 6, c.acc),
+            co(c, L, 70, 420), *name_title(c, L, 170), rect(L, 300, 36, 4, c.acc), *rows(c, L, 334, 36, 6.5, 330, 92)]
 
 
 def f_bar(c):
     d = c.d
-    return [T(70, 62, 560, d["company"], 7, c.sub, True, spacing=2), T(70, 130, 700, d["name"], 22, c.fg, True, h=100), T(70, 242, 700, d["title"], 9, c.sub),
-            T(70, 338, 700, d["addr"], 6.8, c.sub), rect(0, 410, 900, 90, c.panel),
-            T(70, 436, 360, d["tel"], 7, c.onp, True), T(460, 436, 380, d["mail"], 7, c.onp, True)]
+    out = [co(c, L, 70, 420), hl(L, 830, 108, c.line), *name_title(c, L, 160), T(L, 288, 700, d["addr"], 6.5, c.sub), rect(0, 372, 900, 128, c.panel)]
+    x = L
+    for lab, val, w in (("TEL", d["tel"], 260), ("MAIL", d["mail"], 300)):
+        out += [T(x, 410, w, lab, 4.8, c.onp, True, spacing=1.4, op=.7), T(x, 438, w, val, 6.5, c.onp, True)]
+        x += w
+    out.append(vl(L + 238, 408, 466, c.onp))
+    return out
 
 
-def f_circles(c):
+def f_rule(c):
     d = c.d
-    return [ellipse(270, 250, 118, 118, c.deco if c.flavor != 2 else c.panel), ellipse(170, 250, 118, 118, c.acc, op=0.92),
-            T(470, 62, 360, d["company"], 7, c.sub, True, spacing=2), T(470, 150, 380, d["name"], 22, c.fg, True, h=100), T(470, 262, 380, d["title"], 9, c.sub),
-            rect(470, 332, 40, 5, c.acc), *rows(c, 470, 366, 36, 6.6, 330, 92)]
+    return [vl(300, 70, 430, c.line), rect(297, 70, 6, 56, c.acc), co(c, L, 70, 210), ring(L + 40, 238, 34, c.acc, 1.4), T(L, 204, 80, mono(c), 9, c.acc if c.flavor != 2 else c.fg, True, "c", anchor="m", h=70),
+            *name_title(c, 350, 120), hl(350, 830, 262, c.line), *rows(c, 350, 290, 36, 6.5, 330, 92)]
 
 
 def f_table(c):
     d = c.d
-    out = [rect(70, 40, 56, 6, c.acc), T(70, 76, 600, d["name"], 22, c.fg, True, h=100), T(70, 188, 600, d["title"], 9, c.sub), T(430, 64, 400, d["company"], 6.5, c.sub, True, "r", spacing=2)]
+    out = [rect(0, 0, 900, 10, c.acc), T(L, 62, 360, d["name"], 13.5, c.fg, True, spacing=1.2, h=66), T(L, 132, 360, d["title"], 7, c.sub, False),
+           co(c, 430, 72, 400, None, "r")]
     for i, (lab, val) in enumerate([("TEL", d["tel"]), ("MAIL", d["mail"]), ("ADDR", d["addr"])]):
-        y = 292 + i * 62
-        out += [line(70, y, 830, y, c.line, 1.6), T(70, y + 20, 160, lab, 5.2, c.sub, True, spacing=1.5), T(250, y + 14, 580, val, 7.5, c.fg)]
-    out.append(line(70, 478, 830, 478, c.line, 1.6))
+        y = 252 + i * 64
+        out += [hl(L, 830, y, c.line), T(L, y + 22, 160, lab, 4.8, c.sub, True, spacing=1.6), T(260, y + 17, 570, val, 7, c.fg)]
+    out.append(hl(L, 830, 444, c.line))
     return out
 
 
 def f_pill(c):
     d = c.d
-    pw = max(150, len(d["title"]) * 8.5 * PT + 70)
-    return [rect(70, 64, pw, 50, c.acc, r=25), T(70, 64, pw, d["title"], 8, c.on, True, "c", anchor="m", h=50),
-            T(70, 158, 700, d["name"], 24, c.fg, True, h=110), T(70, 276, 600, d["company"], 8, c.sub),
-            line(70, 336, 830, 336, c.line, 1.6), *rows(c, 70, 358, 36, 6.8, 420)]
+    pw = max(150, len(d["title"]) * 7 * PT + 74)
+    dots = [ellipse(742 + i * 26, 70 + j * 26, 3.4, 3.4, c.acc if (i + j) % 4 == 0 else c.line) for i in range(5) for j in range(4)]
+    return [*dots, rect(L, 66, pw, 46, stroke=c.acc, sw=1.6, r=23), T(L, 66, pw, d["title"], 6.6, c.fg, True, "c", anchor="m", spacing=.8, h=46),
+            T(L, 162, 600, d["name"], 13.5, c.fg, True, spacing=1.2, h=66), co(c, L, 244, 500), hl(L, 830, 318, c.line), *rows(c, L, 342, 36, 6.5, 420, 92), *tick(830, 440, c.line)]
 
 
 def f_half(c):
     d = c.d
-    return [poly(arc_pts(0, 250, 200, 200, -90, 90, 30), fill=c.panel), T(10, 150, 150, d["name"][:1], 30, c.onp, True, "c", anchor="m", h=200),
-            T(310, 62, 520, d["company"], 7, c.sub, True, spacing=2), T(310, 150, 520, d["name"], 22, c.fg, True, h=100), T(310, 262, 520, d["title"], 9, c.sub),
-            rect(310, 332, 40, 5, c.acc), *rows(c, 310, 366, 36, 7, 400)]
+    return [poly(arc_pts(0, 250, 190, 190, -90, 90, 30), fill=c.panel), ring(0, 250, 120, c.onp, 1.2), ring(0, 250, 70, c.onp, 1.2), T(24, 170, 90, mono(c), 10, c.onp, True, "c", anchor="m", h=160),
+            co(c, 310, 70, 520), hl(310, 830, 118, c.line), *name_title(c, 310, 180), hl(310, 830, 352, c.line), *rows(c, 310, 374, 34, 6.5, 330, 92)]
 
 
 def f_slice(c):
     d = c.d
-    return [poly([(660, 0), (900, 0), (900, 500), (560, 500)], fill=c.acc), poly([(618, 0), (646, 0), (546, 500), (518, 500)], fill=c.deco if c.flavor != 2 else c.panel),
-            T(70, 62, 400, d["company"], 7, c.sub, True, spacing=2), T(70, 150, 440, d["name"], 22, c.fg, True, h=100), T(70, 262, 440, d["title"], 9, c.sub),
-            rect(70, 332, 40, 5, c.acc), *rows(c, 70, 366, 36, 6.6, 330, 92)]
+    return [poly([(690, 0), (900, 0), (900, 500), (590, 500)], fill=c.acc), *[line(690 - 22 * k, 0, 590 - 22 * k, 500, c.deco if c.flavor not in (2,) else c.sub, 1.0) for k in (1, 2, 3)],
+            co(c, L, 70, 400), hl(L, 420, 104, c.line), *name_title(c, L, 176), rect(L, 290, 36, 4, c.acc), *rows(c, L, 326, 36, 6.3, 270, 90)]
+
+
+def f_strip(c):
+    d = c.d
+    out = [rect(0, 360, 900, 140, c.deco if c.flavor not in (2,) else c.panel), rect(0, 360, 900, 4, c.acc), co(c, L, 70, 420), *name_title(c, L, 160)]
+    out += cols(c, L, 392, [250, 280, 270], 6.3, sep=c.line if c.flavor != 2 else c.sub)
+    return out
 
 
 def f_dots(c):
     d = c.d
-    dots = [ellipse(740 + i * 28, 70 + j * 28, 5, 5, c.acc if (i + j) % 3 == 0 else c.deco) for i in range(5) for j in range(4)]
-    return [*dots, T(70, 62, 400, d["company"], 7, c.sub, True, spacing=2), T(70, 214, 560, d["name"], 22, c.fg, True, h=100), T(70, 326, 560, d["title"], 9, c.sub),
-            *rows(c, 830, 372, 38, 7, 380, align="r")]
+    dots = [ellipse(L + 6 + i * 22, 70 + j * 22, 3.2, 3.2, c.acc if (i * 2 + j) % 5 == 0 else c.line) for i in range(8) for j in range(3)]
+    return [*dots, T(430, 66, 400, d["company"], 6.5, c.sub, True, "r", spacing=2.2), *name_title(c, L, 232), *rows(c, 830 - 330, 250, 36, 6.5, 240, 84), hl(L, 830, 450, c.line), ring(830, 450, 5, c.acc, 1.4)]
 
 
-FRONTS = [f_swiss, f_split, f_center, f_initial, f_arc, f_bar, f_circles, f_table, f_pill, f_half, f_slice, f_dots]
+FRONTS = [f_grid, f_side, f_center, f_block, f_arcs, f_bar, f_rule, f_table, f_pill, f_half, f_slice, f_strip]
+FRONTS[11] = f_strip
 assert len(FRONTS) == NF
 
 
-# ───────── 뒷면 10종
-def tg(c, x, y, w, size=12, align="l", color=None, anchor="t", h=160):
-    return text(x, y, w, h, wrap(c.d["tagline"], size, w), size, color or c.fg, True, align, "sans", 0, anchor)
+# ───────── 뒷면 10종 — 업무 목록·영업시간·채널(감성 문장 없음)
+def chips(c, x, y, maxw, items, size=6.6, filled=False):
+    out, cx, cy = [], x, y
+    h = size * PT + 30
+    for s in items:
+        w = len(s) * size * PT * 0.98 + 44
+        if cx + w > x + maxw:
+            cx, cy = x, cy + h + 14
+        out += [rect(cx, cy, w, h, c.acc if filled else None, stroke=None if filled else c.sub, sw=1.0, r=h / 2),
+                T(cx, cy, w, s, size, c.on if filled else c.fg, False, "c", anchor="m", h=h)]
+        cx += w + 14
+    return out, cy + h
 
 
-def b_solid(c):
+def svc_lines(c, x, y, w, items, size=7, pitch=50, num=True):
+    out = []
+    for i, s in enumerate(items):
+        yy = y + i * pitch
+        out += [hl(x, x + w, yy, c.line)]
+        if num:
+            out.append(T(x, yy + 15, 60, f"{i + 1:02d}", 5, c.sub, True, spacing=1))
+        out.append(T(x + (66 if num else 0), yy + 12, w - 70, s, size, c.fg))
+    out.append(hl(x, x + w, y + len(items) * pitch, c.line))
+    return out, y + len(items) * pitch
+
+
+def info(c, x, y, w=330, pitch=46, rows_=("hours", "web")):
     d = c.d
-    return [rect(0, 0, 900, 500, c.panel), sector(900, 500, 230, 180, 270, mix(c.panel, WHITE, .22)), tg(c, 70, 120, 640, 13, "l", c.onp, "t", 200),
-            T(70, 410, 500, d["company"], 7, c.onp, True, spacing=2)]
+    items = []
+    if "hours" in rows_:
+        items.append(("HOURS", d["hours"]))
+    if "web" in rows_:
+        items.append((d["web"][0], d["web"][1]))
+    out = []
+    for i, (lab, val) in enumerate(items):
+        yy = y + i * pitch
+        out += [T(x, yy + 3, 110, lab, 4.8, c.sub, True, spacing=1.4), T(x + 110, yy, w - 110, val, 6.4, c.fg)]
+    return out
 
 
-def b_dot(c):
+def lab(c, x, y, w=300, color=None, align="l"):
+    return T(x, y, w, c.d["svc_label"].upper() if False else c.d["svc_label"], 5.2, color or c.sub, True, align, spacing=2.4)
+
+
+def b_list(c):  # 번호 목록 + 오른쪽 안내
     d = c.d
-    return [ellipse(450, 150, 8, 8, c.acc), tg(c, 110, 190, 680, 12, "c", None, "t", 140), T(100, 372, 700, d["company"], 6.5, c.sub, True, "c", spacing=3)]
+    items = d["services"]
+    ll, _ = svc_lines(c, L, 126, 420, items, 7, 52)
+    return [lab(c, L, 70), rect(L, 98, 30, 4, c.acc), *ll, rect(580, 70, 250, 360, c.panel), T(610, 100, 190, "INFO", 5, c.onp, True, spacing=2.4, op=.75),
+            T(610, 140, 190, d["hours"], 6.4, c.onp, True), hl(610, 800, 214, c.onp), T(610, 236, 190, d["web"][0], 4.8, c.onp, True, spacing=1.4, op=.75), T(610, 266, 190, d["web"][1], 6.4, c.onp, True),
+            T(610, 380, 200, c.d["company"], 5.6, c.onp, True, spacing=.8)]
 
 
-def b_bar(c):
+def b_row(c):  # 가운데 한 줄 + 세로 구분선
     d = c.d
-    return [rect(70, 150, 8, 200, c.acc), tg(c, 118, 170, 600, 12.5, "l", None, "t", 180), T(118, 420, 500, d["company"], 6.5, c.sub, True, spacing=2)]
+    items = d["services"]
+    out = [*ticks(c), lab(c, 100, 92, 700, None, "c"), rect(425, 126, 50, 4, c.acc)]
+    n = len(items)
+    cw = 700 / n
+    for i, s in enumerate(items):
+        out.append(T(100 + i * cw, 190, cw, s, 7, c.fg, True, "c", anchor="m", h=60))
+        if i:
+            out.append(vl(100 + i * cw, 188, 252, c.line))
+    out += [hl(100, 800, 322, c.line), T(100, 346, 340, d["hours"], 6.2, c.fg, False, "c"), T(460, 346, 340, f'{d["web"][0]}  {d["web"][1]}', 6.2, c.fg, False, "c"), co(c, 100, 424, 700, None, "c")]
+    return out
 
 
-def b_split(c):
+def b_grid(c):  # 2열 번호 격자
     d = c.d
-    return [rect(580, 0, 320, 500, c.panel), ellipse(740, 250, 74, 74, stroke=c.onp, sw=3), T(640, 190, 200, mono(c), 30, c.onp, True, "c", anchor="m", h=120),
-            tg(c, 70, 150, 450, 12, "l", None, "t", 200), T(70, 420, 440, d["company"], 6.5, c.sub, True, spacing=2)]
+    items = d["services"]
+    out = [lab(c, L, 62), hl(L, 830, 108, c.line)]
+    for i, s in enumerate(items):
+        col, row = i % 2, i // 2
+        x, y = L + col * 390, 130 + row * 96
+        out += [T(x, y, 60, f"{i + 1:02d}", 5.2, c.acc if c.flavor != 2 else c.fg, True, spacing=1), T(x + 62, y - 3, 320, s, 7.4, c.fg), hl(x, x + 360, y + 62, c.line)]
+    out += [T(L, 436, 380, d["hours"], 6, c.sub), T(450, 436, 380, f'{d["web"][1]}', 6, c.sub, False, "r")]
+    return out
 
 
-def b_mono(c):
+def b_panel(c):  # 왼쪽 큰 면 + 오른쪽 목록
     d = c.d
-    return [ellipse(450, 140, 58, 58, c.acc), T(380, 90, 140, mono(c), 26, c.on, True, "c", anchor="m", h=100), T(100, 228, 700, d["company"], 8.5, c.fg, True, "c", spacing=2),
-            rect(425, 292, 50, 4, c.acc), tg(c, 150, 330, 600, 9, "c", c.sub, "t", 100)]
+    ll, _ = svc_lines(c, 400, 100, 430, d["services"], 7, 56, False)
+    return [rect(0, 0, 330, 500, c.panel), *hatch(0, 340, 330, 160, c.onp if c.flavor != 2 else c.sub, 16, 1.0), ring(100, 110, 40, c.onp, 1.6), T(60, 70, 80, mono(c), 14, c.onp, True, "c", anchor="m", h=80),
+            T(60, 400, 230, d["svc_label"], 7.5, c.onp, True, spacing=1), lab(c, 400, 62), *ll, T(400, 436, 430, f'{d["hours"]}   |   {d["web"][1]}', 6, c.sub)]
+
+
+def b_chips(c):
+    d = c.d
+    cps, yb = chips(c, L, 150, 760, d["services"], 6.8)
+    return [lab(c, L, 70), rect(L, 102, 30, 4, c.acc), *cps, hl(L, 830, 372, c.line), *info(c, L, 392, 760, 44), co(c, 430, 392, 400, None, "r")]
+
+
+def b_line(c):  # 세로 점선 타임라인
+    d = c.d
+    out = [vl(110, 100, 100 + 56 * (len(d["services"]) - 1) + 12, c.acc, 1.6), lab(c, L, 52, 400)]
+    for i, s in enumerate(d["services"]):
+        y = 112 + i * 62
+        out += [ellipse(110, y, 8, 8, c.acc if i == 0 else c.bg, stroke=c.acc, sw=1.6), T(150, y - 20, 420, s, 7.4, c.fg, True, h=44)]
+    out += [vl(620, 96, 420, c.line), T(660, 110, 180, "HOURS", 4.8, c.sub, True, spacing=1.4), T(660, 142, 200, d["hours"], 6.2, c.fg),
+            T(660, 232, 180, d["web"][0], 4.8, c.sub, True, spacing=1.4), T(660, 264, 190, d["web"][1], 6.2, c.fg), rect(660, 340, 66, 66, stroke=c.sub, sw=1.2, dash=True), T(660, 340, 66, "QR", 5, c.sub, True, "c", anchor="m", h=66)]
+    return out
+
+
+def b_solid(c):  # 원색 전면 + 안쪽 테두리
+    d = c.d
+    out = [rect(0, 0, 900, 500, c.panel), rect(30, 30, 840, 440, stroke=c.onp, sw=1.0, op=.5), lab(c, 80, 78, 400, c.onp)]
+    for i, s in enumerate(d["services"]):
+        out += [T(80, 130 + i * 62, 520, s, 9.5, c.onp, True, h=60), hl(80, 560, 130 + i * 62 + 56, c.onp, 1.0)]
+    out += [T(630, 130, 240, "HOURS", 4.8, c.onp, True, spacing=1.4, op=.75), T(630, 160, 240, d["hours"], 6.2, c.onp, True), T(630, 250, 240, d["web"][0], 4.8, c.onp, True, spacing=1.4, op=.75), T(630, 280, 240, d["web"][1], 6.2, c.onp, True),
+            co(c, 80, 420, 500, c.onp)]
+    return out
+
+
+def b_inline(c):  # 점으로 이어진 한 줄 + 아래 정보 표
+    d = c.d
+    return [*ticks(c, 30), co(c, L, 80, 700, None, "c"), rect(425, 126, 50, 4, c.acc), lab(c, 100, 172, 700, None, "c"),
+            T(100, 206, 700, "  ·  ".join(d["services"]), 8.2, c.fg, True, "c", h=110), hl(100, 800, 340, c.line), T(100, 366, 340, d["hours"], 6.2, c.fg, False, "c"), vl(450, 360, 410, c.line),
+            T(460, 366, 340, f'{d["web"][1]}', 6.2, c.fg, False, "c")]
 
 
 def b_qr(c):
     d = c.d
-    return [rect(640, 140, 190, 190, stroke=c.sub, sw=2, dash=True), T(640, 140, 190, "QR", 11, c.sub, True, "c", anchor="m", h=190),
-            tg(c, 70, 140, 480, 12, "l", None, "t", 200), rect(70, 360, 40, 5, c.acc), T(70, 390, 460, d["company"], 7, c.sub, True, spacing=2)]
+    ll, _ = svc_lines(c, L, 130, 420, d["services"], 7, 52, False)
+    return [lab(c, L, 70), rect(L, 98, 30, 4, c.acc), *ll, rect(610, 110, 200, 200, stroke=c.sub, sw=1.2, dash=True), T(610, 110, 200, "QR", 9, c.sub, True, "c", anchor="m", h=200),
+            T(610, 336, 200, d["web"][1], 6.2, c.fg, False, "c"), T(610, 376, 200, d["hours"], 6.2, c.sub, False, "c")]
 
 
-def b_quote(c):
+def b_dark(c):  # 큰 번호 + 업무
     d = c.d
-    return [T(60, 20, 300, "“", 110, c.acc, True, h=260), tg(c, 70, 220, 700, 12.5, "l", None, "t", 180), line(70, 420, 830, 420, c.line, 1.6),
-            T(70, 436, 760, d["company"], 6.5, c.sub, True, "r", spacing=2)]
+    out = [rect(0, 0, 900, 8, c.acc), lab(c, L, 62)]
+    for i, s in enumerate(d["services"]):
+        out += [T(L, 118 + i * 74, 150, f"{i + 1:02d}", 15, c.acc if c.flavor != 2 else c.fg, True, h=66), T(L + 130, 132 + i * 74, 420, s, 8, c.fg, True, h=50)]
+    out += [vl(620, 118, 420, c.line), T(660, 118, 180, "HOURS", 4.8, c.sub, True, spacing=1.4), T(660, 150, 200, d["hours"], 6.2, c.fg), T(660, 250, 180, d["web"][0], 4.8, c.sub, True, spacing=1.4), T(660, 282, 190, d["web"][1], 6.2, c.fg),
+            co(c, 660, 400, 190)]
+    return out
 
 
-def b_arcs(c):
-    d = c.d
-    return [sector(0, 0, 300, 0, 90, c.acc), sector(0, 0, 190, 0, 90, c.deco if c.flavor != 2 else c.panel), tg(c, 330, 290, 500, 12, "r", None, "t", 120),
-            T(330, 424, 500, d["company"], 6.5, c.sub, True, "r", spacing=2)]
-
-
-def b_foot(c):
-    d = c.d
-    return [tg(c, 70, 90, 700, 13, "l", None, "t", 220), rect(0, 410, 900, 90, c.panel), T(70, 436, 520, d["company"], 7.5, c.onp, True, spacing=2),
-            *[ellipse(760 + i * 30, 455, 6, 6, c.onp, op=1 if i == 0 else .5) for i in range(3)]]
-
-
-def b_grid(c):
-    d = c.d
-    dots = [ellipse(30 + i * 30, 30 + j * 30, 2.6, 2.6, c.line) for i in range(30) for j in range(16)]
-    return [*dots, rect(110, 130, 680, 240, c.bg), tg(c, 150, 160, 600, 11.5, "c", None, "t", 130), T(150, 318, 600, d["company"], 6.5, c.sub, True, "c", spacing=3)]
-
-
-BACKS = [b_solid, b_dot, b_bar, b_split, b_mono, b_qr, b_quote, b_arcs, b_foot, b_grid]
+BACKS = [b_list, b_row, b_grid, b_panel, b_chips, b_line, b_solid, b_inline, b_qr, b_dark]
 assert len(BACKS) == NB

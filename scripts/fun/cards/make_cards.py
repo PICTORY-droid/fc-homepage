@@ -10,7 +10,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 sys.path.insert(0, os.path.join(HERE, "..", "pack"))
 
-from cards_data import CATS, TAGS  # noqa: E402
+from cards_data import CATS, HOURS, LABELS, SERVICES, WEBS  # noqa: E402
 from modern import BACKS, FRONTS, NB, NF, NFLAV, PAL, Ctx  # noqa: E402
 from pack_kit import ROOT, safe_name  # noqa: E402
 from layouts import mix  # noqa: E402
@@ -63,11 +63,12 @@ def assign():
 
 def card_data(cat, j):
     c = CATS[cat]
-    tag = TAGS[cat][j]
-    assert not any(w in tag for w in FORBIDDEN), tag
+    svc = SERVICES[cat][j]
+    hours = HOURS[cat][(j // 2) % len(HOURS[cat])]
     return dict(name=NAMES[j], title=c["titles"][j % len(c["titles"])], company=c["company"],
                 tel="010-1234-5678", mail="name@example.com", addr="주소를 입력해 주세요",
-                tagline=tag, icon=c["icons"][(j // 2 + j) % len(c["icons"])], tag_serif=(j // 3) % 2 == 1)
+                services=svc, svc_label=LABELS[cat], hours=hours, web=WEBS[(j + len(cat)) % len(WEBS)],
+                tagline=" · ".join(svc))
 
 
 def check_text_colors(els, bg, label):
