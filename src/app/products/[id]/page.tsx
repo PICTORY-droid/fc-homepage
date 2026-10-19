@@ -6,7 +6,7 @@ import { Notice } from "@/components/ui/Notice";
 import { BulletList } from "@/components/ui/BulletList";
 import { ButtonLink } from "@/components/ui/Button";
 import { ConsultForm } from "@/components/consult/ConsultForm";
-import { KakaoButton } from "@/components/KakaoButton";
+import { KakaoBanner } from "@/components/KakaoBanner";
 import { ProductCard } from "@/components/products/ProductCard";
 import { productCopy } from "@/config/productCopy";
 import { products, productsMeta } from "@/config/products";
@@ -178,8 +178,8 @@ export default async function ProductPage({ params }: Props) {
         </ol>
       </Section>
 
-      <Section id="consult" title={`${p.displayName} 상담 신청`} lead="상담부터 계약까지 카카오톡으로!">
-        <div className="mb-6"><KakaoButton className="sm:max-w-xs" /></div>
+      <Section id="consult" title={`${p.displayName} 상담 신청`}>
+        <div className="mb-8"><KakaoBanner /></div>
         <ConsultForm initialTopic={p.topic} />
       </Section>
 

@@ -93,3 +93,36 @@
   .art-flow { animation: artFlow 1.4s linear infinite; }
   .art-wheel { transform-box: fill-box; transform-origin: center; animation: artSpin 1.6s linear infinite; }
 }
+
+/* 카카오톡 비대면 상담 만화 장면 (KakaoScene) — 모션 줄이기 설정이면 완성된 장면이 멈춰서 보입니다 */
+.kk-flow { stroke-dasharray: 4 7; }
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes kkB1 { 0%, 3% { opacity: 0; transform: translateY(10px) scale(.85); } 9% { opacity: 1; transform: translateY(0) scale(1.04); } 12%, 90% { opacity: 1; transform: none; } 97%, 100% { opacity: 0; transform: translateY(-4px); } }
+  @keyframes kkDots { 0%, 13% { opacity: 0; } 15%, 26% { opacity: 1; } 28%, 100% { opacity: 0; } }
+  @keyframes kkB2 { 0%, 27% { opacity: 0; transform: translateY(10px) scale(.85); } 33% { opacity: 1; transform: scale(1.04); } 36%, 90% { opacity: 1; transform: none; } 97%, 100% { opacity: 0; } }
+  @keyframes kkDoc { 0%, 40% { opacity: 0; transform: translateY(14px); } 47% { opacity: 1; transform: none; } 90% { opacity: 1; transform: none; } 97%, 100% { opacity: 0; } }
+  @keyframes kkStamp { 0%, 56% { opacity: 0; transform: scale(2.2) rotate(-18deg); } 62% { opacity: 1; transform: scale(.9) rotate(-8deg); } 66%, 90% { opacity: 1; transform: scale(1) rotate(-8deg); } 97%, 100% { opacity: 0; } }
+  @keyframes kkOk { 0%, 64% { opacity: 0; transform: translateY(8px) scale(.8); } 70% { opacity: 1; transform: scale(1.06); } 73%, 90% { opacity: 1; transform: none; } 97%, 100% { opacity: 0; } }
+  @keyframes kkBob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+  @keyframes kkBlink { 0%, 92%, 100% { transform: scaleY(1); } 96% { transform: scaleY(.1); } }
+  @keyframes kkBounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+  @keyframes kkFlow { to { stroke-dashoffset: -22; } }
+  @keyframes kkTwinkle { 0%, 100% { opacity: .3; transform: scale(.7); } 50% { opacity: 1; transform: scale(1.1); } }
+
+  .kk * { transform-box: fill-box; transform-origin: center; }
+  .kk .kk-b1 { animation: kkB1 7s ease-out infinite; }
+  .kk .kk-dots { animation: kkDots 7s linear infinite; }
+  .kk .kk-dot { animation: kkBounce .9s ease-in-out infinite; }
+  .kk .kk-dot2 { animation-delay: .15s; }
+  .kk .kk-dot3 { animation-delay: .3s; }
+  .kk .kk-b2 { animation: kkB2 7s ease-out infinite; }
+  .kk .kk-doc { animation: kkDoc 7s ease-out infinite; }
+  .kk .kk-stamp { animation: kkStamp 7s cubic-bezier(.3,1.4,.5,1) infinite; }
+  .kk .kk-ok { animation: kkOk 7s ease-out infinite; }
+  .kk .kk-char { animation: kkBob 3s ease-in-out infinite; }
+  .kk .kk-eyes { animation: kkBlink 4s ease-in-out infinite; }
+  .kk .kk-flow { animation: kkFlow 1.2s linear infinite; }
+  .kk .kk-spark { animation: kkTwinkle 2s ease-in-out infinite; }
+  .kk .kk-spark2 { animation-delay: .7s; }
+  .kk .kk-spark3 { animation-delay: 1.3s; }
+}
