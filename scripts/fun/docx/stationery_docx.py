@@ -67,7 +67,7 @@ def build(m, jpg_path):
     rx, ry, rw, rows = m["rules"]
     rules_end = ry + rows * GAP
     # 위 여백 = 글쓰기 줄 시작 위치, 아래 여백 = 마지막 줄 끝(조금 여유) → 1쪽에 정확히 rows 줄이 들어가고 2쪽도 줄이 맞습니다
-    doc = new_document(f"계절 편지지 · {m['name']}", (ry, PAGE_W - rx - rw, PAGE_H - rules_end - 6, rx))
+    doc = new_document(f"편지지 · {m['name']}", (ry, PAGE_W - rx - rw, PAGE_H - rules_end - 6, rx))
     doc.sections[0].header_distance = Twips(0)
     _background(doc, jpg_path, m["name"])
     c = m["color"]

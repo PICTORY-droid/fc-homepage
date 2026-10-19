@@ -61,3 +61,4 @@ export const autumnDesigns = [
   D(19, { title: "황금 들녘", tag: "벼 이삭 고개 숙인 풍년 소식", hero: rice, p: pal({ a: "#E2B33C", b: "#F1D582", c: "#F5E6A8", d: "#8F6A10", bg: "#FFF7D9" }), layout: "banner", v: 0, pat: "waves", postal: "mailbox" }),
   D(20, { title: "버섯 마을", tag: "숲속 버섯 마을에서 온 가을 소식", hero: mushroom, p: pal({ a: "#D9734E", b: "#EAA67A", c: "#B7A36B", d: "#7A4026", bg: "#F8EDE3" }), layout: "frame", v: 1, pat: "stripes", postal: "plane" }),
 ];
+export const heroes = { maple,ginkgo,cosmos,pampas,persimmon,acorn,chestnut,scarecrow,songpyeon,dragonfly,apple,grapes,chrysanthemum,geese,books,teacup,leafbox,pumpkin,rice,mushroom };

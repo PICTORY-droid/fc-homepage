@@ -61,3 +61,4 @@ export const winterDesigns = [
   D(19, { title: "선물 상자", tag: "마음을 포장한 겨울 선물", hero: gift, p: pal({ a: "#6BB3A8", b: "#F2A9B8", c: "#F6D86A", d: "#2F6F66", bg: "#EAF7F4" }), layout: "wavetop", v: 1, pat: "stripes", postal: "plane" }),
   D(20, { title: "까치 소식", tag: "까치가 전하는 반가운 겨울 소식", hero: magpie, p: pal({ a: "#5B7FA8", b: "#BFD3E8", c: "#8FB4D8", d: "#2A3F5F", bg: "#EBF1F8" }), layout: "ribbon", v: 1, pat: "waves", postal: "ticket", pp: { label: "까치" } }),
 ];
+export const heroes = { snowflake,snowman,tree,santa,mittens,scarf,cocoa,fireplace,camellia,cabin,aurora,penguin,polarbear,tangerine,bun,sunrise,pouch,wreath,gift,magpie };

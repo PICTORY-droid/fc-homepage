@@ -74,3 +74,4 @@ export const springDesigns = [
   D(19, { title: "우체부 자전거", tag: "꽃바구니 싣고 달리는 봄 배달", hero: bicycle, p: pal({ a: "#6FB7A6", b: "#F7C8A0", c: "#F29BB6", d: "#2F6F63", bg: "#EAF7F3" }), layout: "postcard", v: 0, pat: "stripes", postal: "bike", price: "봄", mark: "SPRING" }),
   D(20, { title: "라일락 향기", tag: "라일락 향기 가득한 안부", hero: lilac, p: pal({ a: "#B58FE0", b: "#D9C3F2", c: "#9ED69A", d: "#6B3FA0", bg: "#F6F0FD" }), layout: "banner", v: 2, pat: "waves", postal: "stamp", price: "봄" }),
 ];
+export const heroes = { cherry,sprout,tulips,forsythia,dandelion,swallow,butterfly,strawberry,umbrella,rapeseed,magnolia,azalea,rainbow,lunch,carnation,bee,kite,chick,bicycle,lilac };

@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 export default function StationeryPage() {
   return (
     <>
-      <Section title="계절 편지지 80장" lead="봄·여름·가을·겨울 각 20장. 마음에 드는 한 장을 Word로 받아 컴퓨터에서 바로 쓰고, 휴대폰·메신저에는 PNG 그림이 편해요.">
+      <Section title="계절 편지지 80장" lead="봄·여름·가을·겨울 각 20장. 우체국 앞에서 편지 부치던 그 시절의 분위기로 만들었어요. 한 장을 Word로 받아 바로 쓰고, 휴대폰에는 PNG가 편해요.">
         <nav aria-label="계절 바로가기" className="flex flex-wrap gap-2">
           {seasons.map((s) => (
             <a key={s.key} href={`#${s.key}`} className="flex min-h-[44px] items-center rounded-full border border-ink/25 bg-paper px-5 text-sm font-bold text-ink hover:bg-paper-gray">{s.label} 20장</a>

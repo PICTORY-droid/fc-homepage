@@ -73,3 +73,4 @@ export const summerDesigns = [
   D(19, { title: "팥빙수 한 그릇", tag: "더위야 가라, 달콤한 소식", hero: bingsu, p: pal({ a: "#F2A3A3", b: "#FFFFFF", c: "#9FD6A8", d: "#A04A4A", bg: "#FFF3F0" }), layout: "banner", v: 0, pat: "checks", postal: "plane" }),
   D(20, { title: "레몬에이드", tag: "상큼 톡톡, 여름 안부", hero: lemonade, p: pal({ a: "#F6D43C", b: "#FBE98F", c: "#8BCB6A", d: "#9A7E00", bg: "#FFFBDB" }), layout: "ribbon", v: 1, pat: "dots", postal: "zip" }),
 ];
+export const heroes = { sunflower,watermelon,shell,palm,icecream,fan,windchime,firefly,rain,mixGray,floatring,hydrangea,lotus,whale,parasol,cicada,surfboard,tent,milkyway,bingsu,lemonade };

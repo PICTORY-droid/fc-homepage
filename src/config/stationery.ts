@@ -1,4 +1,4 @@
-// 계절 편지지 80장 — 파일은 public/fun/stationery/ 에 있고 scripts/fun/seasons/build.mjs + scripts/fun/docx/make_stationery_docx.py 로 만듭니다.
+// 계절 편지지 80장 — 파일은 public/fun/stationery/ 에 있고 scripts/fun/memory/build.mjs + scripts/fun/docx/make_stationery_docx.py 로 만듭니다.
 // 목록(stationery.data.json)은 build.mjs 가 만든 meta.json 에서 뽑은 것입니다.
 import data from "./stationery.data.json";
 
@@ -7,10 +7,10 @@ export interface Stationery { id: string; season: SeasonKey; no: number; name: s
 export interface Season { key: SeasonKey; label: string; lead: string }
 
 export const seasons: Season[] = [
-  { key: "spring", label: "봄", lead: "벚꽃·입춘·어버이날… 꽃소식과 함께 시작하는 새봄의 편지" },
-  { key: "summer", label: "여름", lead: "바다·소나기·칠석… 시원한 안부를 전하는 여름 편지" },
-  { key: "autumn", label: "가을", lead: "단풍·한가위·독서의 계절… 깊어 가는 가을 편지" },
-  { key: "winter", label: "겨울", lead: "눈꽃·크리스마스·새해… 포근한 겨울 편지" },
+  { key: "spring", label: "봄", lead: "새 학기 첫날, 교문 앞 병아리, 어버이날 편지… 그 봄의 기억" },
+  { key: "summer", label: "여름", lead: "방학식, 소나기, 평상 위 수박… 그 여름의 기억" },
+  { key: "autumn", label: "가을", lead: "운동회, 은행잎 책갈피, 귀성 열차… 그 가을의 기억" },
+  { key: "winter", label: "겨울", lead: "첫눈, 군고구마, 연하장… 그 겨울의 기억" },
 ];
 
 export const stationery = data as Stationery[];
