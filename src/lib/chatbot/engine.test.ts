@@ -50,5 +50,10 @@ describe("안내 도우미", () => {
     expect(r.links.map((l) => l.href)).toContain("https://epostlife.go.kr/IPCCFQ0001.do");
     expect(r.text).not.toMatch(/\d+일|\d+원/);
   });
+  it("다이렉트 보험은 1599-0100 문의로 안내", () => {
+    const r = reply("다이렉트 보험 상담 가능해요?");
+    expect(r.text).toBe("다이렉트 보험은 이곳에서 상담이 어렵습니다. 1599-0100으로 문의주세요.");
+    expect(r.links.map((l) => l.href)).toEqual(["tel:1599-0100"]);
+  });
   it("너무 긴 입력은 잘라서 처리", () => expect(() => reply("가".repeat(5000))).not.toThrow());
 });
