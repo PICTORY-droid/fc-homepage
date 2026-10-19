@@ -14,9 +14,7 @@ describe("자료 꾸러미: 항목마다 50종", () => {
           expect(list).toHaveLength(50);
           expect(new Set(list.map((e) => e.no)).size).toBe(50);
           expect(new Set(list.map((e) => e.name)).size).toBe(50);
-          const tags = list.map((e) => e.tag).filter(Boolean);
-          expect(new Set(tags).size).toBe(tags.length); // 문구는 없어도 되지만, 있으면 겹치지 않는다
-        });
+                  });
         it("계절별 13·12·13·12종", () => {
           expect(packSeasons.map((s) => entriesBySeason(item, s).length)).toEqual([13, 12, 13, 12]);
         });

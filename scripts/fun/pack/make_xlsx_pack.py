@@ -30,7 +30,7 @@ def run(keys):
             pal = pk.palette(i)
             fname = f"{key}-{i + 1:02d}.xlsx"
             mod.build(os.path.join(d, fname), i, pal, "")  # 표지 한 줄 문구는 쓰지 않습니다
-            entries.append({"no": i + 1, "name": pal["name"], "tag": "", "flavor": mod.flavor(i), "main": pal["main"], "soft": pal["soft"], "dark": pal["dark"], "season": pk.season_of(i)})
+            entries.append({"no": i + 1, "name": pal["name"], "tag": copy_xlsx.FEATURES[key], "flavor": mod.flavor(i), "main": pal["main"], "soft": pal["soft"], "dark": pal["dark"], "season": pk.season_of(i)})
         pk.write_manifest("xlsx-" + key, entries)
         print(key, "50개 완료")
 
