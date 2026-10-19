@@ -14,6 +14,9 @@ export const funCtas: Record<string, FunCta> = {
   "excel/quote": { title: "사업장 보험이 궁금하다면", text: "견적서를 쓰는 사장님께, 사업장과 직원에게 필요한 보험을 알기 쉽게 정리해 드립니다.", topic: "business", button: "기업·단체 상담" },
   "ppt/family": { title: "우리 가족 보장도 한 번 살펴볼까요?", text: "가족 구성에 맞춰 어떤 점을 확인하면 좋은지 안내해 드립니다.", topic: "kids", button: "가족 보장 상담" },
   "ppt/birthday": { title: "아이의 첫 생일, 보장도 한 번 확인해요", text: "첫돌을 맞은 아이에게 어떤 준비가 있는지 편하게 물어보세요.", topic: "kids", button: "어린이 보장 상담" },
+  "excel/gift": { title: "경조사비, 보험료와 함께 보면 한눈에 들어와요", text: "한 해 나가는 마음 씀씀이를 정리하셨다면, 고정으로 나가는 보험료도 같이 살펴볼 수 있어요. 궁금한 점을 편하게 물어보세요.", topic: "other", button: "보험료 살펴보기" },
+  "ppt/talk": { title: "발표 준비하다 궁금한 점이 생겼다면", text: "직원이나 모임을 위한 보험 이야기가 궁금할 때, 확인할 점을 쉽게 정리해 안내해 드립니다.", topic: "business", button: "기업·단체 문의" },
+  "ppt/news": { title: "카드뉴스로 알리고 싶은 보험 이야기가 있다면", text: "보험 용어나 확인할 점이 어렵게 느껴질 때 편하게 물어보세요. 살펴보고 쉽게 안내해 드립니다.", topic: "other", button: "궁금한 점 물어보기" },
   "ppt/wedding": { title: "새로운 출발, 보장도 함께 정리해요", text: "신혼 때 확인하면 좋은 보장 점검 포인트를 안내해 드립니다.", topic: "other", button: "신혼 보장 점검" },
 };
 
@@ -25,6 +28,11 @@ export const cardCtas: Record<string, FunCta> = {
   beauty: { title: "샵을 운영하신다면", text: "일하는 분들과 가게를 위해 확인할 점을 편하게 물어보세요.", topic: "business", button: "사업장 보험 상담" },
   life: { title: "동네 가게 사장님께", text: "가게와 가족을 위해 살펴볼 보험을 쉽게 설명해 드립니다.", topic: "business", button: "사장님 보험 상담" },
   creative: { title: "프리랜서로 일하신다면", text: "회사의 보호 없이 일할 때 확인하면 좋은 점을 안내해 드려요.", topic: "other", button: "프리랜서 보험 상담" },
+  office: { title: "회사 밖 보장도 궁금하다면", text: "회사에서 받는 것 외에 내가 따로 확인할 점이 있는지 편하게 물어보세요. 살펴보고 안내해 드립니다.", topic: "other", button: "보장 점검 문의" },
+  public: { title: "공직에 계신 분들께", text: "단체보험이나 이미 가입한 보험과 겹치는 부분이 없는지 궁금할 때 편하게 물어보세요.", topic: "other", button: "보장 점검 문의" },
+  teacher: { title: "아이들을 가르치는 선생님께", text: "나와 가족의 보장은 어떻게 되어 있는지 궁금할 때 편하게 물어보세요. 쉽게 설명해 드립니다.", topic: "other", button: "보장 점검 문의" },
+  care: { title: "돌봄과 의료 현장에서 일하신다면", text: "일하는 동안 건강과 가족을 챙기기 어려울 때, 확인할 점을 알기 쉽게 안내해 드립니다.", topic: "other", button: "보장 점검 문의" },
+  finance: { title: "금융 분야에서 일하신다면", text: "나와 가족의 보험을 다른 눈으로 한 번 더 살펴보고 싶을 때 편하게 물어보세요.", topic: "other", button: "보장 점검 문의" },
   expert: { title: "혼자 일하는 전문가께", text: "소득과 건강을 스스로 챙겨야 할 때 살펴볼 점을 안내해 드립니다.", topic: "other", button: "보장 점검 상담" },
 };
 
