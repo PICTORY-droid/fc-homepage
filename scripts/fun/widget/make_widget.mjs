@@ -8,25 +8,28 @@ import { pathToFileURL } from "node:url";
 const ROOT = new URL("../../..", import.meta.url).pathname;
 const OUT = path.join(ROOT, "public", "widget");
 
-// 문구는 안내만 합니다(가입 권유·보장 단정 없음). 주소는 배너를 눌렀을 때 열리는 곳이 아니라 화면 표시용이에요.
+// 문구는 안내만 합니다(가입 권유·보장 단정 없음). 숫자는 실제 사이트에 있는 자료 수(엑셀 300 + PPT 600 = 900)만 씁니다.
+const CHECK = `<svg width="13" height="13" viewBox="0 0 16 16"><circle cx="8" cy="8" r="8" fill="currentColor"/><path d="M4.5 8.2l2.4 2.4 4.6-4.9" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+const char = `<svg viewBox="0 0 200 180" width="64" height="58"><rect x="35" y="55" width="130" height="100" rx="18" fill="#fff" stroke="#E8591A" stroke-width="5"/><path d="M45 52 Q100 14 155 52 Z" fill="#E8591A"/><rect x="40" y="48" width="120" height="9" rx="4" fill="#C4540A"/><circle cx="100" cy="36" r="9" fill="#FFDAC1" stroke="#C4540A" stroke-width="3"/><path d="M40 150 L72 128 M160 150 L128 128" stroke="#E8591A" stroke-width="4" stroke-linecap="round" fill="none"/><circle cx="78" cy="100" r="5.5" fill="#333"/><circle cx="122" cy="100" r="5.5" fill="#333"/><path d="M90 112 Q100 122 110 112" fill="none" stroke="#333" stroke-width="4" stroke-linecap="round"/><circle cx="64" cy="112" r="7" fill="#FF883A" opacity=".5"/><circle cx="136" cy="112" r="7" fill="#FF883A" opacity=".5"/></svg>`;
+
+const chips = `<div style="display:flex;gap:5px;justify-content:center">${[["XLSX", "#1D7A46"], ["PPT", "#D24726"], ["DOCX", "#2B579A"]].map(([t, c]) => `<span style="background:${c};color:#fff;font-size:11px;font-weight:900;padding:6px 7px;border-radius:6px">${t}</span>`).join("")}</div>`;
+
 const banners = [
-  { id: "post", h: 260, bg: "#FFE9D6", fg: "#2B2B2B", sub: "우체국보험 FC 안내", title: ["우체국보험", "궁금하신가요?"], body: "충분히 비교하고 결정하세요", foot: "안내 사이트 가기", icon: "char" },
-  { id: "forms", h: 260, bg: "#FF883A", fg: "#2B2B2B", sub: "우체국보험 FC 안내", title: ["무료 템플릿", "자료실"], body: "PPT · 엑셀 · 워드 양식", foot: "필요한 양식 받기", icon: "doc" },
+  { id: "post", h: 305, tag: "우체국보험 FC 안내", head: `보험, 가입 전에<br><em>꼭 확인</em>하세요`, list: ["상품설명서·약관 먼저 확인", "충분히 비교한 뒤 결정", "상담만으론 가입 안 돼요"], cta: "상담 안내 보기", art: char, bg: "#FFF4EA", accent: "#E8591A" },
+  { id: "forms", h: 305, tag: "무료 다운로드 · 가입 없이", head: `엑셀·PPT 양식<br><em>900종+</em> 무료`, list: ["가계부·견적서·장부 엑셀", "발표·돌잔치·결혼식 PPT", "받아서 바로 고쳐 쓰기"], cta: "자료실 바로가기", art: chips, bg: "#FFF4EA", accent: "#E8591A" },
 ];
 
-const icons = {
-  // 사이트 안내 도우미(챗봇)와 같은 캐릭터 — src/components/chatbot/ChatCharacter.tsx 의 그림을 그대로 옮겼습니다
-  char: `<svg viewBox="0 0 200 180" width="92" height="83"><rect x="35" y="55" width="130" height="100" rx="18" fill="#fff" stroke="#E8591A" stroke-width="5"/><path d="M45 52 Q100 14 155 52 Z" fill="#E8591A"/><rect x="40" y="48" width="120" height="9" rx="4" fill="#C4540A"/><circle cx="100" cy="36" r="9" fill="#FFDAC1" stroke="#C4540A" stroke-width="3"/><path d="M40 150 L72 128 M160 150 L128 128" stroke="#E8591A" stroke-width="4" stroke-linecap="round" fill="none"/><circle cx="78" cy="100" r="5.5" fill="#333"/><circle cx="122" cy="100" r="5.5" fill="#333"/><path d="M90 112 Q100 122 110 112" fill="none" stroke="#333" stroke-width="4" stroke-linecap="round"/><circle cx="64" cy="112" r="7" fill="#FF883A" opacity=".5"/><circle cx="136" cy="112" r="7" fill="#FF883A" opacity=".5"/></svg>`,
-  doc: `<svg viewBox="0 0 64 64" width="72" height="72"><rect x="14" y="6" width="36" height="48" rx="5" fill="#fff"/><rect x="21" y="16" width="22" height="4" rx="2" fill="#FF883A"/><rect x="21" y="26" width="22" height="4" rx="2" fill="#F2B98A"/><rect x="21" y="36" width="14" height="4" rx="2" fill="#F2B98A"/></svg>`,
-};
-
 const html = (b) => `<!doctype html><meta charset="utf-8"><style>
-*{box-sizing:border-box;margin:0}body{width:170px;height:${b.h}px;font-family:"Noto Sans CJK KR","Noto Sans CJK JP","Malgun Gothic",sans-serif}
-.c{width:170px;height:${b.h}px;border-radius:14px;background:${b.bg};color:${b.fg};display:flex;flex-direction:column;align-items:center;padding:16px 10px 12px;text-align:center}
-.s{font-size:11px;opacity:.9;letter-spacing:-.2px}.t{margin-top:8px;font-size:23px;font-weight:900;line-height:1.2;letter-spacing:-1px}
-.i{margin:12px 0 8px}.b{font-size:11.5px;opacity:.95}
-.f{margin-top:auto;width:100%;background:#fff;border:1.5px solid #FF883A;color:#2B2B2B;border-radius:10px;padding:8px 0;font-size:13px;font-weight:800}
-</style><div class="c"><div class="s">${b.sub}</div><div class="t">${b.title.join("<br>")}</div><div class="i">${icons[b.icon]}</div><div class="b">${b.body}</div><div class="f">${b.foot}</div></div>`;
+*{box-sizing:border-box;margin:0}body{width:170px;height:${b.h}px;font-family:"Noto Sans CJK KR","Noto Sans CJK JP","Malgun Gothic",sans-serif;color:#2B2B2B}
+.c{position:relative;width:170px;height:${b.h}px;border-radius:12px;background:${b.bg};border:2px solid ${b.accent};overflow:hidden;display:flex;flex-direction:column}
+.top{background:${b.accent};color:#fff;font-size:11px;font-weight:700;text-align:center;padding:7px 0;letter-spacing:-.3px}
+.in{padding:12px 12px 0;flex:1;display:flex;flex-direction:column}
+.h{font-size:20px;font-weight:900;line-height:1.28;letter-spacing:-1px}.h em{font-style:normal;color:${b.accent}}
+.art{display:flex;justify-content:center;margin:8px 0 0}
+ul{list-style:none;padding:0;margin:11px 0 0;display:flex;flex-direction:column;gap:7px}
+li{display:flex;gap:6px;align-items:flex-start;font-size:11.5px;line-height:1.3;letter-spacing:-.4px;color:#3a3a3a}li svg{flex:none;margin-top:1px;color:${b.accent}}
+.cta{margin:auto 10px 12px;background:${b.accent};color:#fff;text-align:center;border-radius:9px;padding:10px 0;font-size:14px;font-weight:900;letter-spacing:-.4px}
+</style><div class="c"><div class="top">${b.tag}</div><div class="in"><div class="h">${b.head}</div>${b.art ? `<div class="art">${b.art}</div>` : ""}<ul>${b.list.map((t) => `<li>${CHECK}<span>${t}</span></li>`).join("")}</ul></div><div class="cta">${b.cta} ›</div></div>`;
 
 const { chromium } = await import(pathToFileURL(path.join(process.env.PW_PATH ?? "", "playwright/index.mjs")).href);
 fs.mkdirSync(OUT, { recursive: true });
