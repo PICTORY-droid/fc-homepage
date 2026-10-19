@@ -1,17 +1,25 @@
-// 감성 편지지 10종 — 파일은 public/fun/stationery/ 에 있고 scripts/fun/make-stationery.mjs 로 만듭니다. (id 는 scripts/fun/stationery-art.mjs 와 같아야 합니다)
-export interface Stationery { id: string; name: string; desc: string }
+// 계절 편지지 80장 — 파일은 public/fun/stationery/ 에 있고 scripts/fun/seasons/build.mjs + scripts/fun/docx/make_stationery_docx.py 로 만듭니다.
+// 목록(stationery.data.json)은 build.mjs 가 만든 meta.json 에서 뽑은 것입니다.
+import data from "./stationery.data.json";
 
-export const stationery: Stationery[] = [
-  { id: "01-airmail", name: "에어메일", desc: "빨강·파랑 사선 테두리의 항공우편" },
-  { id: "02-stamps", name: "우표 콜라주", desc: "우표와 소인이 모인 따뜻한 한 장" },
-  { id: "03-mailbox", name: "빨간 우체통", desc: "점선 테두리와 우체통 그림" },
-  { id: "04-postmark", name: "소인 엽서", desc: "빈티지 엽서 틀과 둥근 소인" },
-  { id: "05-sky", name: "하늘 편지", desc: "구름 사이를 나는 편지봉투" },
-  { id: "06-flower", name: "꽃 편지", desc: "파스텔 꽃으로 꾸민 편지지" },
-  { id: "07-kraft", name: "크래프트 포장지", desc: "포장지 위에 놓인 작은 소포 편지" },
-  { id: "08-night", name: "별밤 편지", desc: "달과 별이 뜬 밤하늘" },
-  { id: "09-biker", name: "달려라 집배원", desc: "편지를 싣고 달리는 오토바이" },
-  { id: "10-simple", name: "심플 오렌지", desc: "깔끔한 보내는 사람·받는 사람 칸" },
+export type SeasonKey = "spring" | "summer" | "autumn" | "winter";
+export interface Stationery { id: string; season: SeasonKey; no: number; name: string; tag: string }
+export interface Season { key: SeasonKey; label: string; lead: string }
+
+export const seasons: Season[] = [
+  { key: "spring", label: "봄", lead: "벚꽃·입춘·어버이날… 꽃소식과 함께 시작하는 새봄의 편지" },
+  { key: "summer", label: "여름", lead: "바다·소나기·칠석… 시원한 안부를 전하는 여름 편지" },
+  { key: "autumn", label: "가을", lead: "단풍·한가위·독서의 계절… 깊어 가는 가을 편지" },
+  { key: "winter", label: "겨울", lead: "눈꽃·크리스마스·새해… 포근한 겨울 편지" },
 ];
 
+export const stationery = data as Stationery[];
+export const stationeryBySeason = (key: SeasonKey) => stationery.filter((s) => s.season === key);
+
 export const stationeryFile = (id: string, ext: "png" | "docx" | "jpg") => (ext === "jpg" ? `/fun/stationery/thumbs/${id}.jpg` : `/fun/stationery/${id}.${ext}`);
+
+/** 내려받을 때 보이는 한글 파일 이름 — 예) 편지지_봄01_벚꽃편지.docx */
+export const stationeryDownloadName = (s: Stationery, ext: "png" | "docx") => {
+  const label = seasons.find((x) => x.key === s.season)?.label ?? "";
+  return `편지지_${label}${String(s.no).padStart(2, "0")}_${s.name.replace(/\s+/g, "")}.${ext}`;
+};
