@@ -26,7 +26,7 @@ export const chatbotCopy = {
   launcherLabel: "궁금한 점 물어보세요",
   inputPlaceholder: "예) 아이 보험, 암, 연금",
   inputLabel: "궁금한 내용 입력",
-  privacyNote: "정해 둔 안내를 보여주는 도우미예요(AI 아님). 이름·연락처·주민번호는 입력하지 마세요.",
+  privacyNote: "이름·연락처·주민번호는 입력하지 마세요.",
   greeting: "안녕하세요! 우체국보험 안내 도우미예요. 상품 찾기와 상담 연결을 도와드려요.",
   greetingSub: "보험료·가입 가능 여부처럼 정확해야 하는 내용은 상담에서 안내해 드려요.",
   quickReplies: ["내게 맞는 상품 찾기", "가입 조건·나이", "보험료가 궁금해요", "상담 신청하기", "카카오톡 문의"],
