@@ -20,14 +20,14 @@ const banners = [
   { // 우체국보험 — 집배원 모자를 쓴 편지봉투 캐릭터
     id: "post",
     svg: `${feet}
-      <ellipse cx="10" cy="215" rx="8" ry="12" fill="#fff" stroke="#E8591A" stroke-width="4"/><ellipse cx="160" cy="215" rx="8" ry="12" fill="#fff" stroke="#E8591A" stroke-width="4"/>
+      <ellipse cx="10" cy="150" rx="8" ry="12" fill="#fff" stroke="#E8591A" stroke-width="4"/><ellipse cx="160" cy="150" rx="8" ry="12" fill="#fff" stroke="#E8591A" stroke-width="4"/>
       <rect x="10" y="72" width="150" height="250" rx="24" fill="#fff" stroke="#E8591A" stroke-width="5"/>
       <path d="M14 96 Q85 176 156 96 L156 82 Q154 76 146 76 L24 76 Q16 76 14 82 Z" fill="#FFE9D6"/>
       <path d="M14 96 Q85 176 156 96" fill="none" stroke="#E8591A" stroke-width="4"/>
       ${eyes(112)}
       <path d="M24 76 Q85 -6 146 76 Z" fill="#E8591A"/><rect x="20" y="68" width="130" height="13" rx="6" fill="#C4540A"/><circle cx="85" cy="32" r="9" fill="#FFDAC1" stroke="#C4540A" stroke-width="3"/>
       <g transform="rotate(12 146 74)"><circle cx="146" cy="74" r="25" fill="#FFD84D" stroke="#E8591A" stroke-width="3"/><text x="146" y="70" text-anchor="middle" font-size="10" font-weight="900" fill="#C4540A">0원</text><text x="146" y="88" text-anchor="middle" font-size="17" font-weight="900" fill="#C4540A">무료</text></g>`,
-    html: `${txt(166, 11.5, "#C4540A", 800, "우체국보험 FC 안내")}${txt(184, 18, "#2B2B2B", 900, "내 보험 한눈에")}${txt(207, 24, "#E8591A", 900, "증권 정리표")}${txt(243, 11.5, "#555", 600, "가입한 보험 한 장에 정리<br>월 보험료·만기 자동 계산")}${cta(280, "무료로 받기", "#E8591A", "#fff")}`,
+    html: `${txt(176, 18, "#2B2B2B", 900, "내 보험 한눈에")}${txt(200, 24, "#E8591A", 900, "증권 정리표")}${txt(238, 11.5, "#555", 600, "가입한 보험 한 장에 정리<br>월 보험료·만기 자동 계산")}${cta(278, "무료로 받기", "#E8591A", "#fff")}`,
   },
   { // 자료실 — 서류가 쏙 올라온 폴더 캐릭터
     id: "forms",
@@ -36,9 +36,9 @@ const banners = [
       <g transform="rotate(9 130 80)"><rect x="110" y="26" width="42" height="80" rx="5" fill="#2B579A"/><text x="131" y="46" text-anchor="middle" font-size="10.5" font-weight="900" fill="#fff">DOCX</text></g>
       <rect x="64" y="12" width="44" height="90" rx="5" fill="#D24726"/><text x="86" y="32" text-anchor="middle" font-size="12" font-weight="900" fill="#fff">PPT</text>
       <path d="M10 112 Q10 96 26 96 L66 96 Q74 96 78 104 L84 112 L144 112 Q160 112 160 128 L160 302 Q160 322 140 322 L30 322 Q10 322 10 302 Z" fill="#FF883A" stroke="#C4540A" stroke-width="5"/>
-      <ellipse cx="10" cy="215" rx="8" ry="12" fill="#FFB27A" stroke="#C4540A" stroke-width="4"/><ellipse cx="160" cy="215" rx="8" ry="12" fill="#FFB27A" stroke="#C4540A" stroke-width="4"/>
+      <ellipse cx="10" cy="150" rx="8" ry="12" fill="#FFB27A" stroke="#C4540A" stroke-width="4"/><ellipse cx="160" cy="150" rx="8" ry="12" fill="#FFB27A" stroke="#C4540A" stroke-width="4"/>
       ${eyes(128)}`,
-    html: `${txt(166, 11.5, "#4a2a10", 800, "우체국보험 FC 안내")}${txt(184, 18, "#2B2B2B", 900, "엑셀·PPT 양식")}${txt(207, 26, "#fff", 900, "900종+ 무료", "text-shadow:0 2px 0 #C4540A")}${txt(246, 11.5, "#4a2a10", 700, "회원가입 없이 다운로드<br>받아서 바로 고쳐 쓰기")}${cta(282, "자료실 가기", "#fff", "#C4540A")}`,
+    html: `${txt(176, 18, "#2B2B2B", 900, "엑셀·PPT 양식")}${txt(200, 26, "#fff", 900, "900종+ 무료", "text-shadow:0 2px 0 #C4540A")}${txt(240, 11.5, "#4a2a10", 700, "회원가입 없이 다운로드<br>받아서 바로 고쳐 쓰기")}${cta(280, "자료실 가기", "#fff", "#C4540A")}`,
   },
 ];
 
