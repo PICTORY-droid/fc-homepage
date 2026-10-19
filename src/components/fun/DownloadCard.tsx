@@ -18,7 +18,7 @@ export function DownloadCard({ title, desc, thumb, thumbAlt, links }: { title: s
           {links.map((l, i) => (
             <a key={l.href} href={l.href} download={l.filename ?? true}
               className={`flex min-h-[44px] flex-1 items-center justify-center rounded-xl px-2 text-sm font-bold text-ink ${i === 0 ? "bg-brand hover:brightness-95" : "border border-ink/25 bg-paper hover:bg-paper-gray"}`}>
-              {l.label}<span className="sr-only"> ({title} 내려받기)</span>
+              {l.label}<span className="sr-only"> ({title})</span>
             </a>
           ))}
         </div>

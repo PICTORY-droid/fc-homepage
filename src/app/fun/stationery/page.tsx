@@ -17,7 +17,7 @@ export default function StationeryPage() {
         <ul data-reveal="stagger" className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
           {stationery.map((s) => (
             <DownloadCard key={s.id} title={s.name} desc={s.desc} thumb={stationeryFile(s.id, "jpg")}
-              links={[{ label: "PDF 받기", href: stationeryFile(s.id, "pdf"), filename: `감성편지지-${s.name}.pdf` }, { label: "PNG", href: stationeryFile(s.id, "png"), filename: `감성편지지-${s.name}.png` }]} />
+              links={[{ label: "PDF", href: stationeryFile(s.id, "pdf"), filename: `감성편지지-${s.name}.pdf` }, { label: "PNG", href: stationeryFile(s.id, "png"), filename: `감성편지지-${s.name}.png` }]} />
           ))}
         </ul>
         <p className="mt-6 text-sm text-ink-sub">A4 크기로 만들었어요. 인쇄할 때 "실제 크기"로 설정하면 가장 예쁘게 나와요. 개인적인 편지와 SNS 공유는 자유롭게 쓰셔도 좋아요.</p>

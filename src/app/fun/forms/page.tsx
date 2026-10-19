@@ -23,7 +23,7 @@ export default function FormsPage() {
           <ul data-reveal="stagger" className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
             {formTemplates.filter((f) => f.kind === g.kind).map((f) => (
               <DownloadCard key={f.id} title={f.name} desc={`${f.desc} · A4 ${f.pages}쪽`} thumb={formFile(f.id, "jpg")}
-                links={[{ label: "PDF 받기", href: formFile(f.id, "pdf"), filename: `${f.kind}양식-${f.name}.pdf` }]} />
+                links={[{ label: "PDF", href: formFile(f.id, "pdf"), filename: `${f.kind}양식-${f.name}.pdf` }]} />
             ))}
           </ul>
         </Section>
