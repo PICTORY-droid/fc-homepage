@@ -7,10 +7,13 @@ const BUTTON: Record<PackItem["ext"], string> = { xlsx: "엑셀", pptx: "PPT", d
 export function PackCard({ item, entry }: { item: PackItem; entry: PackEntry }) {
   const thumb = packThumb(item, entry.no);
   const no = String(entry.no).padStart(2, "0");
+  // 엑셀은 "무슨 양식인지"가 먼저 보이도록 구성+양식 이름을 제목으로, 테마 이름은 작은 글씨로 보여 줍니다.
+  const byFunction = item.ext === "xlsx";
+  const heading = byFunction ? `${entry.flavor} ${item.fileLabel}` : entry.name;
   return (
     <li className="flex flex-col overflow-hidden rounded-card border border-ink/10 bg-paper">
       {thumb ? (
-        <ZoomThumb thumb={thumb} large={packLarge(item, entry.no) ?? thumb} alt={`${item.title} ${entry.name} 미리보기`} title={`${no}. ${entry.name}`} aspect={item.aspect} />
+        <ZoomThumb thumb={thumb} large={packLarge(item, entry.no) ?? thumb} alt={`${item.title} ${entry.name} 미리보기`} title={`${no}. ${heading}`} aspect={item.aspect} />
       ) : (
         <div className="relative flex aspect-[4/3] flex-col justify-between p-4" style={{ backgroundColor: entry.soft }}>
           <span className="text-xs font-bold" style={{ color: entry.dark }}>{entry.season} · {entry.flavor}</span>
@@ -19,8 +22,10 @@ export function PackCard({ item, entry }: { item: PackItem; entry: PackEntry }) 
         </div>
       )}
       <div className="flex flex-1 flex-col p-4">
-        <h3 className="text-base font-bold text-ink">{no}. {entry.name}</h3>
-        {thumb && <p className="mt-0.5 text-xs font-semibold text-ink-sub">{entry.flavor}</p>}
+        <h3 className="text-base font-bold text-ink">{no}. {heading}</h3>
+        {byFunction
+          ? <p className="mt-0.5 text-xs font-semibold text-ink-sub">{entry.name} · {entry.season}</p>
+          : thumb && <p className="mt-0.5 text-xs font-semibold text-ink-sub">{entry.flavor}</p>}
         {entry.tag ? <p className="mt-1 flex-1 text-sm leading-snug text-ink-sub">{entry.tag}</p> : <span className="flex-1" />}
         <a href={packFile(item, entry)} download={packDownloadName(item, entry)}
           className="mt-3 flex min-h-[44px] items-center justify-center rounded-xl bg-brand px-2 text-sm font-bold text-ink hover:brightness-95">

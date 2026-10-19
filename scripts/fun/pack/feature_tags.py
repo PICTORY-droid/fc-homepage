@@ -30,10 +30,10 @@ def tag(key, i):
         ct, cs = S.CHARTS[sub]
         goal, base = S.GOALS[i % 5]
         monthly = int(round(base * S.SCALE[sub], -4)) // 10000
-        return f"{goal} 월 {monthly}만원 · {S.MONTHS[sub]}개월 · 연 {rate * 100:.1f}% 계산 · 원금·이자 {_c(ct, cs)} · 달성률"
+        return f"월 {monthly}만원 · {S.MONTHS[sub]}개월 · 연 {rate * 100:.1f}% 계산 · 원금·이자 {_c(ct, cs)} · 달성률"
     if key == "gift":
         k, r = G.PAIRS[i // 5]
-        return f"{G.FOCUS[i % 5][0]} 목록 · 종류별 {_c(k)} · 관계별 {_c(r)} · 이름 조회"
+        return f"답례 체크 · 종류별 {_c(k)} · 관계별 {_c(r)} · 이름 조회"
     if key == "allowance":
         _, cats, _, _ = A.AGES[i % 5]
         p, m = A.CHARTS[i // 5]
@@ -43,5 +43,5 @@ def tag(key, i):
         items = Q.ITEMS[i % 5]
         r = (i // 5) % len(items)
         items = items[r:] + items[:r]
-        return f"{trade} · {items[0][0]}, {items[1][0]} 등 품목 선택 · 단가·부가세 자동 계산"
+        return f"{items[0][0]}, {items[1][0]} 등 품목 선택 · 단가·부가세 자동 계산 · A4 인쇄"
     raise KeyError(key)
