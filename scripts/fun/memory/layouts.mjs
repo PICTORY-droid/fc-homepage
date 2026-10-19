@@ -22,7 +22,7 @@ L.polaroid = (d, h, p) => {
   const photo = g(`${shadow(0, 0, 300, 340)}<rect width="300" height="340" fill="#fffdf8"/><rect x="20" y="20" width="260" height="258" fill="${p.b}"/>${g(h(p), 20 + 130 - 130, 20 + 129 - 130, 1.3)}
     <rect x="20" y="20" width="260" height="258" fill="none" stroke="#00000010"/>${txt(150, 312, d.cap ?? "20     .    .", { size: 17, anchor: "middle", fill: p.ink, opacity: .65 })}`, 440, 62, 1, 4);
   const body = `${rect(0, 0, W, H, p.paper)}${photo}${tape(520, 44, 130, p, -4)}${pm(p, 398, 300, 0.8, d.mark ?? "POST OFFICE")}${t.svg}${rules(70, 470, 654, 14, p.line)}${credit(p)}`;
-  return { defs: "", body, area: { fields: [70, 422, 654], rules: [70, 470, 654, 14], from: [70, 1052, 654, "right"] } };
+  return { defs: "", body, area: { fields: [70, 422, 654], rules: [70, 470, 654, 14], from: [70, 1052, 654, "left"] } };
 };
 
 // 2. 항공우편 봉투 테두리
@@ -34,7 +34,7 @@ L.airmail = (d, h, p) => {
     ${rect(B, B, W - 2 * B, H - 2 * B, "none", 0, `stroke="${p.d}" stroke-width="1.5" opacity=".5"`)}
     ${txt(80, 92, "PAR AVION   ·   항 공 우 편", { size: 14, weight: 700, fill: p.a, spacing: 3, serif: false })}${stampHero(h, p, 560, 64, 1.0, 3, d.price ?? "330")}${pm(p, 500, 70, 0.9, d.mark ?? "KOREA")}
     ${t.svg}${rules(80, 290, 634, 17, p.line)}${credit(p)}`;
-  return { defs, body, area: { fields: [80, 238, 634], rules: [80, 290, 634, 16], from: [80, 1004, 634, "right"] } };
+  return { defs, body, area: { fields: [80, 238, 634], rules: [80, 290, 634, 16], from: [80, 1004, 634, "left"] } };
 };
 
 // 3. 줄공책(스프링) + 이름표 스티커
@@ -45,7 +45,7 @@ L.notebook = (d, h, p) => {
     ${txt(24, 36, d.cls ?? "3 학년  2 반   이름 : ", { size: 14, fill: p.ink, opacity: .7, serif: false })}${ls.map((s, i) => txt(190, 82 + i * 42, s, { size: 36, weight: 700, fill: p.d, anchor: "middle" })).join("")}`, 130, 70, 1, -2);
   const body = `${rect(0, 0, W, H, p.paper)}${rect(0, 0, 94, H, mix(p.paper, p.b, 0.25))}${holes}${rect(98, 0, 2, H, p.c, 0, 'opacity=".75"')}${rect(104, 0, 2, H, p.c, 0, 'opacity=".75"')}
     ${rules(120, 250, 620, 18, mix(p.paper, p.a, 0.35))}${label}${hero(h, p, 650, 150, 1.0, 6)}${credit(p)}`;
-  return { defs: "", body, area: { fields: [120, 212, 620], rules: [120, 250, 620, 18], from: [120, 1042, 620, "right"] } };
+  return { defs: "", body, area: { fields: [120, 212, 620], rules: [120, 250, 620, 18], from: [120, 1042, 620, "left"] } };
 };
 
 // 4. 엽서 뒷면(우표·소인·우편번호 칸)
@@ -67,7 +67,7 @@ L.diary = (d, h, p) => {
     ${txt(70, 138, "그 림 일 기", { size: 26, weight: 700, fill: p.d, spacing: 6 })}${wx}
     ${tab}${rect(70, 234, 654, 318, p.bg, 12, `stroke="${p.d}" stroke-width="2.5"`)}${hero(h, p, 397, 394, 1.4, 0)}${txt(86, 540, "오늘 있었던 일을 그림으로 그려 보세요", { size: 13, fill: p.ink, opacity: .45, serif: false })}
     ${rules(70, 590, 654, 10, p.line)}${credit(p)}`;
-  return { defs: "", body, area: { fields: [70, 52, 654], rules: [70, 590, 654, 10], from: [70, 1052, 654, "right"] } };
+  return { defs: "", body, area: { fields: [70, 52, 654], rules: [70, 590, 654, 10], from: [70, 1052, 654, "left"] } };
 };
 
 // 6. 승차권(기차표)
@@ -80,7 +80,7 @@ L.ticket = (d, h, p) => {
     <path d="M24 164 H630" stroke="${p.d}" stroke-width="1.5" stroke-dasharray="4 5" opacity=".6"/>${txt(30, 192, "20      .      .      발행        일반실  1매", { size: 14, fill: p.ink, opacity: .7, serif: false })}
     ${g(h(p), 520, 62, 0.5)}`, 70, 66, 1, d.tilt ?? -1.5);
   const body = `${rect(0, 0, W, H, p.paper)}${tk}${t.svg}${rules(70, f.ry, 654, f.rows, p.line)}${credit(p)}`;
-  return { defs: "", body, area: { fields: [70, f.fy, 654], rules: [70, f.ry, 654, f.rows], from: [70, 1052, 654, "right"] } };
+  return { defs: "", body, area: { fields: [70, f.fy, 654], rules: [70, f.ry, 654, f.rows], from: [70, 1052, 654, "left"] } };
 };
 
 // 7. 카세트 테이프(라벨에 손글씨 제목)
@@ -92,7 +92,7 @@ L.cassette = (d, h, p) => {
     <rect x="130" y="224" width="300" height="60" rx="30" fill="#2e2a28"/><g transform="translate(0 254)">${reel(190)}${reel(370)}</g><path d="M200 296 h160 l16 34 h-192Z" fill="#00000022"/>
     ${[0, 1, 2, 3].map((i) => circle(46 + i * 156, 312, 6, "#00000030")).join("")}`, 74, 66, 0.84, d.tilt ?? 2);
   const body = `${rect(0, 0, W, H, p.paper)}${tape}${hero(h, p, 650, 220, 0.85, 8)}${rules(70, 430, 654, 14, p.line)}${credit(p)}`;
-  return { defs: "", body, area: { fields: [70, 382, 654], rules: [70, 430, 654, 14], from: [70, 1052, 654, "right"] } };
+  return { defs: "", body, area: { fields: [70, 382, 654], rules: [70, 430, 654, 14], from: [70, 1052, 654, "left"] } };
 };
 
 // 8. 일력(절기)
@@ -103,7 +103,7 @@ L.almanac = (d, h, p) => {
     ${txt(125, 180, d.hanja ?? "立春", { size: 76, weight: 700, fill: p.d, anchor: "middle" })}${txt(125, 226, d.term ?? "입춘", { size: 26, weight: 700, fill: p.a, anchor: "middle", spacing: 8 })}
     <path d="M30 246 H220" stroke="${p.d}" stroke-width="1.5" opacity=".4"/>${txt(125, 276, d.cal ?? "음력  월  일", { size: 15, fill: p.ink, anchor: "middle", opacity: .65, serif: false })}`, 70, 70, 1, -3);
   const body = `${rect(0, 0, W, H, p.paper)}${cal}${t.svg}${hero(h, p, 600, 260, 0.78, 6)}${rules(70, 410, 654, 16, p.line)}${credit(p)}`;
-  return { defs: "", body, area: { fields: [70, 362, 654], rules: [70, 410, 654, 14], from: [70, 1052, 654, "right"] } };
+  return { defs: "", body, area: { fields: [70, 362, 654], rules: [70, 410, 654, 14], from: [70, 1052, 654, "left"] } };
 };
 
 // 9. 창가(빗방울·눈·햇살 무늬)
@@ -117,7 +117,7 @@ L.window = (d, h, p) => {
     ${rect(66, 56, 662, 368, "none", 0, `stroke="${p.d}" stroke-width="14"`)}${rect(392, 62, 10, 356, p.d)}${rect(72, 236, 650, 10, p.d)}${rect(52, 424, 690, 20, p.d)}${rect(52, 424, 690, 6, "#fff", 0, 'opacity=".25"')}
     ${path("M66 62 Q120 200 78 420 H66Z", p.c, "none", 0, 'opacity=".9"')}${path("M728 62 Q674 200 716 420 H728Z", p.c, "none", 0, 'opacity=".9"')}
     ${t.svg}${rules(80, f.ry, 634, f.rows, p.line)}${credit(p)}`;
-  return { defs: "", body, area: { fields: [80, f.fy, 634], rules: [80, f.ry, 634, f.rows], from: [80, 1052, 634, "right"] } };
+  return { defs: "", body, area: { fields: [80, f.fy, 634], rules: [80, f.ry, 634, f.rows], from: [80, 1052, 634, "left"] } };
 };
 
 // 10. 봉투 안쪽(속지 무늬)과 우표
@@ -128,7 +128,7 @@ L.envelope = (d, h, p) => {
   const body = `${rect(0, 0, W, H, p.paper)}${path(`M0 0 H${W} V250 L${W / 2} 340 L0 250Z`, "url(#sec)")}${path(`M0 250 L${W / 2} 340 L${W} 250`, "none", p.d, 3, 'opacity=".55"')}
     ${circle(397, 330, 44, p.c)}${circle(397, 330, 34, "none", `stroke="${p.paper}" stroke-width="2" opacity=".7"`)}${g(h(p), 397 - 38, 330 - 38, 0.38)}${stampHero(h, p, 60, 36, 0.8, -4, d.price ?? "330")}${pm(p, 560, 40, 0.9, d.mark ?? "POST OFFICE")}
     ${t.svg}${rules(80, f.ry, 634, f.rows, p.line)}${credit(p)}`;
-  return { defs, body, area: { fields: [80, f.fy, 634], rules: [80, f.ry, 634, f.rows], from: [80, 1052, 634, "right"] } };
+  return { defs, body, area: { fields: [80, f.fy, 634], rules: [80, f.ry, 634, f.rows], from: [80, 1052, 634, "left"] } };
 };
 
 // 11. 한지·문살·낙관
@@ -140,7 +140,7 @@ L.hanji = (d, h, p) => {
   const f = flow(Math.max(t.bottom, 260));
   const seal = g(`<rect width="70" height="70" rx="6" fill="${p.a}"/><rect x="5" y="5" width="60" height="60" rx="3" fill="none" stroke="${p.paper}" stroke-width="2" opacity=".8"/>${txt(35, 48, d.seal ?? "福", { size: 38, weight: 800, fill: p.paper, anchor: "middle" })}`, 650, 70, 1, 4);
   const body = `${rect(0, 0, W, H, p.paper)}${fib}${rect(0, 0, 96, H, mix(p.paper, p.d, 0.08))}${lat}${rect(96, 0, 3, H, p.d, 0, 'opacity=".5"')}${seal}${hero(h, p, 220, 150, 0.7, -4)}${t.svg}${rules(140, f.ry, 590, f.rows, p.line)}${credit(p)}`;
-  return { defs: "", body, area: { fields: [140, f.fy, 590], rules: [140, f.ry, 590, f.rows], from: [140, 1040, 590, "right"] } };
+  return { defs: "", body, area: { fields: [140, f.fy, 590], rules: [140, f.ry, 590, f.rows], from: [140, 1040, 590, "left"] } };
 };
 
 // 12. 쪽지·롤링페이퍼(테이프·낙서)
@@ -152,7 +152,7 @@ L.scrap = (d, h, p) => {
   const body = `${rect(0, 0, W, H, p.paper)}${doodles}${g(`${shadow(0, 0, 250, 250)}<rect width="250" height="250" fill="#fffdf6"/><rect x="14" y="14" width="222" height="222" fill="${p.b}"/>${g(h(p), 14, 14, 1.11)}`, 470, 50, 1, 5)}${tape(540, 36, 120, p, 6)}
     ${g(`<rect width="150" height="104" fill="${p.bg}" stroke="${p.d}" stroke-width="2"/>${txt(75, 42, d.note1 ?? "잘 지내?", { size: 22, weight: 700, fill: p.d, anchor: "middle" })}${txt(75, 76, d.note2 ?? "보고 싶다", { size: 18, fill: p.ink, anchor: "middle" })}`, 90, 66, 1, -6)}${tape(120, 56, 80, p, -8)}
     ${t.svg}${rules(70, f.ry, 654, f.rows, p.line)}${credit(p)}`;
-  return { defs: "", body, area: { fields: [70, f.fy, 654], rules: [70, f.ry, 654, f.rows], from: [70, 1052, 654, "right"] } };
+  return { defs: "", body, area: { fields: [70, f.fy, 654], rules: [70, f.ry, 654, f.rows], from: [70, 1052, 654, "left"] } };
 };
 
 // 13. 삐삐 (호출 문자 화면)
@@ -163,7 +163,7 @@ L.pager = (d, h, p) => {
     <rect x="30" y="30" width="270" height="92" rx="8" fill="#c9d6b0" stroke="#2b3a26" stroke-width="3"/>${txt(44, 70, d.lcd1 ?? "8282", { size: 38, weight: 800, fill: "#2b3a26", serif: false, spacing: 6 })}${txt(44, 106, d.lcd2 ?? "1004  7942  486", { size: 20, weight: 700, fill: "#2b3a26", serif: false, spacing: 2, opacity: .8 })}
     ${[0, 1, 2].map((i) => `<rect x="${50 + i * 90}" y="146" width="70" height="30" rx="15" fill="${p.d}" opacity=".85"/>`).join("")}${circle(300, 22, 5, p.c)}`, 70, 80, 1, -4);
   const body = `${rect(0, 0, W, H, p.paper)}${dev}${hero(h, p, 600, 190, 0.8, 6)}${txt(400, 300, d.sub ?? "음성 사서함 1건", { size: 16, fill: p.ink, opacity: .6 })}${t.svg}${rules(70, f.ry, 654, f.rows, p.line)}${credit(p)}`;
-  return { defs: "", body, area: { fields: [70, f.fy, 654], rules: [70, f.ry, 654, f.rows], from: [70, 1052, 654, "right"] } };
+  return { defs: "", body, area: { fields: [70, f.fy, 654], rules: [70, f.ry, 654, f.rows], from: [70, 1052, 654, "left"] } };
 };
 
 export const layoutNames = Object.keys(L);
