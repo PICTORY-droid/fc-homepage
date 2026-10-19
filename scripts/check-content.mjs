@@ -46,7 +46,7 @@ const checks = [
   [/retentionMonths:\s*null/.test(site), "개인정보 보유 기간(site.privacy.retentionMonths) 미확정"],
   [/contactEmail:\s*""/.test(site), "개인정보 문의 이메일(site.privacy.contactEmail) 비어 있음"],
   [/TODO: 실제로 지킬 수 있는 응답 시간/.test(read("src/config/site.ts")), "상담 응답 시간(site.contact.responseTime) 미확정"],
-  [/TODO: 보유 기간 확정 — 동의일부터/.test(read("src/config/site.ts")) || /TODO: 실제 발송 수단/.test(read("src/config/site.ts")), "새 양식 알림의 발송 수단·보유 기간(site.newsletter) 미확정"],
+  [/TODO: 보유 기간 확정 — 동의일부터/.test(read("src/config/site.ts")), "새 양식 알림의 보유 기간(site.newsletter.retentionMonths) 미확정"],
   [/eMarkVerified:\s*false/.test(productsSrc), "e마크(온라인 전용) 상품이 섞여 있지 않은지 확인 안 됨 (products.ts productsMeta.eMarkVerified)"],
   [/eMarkChecked:\s*false/.test(banners), "e마크(온라인 전용) 확인이 안 된 배너 상품이 있음 (banners.ts eMarkChecked)"],
 ];
