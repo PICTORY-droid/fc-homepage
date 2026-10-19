@@ -14,9 +14,11 @@ const char = `<svg viewBox="0 0 200 180" width="64" height="58"><rect x="35" y="
 
 const chips = `<div style="display:flex;gap:5px;justify-content:center">${[["XLSX", "#1D7A46"], ["PPT", "#D24726"], ["DOCX", "#2B579A"]].map(([t, c]) => `<span style="background:${c};color:#fff;font-size:11px;font-weight:900;padding:6px 7px;border-radius:6px">${t}</span>`).join("")}</div>`;
 
+const free = `<div style="display:flex;align-items:center;justify-content:center;gap:8px"><div style="width:54px;height:54px;border-radius:50%;background:#E8591A;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:900;line-height:1;box-shadow:0 0 0 4px #FFD9BC"><span style="font-size:11px">0원</span><span style="font-size:18px;margin-top:2px">무료</span></div><div style="font-size:11px;line-height:1.35;font-weight:700;color:#C4540A;text-align:left">엑셀 파일<br>회원가입 없이<br>바로 다운</div></div>`;
+
 const banners = [
-  { id: "post", h: 305, tag: "우체국보험 FC 안내", head: `보험, 가입 전에<br><em>꼭 확인</em>하세요`, list: ["상품설명서·약관 먼저 확인", "충분히 비교한 뒤 결정", "상담만으론 가입 안 돼요"], cta: "상담 안내 보기", art: char, bg: "#FFF4EA", accent: "#E8591A" },
-  { id: "forms", h: 305, tag: "무료 다운로드 · 가입 없이", head: `엑셀·PPT 양식<br><em>900종+</em> 무료`, list: ["가계부·견적서·장부 엑셀", "발표·돌잔치·결혼식 PPT", "받아서 바로 고쳐 쓰기"], cta: "자료실 바로가기", art: chips, bg: "#FFF4EA", accent: "#E8591A" },
+  { id: "post", h: 305, tag: "🎁 이달의 무료 양식", head: `내 보험 한눈에<br><em>증권 정리표</em>`, list: ["가입한 보험 한 장에 정리", "월 보험료·만기 자동 계산", "궁금한 점은 상담 안내"], cta: "무료로 받기", art: free, bg: "#FFF4EA", accent: "#E8591A" },
+  { id: "forms", h: 305, tag: "무료 다운로드 · 회원가입 없이", head: `엑셀·PPT 양식<br><em>900종+</em> 무료`, list: ["가계부·견적서·장부 엑셀", "발표·돌잔치·결혼식 PPT", "받아서 바로 고쳐 쓰기"], cta: "자료실 바로가기", art: chips, bg: "#FFF4EA", accent: "#E8591A" },
 ];
 
 const html = (b) => `<!doctype html><meta charset="utf-8"><style>
