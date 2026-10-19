@@ -14,3 +14,18 @@ export function isRateLimited(key: string, now = Date.now()): boolean {
   cur.count += 1;
   return cur.count > MAX_HITS;
 }
+
+/** 한도·시간을 직접 정하는 요청 제한기 — 상담 신청(위 함수)과 따로 셉니다. (이용 통계 기록처럼 횟수가 더 많은 용도) */
+export function createRateLimiter(max: number, windowMs: number) {
+  const map = new Map<string, { count: number; resetAt: number }>();
+  return (key: string, now = Date.now()): boolean => {
+    const cur = map.get(key);
+    if (!cur || cur.resetAt < now) {
+      map.set(key, { count: 1, resetAt: now + windowMs });
+      if (map.size > 5000) for (const [k, v] of map) if (v.resetAt < now) map.delete(k);
+      return false;
+    }
+    cur.count += 1;
+    return cur.count > max;
+  };
+}

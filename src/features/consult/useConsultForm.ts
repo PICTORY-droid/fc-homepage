@@ -1,5 +1,6 @@
 "use client";
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
+import { track } from "@/features/analytics/track";
 import { formatPhone } from "@/lib/phone";
 import { consultSchema, type ConsultInput } from "./schema";
 import { submitConsult } from "./api";
@@ -36,8 +37,11 @@ export function useConsultForm(initialTopic: string) {
   const [serverMessage, setServerMessage] = useState("");
   const steps = useMemo(() => stepsFor(values.topic), [values.topic]);
   const last = steps.length - 1;
+  const started = useRef(false);
+  const markStarted = () => { if (!started.current) { started.current = true; track("consult_start"); } };
 
   const setField = <K extends keyof ConsultInput>(key: K, value: ConsultInput[K]) => {
+    markStarted();
     setValues((v) => ({ ...v, [key]: normalize(key, value) }));
     setErrors((e) => ({ ...e, [key]: "" }));
   };
@@ -77,7 +81,7 @@ export function useConsultForm(initialTopic: string) {
     }
     setStatus("submitting");
     const result = await submitConsult(values);
-    if (result.ok) { setStatus("done"); return; }
+    if (result.ok) { track("consult_done"); setStatus("done"); return; }
     setErrors(result.error.fields ?? {});
     setServerMessage(result.error.message);
     setStatus("error");

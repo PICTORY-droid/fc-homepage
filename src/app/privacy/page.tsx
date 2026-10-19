@@ -24,7 +24,8 @@ export default function PrivacyPage() {
         </div>
         <div><dt className="font-bold">4. 제3자 제공</dt><dd className="text-ink-sub">법령에 근거가 있는 경우를 제외하고 제3자에게 제공하지 않습니다.</dd></div>
         <div><dt className="font-bold">5. 동의 거부 권리</dt><dd className="text-ink-sub">동의를 거부할 수 있으며, 거부 시 온라인 상담 신청이 제한됩니다. 전화로 문의하실 수 있습니다.</dd></div>
-        <div><dt className="font-bold">6. 문의</dt><dd className="text-ink-sub">{site.contact.fcPhone}{p.contactEmail ? ` / ${p.contactEmail}` : ""}</dd></div>
+        <div><dt className="font-bold">6. 이용 통계(비식별)</dt><dd className="text-ink-sub">서비스 개선을 위해 자료 내려받기·전화·카카오톡 문의 버튼을 누른 횟수와 상담 신청의 시작·완료 횟수를 집계합니다. 이름·연락처·IP 주소와 연결하지 않으며, 광고나 개인 식별에 쓰지 않습니다.</dd></div>
+        <div><dt className="font-bold">7. 문의</dt><dd className="text-ink-sub">{site.contact.fcPhone}{p.contactEmail ? ` / ${p.contactEmail}` : ""}</dd></div>
       </dl>
     </Section>
   );
