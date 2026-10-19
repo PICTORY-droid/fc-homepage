@@ -5,7 +5,7 @@ import { funItems } from "@/config/fun";
 
 export const metadata: Metadata = {
   title: "즐길거리",
-  description: "가계부 엑셀, 이력서·자기소개서 양식, 감성 편지지, 편지 받기 게임까지 — 우체국 감성의 무료 자료와 재미를 모았어요.",
+  description: "가계부 엑셀, 이력서·자기소개서 양식, 감성 편지지까지 — 우체국 감성의 무료 자료를 모았어요.",
   alternates: { canonical: "/fun" },
 };
 
