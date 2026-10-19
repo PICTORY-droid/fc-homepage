@@ -10,7 +10,6 @@ export function agencyJsonLd() {
     description: site.description,
     url: siteUrl,
     telephone: site.contact.fcPhone.replace(/^0/, "+82-"),
-    areaServed: { "@type": "AdministrativeArea", name: site.profile.region },
     openingHours: "Mo-Fr 09:00-18:00",
     image: `${siteUrl}/og/default.png`,
   };

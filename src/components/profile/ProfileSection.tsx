@@ -1,6 +1,7 @@
 import { site } from "@/config/site";
 import { Section } from "@/components/ui/Section";
 import { ButtonLink } from "@/components/ui/Button";
+import { KakaoButton } from "@/components/KakaoButton";
 
 // 담당 FC 소개 — 표시만 담당 (내용은 config/site.ts 의 profile 에서 수정)
 export function ProfileSection() {
@@ -8,8 +9,7 @@ export function ProfileSection() {
   return (
     <Section title="담당 FC를 소개합니다" tone="card">
       <div className="max-w-3xl">
-        <p className="text-sm font-semibold text-brand-deep">{profile.region}</p>
-        <h3 className="mt-1 text-3xl font-extrabold text-ink">{profile.role}</h3>
+        <h3 className="text-3xl font-extrabold text-ink">{profile.role}</h3>
         <p className="mt-3 text-lg text-ink-sub">{profile.intro}</p>
         <dl className="mt-5 grid gap-3 text-sm sm:grid-cols-2">
           <div className="rounded-xl bg-paper p-4">
@@ -30,7 +30,10 @@ export function ProfileSection() {
             </li>
           ))}
         </ol>
-        <div className="mt-6"><ButtonLink href="/consult">상담 신청하기</ButtonLink></div>
+        <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+          <ButtonLink href="/consult">상담 신청하기</ButtonLink>
+          <KakaoButton />
+        </div>
       </div>
     </Section>
   );

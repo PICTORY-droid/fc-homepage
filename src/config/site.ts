@@ -16,7 +16,6 @@ export const site = {
   /** 프로필 섹션 (사진 없이 이름·소개·상담 방식만 표시) */
   profile: {
     role: "우체국보험 FC",
-    region: "경남 김해",
     intro: "필요한 보장을 차분히 비교해 보실 수 있도록 쉽게 설명드립니다.",
     approach: [
       ["먼저 들어요", "지금 걱정되는 부분과 이미 가입한 보장을 먼저 여쭤봅니다."],
@@ -28,8 +27,8 @@ export const site = {
     fcPhone: "010-2192-1599", // 사용자 제공 번호 (본인 상담 번호 확인 필요)
     officialCenterPhone: "1599-0100", // 우체국보험 공식 고객센터 (공식 사이트 화면으로 확인)
     hours: "평일 09:00~18:00 (점심 12:00~13:00)",
-    /** 카카오톡 오픈프로필/채널 주소 — 입력하면 홈 첫 화면에 '카톡 상담' 버튼이 나타납니다. 비워두면 표시 안 함 */
-    kakaoUrl: "https://qr.kakao.com/talk/VYw0MTJ1r5dyrzFUjCyEfsbtefg-",
+    /** 카카오톡 오픈프로필/채널 주소 — 입력하면 상품 상세·상담 신청·담당 FC 소개 화면에 '카카오톡 문의' 버튼이 나타납니다. 비워두면 표시 안 함 */
+    kakaoUrl: "https://open.kakao.com/o/sgcg67Si", // 오픈채팅(1:1) — PC·휴대폰 모두 열림
   },
   links: {
     officialSite: "https://www.epostlife.go.kr",

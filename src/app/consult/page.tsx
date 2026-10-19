@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Section } from "@/components/ui/Section";
 import { ConsultForm } from "@/components/consult/ConsultForm";
+import { KakaoButton } from "@/components/KakaoButton";
 import { getCategory } from "@/config/categories";
 
 export const metadata: Metadata = { title: "상담 신청" };
@@ -12,6 +13,7 @@ export default async function ConsultPage({ searchParams }: Props) {
   const initial = topic && (topic === "other" || getCategory(topic)) ? topic : "health";
   return (
     <Section title="간편 상담 신청" lead="남겨주신 연락처로 희망하신 시간에 연락드립니다.">
+      <div className="mb-6"><KakaoButton className="sm:max-w-xs" /></div>
       <ConsultForm initialTopic={initial} />
     </Section>
   );

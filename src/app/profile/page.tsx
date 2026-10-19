@@ -3,7 +3,7 @@ import { ProfileSection } from "@/components/profile/ProfileSection";
 
 export const metadata: Metadata = {
   title: "담당 FC 소개",
-  description: "경남 김해 우체국보험 FC — 상담 진행 방식과 연락 방법을 안내합니다.",
+  description: "우체국보험 FC — 상담 진행 방식과 연락 방법을 안내합니다.",
   alternates: { canonical: "/profile" },
 };
 
