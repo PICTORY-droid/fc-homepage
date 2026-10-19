@@ -13,6 +13,9 @@ from concurrent.futures import ThreadPoolExecutor
 
 from PIL import Image
 
+import pro_check
+import pro_preview
+
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
 PUB = os.path.join(ROOT, "public", "fun", "pack")
 BATCH = 20
@@ -101,6 +104,8 @@ def render(ext, item):
         tmp = os.path.join(src, f"{item}-{k:02d}.{ext}")
         if ext == "xlsx" and item != "quote":  # 견적서는 A4 한 장 인쇄 설정이 이미 들어 있어 그대로 씁니다
             fit_width(f, tmp)
+        elif ext == "pptx" and item.endswith("pro"):
+            pro_preview.preview_copy(f, tmp)  # 프리미엄 PPT: 글꼴 이름만 미리보기용으로 바꾼 복사본(원본은 그대로)
         else:
             shutil.copy(f, tmp)
         names[k] = tmp
@@ -121,9 +126,12 @@ def render(ext, item):
         raw_pages = pages
         if ext == "xlsx":
             pages = distinct_pages(pdf, pages)[:6]
+        if ext == "pptx" and item.endswith("pro"):
+            bad = pro_check.overlaps(pdf)
+            assert not bad, f"{item}-{k:02d}: 글자 겹침 {bad[:3]}"
         large = os.path.join(d, "large", f"{item}-{k:02d}.jpg")
         if ext == "pptx":
-            montage(pages, 2 if item != "news" else 3, 1400, 78, large)
+            montage(pages, 2 if not item.startswith("news") else 3, 1400, 78, large)
         else:
             montage(pages, 2, 1500, 78, large)
             thumb_pages = raw_pages[:1] if item == "quote" else (raw_pages[1:2] if len(raw_pages) > 1 else raw_pages[:1])  # 견적서는 첫 쪽이 견적서 본문

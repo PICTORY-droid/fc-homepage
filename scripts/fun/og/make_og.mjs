@@ -34,6 +34,7 @@ for (const [ck, c] of Object.entries(cards)) {
 const items = { // 파일 키 → [그룹, 제목]
   "xlsx-ledger": ["excel", "가계부 엑셀"], "xlsx-policy": ["excel", "보험 증권 정리표 엑셀"], "xlsx-saving": ["excel", "저축 플래너 엑셀"], "xlsx-gift": ["excel", "경조사비 장부 엑셀"], "xlsx-allowance": ["excel", "용돈기입장 엑셀"], "xlsx-quote": ["excel", "견적서 엑셀"],
   "pptx-talk": ["ppt", "발표 템플릿 PPT"], "pptx-family": ["ppt", "가족 소개 PPT"], "pptx-birthday": ["ppt", "돌잔치 PPT"], "pptx-wedding": ["ppt", "결혼식 PPT"], "pptx-review": ["ppt", "보험 보장 점검 양식 PPT"], "pptx-news": ["ppt", "카드뉴스 PPT"],
+  "pptx-talkpro": ["ppt-pro", "발표 PPT 프리미엄"], "pptx-familypro": ["ppt-pro", "가족 소개 PPT 프리미엄"], "pptx-birthdaypro": ["ppt-pro", "돌잔치 PPT 프리미엄"], "pptx-weddingpro": ["ppt-pro", "결혼식 PPT 프리미엄"], "pptx-reviewpro": ["ppt-pro", "보험 보장 점검 양식 PPT 프리미엄"], "pptx-newspro": ["ppt-pro", "카드뉴스 PPT 프리미엄"],
 };
 for (const [fk, [group, title]] of Object.entries(items)) {
   const [ext, key] = fk.split("-");
@@ -74,6 +75,7 @@ const browser = await chromium.launch({ executablePath: process.env.CHROMIUM_PAT
 const page = await browser.newPage({ viewport: { width: 1200, height: 630 } });
 let n = 0;
 for (const o of out) {
+  if (process.env.OG_ONLY && !o.key.startsWith(process.env.OG_ONLY)) continue; // 예) OG_ONLY=ppt-pro 이면 그 묶음만 다시 만듭니다
   await page.setContent(html(o), { waitUntil: "load" });
   await page.screenshot({ path: path.join(OUT, `${o.key}.jpg`), type: "jpeg", quality: 82 });
   n++;

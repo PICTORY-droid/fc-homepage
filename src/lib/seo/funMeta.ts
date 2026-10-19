@@ -10,6 +10,8 @@ export const searchTitles: Record<string, string> = {
   "excel/gift": "경조사비 장부 엑셀 무료", "excel/allowance": "용돈기입장 엑셀 무료", "excel/quote": "견적서 엑셀 양식 무료",
   "ppt/talk": "발표 PPT 템플릿 무료", "ppt/family": "가족 소개 PPT 무료", "ppt/birthday": "돌잔치 PPT 무료",
   "ppt/wedding": "결혼식 PPT 무료", "ppt/review": "보험 보장 점검 PPT 양식", "ppt/news": "카드뉴스 PPT 템플릿 무료",
+  "ppt-pro/talkpro": "발표 PPT 프리미엄 템플릿 무료", "ppt-pro/familypro": "가족 소개 PPT 프리미엄 무료", "ppt-pro/birthdaypro": "돌잔치 PPT 프리미엄 무료",
+  "ppt-pro/weddingpro": "결혼식 PPT 프리미엄 무료", "ppt-pro/reviewpro": "보험 보장 점검 PPT 프리미엄 양식", "ppt-pro/newspro": "카드뉴스 PPT 프리미엄 템플릿 무료",
 };
 
 export interface FunMetaInput { title: string; description: string; path: string; ogKey: string }

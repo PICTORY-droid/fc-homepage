@@ -14,7 +14,8 @@ const mv = (a, b) => { if (existsSync(a) && !existsSync(b)) { renameSync(a, b); 
 
 // 1) 엑셀·PPT 꾸러미
 const LABEL = { ledger: "가계부", policy: "보험증권정리표", saving: "저축플래너", gift: "경조사비장부", allowance: "용돈기입장", quote: "견적서",
-  talk: "발표템플릿", family: "가족소개", birthday: "돌잔치", wedding: "결혼식", review: "보장점검양식", news: "카드뉴스" };
+  talk: "발표템플릿", family: "가족소개", birthday: "돌잔치", wedding: "결혼식", review: "보장점검양식", news: "카드뉴스",
+  talkpro: "발표템플릿프리미엄", familypro: "가족소개프리미엄", birthdaypro: "돌잔치프리미엄", weddingpro: "결혼식프리미엄", reviewpro: "보장점검양식프리미엄", newspro: "카드뉴스프리미엄" };
 const pack = JSON.parse(readFileSync(join(ROOT, "src/config/pack.data.json"), "utf8"));
 for (const [k, list] of Object.entries(pack)) {
   const [ext, item] = k.split("-");
