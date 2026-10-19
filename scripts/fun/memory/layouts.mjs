@@ -42,7 +42,7 @@ L.notebook = (d, h, p) => {
   const holes = Array.from({ length: 15 }, (_, i) => `<circle cx="34" cy="${70 + i * 70}" r="12" fill="#e9e2d2" stroke="#00000022"/><rect x="14" y="${64 + i * 70}" width="48" height="12" rx="6" fill="${p.d}" opacity=".7"/>`).join("");
   const ls = d.title.length > 7 ? [d.title.slice(0, Math.ceil(d.title.length / 2)), d.title.slice(Math.ceil(d.title.length / 2))] : [d.title];
   const label = g(`${shadow(0, 0, 380, 150)}<rect width="380" height="150" rx="10" fill="${p.bg}" stroke="${p.d}" stroke-width="3"/><rect x="10" y="10" width="360" height="130" rx="6" fill="none" stroke="${p.a}" stroke-width="1.5" stroke-dasharray="6 5"/>
-    ${txt(24, 36, d.cls ?? "3 학년  2 반   이름 : ", { size: 14, fill: p.ink, opacity: .7, serif: false })}${ls.map((s, i) => txt(190, 82 + i * 42, s, { size: 36, weight: 700, fill: p.d, anchor: "middle" })).join("")}${txt(190, 82 + ls.length * 42 - 4 + (ls.length > 1 ? 6 : 8), d.tag, { size: 14, fill: p.ink, anchor: "middle", opacity: .85 })}`, 130, 70, 1, -2);
+    ${txt(24, 36, d.cls ?? "3 학년  2 반   이름 : ", { size: 14, fill: p.ink, opacity: .7, serif: false })}${ls.map((s, i) => txt(190, 82 + i * 42, s, { size: 36, weight: 700, fill: p.d, anchor: "middle" })).join("")}`, 130, 70, 1, -2);
   const body = `${rect(0, 0, W, H, p.paper)}${rect(0, 0, 94, H, mix(p.paper, p.b, 0.25))}${holes}${rect(98, 0, 2, H, p.c, 0, 'opacity=".75"')}${rect(104, 0, 2, H, p.c, 0, 'opacity=".75"')}
     ${rules(120, 250, 620, 18, mix(p.paper, p.a, 0.35))}${label}${hero(h, p, 650, 150, 1.0, 6)}${credit(p)}`;
   return { defs: "", body, area: { fields: [120, 212, 620], rules: [120, 250, 620, 18], from: [120, 1042, 620, "right"] } };
@@ -64,7 +64,7 @@ L.diary = (d, h, p) => {
   const wx = ["맑음", "흐림", "비", "눈"].map((s, i) => `${circle(452 + i * 70, 126, 15, "none", `stroke="${p.d}" stroke-width="2"`)}${i === (d.weather ?? 0) ? circle(452 + i * 70, 126, 7.5, p.a) : ""}${txt(452 + i * 70, 164, s, { size: 13, anchor: "middle", fill: p.ink, serif: false })}`).join("");
   const tab = g(`<rect width="300" height="44" rx="10" fill="${p.a}"/>${txt(150, 30, d.title, { size: 23, weight: 700, fill: "#fff", anchor: "middle" })}`, 70, 192);
   const body = `${rect(0, 0, W, H, p.paper)}${rect(40, 36, W - 80, H - 72, "none", 14, `stroke="${p.a}" stroke-width="2" stroke-dasharray="3 8" stroke-linecap="round"`)}
-    ${txt(70, 138, "그 림 일 기", { size: 26, weight: 700, fill: p.d, spacing: 6 })}${txt(70, 166, d.tag, { size: 15, fill: p.ink, opacity: .8 })}${wx}
+    ${txt(70, 138, "그 림 일 기", { size: 26, weight: 700, fill: p.d, spacing: 6 })}${wx}
     ${tab}${rect(70, 234, 654, 318, p.bg, 12, `stroke="${p.d}" stroke-width="2.5"`)}${hero(h, p, 397, 394, 1.4, 0)}${txt(86, 540, "오늘 있었던 일을 그림으로 그려 보세요", { size: 13, fill: p.ink, opacity: .45, serif: false })}
     ${rules(70, 590, 654, 10, p.line)}${credit(p)}`;
   return { defs: "", body, area: { fields: [70, 52, 654], rules: [70, 590, 654, 10], from: [70, 1052, 654, "right"] } };
@@ -88,7 +88,7 @@ L.cassette = (d, h, p) => {
   const reel = (cx) => `${circle(cx, 0, 38, "#f4efe3")}${circle(cx, 0, 38, "none", 'stroke="#3a3a3a" stroke-width="3"')}${Array.from({ length: 6 }, (_, i) => `<rect x="${cx - 3}" y="-36" width="6" height="14" fill="#3a3a3a" transform="rotate(${i * 60} ${cx} 0)"/>`).join("")}${circle(cx, 0, 9, "#3a3a3a")}`;
   const tape = g(`${shadow(0, 0, 560, 330, 18)}<rect width="560" height="330" rx="18" fill="${p.a}"/><rect x="18" y="16" width="524" height="190" rx="10" fill="#f8f1de"/>
     <rect x="30" y="26" width="500" height="54" fill="${p.c}" opacity=".85"/>${txt(46, 64, "A  SIDE", { size: 24, weight: 800, fill: "#fff", spacing: 4, serif: false })}${txt(514, 64, "C-60", { size: 20, weight: 800, fill: "#fff", anchor: "end", serif: false })}
-    ${txt(280, 134, d.title, { size: 38, weight: 700, fill: p.d, anchor: "middle" })}<path d="M60 152 H500" stroke="${p.d}" stroke-width="1.5" opacity=".5"/>${txt(280, 186, d.tag, { size: 16, fill: p.ink, anchor: "middle", opacity: .85 })}
+    ${txt(280, 134, d.title, { size: 38, weight: 700, fill: p.d, anchor: "middle" })}<path d="M60 152 H500" stroke="${p.d}" stroke-width="1.5" opacity=".5"/>
     <rect x="130" y="224" width="300" height="60" rx="30" fill="#2e2a28"/><g transform="translate(0 254)">${reel(190)}${reel(370)}</g><path d="M200 296 h160 l16 34 h-192Z" fill="#00000022"/>
     ${[0, 1, 2, 3].map((i) => circle(46 + i * 156, 312, 6, "#00000030")).join("")}`, 74, 66, 0.84, d.tilt ?? 2);
   const body = `${rect(0, 0, W, H, p.paper)}${tape}${hero(h, p, 650, 220, 0.85, 8)}${rules(70, 430, 654, 14, p.line)}${credit(p)}`;

@@ -38,7 +38,7 @@ export default async function StationerySeasonPage({ params }: Props) {
       <Section tone="card">
         <ul data-reveal="stagger" className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
           {list.map((it) => (
-            <DownloadCard key={it.id} title={it.name} desc={it.tag} thumb={stationeryFile(it, "jpg")} zoom={stationeryFile(it, "png")}
+            <DownloadCard key={it.id} title={it.name} desc="" thumb={stationeryFile(it, "jpg")} zoom={stationeryFile(it, "png")}
               links={[{ label: "Word", href: stationeryFile(it, "docx"), filename: stationeryDownloadName(it, "docx") }, { label: "PNG", href: stationeryFile(it, "png"), filename: stationeryDownloadName(it, "png") }]} />
           ))}
         </ul>

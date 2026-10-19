@@ -15,7 +15,7 @@ export function DownloadCard({ title, desc, thumb, thumbAlt, zoom, aspect, links
       )}
       <div className="flex flex-1 flex-col p-4">
         <h3 className="text-base font-bold text-ink">{title}</h3>
-        <p className="mt-1 flex-1 text-sm leading-snug text-ink-sub">{desc}</p>
+        {desc ? <p className="mt-1 flex-1 text-sm leading-snug text-ink-sub">{desc}</p> : <div className="flex-1" />}
         <div className="mt-3 flex flex-wrap gap-2">
           {links.map((l, i) => (
             <a key={l.href} href={l.href} download={l.filename ?? true}

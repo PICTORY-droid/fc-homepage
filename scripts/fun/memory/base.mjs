@@ -39,7 +39,7 @@ export const splitTitle = (t, max = 8) => {
 export const titleSvg = (d, x, y, p, { size = 44, anchor = "start", max = 8, gap = 52 } = {}) => {
   const ls = splitTitle(d.title, max);
   const t = ls.map((s, i) => txt(x, y + i * gap, s, { size, weight: 700, fill: p.d, anchor, spacing: 1 })).join("");
-  return { svg: t + txt(x, y + (ls.length - 1) * gap + 38, d.tag, { size: 17, weight: 400, fill: p.ink, anchor, opacity: 0.85 }), bottom: y + (ls.length - 1) * gap + 38 };
+  return { svg: t, bottom: y + (ls.length - 1) * gap + 22 };  // 제목 아래 보조 문장은 두지 않습니다
 };
 export const credit = (p, y = 1106) => txt(W / 2, y, "편지지 · 우체국보험 상담 안내", { size: 12, fill: p.d, anchor: "middle", opacity: 0.5, serif: false });
 export const wrapSvg = (id, defs, body, seed) => `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}"><defs>${defs}${finish(id, seed)}</defs>${body}${finishBody(id)}</svg>`;
