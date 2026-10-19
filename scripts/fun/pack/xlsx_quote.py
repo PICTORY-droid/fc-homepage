@@ -81,15 +81,21 @@ def build(path, i, pal, message):
     wq.set_row(9, 32)
     for c, h in enumerate(["No", "품목", "규격·설명", "수량", "단위", "단가(원)", "공급가액(원)"]):
         wq.write(11, 1 + c, h, fm.head())
+    table = {(it[0]): (it[1], it[2], int(round(it[3] * mult, -2))) for it in items}  # 품목 → (규격, 단위, 단가)
+    sample = {}  # 줄 번호 → (규격, 단위, 단가, 공급가액)
+    for k in range(4):
+        spec, unit, price = table[items[k][0]]
+        sample[k] = (spec, unit, price, (k + 1) * 2 * price)
     for k in range(N_ITEMS):
         r = FIRST_ITEM + k
+        sv = sample.get(k, ("", "", "", ""))
         wq.write_number(r - 1, 1, k + 1, fm.cell(align="center", font_color="#888888"))
         wq.write(r - 1, 2, "", fm.inp())
-        wq.write_formula(r - 1, 3, f'=IFERROR(INDEX({PS},MATCH(C{r},{PN},0)),"")', fm.cell())
+        wq.write_formula(r - 1, 3, f'=IFERROR(INDEX({PS},MATCH(C{r},{PN},0)),"")', fm.cell(), sv[0])
         wq.write_blank(r - 1, 4, None, fm.inp(num_format="#,##0", align="center"))
-        wq.write_formula(r - 1, 5, f'=IFERROR(INDEX({PU},MATCH(C{r},{PN},0)),"")', fm.cell(align="center"))
-        wq.write_formula(r - 1, 6, f'=IFERROR(INDEX({PP},MATCH(C{r},{PN},0)),"")', fm.inp(num_format="#,##0"))
-        wq.write_formula(r - 1, 7, f'=IF(OR(E{r}="",G{r}=""),"",E{r}*G{r})', fm.money())
+        wq.write_formula(r - 1, 5, f'=IFERROR(INDEX({PU},MATCH(C{r},{PN},0)),"")', fm.cell(align="center"), sv[1])
+        wq.write_formula(r - 1, 6, f'=IFERROR(INDEX({PP},MATCH(C{r},{PN},0)),"")', fm.inp(num_format="#,##0"), sv[2])
+        wq.write_formula(r - 1, 7, f'=IF(OR(E{r}="",G{r}=""),"",E{r}*G{r})', fm.money(), sv[3])
     # 예시 입력(처음 4줄)
     for k in range(4):
         r = FIRST_ITEM + k
@@ -99,16 +105,18 @@ def build(path, i, pal, message):
     wq.data_validation(FIRST_ITEM - 1, 4, FIRST_ITEM + N_ITEMS - 2, 4, {"validate": "decimal", "criteria": ">=", "value": 0, "error_message": "0 이상의 숫자를 입력해 주세요."})
     last = FIRST_ITEM + N_ITEMS - 1
     r0 = last + 1
-    wq.merge_range(r0 - 1, 1, r0 - 1, 6, "소 계", fm.total(align="center")); wq.write_formula(r0 - 1, 7, f"=SUM(H{FIRST_ITEM}:H{last})", fm.total(num_format="#,##0"))
+    sub_total = sum(v[3] for v in sample.values())
+    vat = int(round(sub_total * 0.1))
+    wq.merge_range(r0 - 1, 1, r0 - 1, 6, "소 계", fm.total(align="center")); wq.write_formula(r0 - 1, 7, f"=SUM(H{FIRST_ITEM}:H{last})", fm.total(num_format="#,##0"), sub_total)
     wq.merge_range(r0, 1, r0, 6, "할 인(금액 입력)", fm.cell(align="center")); wq.write(r0, 7, 0, fm.inp(num_format="#,##0"))
-    wq.merge_range(r0 + 1, 1, r0 + 1, 6, "공 급 가 액", fm.cell(align="center", bold=True)); wq.write_formula(r0 + 1, 7, f"=H{r0}-H{r0 + 1}", fm.money(bold=True))
+    wq.merge_range(r0 + 1, 1, r0 + 1, 6, "공 급 가 액", fm.cell(align="center", bold=True)); wq.write_formula(r0 + 1, 7, f"=H{r0}-H{r0 + 1}", fm.money(bold=True), sub_total)
     wq.merge_range(r0 + 2, 1, r0 + 2, 4, "부 가 세", fm.cell(align="center")); wq.write(r0 + 2, 5, "별도", fm.inp(align="center"))
     wq.write(r0 + 2, 6, "", fm.cell())
     wq.data_validation(r0 + 2, 5, r0 + 2, 5, {"validate": "list", "source": ["별도", "포함", "면세"]})
     vat_row = r0 + 3
-    wq.write_formula(r0 + 2, 7, f'=IF(F{vat_row}="별도",ROUND(H{r0 + 2}*0.1,0),IF(F{vat_row}="포함",ROUND(H{r0 + 2}/11,0),0))', fm.money())
-    wq.merge_range(r0 + 3, 1, r0 + 3, 6, "합 계 금 액", fm.total(align="center")); wq.write_formula(r0 + 3, 7, f'=H{r0 + 2}+IF(F{vat_row}="별도",H{vat_row},0)', fm.total(num_format="#,##0", font_size=12))
-    wq.write_formula("D10", f'=H{r0 + 4}', fm.f(bold=True, font_size=16, font_color=pal["dark"], bg_color=pal["soft"], align="center", num_format='"₩ "#,##0'))
+    wq.write_formula(r0 + 2, 7, f'=IF(F{vat_row}="별도",ROUND(H{r0 + 2}*0.1,0),IF(F{vat_row}="포함",ROUND(H{r0 + 2}/11,0),0))', fm.money(), vat)
+    wq.merge_range(r0 + 3, 1, r0 + 3, 6, "합 계 금 액", fm.total(align="center")); wq.write_formula(r0 + 3, 7, f'=H{r0 + 2}+IF(F{vat_row}="별도",H{vat_row},0)', fm.total(num_format="#,##0", font_size=12), sub_total + vat)
+    wq.write_formula("D10", f'=H{r0 + 4}', fm.f(bold=True, font_size=16, font_color=pal["dark"], bg_color=pal["soft"], align="center", num_format='"₩ "#,##0'), sub_total + vat)
     nr = r0 + 5
     wq.write(nr - 1, 1, "비고", lab())
     wq.merge_range(nr - 1, 2, nr + 2, 7, NOTES[i % 5], fm.inp(text_wrap=True, valign="top"))

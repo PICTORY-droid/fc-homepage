@@ -40,7 +40,19 @@ def fit_width(src, dst):
             zo.writestr(it, data)
 
 
+XCU = """<?xml version="1.0" encoding="UTF-8"?>
+<oor:items xmlns:oor="http://openoffice.org/2001/registry" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<item oor:path="/org.openoffice.Office.Calc/Formula/Load"><prop oor:name="OOXMLRecalcMode" oor:op="fuse"><value>0</value></prop></item>
+</oor:items>
+"""
+
+
 def to_pdfs(files, outdir, profile):
+    # 엑셀 수식은 파일을 열 때 항상 다시 계산해야 미리보기에 0 대신 실제 값이 보입니다.
+    udir = os.path.join(profile, "user")
+    os.makedirs(udir, exist_ok=True)
+    with open(os.path.join(udir, "registrymodifications.xcu"), "w", encoding="utf-8") as fh:
+        fh.write(XCU)
     subprocess.run(["soffice", f"-env:UserInstallation=file://{profile}", "--headless", "--convert-to", "pdf", "--outdir", outdir] + files,
                    stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=1800, check=False)
 
@@ -52,7 +64,9 @@ def distinct_pages(pdf, pages):
         txt = subprocess.run(["pdftotext", "-f", str(n), "-l", str(n), "-layout", pdf, "-"], capture_output=True, text=True).stdout
         lines = [" ".join(l.split()) for l in txt.splitlines() if l.strip()]
         first = lines[0] if lines else ""
-        if not (n > 1 and first in prev_lines):
+        second = lines[1] if len(lines) > 1 else ""
+        # 앞쪽과 첫 두 줄이 모두 같으면 이어진 쪽입니다(제목만 같은 쪽은 다른 시트이므로 남깁니다).
+        if not (n > 1 and first in prev_lines and (not second or second in prev_lines)):
             keep.append(p)
         prev_lines = set(lines)
     return keep
@@ -85,7 +99,7 @@ def render(ext, item):
     names = {}
     for k, f in enumerate(files, 1):
         tmp = os.path.join(src, f"{item}-{k:02d}.{ext}")
-        if ext == "xlsx":
+        if ext == "xlsx" and item != "quote":  # 견적서는 A4 한 장 인쇄 설정이 이미 들어 있어 그대로 씁니다
             fit_width(f, tmp)
         else:
             shutil.copy(f, tmp)
@@ -104,6 +118,7 @@ def render(ext, item):
         subprocess.run(["pdftoppm", "-jpeg", "-jpegopt", "quality=80", "-r", dpi, "-f", "1", "-l", last, pdf, img], check=True)
         pages = sorted(glob.glob(img + "-*.jpg"))
         assert pages, pdf
+        raw_pages = pages
         if ext == "xlsx":
             pages = distinct_pages(pdf, pages)[:6]
         large = os.path.join(d, "large", f"{item}-{k:02d}.jpg")
@@ -111,7 +126,8 @@ def render(ext, item):
             montage(pages, 2 if item != "news" else 3, 1400, 78, large)
         else:
             montage(pages, 2, 1500, 78, large)
-            montage(pages[1:2] if len(pages) > 1 else pages[:1], 1, 480, 82, os.path.join(d, "thumbs", f"{item}-{k:02d}.jpg"))
+            thumb_pages = raw_pages[:1] if item == "quote" else (raw_pages[1:2] if len(raw_pages) > 1 else raw_pages[:1])  # 견적서는 첫 쪽이 견적서 본문
+            montage(thumb_pages, 1, 480, 82, os.path.join(d, "thumbs", f"{item}-{k:02d}.jpg"))
     shutil.rmtree(work, ignore_errors=True)
     print(ext, item, "50장 완료")
 
