@@ -7,19 +7,20 @@ import { ChatCharacter } from "./ChatCharacter";
 import { useChat, type ChatMessage } from "./useChat";
 
 // 작은 알약 버튼(짧은 선택지·링크) / 긴 질문 목록(한 상자 안에서 줄로 구분)
-const pillBase = "inline-flex h-9 items-center rounded-full border px-3.5 text-[13px] font-semibold text-ink";
+const pillBase = "inline-flex h-9 items-center whitespace-nowrap rounded-full border px-3.5 text-[13px] font-semibold text-ink [.compact_&]:h-8 [.compact_&]:px-3 [.compact_&]:text-xs";
 const pillPlain = `${pillBase} border-ink/20 bg-paper hover:bg-paper-gray`;
 const pillPrimary = `${pillBase} border-transparent bg-brand hover:brightness-95`;
 const pillKakao = `${pillBase} border-transparent bg-[#FEE500] hover:brightness-95`;
 const pillChoice = "inline-flex h-8 items-center rounded-full border border-brand-deep/35 bg-paper px-3 text-[13px] font-medium text-brand-deep hover:bg-brand-soft";
 const LONG_CHOICE = 14; // 이 글자 수를 넘는 선택지는 목록 줄로 보여줍니다
 
-function LinkPill({ link, onNavigate }: { link: ChatLink; onNavigate: () => void }) {
+function LinkPill({ link, compact, onNavigate }: { link: ChatLink; compact: boolean; onNavigate: () => void }) {
+  const label = compact ? link.short ?? link.label : link.label;
   if (link.external) {
-    return <a href={link.href} target="_blank" rel="noopener noreferrer" className={link.href.includes("open.kakao.com") ? pillKakao : pillPlain}>{link.label}<span className="sr-only"> (새 창으로 열림)</span></a>;
+    return <a href={link.href} target="_blank" rel="noopener noreferrer" className={link.href.includes("open.kakao.com") ? pillKakao : pillPlain}>{label}<span className="sr-only"> (새 창으로 열림)</span></a>;
   }
-  if (link.href.startsWith("tel:")) return <a href={link.href} className={pillPlain}>{link.label}</a>;
-  return <Link href={link.href} onClick={onNavigate} className={link.href.startsWith("/consult") ? pillPrimary : pillPlain}>{link.label}</Link>;
+  if (link.href.startsWith("tel:")) return <a href={link.href} className={pillPlain}>{label}</a>;
+  return <Link href={link.href} onClick={onNavigate} className={link.href.startsWith("/consult") ? pillPrimary : pillPlain}>{label}</Link>;
 }
 
 function Choices({ items, onPick }: { items: string[]; onPick: (t: string) => void }) {
@@ -48,6 +49,30 @@ function Choices({ items, onPick }: { items: string[]; onPick: (t: string) => vo
   );
 }
 
+// 연결 버튼 — 3개 이상이면 짧은 글자로 한 줄에 모으고, 긴 상품 이름은 목록 줄로 보여줍니다.
+function Links({ links, onNavigate }: { links: ChatLink[]; onNavigate: () => void }) {
+  if (links.length === 0) return null;
+  const compact = links.length >= 3;
+  const rows = compact ? links.filter((l) => l.href.startsWith("/products/")) : [];
+  const pills = links.filter((l) => !rows.includes(l));
+  return (
+    <div className={`mt-2 space-y-2 ${compact ? "compact" : ""}`}>
+      {pills.length > 0 && <div className={pills.length === 3 ? "grid grid-cols-3 gap-1.5 [&>*]:w-full [&>*]:justify-center [&>*]:px-1.5" : "flex flex-wrap gap-1.5"}>{pills.map((l) => <LinkPill key={l.href + l.label} link={l} compact={compact} onNavigate={onNavigate} />)}</div>}
+      {rows.length > 0 && (
+        <ul className="divide-y divide-ink/10 overflow-hidden rounded-xl border border-ink/15 bg-paper" aria-label="관련 상품">
+          {rows.map((l) => (
+            <li key={l.href}>
+              <Link href={l.href} onClick={onNavigate} className="flex min-h-[40px] items-center gap-2 px-3 py-2 text-[13px] leading-snug text-ink hover:bg-brand-soft">
+                <span className="line-clamp-2 flex-1">{l.label}</span><span aria-hidden="true" className="text-brand-deep">›</span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}
+
 function Bubble({ m, onNavigate, onPick, isLast }: { m: ChatMessage; onNavigate: () => void; onPick: (t: string) => void; isLast: boolean }) {
   if (m.role === "user") {
     return <div data-msg="user" className="ml-auto max-w-[85%] break-words rounded-2xl rounded-br-md bg-brand-soft px-3 py-2 text-sm text-ink">{m.text}</div>;
@@ -57,7 +82,7 @@ function Bubble({ m, onNavigate, onPick, isLast }: { m: ChatMessage; onNavigate:
       <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-brand-soft"><ChatCharacter className="h-5 w-5" /></span>
       <div className="min-w-0">
         <p className="whitespace-pre-line break-keep rounded-2xl rounded-tl-md bg-paper-card px-3 py-2 text-sm leading-relaxed text-ink">{m.text}</p>
-        {m.links.length > 0 && <div className="mt-2 flex flex-wrap gap-1.5">{m.links.map((l) => <LinkPill key={l.href + l.label} link={l} onNavigate={onNavigate} />)}</div>}
+        <Links links={m.links} onNavigate={onNavigate} />
         {isLast && m.suggestions.length > 0 && <Choices items={m.suggestions} onPick={onPick} />}
       </div>
     </div>

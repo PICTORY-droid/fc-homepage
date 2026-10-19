@@ -6,7 +6,8 @@ import { site } from "./site";
 import type { CategorySlug } from "./categories";
 import { officialFaqCategories } from "./officialFaq";
 
-export interface ChatLink { label: string; href: string; external?: boolean }
+/** short: 버튼이 3개 이상일 때 쓰는 짧은 글자(없으면 label 그대로) */
+export interface ChatLink { label: string; short?: string; href: string; external?: boolean }
 
 export interface FaqEntry {
   id: string;
@@ -17,8 +18,8 @@ export interface FaqEntry {
   suggestions?: string[];
 }
 
-const kakao: ChatLink[] = site.contact.kakaoUrl ? [{ label: "카카오톡으로 문의하기", href: site.contact.kakaoUrl, external: true }] : [];
-const consult: ChatLink = { label: "상담 신청하기", href: "/consult" };
+const kakao: ChatLink[] = site.contact.kakaoUrl ? [{ label: "카카오톡으로 문의하기", short: "카카오톡", href: site.contact.kakaoUrl, external: true }] : [];
+const consult: ChatLink = { label: "상담 신청하기", short: "상담신청", href: "/consult" };
 /** 우체국보험 공식 홈페이지 '자주하는 질문' 주소 (답변 원문은 officialFaq.data.json 에 있습니다) */
 export const OFFICIAL_FAQ_URL = "https://epostlife.go.kr/IPCCFQ0001.do";
 
@@ -52,21 +53,21 @@ export const faq: FaqEntry[] = [
     id: "faq-list",
     keywords: ["자주하는질문", "자주묻는질문", "faq", "질문목록"],
     text: "우체국보험 공식 '자주하는 질문'을 분류별로 찾아보실 수 있어요. 궁금한 분류를 골라 보세요. '자동이체 변경', '청약 철회'처럼 직접 입력하셔도 돼요.",
-    links: [{ label: "공식 자주하는 질문 전체 보기", href: OFFICIAL_FAQ_URL, external: true }],
+    links: [{ label: "공식 자주하는 질문 전체 보기", short: "공식 FAQ", href: OFFICIAL_FAQ_URL, external: true }],
     suggestions: [...officialFaqCategories],
   },
   {
     id: "find",
     keywords: ["상품찾기", "맞는상품", "추천", "뭐가좋", "어떤보험", "고르"],
     text: "어떤 걱정이 있으신가요? 아래에서 고르시거나 '아이', '암', '연금'처럼 입력해 보세요. 30초 보장 점검으로도 살펴보실 수 있어요.",
-    links: [{ label: "30초 보장 점검", href: "/find" }, { label: "보험 상품 전체 보기", href: "/products" }],
+    links: [{ label: "30초 보장 점검", short: "보장점검", href: "/find" }, { label: "보험 상품 전체 보기", short: "전체상품", href: "/products" }],
     suggestions: ["건강·암 보장", "노후·연금", "어린이·가족", "산모·신생아", "저축·목돈 마련", "시니어·간병·치매", "병력이 있으신 분", "기업·단체"],
   },
   {
     id: "conditions",
     keywords: ["가입조건", "가입나이", "나이제한", "가입한도", "보험기간", "납입기간", "몇살", "가입자격"],
     text: "가입 나이·보험기간·가입 한도는 상품마다 달라요. 상품 이름이나 분야를 입력하시면 해당 상품 페이지에서 '상품 정보'를 확인하실 수 있게 안내해 드릴게요.",
-    links: [{ label: "보험 상품 전체 보기", href: "/products" }],
+    links: [{ label: "보험 상품 전체 보기", short: "전체상품", href: "/products" }],
     suggestions: ["내게 맞는 상품 찾기", "상담 신청하기"],
   },
   {
@@ -89,9 +90,9 @@ export const faq: FaqEntry[] = [
   },
   {
     id: "contact",
-    keywords: ["전화", "연락처", "번호", "통화", "영업시간", "운영시간", "언제연락"],
+    keywords: ["전화", "전화상담", "연락처", "번호", "통화", "영업시간", "운영시간", "언제연락"],
     text: `전화 상담은 ${site.contact.hours}에 가능해요. 시간 외에는 상담 신청서나 카카오톡으로 남겨 주시면 확인 후 연락드려요.`,
-    links: [{ label: "전화 상담하기", href: `tel:${site.contact.fcPhone}` }, consult, ...kakao],
+    links: [{ label: "전화 상담하기", short: "전화", href: `tel:${site.contact.fcPhone}` }, consult, ...kakao],
   },
   {
     id: "promise",
@@ -103,13 +104,13 @@ export const faq: FaqEntry[] = [
     id: "compare",
     keywords: ["비교", "차이", "상품비교"],
     text: "상품을 나란히 놓고 비교해 보실 수 있어요.",
-    links: [{ label: "상품 비교하기", href: "/compare" }, { label: "보험 상품 전체 보기", href: "/products" }],
+    links: [{ label: "상품 비교하기", short: "비교하기", href: "/compare" }, { label: "보험 상품 전체 보기", short: "전체상품", href: "/products" }],
   },
   {
     id: "privacy",
     keywords: ["개인정보", "정보보관", "정보수집", "보관기간"],
     text: "상담 신청 시 입력하신 정보는 동의한 목적으로만 사용해요. 자세한 내용은 개인정보 처리방침에서 확인하실 수 있어요.",
-    links: [{ label: "개인정보 처리방침", href: "/privacy" }],
+    links: [{ label: "개인정보 처리방침", short: "처리방침", href: "/privacy" }],
   },
   {
     id: "basis",

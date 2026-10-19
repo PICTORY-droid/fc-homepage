@@ -14,14 +14,14 @@ const norm = (s: string) => s.toLowerCase().replace(/[\s.,!?~·'"()\-_/]+/g, "")
 const MAX_PRODUCTS = 3;
 const MAX_QUERY = 300; // 추천 질문(공식 질문 원문)도 그대로 받을 수 있게 입력칸 제한보다 넉넉히
 const faqIndex = buildFaqIndex(officialFaq);
-const officialLink: ChatLink = { label: "공식 자주하는 질문 전체 보기", href: OFFICIAL_FAQ_URL, external: true };
+const officialLink: ChatLink = { label: "공식 자주하는 질문 전체 보기", short: "공식 FAQ", href: OFFICIAL_FAQ_URL, external: true };
 
 // 주민번호·전화번호·카드/계좌 번호처럼 보이는 숫자, 또는 관련 단어
 const SENSITIVE = [/\d{6}\s*-?\s*[1-4]\d{6}/, /01[016789][-\s]?\d{3,4}[-\s]?\d{4}/, /\d{4}[-\s]?\d{4}[-\s]?\d{4}[-\s]?\d{4}/, /\d{9,}/, /주민\s*(등록)?\s*번호|계좌\s*번호|카드\s*번호/];
 export const looksSensitive = (input: string) => SENSITIVE.some((re) => re.test(input));
 
-const consultLink = (topic?: string): ChatLink => ({ label: "상담 신청하기", href: topic ? `/consult?topic=${topic}` : "/consult" });
-const kakaoLinks = (): ChatLink[] => (site.contact.kakaoUrl ? [{ label: "카카오톡으로 문의하기", href: site.contact.kakaoUrl, external: true }] : []);
+const consultLink = (topic?: string): ChatLink => ({ label: "상담 신청하기", short: "상담신청", href: topic ? `/consult?topic=${topic}` : "/consult" });
+const kakaoLinks = (): ChatLink[] => (site.contact.kakaoUrl ? [{ label: "카카오톡으로 문의하기", short: "카카오톡", href: site.contact.kakaoUrl, external: true }] : []);
 
 /** 가장 긴 키워드가 맞은 길이 (없으면 0) */
 function score(input: string, keywords: readonly string[]): number {
@@ -37,7 +37,7 @@ function productReply(list: Product[]): ChatReply {
       : `관련 상품을 찾았어요.${more ? ` (${list.length}개 중 ${shown.length}개)` : ""} 가입 조건은 각 상품 페이지에서 확인하세요.`,
     links: [
       ...shown.map((p) => ({ label: p.displayName, href: `/products/${p.id}` })),
-      ...(more ? [{ label: "보험 상품 전체 보기", href: "/products" }] : []),
+      ...(more ? [{ label: "보험 상품 전체 보기", short: "전체상품", href: "/products" }] : []),
       consultLink(shown[0].topic === "other" ? undefined : shown[0].topic),
     ],
     suggestions: [],
@@ -50,7 +50,7 @@ function categoryReply(slug: CategorySlug): ChatReply {
   return {
     text: `${c.title} 쪽이 궁금하시군요. ${c.short}${c.notice ? ` ${c.notice}` : ""}`,
     links: [
-      { label: `${c.title} 안내 보기`, href: `/c/${c.slug}` },
+      { label: `${c.title} 안내 보기`, short: "분야 안내", href: `/c/${c.slug}` },
       ...items.map((p) => ({ label: p.displayName, href: `/products/${p.id}` })),
       consultLink(slug),
     ],
