@@ -20,7 +20,7 @@ export interface PackGroup { slug: string; title: string; short: string; lead: s
 
 export const packGroups: PackGroup[] = [
   {
-    slug: "excel", title: "엑셀 양식 300종", icon: "📊",
+    slug: "excel", title: "엑셀 양식", icon: "📊",
     short: "가계부·보험 증권 정리표·저축 플래너·경조사비 장부·용돈기입장·견적서, 각 50종. 수식과 차트가 들어 있어 받아서 바로 쓰고 고칠 수 있어요.",
     lead: "항목마다 50가지 한국 감성 테마로 만든 엑셀 양식이에요. 노란 칸에 입력하면 합계·그래프가 자동으로 바뀌고, 수식·서식·분류는 마음대로 고칠 수 있어요.",
     howto: "엑셀(Excel)·한컴오피스 한셀·구글 스프레드시트에서 열 수 있어요. 휴대폰에서는 엑셀 앱을 권해요. 처음 들어 있는 예시 줄은 지우고 쓰세요.",
@@ -34,7 +34,7 @@ export const packGroups: PackGroup[] = [
     ],
   },
   {
-    slug: "ppt", title: "PPT 템플릿 300종", icon: "🎞️",
+    slug: "ppt", title: "PPT 템플릿", icon: "🎞️",
     short: "발표·가족 소개·돌잔치·결혼식·보험 점검 양식·카드뉴스, 각 50종. 글과 사진 자리를 바로 고쳐 쓸 수 있는 PowerPoint 파일이에요.",
     lead: "항목마다 50가지 한국 감성 테마로 만든 PowerPoint 템플릿이에요. 글·색·사진 자리를 마음대로 고쳐서 발표, 초대, 소개 자료로 쓰세요.",
     howto: "PowerPoint·한컴오피스 한쇼·구글 슬라이드에서 열 수 있어요. 사진을 넣으려면 점선 칸을 누르고 ‘도형 채우기 → 그림’을 고르세요. 글꼴은 맑은 고딕이에요.",

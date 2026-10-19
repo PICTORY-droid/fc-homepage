@@ -10,9 +10,12 @@ export interface FunItem {
   icon: string; // 카드에 보이는 그림 문자
 }
 
-export const funItems: FunItem[] = [
-  { slug: "stationery", title: "계절 편지지 80장", short: "봄·여름·가을·겨울 각 20장, 서로 다른 그림의 편지지를 Word로 받아 바로 쓰세요.", href: "/fun/stationery", icon: "✉️" },
+// 메뉴는 제목이 짧은 것부터 보여 줍니다(긴 제목이 중간에 끼어 시선을 흩뜨리지 않게). 항목을 추가해도 자동으로 제자리를 찾아요.
+const unsorted: FunItem[] = [
+  { slug: "stationery", title: "계절 편지지", short: "봄·여름·가을·겨울 각 20장, 서로 다른 그림의 편지지를 Word로 받아 바로 쓰세요.", href: "/fun/stationery", icon: "✉️" },
   // 자료 꾸러미(엑셀·PPT·워드 …) — config/pack.ts 의 묶음이 늘어나면 자동으로 추가됩니다.
   ...packGroups.map((g) => ({ slug: g.slug, title: g.title, short: g.short, href: `/fun/${g.slug}`, icon: g.icon })),
-  { slug: "forms", title: "직업별 이력서·자기소개서 200종", short: "포지션 20개마다 이력서 5종·자기소개서 5종, 짜임이 모두 다른 Word 양식을 무료로 받으세요.", href: "/fun/forms", icon: "📄" },
+  { slug: "forms", title: "직업별 이력서·자기소개서", short: "포지션 20개마다 이력서 5종·자기소개서 5종, 짜임이 모두 다른 Word 양식을 무료로 받으세요.", href: "/fun/forms", icon: "📄" },
 ];
+
+export const funItems: FunItem[] = [...unsorted].sort((a, b) => a.title.length - b.title.length);
