@@ -33,8 +33,8 @@ describe("안내 도우미", () => {
       expect(reply(s).text).toContain("개인정보");
     }
   });
-  it("직접 쓴 안내 문구에는 공식 고객센터 번호(1599-0100)를 넣지 않는다 (다이렉트 안내만 예외)", () => {
-    for (const f of faq.filter((x) => x.id !== "direct")) expect(JSON.stringify(f)).not.toContain("1599-0100");
+  it("직접 쓴 안내 문구에는 공식 고객센터 번호(1599-0100)를 넣지 않는다 ", () => {
+    for (const f of faq) expect(JSON.stringify(f)).not.toContain("1599-0100");
   });
   it("모든 연결 주소는 사이트 안 경로·전화·카카오뿐", () => {
     const qs = ["상품찾기", "가입조건", "보험료", "상담", "카톡", "전화", "비교", "자동이체", "보험금청구", "환급금대출", "개인정보", "출처", "가입방법", "담당자", "안녕", "감사", "아이", "암", "연금", "산모", "저축", "치매", "병력", "회사", "zzzz", ...products.map((p) => p.displayName)];
@@ -44,8 +44,8 @@ describe("안내 도우미", () => {
     const ids = new Set(products.map((p) => p.id));
     for (const l of reply("아이").links.filter((l) => l.href.startsWith("/products/"))) expect(ids.has(l.href.split("/")[2])).toBe(true);
   });
-  it("공식 질문 111개를 그대로 입력하면 각각 자기 답변 원문이 나온다", () => {
-    expect(officialFaq).toHaveLength(111);
+  it("공식 질문 110개를 그대로 입력하면 각각 자기 답변 원문이 나온다", () => {
+    expect(officialFaq).toHaveLength(110);
     for (const f of officialFaq) expect(reply(f.question).text, f.id).toContain(f.answer);
   });
   it("공식 답변에는 출처 줄과 공식 FAQ 링크가 붙는다", () => {
@@ -67,10 +67,10 @@ describe("안내 도우미", () => {
     expect(reply("자동이체 변경").suggestions[0]).toContain("자동이체 신청, 변경");
     expect(reply("보험금 청구 서류").links.map((l) => l.href)).toContain("https://epostlife.go.kr/IPCCFQ0001.do");
   });
-  it("다이렉트 보험은 1599-0100 문의로 안내", () => {
-    const r = reply("다이렉트 보험 상담 가능해요?");
-    expect(r.text).toBe("다이렉트 보험은 이곳에서 상담이 어렵습니다. 1599-0100으로 문의주세요.");
-    expect(r.links.map((l) => l.href)).toEqual(["tel:1599-0100"]);
+  it("다이렉트 보험 관련 안내와 질문은 챗봇에 없다", () => {
+    expect(JSON.stringify(faq)).not.toContain("다이렉트");
+    expect(officialFaq.some((f) => f.question.includes("다이렉트"))).toBe(false);
+    expect(reply("다이렉트 보험").text).not.toMatch(/1599-0100/);
   });
   it("너무 긴 입력은 잘라서 처리", () => expect(() => reply("가".repeat(5000))).not.toThrow());
 });

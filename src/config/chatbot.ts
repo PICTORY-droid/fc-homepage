@@ -1,6 +1,7 @@
 // 안내 도우미(챗봇) 문구 — AI가 아닌 '정해 둔 답변' 방식입니다. 문구·키워드는 이 파일만 고치면 됩니다.
 // 규칙: 보험료 금액·가입 가능 여부·보장 판단·가입 권유는 답하지 않고 상담으로 연결합니다.
-// 주의: 문구를 바꾸면 광고 심의 대상이 될 수 있습니다. 공식 고객센터 번호(1599-0100)는 '다이렉트 보험' 안내에만 사용합니다(사용자 지시).
+// 주의: 문구를 바꾸면 광고 심의 대상이 될 수 있습니다.
+// 다이렉트 보험 관련 안내는 넣지 않습니다(사용자 지시). 공식 고객센터 번호(1599-0100)는 직접 쓴 문구에는 넣지 않습니다.
 import { site } from "./site";
 import type { CategorySlug } from "./categories";
 import { officialFaqCategories } from "./officialFaq";
@@ -14,8 +15,6 @@ export interface FaqEntry {
   text: string;
   links?: ChatLink[];
   suggestions?: string[];
-  /** true 이면 입력이 짧을 때 공식 질문보다 먼저 보여줍니다 (정해진 안내 문구가 있는 항목) */
-  priority?: boolean;
 }
 
 const kakao: ChatLink[] = site.contact.kakaoUrl ? [{ label: "카카오톡으로 문의하기", href: site.contact.kakaoUrl, external: true }] : [];
@@ -49,13 +48,6 @@ export const chatbotCopy = {
 } as const;
 
 export const faq: FaqEntry[] = [
-  {
-    id: "direct",
-    priority: true,
-    keywords: ["다이렉트", "다이렉트보험", "인터넷보험", "온라인보험", "온라인전용"],
-    text: "다이렉트 보험은 이곳에서 상담이 어렵습니다. 1599-0100으로 문의주세요.",
-    links: [{ label: "1599-0100 전화하기", href: "tel:1599-0100" }],
-  },
   {
     id: "faq-list",
     keywords: ["자주하는질문", "자주묻는질문", "faq", "질문목록"],

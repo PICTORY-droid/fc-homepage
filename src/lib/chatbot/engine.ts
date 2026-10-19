@@ -75,13 +75,6 @@ export function reply(rawInput: string): ChatReply {
   }
   const hits = searchFaq(faqIndex, input, 4);
   const grams = queryGrams(input).size;
-  const exactQuestion = hits[0] && normFaq(hits[0].item.question) === normFaq(input);
-
-  // 정해진 안내 문구가 있는 항목(예: 다이렉트 보험)은 입력이 짧을 때 공식 질문보다 먼저
-  if (!exactQuestion && grams < 6) {
-    const pri = faq.filter((f) => f.priority);
-    for (const f of pri) if (score(q, f.keywords) > 0) return { text: f.text, links: f.links ?? [], suggestions: f.suggestions ?? [] };
-  }
 
   if (isDecisive(hits, input)) {
     const rest = hits.slice(1).filter((h) => h.score >= 0.4).map((h) => h.item.question);
