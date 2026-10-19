@@ -6,7 +6,7 @@ def cover(d, title, extra=(), message="", size=None):
     d.slide(cover=True)
     d.title(title, size=size or d.cover_size, align=d.cal)
     x, y, w, h = d.sbox
-    d.text(x, y, w, 0.9, message, size=17 if d.W > d.H else 15, italic=True, color=d.pal["dark"], align=d.cal, name="한 줄 문구")
+    d.text(x, y, w, 0.9, message, size=17 if d.W > d.H else 15, italic=not d.modern, color=d.pal["dark"], align=d.cal, name="한 줄 문구")
     if extra:
         d.text(x, y + 0.95, w, 1.0, list(extra), size=14 if d.W > d.H else 12, color="#666666", align=d.cal, name="안내 문구")
 
@@ -19,6 +19,9 @@ def heading(d, text, size=30):
 def badge(d, x, y, n, dia=0.5, size=16):
     p = d.pal
     o = d.shape(SH.OVAL, x, y, dia, dia, fill=p["main"], name=f"번호 {n}")
+    if d.modern:
+        d.grad(o, p["accent"], p["main"], angle=45)
+        d.shadow(o, color=p["main"], blur=8, dist=3, alpha=35)
     d._fill_text(o.text_frame, str(n), size, True, "#FFFFFF", "c", "m", False, 1.0, False)
 
 

@@ -5,15 +5,24 @@ from pptx_blocks import badge, cards, cover, heading, note, person, photo_grid, 
 from pptx_kit import Deck
 
 
-COVER = {"dir": None, "key": None}  # make_pptx_pack 이 표지 그림 폴더와 항목 키를 넣어 줍니다
+COVER = {"dir": None, "key": None}
+MODERN = {"on": False, "mesh_dir": None, "label": ""}  # 새 디자인(파스텔·미니멀)  # make_pptx_pack 이 표지 그림 폴더와 항목 키를 넣어 줍니다
 
 
 def new(i, pal, title, size="wide"):
     style = (i // 5 + 3 * (i % 5)) % 10  # (프레임, 구성) 조합이 50종 모두 다르다
     img = None
-    if COVER["dir"]:
+    if COVER["dir"] and not MODERN["on"]:
         img = os.path.join(COVER["dir"], f"{COVER['key']}-{i + 1:02d}.jpg")
         assert os.path.exists(img), f"표지 그림이 없습니다: {img}"
+    if MODERN["on"]:
+        import pptx_style as ST
+        k = "" if size == "wide" else "s"
+        d = Deck(pal, style, i, size, title, modern=True, label=f"{ST.SEASON_EN[pal['season']]} · {MODERN['label']}")
+        d.occ = sum(1 for j in range(i) if (j // 5 + 3 * (j % 5)) % 10 == style)  # 같은 구도 중 몇 번째인지
+        d.cover_mesh = os.path.join(MODERN["mesh_dir"], f"c{k}{i + 1:02d}.jpg")
+        d.page_mesh = os.path.join(MODERN["mesh_dir"], f"p{k}{i + 1:02d}.jpg")
+        return d
     return Deck(pal, style, i, size, title, cover_img=img)
 
 
@@ -46,7 +55,7 @@ def build_talk(path, i, pal, message):
     d.text(l, t, r - l, 1.3, "한 문장으로 말하면 — 여기에 핵심 메시지를 입력하세요", size=26, bold=True, color=pal["dark"], align="c", anchor="m", name="핵심 문장")
     cards(d, [(pt, ["내용을 입력하세요", "내용을 입력하세요"]) for pt in points], y=t + 1.6, h=3.3)
     heading(d, "한눈에 비교")
-    two_col(d, (cmp_[0], _rows_text(3)), (cmp_[1], _rows_text(3)))
+    two_col(d, (cmp_[0], _rows_text(3)), (cmp_[1], _rows_text(3)), h=3.6)
     heading(d, "일정·현황")
     l, t, r, b = d.rect
     d.table(l, t, r - l, [heads] + [[f"{k}", "내용 입력", "", ""] for k in range(1, 6)], row_h=0.7, size=15, first_col=True)
