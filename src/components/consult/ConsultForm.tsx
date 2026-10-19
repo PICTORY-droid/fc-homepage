@@ -76,6 +76,10 @@ export function ConsultForm({ initialTopic = "health" }: { initialTopic?: string
                 <span className="pr-5"><b className="block text-[15px] leading-snug">{c.title}</b><span className="mt-0.5 block text-xs leading-snug text-ink-sub">{c.short}</span></span>
               </label>
             ))}
+            {/* 빈 칸 장식 박스 — 같은 모양, 우체국보험 로고를 왼쪽 위에 흐리게 (선택 불가, 화면낭독기에서 제외) */}
+            <div aria-hidden="true" className="relative hidden rounded-xl border border-ink/15 bg-paper px-4 py-3 sm:block">
+              <img src="/brand/postal-insurance-logo.svg" alt="" width={156} height={63} className="h-7 w-auto opacity-40 blur-[0.6px]" />
+            </div>
           </div>
           <Err k="topic" />
         </fieldset>
