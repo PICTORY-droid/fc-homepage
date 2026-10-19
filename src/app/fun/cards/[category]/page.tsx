@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Section } from "@/components/ui/Section";
 import { DownloadCard } from "@/components/fun/DownloadCard";
+import { NewsletterOptIn } from "@/components/fun/NewsletterOptIn";
 import { FunCtaBox } from "@/components/fun/FunCtaBox";
 import { CARD_ASPECT, cardCategories, cardDownloadName, cardPptx, cardSvg, cardThumb, getCardCategory } from "@/config/cards";
 import { getCardCta } from "@/config/funCta";
@@ -45,6 +46,7 @@ export default async function CardCategoryPage({ params }: Props) {
         <p className="text-sm text-ink-sub">명함 크기는 90mm × 50mm예요. 파일의 이름·직함·연락처는 예시이니 내 정보로 바꿔 쓰세요. PPT는 1쪽이 앞면, 2쪽이 뒷면이고, SVG는 한 파일에 앞면(위)과 뒷면(아래)이 함께 들어 있어요. SVG는 피그마·일러스트레이터 같은 디자인 도구용이에요. 글꼴은 맑은 고딕·바탕이고, 다른 글꼴로 바꾸면 줄이 달라질 수 있어요.</p>
         <p className="mt-3 text-ink-sub"><Link href="/fun/cards" className="font-semibold text-brand-deep underline">다른 분류 보기</Link> · <Link href="/fun" className="font-semibold text-brand-deep underline">즐길거리 전체 보기</Link></p>
       </Section>
+      <Section><NewsletterOptIn from={`/fun/cards/${c.key}`} /></Section>
     </>
   );
 }

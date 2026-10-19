@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Section } from "@/components/ui/Section";
 import { DownloadCard } from "@/components/fun/DownloadCard";
+import { NewsletterOptIn } from "@/components/fun/NewsletterOptIn";
 import { FunCtaBox } from "@/components/fun/FunCtaBox";
 import { SeasonLinks } from "@/components/fun/SeasonLinks";
 import { stationeryCta } from "@/config/funCta";
@@ -48,6 +49,7 @@ export default async function StationerySeasonPage({ params }: Props) {
         <p className="text-sm text-ink-sub">A4 크기예요. Word 파일은 받는 사람·날짜·본문을 눌러 바로 입력할 수 있고, 줄에 맞춰 글이 써져요. 개인적인 편지와 SNS 공유는 자유롭게 쓰셔도 좋아요.</p>
         <p className="mt-3 text-ink-sub"><Link href="/fun/stationery" className="font-semibold text-brand-deep underline">계절 고르기</Link> · <Link href="/fun" className="font-semibold text-brand-deep underline">즐길거리 전체 보기</Link></p>
       </Section>
+      <Section><NewsletterOptIn from={`/fun/stationery/${s.key}`} /></Section>
     </>
   );
 }

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Section } from "@/components/ui/Section";
 import { SeasonChooser } from "@/components/fun/SeasonChooser";
+import { NewsletterOptIn } from "@/components/fun/NewsletterOptIn";
 import { FunCtaBox } from "@/components/fun/FunCtaBox";
 import { getFunCta } from "@/config/funCta";
 import { entriesBySeason, getGroup, getItem, packEntries, packGroups, packSeasons, packThumb, seasonSlug } from "@/config/pack";
@@ -51,6 +52,7 @@ export default async function PackItemPage({ params }: Props) {
         <p className="text-sm text-ink-sub">{group.howto}</p>
         <p className="mt-3 text-ink-sub"><Link href={`/fun/${group.slug}`} className="font-semibold text-brand-deep underline">{group.title} 목록으로</Link> · <Link href="/fun" className="font-semibold text-brand-deep underline">즐길거리 전체 보기</Link></p>
       </Section>
+      <Section><NewsletterOptIn from={`/fun/${group.slug}/${item.key}`} /></Section>
     </>
   );
 }
