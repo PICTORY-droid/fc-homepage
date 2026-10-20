@@ -38,3 +38,7 @@ export function monthlyPick(month: number): MonthlyPick {
 
 /** 한국 시간 기준 현재 월 */
 export const currentMonthKST = (now = new Date()) => Number(new Intl.DateTimeFormat("en-US", { timeZone: "Asia/Seoul", month: "numeric" }).format(now));
+
+/** 홈에 올릴 달 — 숫자(1~12)를 적으면 그 달의 양식을 고정해 보여 주고, null 이면 한국 시간 기준 현재 달을 따라갑니다. */
+export const FEATURED_MONTH: number | null = 12;
+export const homeMonth = (now = new Date()) => FEATURED_MONTH ?? currentMonthKST(now);

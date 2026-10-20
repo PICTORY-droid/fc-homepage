@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { currentMonthKST, monthlyPick } from "./monthly";
+import { FEATURED_MONTH, currentMonthKST, homeMonth, monthlyPick } from "./monthly";
 
 describe("이달의 양식", () => {
   it("12개월 모두 편지지·PPT·엑셀 3장이 실제 페이지로 이어진다", () => {
@@ -17,5 +17,12 @@ describe("이달의 양식", () => {
   });
   it("한국 시간 기준 월을 돌려준다", () => {
     expect(currentMonthKST(new Date("2026-09-30T16:00:00Z"))).toBe(10); // 한국은 10월 1일 01시
+  });
+  it("홈에는 12월의 양식(겨울 자료)이 올라간다", () => {
+    expect(FEATURED_MONTH).toBe(12);
+    expect(homeMonth(new Date("2026-10-20T00:00:00Z"))).toBe(12);
+    const p = monthlyPick(homeMonth());
+    expect(p.heading).toBe("12월의 양식");
+    expect(p.cards.map((c) => c.title)).toEqual(["겨울 편지지", "겨울 카드뉴스", "겨울 가계부"]);
   });
 });

@@ -30,9 +30,8 @@ export const chatbotCopy = {
   inputPlaceholder: "예) 아이 보험, 암, 연금",
   inputLabel: "궁금한 내용 입력",
   privacyNote: "이름·연락처·주민번호는 입력하지 마세요.",
-  greeting: "안녕하세요! 우체국보험 안내 도우미예요. 상품 찾기와 상담 연결을 도와드려요.",
-  greetingSub: "자동으로 안내하는 도우미예요. 보험료·가입 가능 여부처럼 정확해야 하는 내용은 담당 FC 상담에서 확인해 주세요.",
-  quickReplies: ["내게 맞는 상품 찾기", "가입 조건·나이", "보험료가 궁금해요", "자주 묻는 질문", "상담 신청하기", "카카오톡 문의"],
+  greeting: "안녕하세요! 무엇이 궁금하세요?",
+  quickReplies: ["상품 찾기", "자주 묻는 질문", "상담 신청하기", "카카오톡 문의"],
   maxInputLength: 100,
   /** 공식 답변 아래에 붙는 출처 줄 */
   faqSourceLine: "출처: 우체국보험 공식 자주하는 질문",

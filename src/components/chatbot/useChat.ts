@@ -8,7 +8,7 @@ export type ChatMessage =
   | ({ id: number; role: "bot" } & ChatReply);
 
 const greeting = (): ChatMessage => ({
-  id: 0, role: "bot", text: `${chatbotCopy.greeting} ${chatbotCopy.greetingSub}`, links: [],
+  id: 0, role: "bot", text: chatbotCopy.greeting, links: [],
   suggestions: [...chatbotCopy.quickReplies],
 });
 

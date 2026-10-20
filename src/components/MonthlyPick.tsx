@@ -1,11 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Section } from "@/components/ui/Section";
-import { currentMonthKST, monthlyPick } from "@/config/monthly";
+import { homeMonth, monthlyPick } from "@/config/monthly";
 
-// 홈의 '이달의 양식' — 지금 계절에 맞는 무료 자료 3가지. 각 카드는 자료 상세페이지로 이어지고 클릭 수가 기록됩니다.
+// 홈의 '이달의 양식' — 홈에 올리기로 정한 달(config/monthly 의 FEATURED_MONTH, 지금은 12월)의 무료 자료 3가지. 각 카드는 자료 상세페이지로 이어지고 클릭 수가 기록됩니다.
 export function MonthlyPick() {
-  const p = monthlyPick(currentMonthKST());
+  const p = monthlyPick(homeMonth());
   return (
     <Section dense title={p.heading} lead={p.lead} tone="card">
       <ul className="grid gap-4 sm:grid-cols-3">
