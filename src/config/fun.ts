@@ -12,7 +12,7 @@ export interface FunItem {
 
 // 메뉴는 제목이 짧은 것부터 보여 줍니다(긴 제목이 중간에 끼어 시선을 흩뜨리지 않게). 항목을 추가해도 자동으로 제자리를 찾아요.
 const unsorted: FunItem[] = [
-  { slug: "stationery", title: "계절 편지지", short: "봄·여름·가을·겨울 각 20장, 서로 다른 그림의 편지지를 Word로 받아 바로 쓰세요.", href: "/fun/stationery", icon: "✉️" },
+  { slug: "stationery", title: "감성 편지지", short: "계절 80장과 동물·장소·날씨·커피·창가·정원 400장, 서로 다른 그림의 편지지를 Word로 받아 바로 쓰세요.", href: "/fun/stationery", icon: "✉️" },
   // 자료 꾸러미(엑셀·PPT·워드 …) — config/pack.ts 의 묶음이 늘어나면 자동으로 추가됩니다.
   ...packGroups.map((g) => ({ slug: g.slug, title: g.title, short: g.short, href: `/fun/${g.slug}`, icon: g.icon })),
   { slug: "cards", title: "명함 템플릿", short: "직장인·사장님·프리랜서·선생님·공무원 등 10분류, 앞뒤가 모두 다른 명함을 PPT·SVG로 받아 이름만 고쳐 쓰세요.", href: "/fun/cards", icon: "🪪" },

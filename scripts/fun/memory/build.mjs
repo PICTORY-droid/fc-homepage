@@ -5,7 +5,9 @@ import { createRequire } from "node:module";
 import { join, resolve } from "node:path";
 import { W, H } from "./base.mjs";
 import { draw } from "./layouts.mjs";
-import { allDesigns } from "./designs.mjs";
+import { allDesigns as seasonal } from "./designs.mjs";
+import { designs2 } from "./designs2.mjs";
+const allDesigns = [...seasonal, ...designs2];
 
 const out = resolve(process.argv[2] ?? "");
 const filter = process.argv[3] ?? "";

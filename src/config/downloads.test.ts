@@ -23,14 +23,15 @@ describe("내려받기 파일이 모두 있다", () => {
     expect(new Set(names).size).toBe(200);
     for (const nm of names) expect(nm).toMatch(/^(이력서|자기소개서)_[가-힣A-Za-z0-9·()]+_[1-5]_[가-힣A-Za-z0-9]+\.docx$/);
   });
-  it("편지지: 계절별 20장, Word·PNG·미리보기", () => {
-    expect(stationery).toHaveLength(80);
-    for (const s of seasons) expect(stationeryBySeason(s.key)).toHaveLength(20);
+  it("편지지: 계절 80장 + 주제 400장, Word·PNG·미리보기", () => {
+    expect(stationery).toHaveLength(480);
+    const expected: Record<string, number> = { spring: 20, summer: 20, autumn: 20, winter: 20, animal: 50, place: 100, weather: 50, coffee: 50, window: 50, garden: 100 };
+    for (const s of seasons) expect(stationeryBySeason(s.key), s.key).toHaveLength(expected[s.key]);
     for (const s of stationery) for (const ext of ["docx", "png", "jpg"] as const) expect(existsSync(pub(stationeryFile(s, ext))), `${s.id}.${ext}`).toBe(true);
   });
   it("편지지 이름이 서로 겹치지 않고, 내려받는 파일 이름은 한글", () => {
-    expect(new Set(stationery.map((s) => s.name)).size).toBe(80);
-    expect(new Set(stationery.map((s) => s.tag)).size).toBe(80);
+    expect(new Set(stationery.map((s) => s.name)).size).toBe(480);
+    expect(new Set(stationery.map((s) => s.tag)).size).toBe(480);
     expect(stationeryDownloadName(stationery[0], "docx")).toMatch(/^편지지_봄01_[가-힣]+\.docx$/);
   });
 });

@@ -22,10 +22,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const key = (await params).season;
   const s = seasons.find((x) => x.key === key);
   if (!s) return {};
-  return funMetadata({ title: `${s.label} 편지지 무료 다운로드 20장`, description: `${s.lead}. ${s.label}의 기억을 담은 편지지 20장을 Word·PNG로 무료로 받으세요.`, path: `/fun/stationery/${s.key}`, ogKey: `stationery-${s.key}` });
+  return funMetadata({ title: `${s.label} 편지지 무료 다운로드 ${stationeryBySeason(s.key).length}장`, description: `${s.lead}. ${s.label} 편지지 ${stationeryBySeason(s.key).length}장을 Word·PNG로 무료로 받으세요.`, path: `/fun/stationery/${s.key}`, ogKey: `stationery-${s.key}` });
 }
 
-// 계절 상세페이지 — 그 계절의 편지지 20장. 그림을 누르면 큰 미리보기가 열리고, 상담 안내·클릭 기록도 이 페이지 단위로 쌓여요.
+// 계절 상세페이지 — 그 모음의 편지지. 그림을 누르면 큰 미리보기가 열리고, 상담 안내·클릭 기록도 이 페이지 단위로 쌓여요.
 export default async function StationerySeasonPage({ params }: Props) {
   const key = (await params).season;
   const s = seasons.find((x) => x.key === key);
@@ -48,7 +48,7 @@ export default async function StationerySeasonPage({ params }: Props) {
       <Section><FunCtaBox cta={stationeryCta} from={`stationery/${s.key}`} /></Section>
       <Section>
         <p className="text-sm text-ink-sub">A4 크기예요. Word 파일은 받는 사람·날짜·본문을 눌러 바로 입력할 수 있고, 줄에 맞춰 글이 써져요. 개인적인 편지와 SNS 공유는 자유롭게 쓰셔도 좋아요.</p>
-        <p className="mt-3 text-ink-sub"><Link href="/fun/stationery" className="font-semibold text-brand-deep underline">계절 고르기</Link> · <Link href="/fun" className="font-semibold text-brand-deep underline">즐길거리 전체 보기</Link></p>
+        <p className="mt-3 text-ink-sub"><Link href="/fun/stationery" className="font-semibold text-brand-deep underline">다른 편지지 고르기</Link> · <Link href="/fun" className="font-semibold text-brand-deep underline">즐길거리 전체 보기</Link></p>
       </Section>
       <Section><FunPageExtras path={`/fun/stationery/${s.key}`} /></Section>
     </>

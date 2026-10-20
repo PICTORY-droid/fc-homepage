@@ -2,6 +2,7 @@
 // 각 배치는 { defs, body, area } 를 돌려줍니다. area: fields=[x,y,w] 받는 사람(+날짜) 줄, rules=[x,y,w,rows] 글쓰기 줄, from=[x,y,w,맞춤]|null
 import { W, H, GAP, circle, rect, path, g, rng, mix, txt, titleSvg, credit, rules, hero, tape, wrapSvg, SERIF } from "./base.mjs";
 import { postal } from "../seasons/postal.mjs";
+import { L2 } from "./layouts2.mjs";
 
 const star = (cx, cy, r, f, o = 1) => `<polygon opacity="${o}" fill="${f}" points="${[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((i) => { const a = (i * 36 - 90) * Math.PI / 180, rr = i % 2 ? r * 0.45 : r; return `${(cx + Math.cos(a) * rr).toFixed(1)},${(cy + Math.sin(a) * rr).toFixed(1)}`; }).join(" ")}"/>`;
 
@@ -166,10 +167,10 @@ L.pager = (d, h, p) => {
   return { defs: "", body, area: { fields: [70, f.fy, 654], rules: [70, f.ry, 654, f.rows], from: [70, 1052, 654, "left"] } };
 };
 
-export const layoutNames = Object.keys(L);
+export const layoutNames = [...Object.keys(L), ...Object.keys(L2)];
 export const draw = (d, heroFn) => {
   const p = d.p;
-  const r = L[d.layout](d, heroFn, p);
+  const r = (L[d.layout] ?? L2[d.layout])(d, heroFn, p);
   const a = r.area;
   const lab = [
     txt(a.fields[0], a.fields[1] + 28, "받는 사람 :", { size: 17, weight: 700, fill: p.ink, serif: false }),
