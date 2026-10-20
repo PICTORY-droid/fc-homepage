@@ -31,7 +31,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const p = getProduct((await params).id);
   if (!p) return {};
   const title = p.displayName;
-  const description = p.slogan?.headline ?? `${p.displayName} — ${p.group} 보험 상품 안내`;
+  const description = `${p.slogan?.headline ?? `${p.displayName} — ${p.group} 보험 상품 안내`} ${p.displayName}의 보장 내용과 가입 조건, 유의사항을 상품요약서 기준으로 정리했습니다.`;
   return {
     title,
     description,

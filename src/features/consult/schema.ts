@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { categories } from "@/config/categories";
 import { isValidKoreanPhone, onlyDigits } from "@/lib/phone";
+import { attributionSchema } from "@/features/analytics/events";
 import { FAMILY_HISTORY, INSURANCE_KINDS, YESNO, hasHealthInput } from "./detailOptions";
 
 // 상담 신청 입력 규칙 — 브라우저와 서버가 같은 스키마를 씁니다 (서버 검증이 최종).
@@ -39,6 +40,8 @@ export const consultSchema = z
     familyHistory: z.array(z.enum(FAMILY_HISTORY)).max(FAMILY_HISTORY.length).default([]),
     memo: z.string({ message: "궁금한 점을 적어 주세요." }).trim().min(2, "궁금한 점을 2자 이상 적어 주세요.").max(300, "300자 이내로 적어 주세요."),
     healthConsent: z.boolean().default(false),
+    // 어느 글·채널에서 왔는지(선택). 형식이 틀리면 신청 자체를 막지 않고 버립니다.
+    attribution: attributionSchema.optional().catch(undefined),
   })
   .superRefine((d, ctx) => {
     if (hasHealthInput(d) && d.healthConsent !== true) {

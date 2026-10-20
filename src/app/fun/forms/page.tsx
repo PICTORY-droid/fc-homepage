@@ -14,7 +14,7 @@ export const metadata: Metadata = funMetadata({
 export default function FormsPage() {
   return (
     <>
-      <Section title="직업별 이력서·자기소개서" lead="포지션마다 이력서 10종, 자기소개서 10종 — 짜임이 모두 다른 Word 양식이에요. 고용24·NCS·STAR 작성법을 바탕으로 끝 장에 작성 가이드와 예시를 붙였어요.">
+      <Section as="h1" title="직업별 이력서·자기소개서" lead="포지션마다 이력서 10종, 자기소개서 10종 — 짜임이 모두 다른 Word 양식이에요. 고용24·NCS·STAR 작성법을 바탕으로 끝 장에 작성 가이드와 예시를 붙였어요.">
         <nav aria-label="직업군 바로가기" className="flex flex-wrap gap-2">
           {jobGroups.map((g) => (
             <a key={g.key} href={`#${g.key}`} className="flex min-h-[44px] items-center rounded-full border border-ink/25 bg-paper px-4 text-sm font-bold text-ink hover:bg-paper-gray">{g.label}</a>

@@ -1,0 +1,5 @@
+#!/bin/sh
+# 푸시 전 빠른 검증 — 배포(빌드)에서 실패하는 원인(콘텐츠 검사·타입·테스트)을 미리 잡습니다.
+# 켜기: npm run hooks   /   급할 때 건너뛰기: git push --no-verify
+echo "[pre-push] 콘텐츠 검사 · 타입 · 테스트 실행 중..."
+npm run verify:fast || { echo "[pre-push] 검증 실패 — 푸시를 중단합니다."; exit 1; }

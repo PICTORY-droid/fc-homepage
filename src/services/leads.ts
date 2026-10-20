@@ -30,10 +30,21 @@ export async function saveLead(data: ConsultData): Promise<void> {
     consent_marketing: false,
     status: "new",
   };
-  let { error } = await db.from("leads").insert(detail ? { ...row, detail } : row);
-  if (error && detail) { // detail 컬럼이 아직 없으면(db/leads_detail.sql 미실행) 상세는 시트로만 전달하고 접수는 유지
-    console.error("[consult] detail column missing?");
-    ({ error } = await db.from("leads").insert(row));
+  const a = data.attribution;
+  const attr = a && (a.source || a.medium || a.campaign || a.refHost)
+    ? { utm_source: a.source ?? null, utm_medium: a.medium ?? null, utm_campaign: a.campaign ?? null, ref_host: a.refHost ?? null }
+    : null;
+  // 컬럼이 아직 없는 DB(db/leads_attribution.sql, db/leads_detail.sql 미실행)에서도 접수는 유지: 선택 컬럼을 빼며 재시도
+  const attempts: Record<string, unknown>[] = [];
+  if (detail && attr) attempts.push({ ...row, detail, ...attr });
+  if (attr) attempts.push({ ...row, ...attr });
+  if (detail) attempts.push({ ...row, detail });
+  attempts.push(row);
+  let error: unknown = null;
+  for (const payload of attempts) {
+    ({ error } = await db.from("leads").insert(payload));
+    if (!error) break;
+    console.error("[consult] insert retry (optional column missing?)");
   }
   if (error) throw new Error("lead insert failed"); // 상세 오류는 응답에 노출하지 않음
 

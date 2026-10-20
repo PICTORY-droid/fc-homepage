@@ -6,6 +6,8 @@ import { FunPageExtras } from "@/components/fun/FunPageExtras";
 import { Section } from "@/components/ui/Section";
 import { DownloadCard } from "@/components/fun/DownloadCard";
 import { allPositions, formDocx, formDownloadName, formFile, formLargeFile, getPosition, groupOf, kindLabel, variantDesc, variantNames, variants, type DocKind } from "@/config/forms";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { breadcrumbJsonLd } from "@/lib/seo/jsonLd";
 
 type Props = { params: Promise<{ position: string }> };
 
@@ -30,7 +32,8 @@ export default async function PositionFormsPage({ params }: Props) {
   const group = groupOf(p.id);
   return (
     <>
-      <Section title={`${p.name} 이력서·자기소개서`} lead={`${group?.label ?? ""} · ${p.desc}`}>
+      <JsonLd data={breadcrumbJsonLd([["홈", "/"], ["즐길거리", "/fun"], ["이력서·자기소개서", "/fun/forms"], [p.name, `/fun/forms/${p.id}`]])} />
+      <Section as="h1" title={`${p.name} 이력서·자기소개서`} lead={`${group?.label ?? ""} · ${p.desc}`}>
         <nav aria-label="문서 종류 바로가기" className="flex flex-wrap gap-2">
           {kinds.map((k) => (
             <a key={k} href={`#${k}`} className="flex min-h-[44px] items-center rounded-full border border-ink/25 bg-paper px-5 text-sm font-bold text-ink hover:bg-paper-gray">{kindLabel[k]} 10종</a>

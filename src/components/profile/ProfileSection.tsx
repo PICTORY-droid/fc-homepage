@@ -7,7 +7,7 @@ import { KakaoButton } from "@/components/KakaoButton";
 export function ProfileSection() {
   const { profile, contact } = site;
   return (
-    <Section title="담당 FC를 소개합니다" tone="card">
+    <Section as="h1" title="담당 FC를 소개합니다" tone="card">
       <div className="max-w-3xl">
         <h3 className="text-3xl font-extrabold text-ink">{profile.role}</h3>
         <p className="mt-3 text-lg text-ink-sub">{profile.intro}</p>

@@ -1,5 +1,6 @@
 import type { ApiResult } from "@/lib/api";
 import type { ConsultInput } from "./schema";
+import { readAttribution } from "@/features/analytics/attribution";
 
 // 브라우저 → 서버 호출은 이 함수 하나로만 합니다. (화면 코드는 fetch 를 직접 쓰지 않음)
 export async function submitConsult(input: ConsultInput): Promise<ApiResult> {
@@ -7,7 +8,7 @@ export async function submitConsult(input: ConsultInput): Promise<ApiResult> {
     const res = await fetch("/api/consult", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(input),
+      body: JSON.stringify({ ...input, attribution: readAttribution() }),
     });
     return (await res.json()) as ApiResult;
   } catch {

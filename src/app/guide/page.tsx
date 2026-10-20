@@ -8,7 +8,8 @@ import { productsMeta } from "@/config/products";
 
 export const metadata: Metadata = {
   title: "이용 안내",
-  description: "이 페이지의 성격, 상담 진행 방법, 상품 정보 기준과 공식 확인 방법을 안내합니다.",
+  description: "이 페이지의 성격, 상담 진행 방법, 상품 정보 기준과 공식 확인 방법을 안내합니다. 계약 변경·해지·민원은 공식 고객센터에서 확인하세요.",
+  alternates: { canonical: "/guide" },
 };
 
 const FLOW = [
@@ -22,7 +23,7 @@ const FLOW = [
 export default function GuidePage() {
   return (
     <>
-      <Section title="이용 안내" lead="이 페이지를 이용하시기 전에 알아두시면 좋은 내용입니다.">
+      <Section as="h1" title="이용 안내" lead="이 페이지를 이용하시기 전에 알아두시면 좋은 내용입니다.">
         <h3 className="text-xl font-bold text-ink">상담은 이렇게 진행돼요</h3>
         <ol className="mt-4 grid gap-4 sm:grid-cols-2">
           {FLOW.map(([t, d], i) => (
@@ -33,7 +34,26 @@ export default function GuidePage() {
           ))}
         </ol>
       </Section>
-      <Section title="상품 정보는 이렇게 정리했어요" tone="card">
+      <Section title="어떤 도움이 필요하세요?" lead="아래에서 목적에 맞는 곳을 골라 주세요." tone="card">
+        <div className="grid gap-4 sm:grid-cols-2">
+          <div className="rounded-card bg-paper p-5">
+            <h3 className="font-bold text-ink">가입·보장 점검이 궁금해요</h3>
+            <p className="mt-1 text-sm text-ink-sub">3가지 질문으로 살펴볼 분야를 찾고, 궁금한 점은 상담으로 남겨 주세요.</p>
+            <div className="mt-4 flex flex-col gap-3 sm:flex-row">
+              <ButtonLink href="/find" trackLabel="guide_find">30초 보장 점검</ButtonLink>
+              <ButtonLink href="/consult" variant="outline" trackLabel="guide_consult">상담 신청</ButtonLink>
+            </div>
+          </div>
+          <div className="rounded-card bg-paper p-5">
+            <h3 className="font-bold text-ink">계약 변경·해지·민원이에요</h3>
+            <p className="mt-1 text-sm text-ink-sub">이미 가입한 계약의 변경·해지·민원 처리는 공식 고객센터에서 확인해 주세요.</p>
+            <div className="mt-4">
+              <ButtonLink href={`tel:${site.contact.officialCenterPhone}`} variant="outline">공식 고객센터 {site.contact.officialCenterPhone}</ButtonLink>
+            </div>
+          </div>
+        </div>
+      </Section>
+      <Section title="상품 정보는 이렇게 정리했어요">
         <BulletList className="space-y-3 text-ink" items={[
           site.notices.basis,
           `판매 중인 상품 목록 출처: ${productsMeta.source} (${productsMeta.asOf} 확인)`,
@@ -42,7 +62,7 @@ export default function GuidePage() {
         ]} />
         <p className="mt-4 text-sm text-ink-sub">{site.notices.premium}</p>
       </Section>
-      <Section title="공식 채널에서 확인하세요">
+      <Section title="공식 채널에서 확인하세요" tone="card">
         <div className="flex flex-col gap-3 sm:flex-row">
           <ButtonLink href={site.links.officialSite} external variant="outline">우체국보험 공식 사이트</ButtonLink>
           <ButtonLink href={`tel:${site.contact.officialCenterPhone}`} variant="outline">공식 고객센터 {site.contact.officialCenterPhone}</ButtonLink>

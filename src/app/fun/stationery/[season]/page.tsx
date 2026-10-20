@@ -9,6 +9,8 @@ import { FunCtaBox } from "@/components/fun/FunCtaBox";
 import { SeasonLinks } from "@/components/fun/SeasonLinks";
 import { stationeryCta } from "@/config/funCta";
 import { seasons, stationeryBySeason, subsOf } from "@/config/stationery";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { breadcrumbJsonLd } from "@/lib/seo/jsonLd";
 
 type Props = { params: Promise<{ season: string }> };
 
@@ -34,7 +36,8 @@ export default async function StationerySeasonPage({ params }: Props) {
   const links = seasons.map((x) => ({ slug: x.key, label: x.label, count: stationeryBySeason(x.key).length, href: `/fun/stationery/${x.key}`, group: x.group }));
   return (
     <>
-      <Section title={`${s.label} 편지지 ${list.length}장`} lead={s.lead}>
+      <JsonLd data={breadcrumbJsonLd([["홈", "/"], ["즐길거리", "/fun"], [`${s.label} 편지지`, `/fun/stationery/${s.key}`]])} />
+      <Section as="h1" title={`${s.label} 편지지 ${list.length}장`} lead={s.lead}>
         <SeasonLinks items={links} current={s.key} />
       </Section>
       <Section tone="card">

@@ -8,6 +8,8 @@ import { FunPageExtras } from "@/components/fun/FunPageExtras";
 import { FunCtaBox } from "@/components/fun/FunCtaBox";
 import { getFunCta } from "@/config/funCta";
 import { entriesBySeason, getGroup, getItem, packEntries, packGroups, packSeasons, packThumb, seasonSlug } from "@/config/pack";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { breadcrumbJsonLd } from "@/lib/seo/jsonLd";
 
 type Props = { params: Promise<{ group: string; item: string }> };
 
@@ -45,7 +47,8 @@ export default async function PackItemPage({ params }: Props) {
   });
   return (
     <>
-      <Section title={`${item.title} ${total}종`} lead={`${item.short} — 계절을 골라 들어가 보세요.`}>
+      <JsonLd data={breadcrumbJsonLd([["홈", "/"], ["즐길거리", "/fun"], [group.title, `/fun/${group.slug}`], [item.title, `/fun/${group.slug}/${item.key}`]])} />
+      <Section as="h1" title={`${item.title} ${total}종`} lead={`${item.short} — 계절을 골라 들어가 보세요.`}>
         <SeasonChooser items={choices} />
       </Section>
       {cta && <Section><FunCtaBox cta={cta} from={`${group.slug}/${item.key}`} /></Section>}

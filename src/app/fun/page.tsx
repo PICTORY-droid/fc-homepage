@@ -13,7 +13,7 @@ export const metadata: Metadata = funMetadata({
 // 즐길거리 허브 — 목록은 config/fun.ts 에서만 관리합니다.
 export default function FunPage() {
   return (
-    <Section title="즐길거리" lead="보험 걱정은 잠깐 내려놓고, 편하게 놀다 가세요. 모두 무료예요.">
+    <Section as="h1" title="즐길거리" lead="보험 걱정은 잠깐 내려놓고, 편하게 놀다 가세요. 모두 무료예요.">
       <ul data-reveal="stagger" className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {funItems.map((f) => (
           <li key={f.slug}>

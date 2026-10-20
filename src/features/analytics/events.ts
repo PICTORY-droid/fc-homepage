@@ -6,6 +6,12 @@ export type EventName = (typeof EVENT_NAMES)[number];
 
 const tag = z.string().trim().max(40).regex(/^[\w.\-가-힣]*$/, "invalid").optional();
 
+// 유입 정보 — 이벤트와 상담 신청이 같은 규칙으로 검증합니다.
+export const attributionSchema = z.object({
+  source: tag, medium: tag, campaign: tag,
+  refHost: z.string().trim().max(60).regex(/^[\w.\-]*$/, "invalid").optional(),
+});
+
 export const eventSchema = z.object({
   name: z.enum(EVENT_NAMES),
   path: z.string().max(200).regex(/^\/[^\s<>"'`]*$/, "invalid"),

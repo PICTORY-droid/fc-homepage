@@ -15,7 +15,7 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const c = getCategory((await params).slug);
-  return c ? { title: c.title, description: c.short } : {};
+  return c ? { title: c.title, description: `${c.short} ${c.title} 관련 상품 안내와 상담 신청을 한곳에서 확인하세요.`, alternates: { canonical: `/c/${c.slug}` } } : {};
 }
 
 export default async function CategoryPage({ params }: Props) {

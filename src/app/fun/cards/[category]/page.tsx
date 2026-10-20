@@ -8,6 +8,8 @@ import { FunPageExtras } from "@/components/fun/FunPageExtras";
 import { FunCtaBox } from "@/components/fun/FunCtaBox";
 import { CARD_ASPECT, cardCategories, cardDownloadName, cardPptx, cardSvg, cardThumb, getCardCategory } from "@/config/cards";
 import { getCardCta } from "@/config/funCta";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { breadcrumbJsonLd } from "@/lib/seo/jsonLd";
 
 type Props = { params: Promise<{ category: string }> };
 
@@ -30,7 +32,8 @@ export default async function CardCategoryPage({ params }: Props) {
   const cta = getCardCta(c.key);
   return (
     <>
-      <Section title={`${c.label} 명함`} lead={`${c.short} — 앞뒤 디자인이 모두 다른 ${c.items.length}장이에요.`}>
+      <JsonLd data={breadcrumbJsonLd([["홈", "/"], ["즐길거리", "/fun"], [`${c.label} 명함`, `/fun/cards/${c.key}`]])} />
+      <Section as="h1" title={`${c.label} 명함`} lead={`${c.short} — 앞뒤 디자인이 모두 다른 ${c.items.length}장이에요.`}>
         <ul data-reveal="stagger" className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
           {c.items.map((e) => (
             <DownloadCard key={e.no} title={`${String(e.no).padStart(2, "0")}. ${e.title}`} desc={e.tag} thumb={cardThumb(c.key, e.no)} zoom={cardThumb(c.key, e.no)} aspect={CARD_ASPECT}
