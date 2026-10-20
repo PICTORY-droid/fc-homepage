@@ -99,10 +99,12 @@ def classic_block(d, s, sk, cw):
         for c, lab in zip(t.rows[0].cells, labels):
             label_cell(c, lab, sk)
         row_height(t.rows[0], 28)
-        for r in t.rows[1:]:
+        for ri, r in enumerate(t.rows[1:]):
             row_height(r, 31)
-            for c in r.cells:
+            for ci, c in enumerate(r.cells):
                 valign(c, "center")
+                if kind == "G" and ri == 0 and s.get("example") and s["example"][ci]:
+                    ct(c, "예) " + s["example"][ci] if ci == 0 else s["example"][ci], 8, None, sk["hint"], where="center")
             if kind == "S":
                 ct(r.cells[-1], LEVEL, 10, None, sk["mid"], "center", where="center")
     elif kind == "K":
@@ -326,10 +328,12 @@ def summary_block(d, s, sk, cw, zebra):
         row_height(t.rows[0], 26)
         for i, r in enumerate(t.rows[1:]):
             row_height(r, 30)
-            for c in r.cells:
+            for ci, c in enumerate(r.cells):
                 valign(c, "center"); borders(c, sk["line"], 4, bottom=True, top=False, left=False, right=False)
                 if zebra and i % 2 == 0:
                     shade(c, sk["soft"])
+                if kind == "G" and i == 0 and s.get("example") and s["example"][ci]:
+                    ct(c, "예) " + s["example"][ci] if ci == 0 else s["example"][ci], 8, None, sk["hint"], where="center")
             if kind == "S":
                 ct(r.cells[-1], LEVEL, 10, None, sk["mid"], "center", where="center")
     elif kind == "K":

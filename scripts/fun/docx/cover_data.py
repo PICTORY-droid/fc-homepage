@@ -303,3 +303,13 @@ Q = {
         ('안전한 현장을 위해 지키는 원칙', '(500자)', 170),
     ],
 }
+
+
+# ---- 하이잡 STAR · 고용24 가이드: 첫 문항은 상황→과제→행동→결과로, '입사 후' 문항은 직무 경험과 연결해서 쓰도록 안내를 덧붙입니다.
+for _pid, _qs in Q.items():
+    _q, _h, _s = _qs[0]
+    if "STAR" not in _h and "→" not in _h:
+        _qs[0] = (_q, _h[:-1] + " · STAR로)", _s)
+    for _i, (_q, _h, _s) in enumerate(_qs):
+        if _i > 0 and ("입사 후" in _q or "앞으로" in _q) and "연결" not in _h:
+            _qs[_i] = (_q, _h[:-1] + " · 내 경험과 연결)", _s)
