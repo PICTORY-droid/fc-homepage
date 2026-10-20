@@ -22,6 +22,7 @@ const ctl = "flex h-9 w-9 items-center justify-center rounded-full bg-white/85 t
 export function HeroCarousel({ slides, phone, intervalMs }: { slides: HeroSlideView[]; phone: string; intervalMs: number }) {
   const c = useCarousel(slides.length, intervalMs);
   const cur = slides[c.index].theme;
+  const track = [slides[slides.length - 1], ...slides, slides[0]];
 
   return (
     <div
@@ -36,20 +37,24 @@ export function HeroCarousel({ slides, phone, intervalMs }: { slides: HeroSlideV
       {...c.swipe}
     >
       <div
-        className="flex motion-safe:transition-transform motion-safe:duration-700 motion-safe:ease-[cubic-bezier(.65,.05,.25,1)]"
-        style={{ transform: `translateX(-${c.index * 100}%)` }}
+        className={`flex ${c.animate ? "motion-safe:transition-transform motion-safe:duration-700 motion-safe:ease-[cubic-bezier(.65,.05,.25,1)]" : ""}`}
+        style={{ transform: `translateX(-${c.pos * 100}%)` }}
+        onTransitionEnd={(e) => { if (e.target === e.currentTarget) c.snap(); }}
         aria-live={c.running ? "off" : "polite"}
       >
-        {slides.map((s, i) => {
-          const H = i === 0 ? "h1" : "h2"; // 페이지 제목(h1)은 첫 장 하나만
+        {track.map((s, k) => {
+          const real = k >= 1 && k <= slides.length; // 앞뒤 복제 장은 이어붙이기용(화면 읽기·탭 이동 제외)
+          const i = k - 1;
+          const H = real && i === 0 ? "h1" : real ? "h2" : "p"; // 페이지 제목(h1)은 첫 장 하나만
+          const active = real && i === c.index;
           return (
           <div
-            key={s.id}
+            key={`${s.id}-${k}`}
             role="group"
             aria-roledescription="slide"
-            aria-label={`${i + 1} / ${slides.length}`}
-            aria-hidden={i !== c.index}
-            inert={i !== c.index}
+            aria-label={real ? `${i + 1} / ${slides.length}` : undefined}
+            aria-hidden={!active}
+            inert={!active}
             className="w-full shrink-0"
             style={{ background: `linear-gradient(160deg, ${s.theme.from} 0%, ${s.theme.to})` }}
           >
