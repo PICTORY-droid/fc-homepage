@@ -50,17 +50,25 @@ def thumbs(files, out_dir, width):
 
 
 def fresh_palette(i, pal):
-    """봄(0~12)은 싱그럽고 향기롭게, 여름(13~24)은 청량하고 맑게 — 색을 더 밝고 또렷하게 바꿉니다. 가을·겨울은 그대로."""
-    import colorsys
+    """네 계절 모두 맑고 깨끗하고 싱그럽게 — 탁한 갈색·회색 기운을 빼고 밝고 또렷한 색으로 바꿉니다.
+    봄: 꽃잎 색 + 새잎 초록 / 여름: 하늘·바다빛 / 가을: 맑은 단풍·은행빛 + 청명한 하늘 / 겨울: 얼음빛 하늘 + 산뜻한 포인트"""
     name, h, s, l = pk.THEMES[i]
-    hx = lambda hh, ss, ll: pk._hex(hh, ss, ll)
-    if i < 13:  # 봄: 꽃잎 색 + 새잎 초록
-        s2 = min(0.72, s + 0.14)
-        pal.update(main=hx(h, s2, 0.55), dark=hx(h, min(0.6, s2), 0.28), soft=hx(h, 0.7, 0.9), pale=hx(h, 0.6, 0.97), accent=hx(128, 0.5, 0.40))
-    elif i < 25:  # 여름: 하늘·바다빛으로 한 톤 끌어 오고 맑게
-        diff = (195 - h + 540) % 360 - 180  # 하늘·바다 빛(195°) 쪽으로 가장 가까운 방향
+    hx = pk._hex
+    if i < 13:  # 봄
+        s2 = min(0.78, s + 0.2)
+        pal.update(main=hx(h, s2, 0.58), dark=hx(h, min(0.6, s2), 0.28), soft=hx(h, 0.8, 0.92), pale=hx(h, 0.7, 0.975), accent=hx(128, 0.55, 0.42))
+    elif i < 25:  # 여름: 하늘·바다 빛 쪽으로 가장 가까운 방향으로 한 톤 끌어 오고 맑게
+        diff = (195 - h + 540) % 360 - 180
         hh = h if 160 <= h <= 260 else (h + diff * 0.6) % 360
-        pal.update(main=hx(hh, 0.68, 0.46), dark=hx(hh, 0.7, 0.22), soft=hx(hh, 0.8, 0.9), pale=hx(hh, 0.7, 0.96), accent=hx(190, 0.7, 0.42))
+        pal.update(main=hx(hh, 0.72, 0.56), dark=hx(hh, 0.7, 0.24), soft=hx(hh, 0.85, 0.92), pale=hx(hh, 0.75, 0.975), accent=hx(190, 0.75, 0.44))
+    elif i < 38:  # 가을: 갈색 hue 를 선명한 주황·코랄·노랑 쪽으로, 큰 면은 거의 흰 바탕
+        hh = h if h >= 330 or h <= 10 or 38 <= h <= 60 or 300 <= h < 330 else (14 + (h - 10) * 0.9)  # 10~38° 갈색대 → 선명한 주황
+        hh = min(hh, 52) if 10 < h < 38 else hh
+        pal.update(main=hx(hh, 0.84, 0.56), dark=hx(hh, 0.62, 0.27), soft=hx(hh, 0.9, 0.93), pale=hx(hh, 0.8, 0.98), accent=hx(176, 0.6, 0.40))
+    else:  # 겨울: 얼음빛이 도는 맑은 색
+        warm = h < 60 or h > 330
+        hh = h if not (10 < h < 50) else 18 + (h - 10) * 0.5
+        pal.update(main=hx(hh, 0.82 if warm else 0.74, 0.58), dark=hx(hh, 0.6, 0.27), soft=hx(hh, 0.9, 0.93), pale=hx(hh, 0.8, 0.98), accent=hx(205, 0.8, 0.5) if warm else hx(350, 0.7, 0.62))
     return pal
 
 

@@ -86,11 +86,32 @@ const summerBg = (w, h, p, i) => {
     ${bubbles}${wv(h * 0.86, "#9ED8E6", 0.45, 22)}${wv(h * 0.9, "#6CC3D8", 0.4, 18)}${wv(h * 0.95, "#3FAFCB", 0.35, 14)}`;
 };
 
+/** 가을 — 맑고 높은 하늘빛 공기 + 따뜻한 햇살 + 선명한 단풍·은행잎이 가볍게 흩날리는 배경 */
+const autumnBg = (w, h, p, i) => {
+  const r = sr(i + 17);
+  const cols = [p.a, p.b, "#FFC93C", "#FF8A5B", mix(p.a, "#FFFFFF", 0.35)];
+  const leaves = Array.from({ length: 22 }, () => { const x = r() * w, y = r() * h, s = 0.7 + r() * 1.1, rot = r() * 360; return `<g transform="translate(${x.toFixed(0)} ${y.toFixed(0)}) rotate(${rot.toFixed(0)}) scale(${s.toFixed(2)})" opacity="${(0.45 + r() * 0.45).toFixed(2)}"><path d="M0 -18 C14 -10 14 10 0 20 C-14 10 -14 -10 0 -18Z" fill="${cols[Math.floor(r() * cols.length)]}"/><path d="M0 -14 V18" stroke="#fff" stroke-opacity=".6" stroke-width="2"/></g>`; }).join("");
+  const dots = Array.from({ length: 16 }, () => `<circle cx="${(r() * w).toFixed(0)}" cy="${(r() * h).toFixed(0)}" r="${(3 + r() * 7).toFixed(0)}" fill="#fff" opacity="${(0.5 + r() * 0.4).toFixed(2)}"/>`).join("");
+  return `<defs><linearGradient id="sg${i}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E6F4FF"/><stop offset=".5" stop-color="#FFFFFF"/><stop offset="1" stop-color="${mix(p.b, "#FFFFFF", 0.55)}"/></linearGradient>
+    <radialGradient id="sun${i}" cx=".88" cy=".08" r=".7"><stop offset="0" stop-color="#FFF1B8" stop-opacity=".95"/><stop offset=".55" stop-color="#FFF1B8" stop-opacity=".25"/><stop offset="1" stop-color="#FFF1B8" stop-opacity="0"/></radialGradient></defs>
+    ${rect(0, 0, w, h, `url(#sg${i})`)}${rect(0, 0, w, h, `url(#sun${i})`)}${dots}${leaves}`;
+};
+
+/** 겨울 — 맑은 얼음빛 하늘 + 반짝이는 눈송이 + 포근한 흰 눈언덕 */
+const winterBg = (w, h, p, i) => {
+  const r = sr(i + 23);
+  const flakes = Array.from({ length: 34 }, () => { const x = r() * w, y = r() * h * 0.9, rr = 3 + r() * 11; return `<circle cx="${x.toFixed(0)}" cy="${y.toFixed(0)}" r="${rr.toFixed(0)}" fill="#fff" fill-opacity="${(0.7 + r() * 0.3).toFixed(2)}" stroke="#BFE2FF" stroke-opacity=".8" stroke-width="1.5"/>`; }).join("");
+  const stars = Array.from({ length: 9 }, () => { const x = r() * w, y = r() * h * 0.8, s = 0.6 + r() * 1.0; return `<path transform="translate(${x.toFixed(0)} ${y.toFixed(0)}) scale(${s.toFixed(2)})" d="M0 -16 L4 -4 L16 0 L4 4 L0 16 L-4 4 L-16 0 L-4 -4Z" fill="#fff" stroke="${mix(p.a, "#8CCBFF", 0.5)}" stroke-opacity=".55" stroke-width="1.5"/>`; }).join("");
+  const hill = (y, c, o, amp) => `<path d="M0 ${y} C${w * 0.25} ${y - amp} ${w * 0.55} ${y + amp} ${w} ${y - amp * 0.4} V${h} H0Z" fill="${c}" opacity="${o}"/>`;
+  return `<defs><linearGradient id="sg${i}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#DDF0FF"/><stop offset=".55" stop-color="#F7FBFF"/><stop offset="1" stop-color="#FFFFFF"/></linearGradient></defs>
+    ${rect(0, 0, w, h, `url(#sg${i})`)}${stars}${flakes}${hill(h * 0.9, "#D2E9FA", 0.7, 26)}${hill(h * 0.95, "#FFFFFF", 0.95, 20)}`;
+};
+
 export const cover = (d, i) => {
   const w = d.wide ? 1600 : 1000, h = d.wide ? 900 : 1000;
-  const fresh = d.season === "봄" || d.season === "여름";
-  const p = fresh ? pal({ a: d.main, b: d.soft, c: d.accent, d: d.dark, bg: d.pale }) : pal({ a: mix(d.main, "#a8894f", 0.16), b: d.soft, c: mix(d.accent, "#c9a05a", 0.25), d: d.dark, bg: d.pale });
-  if (fresh) { p.paper = "#FFFFFF"; p.ink = mix(d.dark, "#1f2a2a", 0.4); }
+  const fresh = true; // 네 계절 모두 맑고 깨끗한 색감
+  const p = pal({ a: d.main, b: d.soft, c: d.accent, d: d.dark, bg: d.pale });
+  p.paper = "#FFFFFF"; p.ink = mix(d.dark, "#1f2a2a", 0.4);
   const hero = pickHero(d.hero);
   const art = ART[d.style](hero, p, d);
   const place = d.wide ? `translate(${w - BOX.w * 1.18 - 70} ${(h - BOX.h * 1.18) / 2}) scale(1.18)` : `translate(${(w - BOX.w * 0.66) / 2 - 30} ${h - BOX.h * 0.66 - 50}) scale(.66)`;
@@ -98,7 +119,7 @@ export const cover = (d, i) => {
     ? txt(112, 100, d.label, { size: 22, weight: 700, fill: p.d, spacing: 8, opacity: 0.7, serif: false }) + rect(112, 120, 64, 3, p.a) + txt(112, d.season === "여름" ? h - 150 : h - 70, "우체국보험 상담 안내  ·  2027", { size: 17, fill: p.d, spacing: 3, opacity: 0.5, serif: false })
     : txt(100, 90, d.label, { size: 22, weight: 700, fill: p.d, spacing: 8, opacity: 0.7, serif: false }) + rect(100, 110, 64, 3, p.a);
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}">${bgSvg(w, h, p, i)}
-    ${fresh ? (d.season === "봄" ? springBg(w, h, p, i) : summerBg(w, h, p, i)) : `${rect(0, 0, w, h, p.paper)}${rect(0, 0, w, h, p.b, 0, 'opacity=".22"')}`}${label}<g transform="${place}">${art}</g>
+    ${{ 봄: springBg, 여름: summerBg, 가을: autumnBg, 겨울: winterBg }[d.season](w, h, p, i)}${label}<g transform="${place}">${art}</g>
     ${fresh ? "" : `<rect width="${w}" height="${h}" filter="url(#gr${i})" opacity=".5"/><rect width="${w}" height="${h}" fill="url(#vg${i})"/>`}</svg>`;
 };
 

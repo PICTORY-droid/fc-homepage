@@ -7,7 +7,7 @@ from docx.shared import Pt
 
 from doc_blocks import borders, ct, fp, fr, new_doc, row_height, rule, shade, spacer, table, tab_right, valign
 from guide_data import JSON_KEYS
-from resume_layouts import LEVEL, card_block, card_shell, classic_block, sec_head, summary_block, widths_for
+from resume_layouts import LEVEL, fit_label, label_w, card_block, card_shell, classic_block, sec_head, summary_block, widths_for
 
 NAMES = ["NCS형", "경력기술서형", "신입·활동형", "포트폴리오형", "JSON Resume형"]
 
@@ -20,7 +20,7 @@ def _band(d, sk, cw, title, sub, dark=True):
 
 
 def _person(d, pos, sk, cw, photo):
-    f = pos["person"]; rows = math.ceil(len(f) / 2); lab = 80
+    f = pos["person"]; rows = math.ceil(len(f) / 2); lab = label_w(f, 80)
     if photo and pos["photo"]:
         w = [113, lab, 217, lab, cw - 113 - lab * 2 - 217]; t = table(d, w, rows, sk["line"]); base = 1
         ph = t.cell(0, 0).merge(t.cell(rows - 1, 0)); ct(ph, "사진\n(3×4cm)", 9, None, sk["hint"], "center", where="center")
@@ -31,7 +31,7 @@ def _person(d, pos, sk, cw, photo):
         for ci in range(2):
             idx = ri * 2 + ci
             if idx < len(f):
-                lc = t.cell(ri, base + ci * 2); shade(lc, sk["soft"]); ct(lc, f[idx], 9.5, True, sk["dark"], "center", where="center")
+                lc = t.cell(ri, base + ci * 2); shade(lc, sk["soft"]); ct(lc, fit_label(f[idx]), 9.5, True, sk["dark"], "center", where="center")
                 valign(t.cell(ri, base + ci * 2 + 1), "center")
         if len(f) % 2 and ri == rows - 1:
             t.cell(ri, base + 1).merge(t.cell(ri, base + 3))
@@ -84,12 +84,13 @@ def r_ncs(pos, sk, k):
     from docx_kit import para_border
     para_border(p, "bottom", sk["mid"], 10, 3)
     for _ in range(2):
-        t = table(d, [92, 255, 92, 255], 4, sk["line"])
+        lw = label_w(["회사 · 기간", "직무 · 직위", "담당 역할", "사용 기술 · 도구", "주요 업무", "성과 (숫자)"], 92)
+        t = table(d, [lw, 347 - lw, lw, 347 - lw], 4, sk["line"])
         for ri, (a, b) in enumerate([("회사 · 기간", "직무 · 직위"), ("담당 역할", "사용 기술 · 도구"), ("주요 업무", ""), ("성과 (숫자)", "")]):
             row_height(t.rows[ri], 30 if ri < 2 else 62)
-            shade(t.cell(ri, 0), sk["soft"]); ct(t.cell(ri, 0), a, 9, True, sk["dark"], "center", where="center")
+            shade(t.cell(ri, 0), sk["soft"]); ct(t.cell(ri, 0), fit_label(a), 9, True, sk["dark"], "center", where="center")
             if b:
-                shade(t.cell(ri, 2), sk["soft"]); ct(t.cell(ri, 2), b, 9, True, sk["dark"], "center", where="center")
+                shade(t.cell(ri, 2), sk["soft"]); ct(t.cell(ri, 2), fit_label(b), 9, True, sk["dark"], "center", where="center")
             else:
                 t.cell(ri, 1).merge(t.cell(ri, 3))
         spacer(d, 6)

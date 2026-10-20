@@ -21,6 +21,40 @@ def widths_for(labels, cw):
     return w
 
 
+def _tw(t):
+    return sum(13 if ord(ch) > 127 else 8 for ch in t) + 22
+
+
+def fit_label(t, cap=124):
+    """라벨이 칸보다 길면 ' → ' · ' · ' · 공백 자리에서 미리 줄을 나눠, 글자 중간에서 끊기지 않게 합니다."""
+    t = str(t)
+    if _tw(t) <= cap:
+        return t
+    for sep in (" → ", " · ", " "):
+        toks = t.split(sep)
+        if len(toks) < 2:
+            continue
+        lines, cur = [], toks[0]
+        for tk in toks[1:]:
+            if _tw(cur + sep + tk) <= cap:
+                cur += sep + tk
+            else:
+                lines.append(cur + sep.rstrip()); cur = tk
+        lines.append(cur)
+        if all(_tw(x) <= cap for x in lines):
+            return "\n".join(lines)
+    return t
+
+
+def label_w(texts, base):
+    """라벨 칸 너비: 줄 나눈 뒤 가장 긴 줄이 한 줄에 들어가도록 계산."""
+    need = base
+    for t in texts:
+        for ln in fit_label(t).split("\n"):
+            need = max(need, _tw(ln))
+    return min(need, 124)
+
+
 def hint_line(labels):
     return " · ".join(labels)
 
@@ -47,7 +81,7 @@ def r_classic(pos, sk, k):
         para_border(p, "left", sk["mid"], 60, 8); p.paragraph_format.left_indent = Pt(8)
     # 인적사항
     f = pos["person"]; rows = math.ceil(len(f) / 2)
-    lab = 80
+    lab = label_w(pos["person"], 80)
     if pos["photo"]:
         w = [113, lab, 217, lab, cw - 113 - lab * 2 - 217]; rh = max(36, math.ceil(152 / rows))
         t = table(d, w, rows, sk["line"])
@@ -62,7 +96,7 @@ def r_classic(pos, sk, k):
             idx = ri * 2 + ci
             if idx >= len(f):
                 continue
-            lc = t.cell(ri, base + ci * 2); shade(lc, sk["soft"]); ct(lc, f[idx], 9.5, True, sk["dark"], "center", where="center")
+            lc = t.cell(ri, base + ci * 2); shade(lc, sk["soft"]); ct(lc, fit_label(f[idx]), 9.5, True, sk["dark"], "center", where="center")
             valign(t.cell(ri, base + ci * 2 + 1), "center")
         if len(f) % 2 and ri == rows - 1:
             t.cell(ri, base + 1).merge(t.cell(ri, base + 3))
@@ -87,6 +121,7 @@ def sec_head(d, text, sk, cw, before=11, style="left"):
 
 
 def label_cell(c, text, sk):
+    text = fit_label(text)
     shade(c, sk["soft"]); ct(c, text, 9.5, True, sk["dark"], "center", where="center")
 
 
@@ -114,7 +149,7 @@ def classic_block(d, s, sk, cw):
         t = table(d, [cw], 1, sk["line"]); row_height(t.rows[0], s["height"])
     else:
         for n in range(s["rows"]):
-            f = s["fields"]; lab = 92; vw = (cw - 2 * lab) // 2
+            f = s["fields"]; lab = label_w(list(f) + [s["tall"]], 92); vw = (cw - 2 * lab) // 2
             t = table(d, [lab, vw, lab, cw - 2 * lab - vw], len(f) // 2 + 1 + (len(f) % 2), sk["line"])
             pairs = [f[i:i + 2] for i in range(0, len(f), 2)]
             for ri, pr in enumerate(pairs):

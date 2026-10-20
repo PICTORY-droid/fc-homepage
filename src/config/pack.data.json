@@ -2013,9 +2013,9 @@
    "name": "외갓집 매화",
    "tag": "새 학기 전에 점검할 지출 다섯 가지",
    "flavor": "알뜰 생활 팁",
-   "main": "#CD4C82",
-   "soft": "#F7D4E3",
-   "dark": "#6F1F41",
+   "main": "#D65189",
+   "soft": "#FBDAE8",
+   "dark": "#721D40",
    "season": "봄"
   },
   {
@@ -2023,8 +2023,8 @@
    "name": "입춘날 마루",
    "tag": "봄 알레르기 시즌 생활 습관",
    "flavor": "건강·안심 습관",
-   "main": "#DFAD3A",
-   "soft": "#F7EDD4",
+   "main": "#E7B540",
+   "soft": "#FBF1DA",
    "dark": "#72591D",
    "season": "봄"
   },
@@ -2033,8 +2033,8 @@
    "name": "교정 벚나무",
    "tag": "꽃샘추위에 챙길 겉옷 한 벌",
    "flavor": "계절 안부",
-   "main": "#DB3D65",
-   "soft": "#F7D4DD",
+   "main": "#E4446C",
+   "soft": "#FBDAE2",
    "dark": "#721D32",
    "season": "봄"
   },
@@ -2043,8 +2043,8 @@
    "name": "제주 유채밭",
    "tag": "오늘 고마웠던 일 세 가지 적기",
    "flavor": "감사·칭찬",
-   "main": "#DFC93A",
-   "soft": "#F7F3D4",
+   "main": "#E7D140",
+   "soft": "#FBF7DA",
    "dark": "#72671D",
    "season": "봄"
   },
@@ -2053,9 +2053,9 @@
    "name": "청보리밭",
    "tag": "오늘 하루 이것만 하면 됩니다",
    "flavor": "오늘의 한마디",
-   "main": "#82CD4C",
-   "soft": "#E3F7D4",
-   "dark": "#416F1F",
+   "main": "#89D651",
+   "soft": "#E8FBDA",
+   "dark": "#40721D",
    "season": "봄"
   },
   {
@@ -2063,9 +2063,9 @@
    "name": "봄비 창가",
    "tag": "이번 달 고정지출, 한 번 적어 보세요",
    "flavor": "알뜰 생활 팁",
-   "main": "#5196C8",
-   "soft": "#D4E8F7",
-   "dark": "#224E6D",
+   "main": "#569ED2",
+   "soft": "#DAEDFB",
+   "dark": "#1E4E71",
    "season": "봄"
   },
   {
@@ -2073,8 +2073,8 @@
    "name": "뒷산 진달래",
    "tag": "아침 물 한 잔으로 시작하는 하루",
    "flavor": "건강·안심 습관",
-   "main": "#D345A9",
-   "soft": "#F7D4ED",
+   "main": "#DD4BB1",
+   "soft": "#FBDAF1",
    "dark": "#721D59",
    "season": "봄"
   },
@@ -2083,8 +2083,8 @@
    "name": "처마 밑 제비집",
    "tag": "봄비 오는 날 우산 챙기셨나요",
    "flavor": "계절 안부",
-   "main": "#4981D0",
-   "soft": "#D4E3F7",
+   "main": "#4E88DA",
+   "soft": "#DAE8FB",
    "dark": "#1D4072",
    "season": "봄"
   },
@@ -2093,9 +2093,9 @@
    "name": "모내기 날",
    "tag": "가족에게 칭찬 한 줄 써 주기",
    "flavor": "감사·칭찬",
-   "main": "#4ECA4E",
-   "soft": "#D4F7D4",
-   "dark": "#216E21",
+   "main": "#54D454",
+   "soft": "#DAFBDA",
+   "dark": "#1D721D",
    "season": "봄"
   },
   {
@@ -2103,8 +2103,8 @@
    "name": "어버이날 꽃",
    "tag": "바빠도 점심은 챙겨 드세요",
    "flavor": "오늘의 한마디",
-   "main": "#DF3A55",
-   "soft": "#F7D4DA",
+   "main": "#E7405C",
+   "soft": "#FBDAE0",
    "dark": "#721D2B",
    "season": "봄"
   },
@@ -2113,9 +2113,9 @@
    "name": "라일락 골목",
    "tag": "장보기 전에 냉장고부터 열어 보세요",
    "flavor": "알뜰 생활 팁",
-   "main": "#9651C8",
-   "soft": "#E8D4F7",
-   "dark": "#4E226D",
+   "main": "#9E56D2",
+   "soft": "#EDDAFB",
+   "dark": "#4E1E71",
    "season": "봄"
   },
   {
@@ -2123,9 +2123,9 @@
    "name": "아카시아 길",
    "tag": "검진 날짜, 달력에 적어 두세요",
    "flavor": "건강·안심 습관",
-   "main": "#9DBF5A",
-   "soft": "#EBF7D4",
-   "dark": "#526728",
+   "main": "#A6C95E",
+   "soft": "#F0FBDA",
+   "dark": "#536B24",
    "season": "봄"
   },
   {
@@ -2133,8 +2133,8 @@
    "name": "오월 숲길",
    "tag": "황사 심한 날 이렇게 지내세요",
    "flavor": "계절 안부",
-   "main": "#43D66F",
-   "soft": "#D4F7DE",
+   "main": "#49DF76",
+   "soft": "#DAFBE4",
    "dark": "#1D7236",
    "season": "봄"
   },
@@ -2143,9 +2143,9 @@
    "name": "장마철 우산",
    "tag": "어버이날 편지 이렇게 써 보세요",
    "flavor": "감사·칭찬",
-   "main": "#2655C5",
-   "soft": "#D1DDFA",
-   "dark": "#11285F",
+   "main": "#3E6EE0",
+   "soft": "#D9E4FC",
+   "dark": "#122C68",
    "season": "여름"
   },
   {
@@ -2153,9 +2153,9 @@
    "name": "수국 화단",
    "tag": "생각났을 때 바로 메모하세요",
    "flavor": "오늘의 한마디",
-   "main": "#4D26C5",
-   "soft": "#DBD1FA",
-   "dark": "#24115F",
+   "main": "#663EE0",
+   "soft": "#E2D9FC",
+   "dark": "#281268",
    "season": "여름"
   },
   {
@@ -2163,9 +2163,9 @@
    "name": "평상 수박",
    "tag": "한 달 용돈, 어디로 갔을까요",
    "flavor": "알뜰 생활 팁",
-   "main": "#26C5B8",
-   "soft": "#D1FAF7",
-   "dark": "#115F59",
+   "main": "#3EE0D2",
+   "soft": "#D9FCF9",
+   "dark": "#126861",
    "season": "여름"
   },
   {
@@ -2173,9 +2173,9 @@
    "name": "해바라기 담장",
    "tag": "하루 십 분 걷기 시작하기",
    "flavor": "건강·안심 습관",
-   "main": "#26C54E",
-   "soft": "#D1FADC",
-   "dark": "#115F25",
+   "main": "#3EE067",
+   "soft": "#D9FCE2",
+   "dark": "#126828",
    "season": "여름"
   },
   {
@@ -2183,9 +2183,9 @@
    "name": "바닷가 등대",
    "tag": "장마철 빨래 잘 말리는 법",
    "flavor": "계절 안부",
-   "main": "#2695C5",
-   "soft": "#D1EEFA",
-   "dark": "#11485F",
+   "main": "#3EAFE0",
+   "soft": "#D9F2FC",
+   "dark": "#124E68",
    "season": "여름"
   },
   {
@@ -2193,9 +2193,9 @@
    "name": "반딧불 마을",
    "tag": "동료에게 고맙다고 말해 본 적 있나요",
    "flavor": "감사·칭찬",
-   "main": "#26C590",
-   "soft": "#D1FAEC",
-   "dark": "#115F45",
+   "main": "#3EE0AA",
+   "soft": "#D9FCF0",
+   "dark": "#12684B",
    "season": "여름"
   },
   {
@@ -2203,9 +2203,9 @@
    "name": "소나기 지난 뒤",
    "tag": "퇴근길 한 정거장 걷기",
    "flavor": "오늘의 한마디",
-   "main": "#26AAC5",
-   "soft": "#D1F3FA",
-   "dark": "#11525F",
+   "main": "#3EC5E0",
+   "soft": "#D9F6FC",
+   "dark": "#125A68",
    "season": "여름"
   },
   {
@@ -2213,9 +2213,9 @@
    "name": "대나무 숲",
    "tag": "여름 전기요금 줄이는 다섯 가지",
    "flavor": "알뜰 생활 팁",
-   "main": "#26C5BD",
-   "soft": "#D1FAF8",
-   "dark": "#115F5B",
+   "main": "#3EE0D8",
+   "soft": "#D9FCFA",
+   "dark": "#126864",
    "season": "여름"
   },
   {
@@ -2223,9 +2223,9 @@
    "name": "섬마을 선착장",
    "tag": "더위 먹지 않게 챙길 것 다섯 가지",
    "flavor": "건강·안심 습관",
-   "main": "#267BC5",
-   "soft": "#D1E7FA",
-   "dark": "#113B5F",
+   "main": "#3E94E0",
+   "soft": "#D9ECFC",
+   "dark": "#124068",
    "season": "여름"
   },
   {
@@ -2233,9 +2233,9 @@
    "name": "여름 낮잠",
    "tag": "열대야에 잠 잘 자는 방법",
    "flavor": "계절 안부",
-   "main": "#26C588",
-   "soft": "#D1FAEA",
-   "dark": "#115F41",
+   "main": "#3EE0A2",
+   "soft": "#D9FCEF",
+   "dark": "#126847",
    "season": "여름"
   },
   {
@@ -2243,9 +2243,9 @@
    "name": "절집 풍경",
    "tag": "수고했다는 말, 퇴근하는 사람에게",
    "flavor": "감사·칭찬",
-   "main": "#26B8C5",
-   "soft": "#D1F7FA",
-   "dark": "#11595F",
+   "main": "#3ED2E0",
+   "soft": "#D9F9FC",
+   "dark": "#126168",
    "season": "여름"
   },
   {
@@ -2253,9 +2253,9 @@
    "name": "연꽃 연못",
    "tag": "오늘은 일찍 자는 날로 정했습니다",
    "flavor": "오늘의 한마디",
-   "main": "#3D26C5",
-   "soft": "#D7D1FA",
-   "dark": "#1D115F",
+   "main": "#563EE0",
+   "soft": "#DED9FC",
+   "dark": "#1F1268",
    "season": "여름"
   },
   {
@@ -2263,9 +2263,9 @@
    "name": "코스모스 신작로",
    "tag": "추석 전에 미리 적어 두는 지출",
    "flavor": "알뜰 생활 팁",
-   "main": "#C15CA0",
-   "soft": "#F0D1E5",
-   "dark": "#85326A",
+   "main": "#ED31AE",
+   "soft": "#FDDDF3",
+   "dark": "#701A53",
    "season": "가을"
   },
   {
@@ -2273,9 +2273,9 @@
    "name": "한가위 달",
    "tag": "환절기 감기 막는 생활 습관",
    "flavor": "건강·안심 습관",
-   "main": "#C79123",
-   "soft": "#F7E8C9",
-   "dark": "#715214",
+   "main": "#EDAE31",
+   "soft": "#FDF3DD",
+   "dark": "#70531A",
    "season": "가을"
   },
   {
@@ -2283,9 +2283,9 @@
    "name": "감나무 집",
    "tag": "추석 인사 한 줄 보내기",
    "flavor": "계절 안부",
-   "main": "#CA7021",
-   "soft": "#F8DFC9",
-   "dark": "#723F13",
+   "main": "#ED8F31",
+   "soft": "#FDEDDD",
+   "dark": "#70451A",
    "season": "가을"
   },
   {
@@ -2293,9 +2293,9 @@
    "name": "억새밭",
    "tag": "스승의 날 엽서 한 장",
    "flavor": "감사·칭찬",
-   "main": "#9D7D4D",
-   "soft": "#ECE3D4",
-   "dark": "#59472C",
+   "main": "#EDA631",
+   "soft": "#FDF1DD",
+   "dark": "#704F1A",
    "season": "가을"
   },
   {
@@ -2303,9 +2303,9 @@
    "name": "빨간 우체통",
    "tag": "전화 한 통이면 됩니다",
    "flavor": "오늘의 한마디",
-   "main": "#AE4329",
-   "soft": "#F5D4CC",
-   "dark": "#5B2315",
+   "main": "#ED6231",
+   "soft": "#FDE6DD",
+   "dark": "#70311A",
    "season": "가을"
   },
   {
@@ -2313,9 +2313,9 @@
    "name": "은행잎 길",
    "tag": "가을 옷 정리하고 알뜰하게 시작하기",
    "flavor": "알뜰 생활 팁",
-   "main": "#CEAB1C",
-   "soft": "#F9EFC8",
-   "dark": "#756110",
+   "main": "#EDC731",
+   "soft": "#FDF7DD",
+   "dark": "#705E1A",
    "season": "가을"
   },
   {
@@ -2323,9 +2323,9 @@
    "name": "도서관 창가",
    "tag": "잠들기 전 삼십 분, 화면 끄기",
    "flavor": "건강·안심 습관",
-   "main": "#765037",
-   "soft": "#EDDED4",
-   "dark": "#37261A",
+   "main": "#ED8431",
+   "soft": "#FDEBDD",
+   "dark": "#70401A",
    "season": "가을"
   },
   {
@@ -2333,9 +2333,9 @@
    "name": "완행열차",
    "tag": "일교차 큰 날 옷차림",
    "flavor": "계절 안부",
-   "main": "#855A47",
-   "soft": "#EBDCD6",
-   "dark": "#422D24",
+   "main": "#ED7331",
+   "soft": "#FDE8DD",
+   "dark": "#70381A",
    "season": "가을"
   },
   {
@@ -2343,9 +2343,9 @@
    "name": "장독대 마당",
    "tag": "명절에 어른께 드리는 말씀",
    "flavor": "감사·칭찬",
-   "main": "#994133",
-   "soft": "#F1D4D0",
-   "dark": "#4D2019",
+   "main": "#ED4A31",
+   "soft": "#FDE1DD",
+   "dark": "#70261A",
    "season": "가을"
   },
   {
@@ -2353,9 +2353,9 @@
    "name": "밤 줍던 산",
    "tag": "미뤄 둔 일 하나만 끝내기",
    "flavor": "오늘의 한마디",
-   "main": "#7B5732",
-   "soft": "#EFE0D2",
-   "dark": "#3A2918",
+   "main": "#ED9531",
+   "soft": "#FDEEDD",
+   "dark": "#70481A",
    "season": "가을"
   },
   {
@@ -2363,9 +2363,9 @@
    "name": "서리 낀 들판",
    "tag": "통장 쪼개기, 이렇게 시작하세요",
    "flavor": "알뜰 생활 팁",
-   "main": "#5A7887",
-   "soft": "#D9E3E8",
-   "dark": "#314149",
+   "main": "#31DDED",
+   "soft": "#DDFBFD",
+   "dark": "#1A6870",
    "season": "가을"
   },
   {
@@ -2373,9 +2373,9 @@
    "name": "학교 종",
    "tag": "가을 건강검진 챙기는 순서",
    "flavor": "건강·안심 습관",
-   "main": "#38438A",
-   "soft": "#D2D6EF",
-   "dark": "#1B2041",
+   "main": "#3183ED",
+   "soft": "#DDEBFD",
+   "dark": "#1A3F70",
    "season": "가을"
   },
   {
@@ -2383,9 +2383,9 @@
    "name": "군고구마 골목",
    "tag": "첫서리 오기 전에 할 일",
    "flavor": "계절 안부",
-   "main": "#995229",
-   "soft": "#F4DBCD",
-   "dark": "#492713",
+   "main": "#ED7E31",
+   "soft": "#FDEADD",
+   "dark": "#703D1A",
    "season": "가을"
   },
   {
@@ -2393,9 +2393,9 @@
    "name": "첫눈",
    "tag": "고마운 분께 손편지 쓰기",
    "flavor": "감사·칭찬",
-   "main": "#6991BF",
-   "soft": "#D3DFEE",
-   "dark": "#3A5E88",
+   "main": "#458FE3",
+   "soft": "#DDECFD",
+   "dark": "#1C426E",
    "season": "겨울"
   },
   {
@@ -2403,9 +2403,9 @@
    "name": "붕어빵 포장마차",
    "tag": "서두르지 않아도 됩니다",
    "flavor": "오늘의 한마디",
-   "main": "#AE7429",
-   "soft": "#F5E3CC",
-   "dark": "#5B3D15",
+   "main": "#EC943C",
+   "soft": "#FDEDDD",
+   "dark": "#6E451C",
    "season": "겨울"
   },
   {
@@ -2413,9 +2413,9 @@
    "name": "아랫목",
    "tag": "연말 모임비 부담 줄이는 법",
    "flavor": "알뜰 생활 팁",
-   "main": "#7D4531",
-   "soft": "#EFD9D1",
-   "dark": "#3B2017",
+   "main": "#EC7A3C",
+   "soft": "#FDE8DD",
+   "dark": "#6E381C",
    "season": "겨울"
   },
   {
@@ -2423,9 +2423,9 @@
    "name": "눈 속 동백",
    "tag": "겨울철 빙판길 조심하세요",
    "flavor": "건강·안심 습관",
-   "main": "#AE2934",
-   "soft": "#F5CCCF",
-   "dark": "#5B151B",
+   "main": "#EC3C4B",
+   "soft": "#FDDDE0",
+   "dark": "#6E1C22",
    "season": "겨울"
   },
   {
@@ -2433,9 +2433,9 @@
    "name": "설날 세배",
    "tag": "눈 오는 날 안부 전화",
    "flavor": "계절 안부",
-   "main": "#8D3443",
-   "soft": "#F0D1D6",
-   "dark": "#431920",
+   "main": "#EC3C59",
+   "soft": "#FDDDE2",
+   "dark": "#6E1C29",
    "season": "겨울"
   },
   {
@@ -2443,9 +2443,9 @@
    "name": "대보름 달집",
    "tag": "올해 고마웠던 사람 떠올려 보기",
    "flavor": "감사·칭찬",
-   "main": "#A78425",
-   "soft": "#F6EACB",
-   "dark": "#544212",
+   "main": "#ECA33C",
+   "soft": "#FDF0DD",
+   "dark": "#6E4C1C",
    "season": "겨울"
   },
   {
@@ -2453,9 +2453,9 @@
    "name": "한지 등",
    "tag": "쉬는 것도 일정에 넣으세요",
    "flavor": "오늘의 한마디",
-   "main": "#C49645",
-   "soft": "#F2E5CF",
-   "dark": "#7C5D27",
+   "main": "#EC9A3C",
+   "soft": "#FDEEDD",
+   "dark": "#6E481C",
    "season": "겨울"
   },
   {
@@ -2463,9 +2463,9 @@
    "name": "새벽 시장",
    "tag": "새해 가계부 쓰기 시작하는 법",
    "flavor": "알뜰 생활 팁",
-   "main": "#497483",
-   "soft": "#D6E5EA",
-   "dark": "#253A41",
+   "main": "#45BCE3",
+   "soft": "#DDF5FD",
+   "dark": "#1C5A6E",
    "season": "겨울"
   },
   {
@@ -2473,9 +2473,9 @@
    "name": "성탄절 우체국",
    "tag": "새해 건강 습관 하나만 정해 보세요",
    "flavor": "건강·안심 습관",
-   "main": "#29653D",
-   "soft": "#D2EFDC",
-   "dark": "#183A23",
+   "main": "#45E379",
+   "soft": "#DDFDE8",
+   "dark": "#1C6E37",
    "season": "겨울"
   },
   {
@@ -2483,9 +2483,9 @@
    "name": "눈 쌓인 장독대",
    "tag": "한파에 어르신 안부 묻기",
    "flavor": "계절 안부",
-   "main": "#5E74A1",
-   "soft": "#D7DDEA",
-   "dark": "#394660",
+   "main": "#4579E3",
+   "soft": "#DDE8FD",
+   "dark": "#1C376E",
    "season": "겨울"
   },
   {
@@ -2493,9 +2493,9 @@
    "name": "섣달 그믐",
    "tag": "새해 첫 인사는 고마움으로",
    "flavor": "감사·칭찬",
-   "main": "#29295B",
-   "soft": "#D3D3EE",
-   "dark": "#191938",
+   "main": "#4545E3",
+   "soft": "#DDDDFD",
+   "dark": "#1C1C6E",
    "season": "겨울"
   },
   {
@@ -2503,9 +2503,9 @@
    "name": "새해 해돋이",
    "tag": "올해의 마지막 한 주 보내는 법",
    "flavor": "오늘의 한마디",
-   "main": "#E36C1C",
-   "soft": "#FADBC7",
-   "dark": "#884111",
+   "main": "#EC853C",
+   "soft": "#FDEADD",
+   "dark": "#6E3E1C",
    "season": "겨울"
   }
  ],
