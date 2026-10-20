@@ -13,7 +13,7 @@ export default function HomePage() {
       <PageBanner bannerKey="home" />
       <TopProducts />
       <MonthlyPick />
-      <Section id="consult" title="간편 상담 신청">
+      <Section dense id="consult" title="간편 상담 신청">
         <ConsultForm initialTopic="health" />
       </Section>
     </>
