@@ -15,8 +15,10 @@ const palettes = Array.from({ length: NP }, (_, i) => {
   return pal({ a: hex(h, s, la), b: hex(h, 78, 91), c: hex((h + 160) % 360, 62, 72), d: hex(h, 52, 30), bg: hex(h, 100, 97) });
 });
 
-// ── 배치: 새 현대식 8종과 범용 옛 배치 7종을 번갈아 씁니다.
-const LAYS = ["arch", "polaroid", "circle", "notebook", "card", "postcard", "frame", "scrap", "band", "airmail", "blob", "diary", "side", "envelope", "slant"];
+// ── 배치: 깔끔한 현대식 8종만 씁니다(우표·우편번호 같은 옛 장식 없음).
+// 낱개 그림(동물·커피·꽃)은 꿈결 하늘·안개 달·색 매트까지 11종, 풍경 그림(네모난 장면)은 큰 그림 8종을 씁니다.
+const LAYS_SCENE = ["arch", "circle", "card", "corner", "frame", "band", "blob", "slant"];
+const LAYS_OBJ = ["dream", "mat", "mist", "arch", "circle", "dream", "card", "mist", "corner", "frame", "mat", "band", "blob", "slant"];
 const CATS = {
   animal: { label: "동물", mark: "동물", cls: " 이름 : ", n1: "오늘도", n2: "함께해 줘" },
   place: { label: "장소", mark: "여행", cls: " 이름 : ", n1: "여기 어때?", n2: "같이 가자" },
@@ -27,21 +29,22 @@ const CATS = {
   garden: { label: "정원", mark: "정원", cls: " 이름 : ", n1: "마당에", n2: "놀러 와" },
 };
 const heroOf = (mods, key) => { for (const m of mods) if (m[key]) return m[key]; throw new Error("그림을 찾을 수 없음: " + key); };
-const OFF = { animal: 0, place: 4, weather: 9, coffee: 2, window: 6, flower: 11, garden: 13 };
-const make = (cat, rows, getHero, offset) => rows.map(([key, title, tag], i) => {
-  const c = CATS[cat], lay = LAYS[(i + OFF[cat]) % LAYS.length];
-  const o = { cap: "20     .    .", mark: c.mark, price: "300", cls: c.cls, note1: c.n1, note2: c.n2, weather: i % 4 };
-  return { id: `${cat}-${String(i + 1).padStart(2, "0")}`, season: cat, n: 11 + (offset + i) * 7, title, tag, hero: getHero(key, i), p: palettes[(i * 7 + OFF[cat] * 13 + offset * 3) % NP], layout: lay, ...o };
+const OFF = { animal: 0, place: 4, weather: 8, coffee: 2, window: 6, flower: 3, garden: 5 };
+const EYE = { animal: "ANIMAL", place: "PLACE", weather: "WEATHER", coffee: "COFFEE", window: "WINDOW", garden: "GARDEN" };
+const make = (cat, rows, getHero, offset, scene = () => false) => rows.map(([key, title, tag], i) => {
+  const sc = scene(i), lays = sc ? LAYS_SCENE : LAYS_OBJ, lay = lays[(i + OFF[cat]) % lays.length];
+  const o = { eyebrow: EYE[cat], editTitle: true };
+  return { id: `${cat}-${String(i + 1).padStart(2, "0")}`, season: cat, n: 11 + (offset + i) * 7, title, tag, hero: getHero(key, i), p: palettes[(i * 7 + OFF[cat] * 13 + offset * 3) % NP], layout: lay, scene: sc, ...o };
 });
 // 정원/꽃은 한 묶음(100장) — 꽃 60 + 정원 40, 번호는 꽃 01~60, 정원 61~100 으로 이어 붙입니다.
 const gardenAll = [...flower.map((r) => ["f", ...r]), ...garden.map((r) => ["g", ...r])];
 export const designs2 = [
   ...make("animal", animal, (k) => heroOf([an_a, an_b, an_c], k), 0),
-  ...make("place", place, (k) => heroOf([pl_kr, pl_life, pl_world], k), 50),
-  ...make("weather", weather, (k) => heroOf([wx], k), 150),
+  ...make("place", place, (k) => heroOf([pl_kr, pl_life, pl_world], k), 50, () => true),
+  ...make("weather", weather, (k) => heroOf([wx], k), 150, () => true),
   ...make("coffee", coffee, (k) => heroOf([cf], k), 200),
-  ...make("window", win, (k, i) => windows[i], 250),
-  ...make("garden", gardenAll.map(([, ...r]) => r), (k, i) => (i < flower.length ? heroOf([fl], k) : heroOf([gd], k)), 300),
+  ...make("window", win, (k, i) => windows[i], 250, () => true),
+  ...make("garden", gardenAll.map(([, ...r]) => r), (k, i) => (i < flower.length ? heroOf([fl], k) : heroOf([gd], k)), 300, (i) => i >= flower.length),
 ];
 // 배치+색 조합이 겹치면 색을 한 칸씩 옮겨 모두 서로 다르게 만듭니다.
 const seen = new Set();

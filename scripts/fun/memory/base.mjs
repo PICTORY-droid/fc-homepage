@@ -35,10 +35,14 @@ export const splitTitle = (t, max = 8) => {
   for (let i = 0; i < t.length; i++) if (t[i] === " " && (best < 0 || Math.abs(i - m) < Math.abs(best - m))) best = i;
   return best > 0 ? [t.slice(0, best), t.slice(best + 1)] : [t.slice(0, m), t.slice(m)];
 };
-export const titleSvg = (d, x, y, p, { size = 44, anchor = "start", max = 8, gap = 52 } = {}) => {
+export const titleSvg = (d, x, y, p, { size = 44, anchor = "start", max = 8, gap = 52, w } = {}) => {
   const ls = splitTitle(d.title, max);
-  const t = ls.map((s, i) => txt(x, y + i * gap, s, { size, weight: 700, fill: p.d, anchor, spacing: 1 })).join("");
-  return { svg: t, bottom: y + (ls.length - 1) * gap + 22 };  // 제목 아래 보조 문장은 두지 않습니다
+  // 글자를 뺀 배경(bare)을 만들 때는 제목을 그리지 않고 위치만 기록합니다 → Word 에서 제목을 직접 고쳐 쓸 수 있어요.
+  const hide = d._bare && d.editTitle;
+  if (hide) d._titleArea = { x, y, anchor, size, gap, w: w ?? (anchor === "middle" ? 600 : W - x - 70), lines: ls.length };
+  const eyebrow = d.eyebrow ? txt(x, y - size - 8, d.eyebrow, { size: 13, weight: 700, fill: p.a, anchor, spacing: 5, serif: false }) : "";
+  const t = hide ? "" : ls.map((s, i) => txt(x, y + i * gap, s, { size, weight: 700, fill: p.d, anchor, spacing: 1 })).join("");
+  return { svg: eyebrow + t, bottom: y + (ls.length - 1) * gap + 22 };  // 제목 아래 보조 문장은 두지 않습니다
 };
 export const credit = (p, y = 1106) => txt(W / 2, y, "편지지 · 우체국보험 상담 안내", { size: 12, fill: p.d, anchor: "middle", opacity: 0.5, serif: false });
 export const wrapSvg = (id, defs, body, seed) => `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}"><defs>${defs}${finish(id, seed)}</defs>${body}${finishBody(id)}</svg>`;

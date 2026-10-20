@@ -42,6 +42,19 @@ def _line(doc, left, right, x, y, w, h, color, align="left"):
     return p
 
 
+def _title(doc, text, t, color):
+    """제목을 쪽 위의 고정 위치 '틀'에 넣어 Word 에서 직접 고쳐 쓰게 합니다(글자 크기·색·정렬은 그림 속 제목과 같게)."""
+    w, gap, lines = t["w"], t["gap"], t["lines"]
+    x = t["x"] - w / 2 if t["anchor"] == "middle" else t["x"]
+    top = t["y"] - 0.80 * gap
+    p = doc.add_paragraph()
+    _frame(p, x, top, w, gap * 2)
+    exact_height(p, gap)
+    p.alignment = 1 if t["anchor"] == "middle" else 0
+    run(p, text, t["size"] * 0.75, True, color)
+    return p
+
+
 def _background(doc, jpg_path, name):
     """그림을 쪽 전체 배경(글 뒤)으로 머리글에 고정합니다. 모든 쪽에 같은 배경이 깔립니다."""
     sec = doc.sections[0]
@@ -72,6 +85,9 @@ def build(m, jpg_path):
     _background(doc, jpg_path, m["name"])
     c = m["color"]
     date = "날짜 :  20        년        월        일"
+    t = m.get("title")
+    if t:
+        _title(doc, m["name"], t, m.get("tcolor", c))
     _line(doc, "받는 사람 : ", date if m["date"] else None, fx, fy, fw, 36, c)
     if m["from"]:
         x, y, w, al = m["from"]
