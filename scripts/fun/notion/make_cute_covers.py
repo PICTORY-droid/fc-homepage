@@ -1,5 +1,5 @@
 """노션 커버 — 깨끗·미니멀·귀여움. 파스텔 한 가지 배경 + 얼굴 달린 단순 도형 일러스트(SVG)를 크롬으로 그려 JPG 로 저장합니다.
-허브 커버·자료실 행 배너 모두 2400×400 (노션은 커버를 약 6:1 띠로 보여 주며 위아래를 잘라 내므로, 내용은 가운데 띠 안쪽에 넉넉한 여백으로 둡니다)
+허브 커버·자료실 행 배너 모두 1800×600 (노션은 데스크톱에서 6:1, 모바일에서 약 2.1:1 로 가운데만 잘라 보여 주므로, 내용은 정가운데 작은 영역에 넉넉한 여백으로 둡니다)
 저장: public/notion/cover-<id>.jpg  /  public/notion/banner/<종류>-<번호>.jpg
 글자 규칙: 노션 본문 규칙대로 '우체국'·'보험'·'연락처' 단어를 쓰지 않습니다(테마 이름의 '우체국'은 지웁니다).
 사용: python3 make_cute_covers.py [hubs|rows|all]"""
@@ -276,21 +276,22 @@ def text_block(x, y, tag, h1, em, sub, accent, w=1500, tag_fill="#FFFFFF", tag_i
     return s
 
 
-CW, CH = 2400, 400
+CW, CH = 1800, 600
 
 
-def wide(bg, back, scene, vby, vbh, scale=0.7, cy=200):
-    """1500 폭으로 짠 장면을 축소해 2400×400 가운데 띠에 놓습니다. 내용 가운데가 cy 에 오도록 세로 위치를 맞춥니다."""
+def wide(bg, c1, c2, scene, vby, vbh, scale, ill_x):
+    """1500 폭으로 짠 장면을 축소해 1800×600 정가운데에 놓습니다.
+    노션은 데스크톱에서 커버를 6:1 띠(세로 가운데 절반만)로, 모바일에서는 약 2.1:1(가로 가운데 70%만)로 잘라 보여 주므로
+    내용은 가로 840px·세로 210px 안쪽 가운데에만 둡니다."""
+    cy = CH / 2
     mid = vby + vbh / 2
     y = cy - (mid - vby) * scale
     x = (CW - 1500 * scale) / 2
+    ix = x + ill_x * scale
+    back = (f'<circle cx="{ix:.0f}" cy="{cy:.0f}" r="150" fill="{c1}"/><circle cx="1720" cy="520" r="130" fill="{c2}" opacity=".85"/>'
+            f'<circle cx="90" cy="90" r="110" fill="{c2}" opacity=".6"/>' + sparkle(330, 140, 11, "#fff") + sparkle(1480, 130, 9, "#fff") + sparkle(500, 470, 8, "#fff"))
     inner = f'<svg x="{x:.1f}" y="{y:.1f}" width="{1500 * scale:.1f}" height="{vbh * scale:.1f}" viewBox="0 {vby} 1500 {vbh}" overflow="visible">{scene}</svg>'
     return page(CW, CH, bg, back + inner)
-
-
-def wide_back(c1, c2, scene_cx=1500):
-    return (f'<circle cx="{scene_cx}" cy="205" r="190" fill="{c1}"/><circle cx="2330" cy="350" r="150" fill="{c2}" opacity=".85"/>'
-            f'<circle cx="150" cy="330" r="140" fill="{c2}" opacity=".7"/>' + sparkle(300, 110, 12, "#fff") + sparkle(2150, 90, 10, "#fff") + sparkle(560, 320, 8, "#fff"))
 
 
 # ---------- 허브 커버 ----------
@@ -319,7 +320,7 @@ def hub_html(c):
     body += place(o[2][1], o[2][0], 1395, 348, 0.78, 6)
     body += place(o[1][1], o[1][0], 1185, 300, 1.22, 0)
     body += sparkle(930, 150, 16, c["acc"]) + heart(1420, 170, 0.7, c["acc"]) + sparkle(1260, 500, 11, c["acc"])
-    return wide(c["bg"], wide_back(c["c1"], c["c2"]), body, 70, 450)
+    return wide(c["bg"], c["c1"], c["c2"], body, 70, 450, 0.62, 1185)
 
 
 # ---------- 자료실 행 배너 ----------
@@ -347,7 +348,7 @@ def row_html(kind, e):
     fs = 78 if len(theme) <= 6 else 66 if len(theme) <= 9 else 56
     body += f'<text x="96" y="{ty + 50 + fs + 14}" font-size="{fs}" font-weight="900" fill="{INK}" letter-spacing="-2">{theme}</text>'
     body += f'<text x="96" y="{ty + 50 + fs + 70}" font-size="28" font-weight="600" fill="{SUB}">{flavor}</text>'
-    return wide(bg, wide_back(e["soft"], tint(e["main"], 0.55)), body, 60, 400, scale=0.76)
+    return wide(bg, e["soft"], tint(e["main"], 0.55), body, 60, 400, 0.58, 1180)
 
 
 def render(items):
