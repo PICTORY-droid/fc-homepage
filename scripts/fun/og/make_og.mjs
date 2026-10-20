@@ -20,8 +20,8 @@ const forms = fs.readFileSync(path.join(ROOT, "src/config/forms.ts"), "utf8");
 const jobs = [];
 const out = []; // { key, title, sub, thumbs: [절대경로], color }
 
-const stSeason = { spring: ["봄 편지지", "#FF883A"], summer: ["여름 편지지", "#2FA8C9"], autumn: ["가을 편지지", "#C8742A"], winter: ["겨울 편지지", "#6B7FA8"], animal: ["동물 편지지", "#E58FD6"], place: ["장소 편지지", "#4FC3D9"], weather: ["날씨 편지지", "#6BB6FF"], coffee: ["커피 편지지", "#C79A7B"], window: ["창가 편지지", "#B79CFF"], garden: ["정원 편지지", "#5DAE6E"] };
-out.push({ key: "stationery", title: "감성 편지지 480장", sub: "Word·PNG 무료 다운로드", thumbs: stationery.filter((s) => s.no === 1).map((s) => pub(`fun/stationery/thumbs/${s.id}.jpg`)).slice(0, 4), color: "#FF883A" });
+const stSeason = { spring: ["봄 편지지", "#FF883A"], summer: ["여름 편지지", "#2FA8C9"], autumn: ["가을 편지지", "#C8742A"], winter: ["겨울 편지지", "#6B7FA8"], animal: ["동물 편지지", "#E58FD6"], place: ["장소 편지지", "#4FC3D9"], weather: ["날씨 편지지", "#6BB6FF"], coffee: ["커피 편지지", "#C79A7B"], window: ["창가 편지지", "#B79CFF"], garden: ["정원 편지지", "#5DAE6E"], culture: ["전통 편지지", "#C0392B"] };
+out.push({ key: "stationery", title: "감성 편지지 980장", sub: "Word·PNG 무료 다운로드", thumbs: stationery.filter((s) => s.no === 1).map((s) => pub(`fun/stationery/thumbs/${s.id}.jpg`)).slice(0, 4), color: "#FF883A" });
 for (const [k, [label, color]] of Object.entries(stSeason)) {
   out.push({ key: `stationery-${k}`, title: `${label} ${stationery.filter((s) => s.season === k).length}장`, sub: "Word·PNG 무료 다운로드", thumbs: stationery.filter((s) => s.season === k).slice(0, 4).map((s) => pub(`fun/stationery/thumbs/${s.id}.jpg`)), color });
 }

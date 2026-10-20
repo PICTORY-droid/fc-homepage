@@ -49,3 +49,4 @@ export const designs2 = [
 // 배치+색 조합이 겹치면 색을 한 칸씩 옮겨 모두 서로 다르게 만듭니다.
 const seen = new Set();
 for (const d of designs2) { let k = palettes.indexOf(d.p); while (seen.has(d.layout + "|" + k)) k = (k + 1) % NP; seen.add(d.layout + "|" + k); d.p = palettes[k]; }
+export { palettes, NP, LAYS_SCENE, LAYS_OBJ };

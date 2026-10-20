@@ -9,8 +9,8 @@ import { stationeryCta } from "@/config/funCta";
 import { seasons, stationeryBySeason, stationeryFile } from "@/config/stationery";
 
 export const metadata: Metadata = funMetadata({
-  title: "편지지 무료 다운로드 — 감성 편지지 480장 (Word·PNG)",
-  description: "계절 편지지 80장과 동물·장소·날씨·커피·창가·정원 주제 편지지 400장, 서로 다른 그림의 감성 편지지를 Word 파일로 무료로 내려받아 컴퓨터에서 바로 쓰세요.",
+  title: "편지지 무료 다운로드 — 감성 편지지 980장 (Word·PNG)",
+  description: "계절 편지지 80장과 동물·장소·날씨·커피·창가·정원 주제 편지지 900장(전통문화 500장 포함), 서로 다른 그림의 감성 편지지를 Word 파일로 무료로 내려받아 컴퓨터에서 바로 쓰세요.",
   path: "/fun/stationery", ogKey: "stationery",
 });
 
@@ -25,7 +25,7 @@ export default function StationeryPage() {
       <Section title="계절 편지지 80장" lead="봄·여름·가을·겨울 각 20장. 우체국 앞에서 편지 부치던 그 시절의 분위기로 만들었어요. 계절을 골라 들어가 보세요.">
         <SeasonChooser items={toChoices("season")} />
       </Section>
-      <Section title="주제 편지지 400장" lead="계절과 상관없이 쓰는 감성 편지지. 동물 50 · 장소 100 · 날씨 50 · 커피 50 · 창가 50 · 정원과 꽃 100장이에요.">
+      <Section title="주제 편지지 900장" lead="계절과 상관없이 쓰는 감성 편지지. 한국 전통문화 500 · 장소 100 · 정원과 꽃 100 · 동물 50 · 날씨 50 · 커피 50 · 창가 50장이에요. 제목은 Word에서 원하는 글로 고칠 수 있어요.">
         <SeasonChooser items={toChoices("theme")} />
       </Section>
       <Section><FunCtaBox cta={stationeryCta} from="stationery" /></Section>

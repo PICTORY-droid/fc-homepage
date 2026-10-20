@@ -7,8 +7,9 @@ import { W, H } from "./base.mjs";
 import { draw } from "./layouts.mjs";
 import { allDesigns as seasonal } from "./designs.mjs";
 import { designs2 } from "./designs2.mjs";
+import { designs3 } from "./designs3.mjs";
 // 모든 편지지의 제목은 Word 에서 편집할 수 있도록 editTitle 을 켭니다.
-const allDesigns = [...seasonal, ...designs2].map((d) => ({ ...d, editTitle: true }));
+const allDesigns = [...seasonal, ...designs2, ...designs3].map((d) => ({ ...d, editTitle: true }));
 
 const out = resolve(process.argv[2] ?? "");
 const filter = process.argv[3] ?? "";
@@ -31,7 +32,7 @@ for (const d of allDesigns.filter((x) => x.id.startsWith(filter))) {
   writeFileSync(join(out, `bg/${d.id}.jpg`), await big.screenshot({ type: "jpeg", quality: 90 }));
   await big.setContent(html(r.cover()), { waitUntil: "load" });
   writeFileSync(join(out, `cover/${d.id}.jpg`), await big.screenshot({ type: "jpeg", quality: 86 }));
-  meta.push({ id: d.id, season: d.season, name: d.title, tag: d.tag, color: d.p.ink.slice(1), tcolor: d.p.d.slice(1), date: r.area.date, fields: r.area.fields, rules: r.area.rules, from: r.area.from, title: r.area.title ?? null });
+  meta.push({ id: d.id, season: d.season, sub: d.sub ?? null, name: d.title, tag: d.tag, color: d.p.ink.slice(1), tcolor: d.p.d.slice(1), date: r.area.date, fields: r.area.fields, rules: r.area.rules, from: r.area.from, title: r.area.title ?? null });
 }
 writeFileSync(join(out, `meta${filter ? "-" + filter : ""}.json`), JSON.stringify(meta, null, 1));
 console.log("✔", meta.length, "장");
