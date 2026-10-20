@@ -51,7 +51,7 @@ export function HeroCarousel({ slides, phone, intervalMs }: { slides: HeroSlideV
             aria-hidden={i !== c.index}
             inert={i !== c.index}
             className="w-full shrink-0"
-            style={{ background: `linear-gradient(160deg, ${s.theme.from} 0%, ${s.theme.to} 100%)` }}
+            style={{ background: `linear-gradient(160deg, ${s.theme.from} 0%, ${s.theme.to})` }}
           >
             <div className="mx-auto grid max-w-5xl items-center gap-2 px-4 pb-14 pt-5 sm:px-6 sm:pb-16 sm:pt-10 md:grid-cols-[1.3fr_1fr] md:gap-8">
               <div className="order-2 md:order-1">
