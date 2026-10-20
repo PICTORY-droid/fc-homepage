@@ -12,14 +12,14 @@ export const stampHero = (h, p, x, y, s, rot = 4, value = "330") => g(`
   <rect width="110" height="136" fill="none" stroke="${p.paper}" stroke-width="9" stroke-dasharray="0 11" stroke-linecap="round"/>`, x, y, s, rot);
 
 const pm = (p, x, y, s, label, rot = -12, o = 0.55) => postal("postmark", x, y, s, p, { label, rot, o });
-const shadow = (x, y, w, h, rx = 6) => rect(x + 5, y + 7, w, h, "#3a2a18", rx, 'opacity=".14"');
+const shadow = (x, y, w, h, rx = 6) => rect(x + 5, y + 7, w, h, "#2b3a67", rx, 'opacity=".08"');
 const L = {};
 const flow = (bottom, minRy = 0) => { const fy = bottom + 26; const ry = Math.max(fy + 48, minRy); return { fy, ry, rows: Math.floor((1046 - ry) / GAP) }; };
 
 // 1. 폴라로이드 사진 한 장
 L.polaroid = (d, h, p) => {
   const t = titleSvg(d, 70, 190, p, { size: 44, max: 6 });
-  const photo = g(`${shadow(0, 0, 300, 340)}<rect width="300" height="340" fill="#fffdf8"/><rect x="20" y="20" width="260" height="258" fill="${p.b}"/>${g(h(p), 20 + 130 - 130, 20 + 129 - 130, 1.3)}
+  const photo = g(`${shadow(0, 0, 300, 340)}<rect width="300" height="340" fill="#ffffff"/><rect x="20" y="20" width="260" height="258" fill="${p.b}"/>${g(h(p), 20 + 130 - 130, 20 + 129 - 130, 1.3)}
     <rect x="20" y="20" width="260" height="258" fill="none" stroke="#00000010"/>${txt(150, 312, d.cap ?? "20     .    .", { size: 17, anchor: "middle", fill: p.ink, opacity: .65 })}`, 440, 62, 1, 4);
   const body = `${rect(0, 0, W, H, p.paper)}${photo}${tape(520, 44, 130, p, -4)}${pm(p, 398, 300, 0.8, d.mark ?? "POST OFFICE")}${t.svg}${rules(70, 470, 654, 14, p.line)}${credit(p)}`;
   return { defs: "", body, area: { fields: [70, 422, 654], rules: [70, 470, 654, 14], from: [70, 1052, 654, "left"] } };
@@ -74,7 +74,7 @@ L.diary = (d, h, p) => {
 L.ticket = (d, h, p) => {
   const t = titleSvg(d, 70, 350, p, { size: 40, max: 8 });
   const f = flow(t.bottom);
-  const tk = g(`${shadow(0, 0, 654, 210, 10)}<path d="M0 12 a12 12 0 0 1 12 -12 H642 a12 12 0 0 1 12 12 V92 a14 14 0 0 0 0 28 V198 a12 12 0 0 1 -12 12 H12 a12 12 0 0 1 -12 -12 V120 a14 14 0 0 0 0 -28Z" fill="#fbf4e2" stroke="${p.d}" stroke-width="2.5"/>
+  const tk = g(`${shadow(0, 0, 654, 210, 10)}<path d="M0 12 a12 12 0 0 1 12 -12 H642 a12 12 0 0 1 12 12 V92 a14 14 0 0 0 0 28 V198 a12 12 0 0 1 -12 12 H12 a12 12 0 0 1 -12 -12 V120 a14 14 0 0 0 0 -28Z" fill="#ffffff" stroke="${p.d}" stroke-width="2.5"/>
     <rect x="0" y="0" width="654" height="44" rx="12" fill="${p.a}"/><rect x="0" y="22" width="654" height="22" fill="${p.a}"/>${txt(24, 31, "승  차  권", { size: 20, weight: 700, fill: "#fff", spacing: 8 })}${txt(630, 30, d.train ?? "무궁화호", { size: 18, weight: 700, fill: "#fff", anchor: "end" })}
     ${txt(30, 96, "출발", { size: 14, fill: p.ink, opacity: .6, serif: false })}${txt(30, 140, d.from ?? "추억역", { size: 38, weight: 700, fill: p.d })}${txt(300, 140, "→", { size: 34, fill: p.a, anchor: "middle" })}${txt(340, 96, "도착", { size: 14, fill: p.ink, opacity: .6, serif: false })}${txt(340, 140, d.to ?? "그리움역", { size: 38, weight: 700, fill: p.d })}
     <path d="M24 164 H630" stroke="${p.d}" stroke-width="1.5" stroke-dasharray="4 5" opacity=".6"/>${txt(30, 192, "20      .      .      발행        일반실  1매", { size: 14, fill: p.ink, opacity: .7, serif: false })}
@@ -86,7 +86,7 @@ L.ticket = (d, h, p) => {
 // 7. 카세트 테이프(라벨에 손글씨 제목)
 L.cassette = (d, h, p) => {
   const reel = (cx) => `${circle(cx, 0, 38, "#f4efe3")}${circle(cx, 0, 38, "none", 'stroke="#3a3a3a" stroke-width="3"')}${Array.from({ length: 6 }, (_, i) => `<rect x="${cx - 3}" y="-36" width="6" height="14" fill="#3a3a3a" transform="rotate(${i * 60} ${cx} 0)"/>`).join("")}${circle(cx, 0, 9, "#3a3a3a")}`;
-  const tape = g(`${shadow(0, 0, 560, 330, 18)}<rect width="560" height="330" rx="18" fill="${p.a}"/><rect x="18" y="16" width="524" height="190" rx="10" fill="#f8f1de"/>
+  const tape = g(`${shadow(0, 0, 560, 330, 18)}<rect width="560" height="330" rx="18" fill="${p.a}"/><rect x="18" y="16" width="524" height="190" rx="10" fill="#ffffff"/>
     <rect x="30" y="26" width="500" height="54" fill="${p.c}" opacity=".85"/>${txt(46, 64, "A  SIDE", { size: 24, weight: 800, fill: "#fff", spacing: 4, serif: false })}${txt(514, 64, "C-60", { size: 20, weight: 800, fill: "#fff", anchor: "end", serif: false })}
     ${txt(280, 134, d.title, { size: 38, weight: 700, fill: p.d, anchor: "middle" })}<path d="M60 152 H500" stroke="${p.d}" stroke-width="1.5" opacity=".5"/>
     <rect x="130" y="224" width="300" height="60" rx="30" fill="#2e2a28"/><g transform="translate(0 254)">${reel(190)}${reel(370)}</g><path d="M200 296 h160 l16 34 h-192Z" fill="#00000022"/>
@@ -98,7 +98,7 @@ L.cassette = (d, h, p) => {
 // 8. 일력(절기)
 L.almanac = (d, h, p) => {
   const t = titleSvg(d, 360, 150, p, { size: 40, max: 6 });
-  const cal = g(`${shadow(0, 0, 250, 300, 6)}<rect width="250" height="300" rx="6" fill="#fffdf4"/><rect width="250" height="62" rx="6" fill="${p.a}"/><rect y="40" width="250" height="22" fill="${p.a}"/>
+  const cal = g(`${shadow(0, 0, 250, 300, 6)}<rect width="250" height="300" rx="6" fill="#ffffff"/><rect width="250" height="62" rx="6" fill="${p.a}"/><rect y="40" width="250" height="22" fill="${p.a}"/>
     ${circle(60, 10, 7, "#fff", `stroke="${p.d}" stroke-width="2"`)}${circle(190, 10, 7, "#fff", `stroke="${p.d}" stroke-width="2"`)}${txt(125, 42, d.month ?? "3월", { size: 26, weight: 700, fill: "#fff", anchor: "middle", spacing: 4 })}
     ${txt(125, 180, d.hanja ?? "立春", { size: 76, weight: 700, fill: p.d, anchor: "middle" })}${txt(125, 226, d.term ?? "입춘", { size: 26, weight: 700, fill: p.a, anchor: "middle", spacing: 8 })}
     <path d="M30 246 H220" stroke="${p.d}" stroke-width="1.5" opacity=".4"/>${txt(125, 276, d.cal ?? "음력  월  일", { size: 15, fill: p.ink, anchor: "middle", opacity: .65, serif: false })}`, 70, 70, 1, -3);
@@ -149,7 +149,7 @@ L.scrap = (d, h, p) => {
   const doodles = Array.from({ length: 9 }, (_, i) => { const x = 60 + r() * 680, y = 40 + r() * 230; return i % 3 === 0 ? star(x, y, 12 + r() * 8, p.c, 0.55) : i % 3 === 1 ? circle(x, y, 7 + r() * 6, "none", `stroke="${p.a}" stroke-width="2.5" opacity=".6"`) : `<path d="M${x.toFixed(0)} ${y.toFixed(0)} q10 -16 20 0 t20 0" stroke="${p.d}" stroke-width="2.5" fill="none" opacity=".4"/>`; }).join("");
   const t = titleSvg(d, 70, 336, p, { size: 44, max: 8 });
   const f = flow(t.bottom);
-  const body = `${rect(0, 0, W, H, p.paper)}${doodles}${g(`${shadow(0, 0, 250, 250)}<rect width="250" height="250" fill="#fffdf6"/><rect x="14" y="14" width="222" height="222" fill="${p.b}"/>${g(h(p), 14, 14, 1.11)}`, 470, 50, 1, 5)}${tape(540, 36, 120, p, 6)}
+  const body = `${rect(0, 0, W, H, p.paper)}${doodles}${g(`${shadow(0, 0, 250, 250)}<rect width="250" height="250" fill="#ffffff"/><rect x="14" y="14" width="222" height="222" fill="${p.b}"/>${g(h(p), 14, 14, 1.11)}`, 470, 50, 1, 5)}${tape(540, 36, 120, p, 6)}
     ${g(`<rect width="150" height="104" fill="${p.bg}" stroke="${p.d}" stroke-width="2"/>${txt(75, 42, d.note1 ?? "잘 지내?", { size: 22, weight: 700, fill: p.d, anchor: "middle" })}${txt(75, 76, d.note2 ?? "보고 싶다", { size: 18, fill: p.ink, anchor: "middle" })}`, 90, 66, 1, -6)}${tape(120, 56, 80, p, -8)}
     ${t.svg}${rules(70, f.ry, 654, f.rows, p.line)}${credit(p)}`;
   return { defs: "", body, area: { fields: [70, f.fy, 654], rules: [70, f.ry, 654, f.rows], from: [70, 1052, 654, "left"] } };
