@@ -5,7 +5,7 @@ import { funItems } from "./fun";
 export interface NavLink { label: string; href: string }
 export interface NavGroup { id: string; title: string; items: NavLink[] }
 
-// 그룹은 제목이 짧은 순으로 보여 줍니다(같은 길이는 아래 선언 순서). 그룹을 추가해도 자동으로 제자리를 찾아요.
+// 그룹은 제목이, 그룹 안의 메뉴는 글자 수가 짧은 순으로 보여 줍니다(같은 길이는 아래 선언 순서). 그룹을 추가해도 자동으로 제자리를 찾아요.
 const groups: NavGroup[] = [
   {
     id: "products", title: "보험 상품",
@@ -37,4 +37,9 @@ const groups: NavGroup[] = [
   },
 ];
 
-export const navGroups: NavGroup[] = [...groups].sort((a, b) => a.title.length - b.title.length);
+// 각 그룹 안의 세부 메뉴도 글자 수가 적은 순(위→아래)으로 보여 줍니다. 같은 길이는 위에 적은 순서를 지킵니다(sort 는 순서를 유지).
+const byLabelLength = (items: NavLink[]) => [...items].sort((a, b) => a.label.length - b.label.length);
+
+export const navGroups: NavGroup[] = [...groups]
+  .sort((a, b) => a.title.length - b.title.length)
+  .map((g) => ({ ...g, items: byLabelLength(g.items) }));
