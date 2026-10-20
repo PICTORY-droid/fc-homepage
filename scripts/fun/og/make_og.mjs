@@ -49,9 +49,9 @@ for (const [fk, [group, title]] of Object.entries(items)) {
 
 // 이력서 포지션 (썸네일 없음 → 글자 중심)
 for (const m of forms.matchAll(/id: "([\w-]+)", name: "([^"]+)"/g)) {
-  out.push({ key: `forms-${m[1]}`, title: `${m[2]} 이력서·자기소개서`, sub: "Word 양식 10종 무료", thumbs: [], color: "#FF883A" });
+  out.push({ key: `forms-${m[1]}`, title: `${m[2]} 이력서·자기소개서`, sub: "Word 양식 20종 무료", thumbs: [], color: "#FF883A" });
 }
-out.push({ key: "forms", title: "직업별 이력서·자기소개서 200종", sub: "Word 양식 무료 다운로드", thumbs: [], color: "#FF883A" });
+out.push({ key: "forms", title: "직업별 이력서·자기소개서 600종", sub: "Word 양식 무료 다운로드", thumbs: [], color: "#FF883A" });
 out.push({ key: "fun", title: "즐길거리", sub: "엑셀·PPT·편지지·명함 무료 양식", thumbs: [], color: "#FF883A" });
 
 const esc = (s) => s.replace(/[&<>]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" })[c]);

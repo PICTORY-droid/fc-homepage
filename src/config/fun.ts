@@ -16,7 +16,7 @@ const unsorted: FunItem[] = [
   // 자료 꾸러미(엑셀·PPT·워드 …) — config/pack.ts 의 묶음이 늘어나면 자동으로 추가됩니다.
   ...packGroups.map((g) => ({ slug: g.slug, title: g.title, short: g.short, href: `/fun/${g.slug}`, icon: g.icon })),
   { slug: "cards", title: "명함 템플릿", short: "직장인·사장님·프리랜서·선생님·공무원 등 10분류, 앞뒤가 모두 다른 명함을 PPT·SVG로 받아 이름만 고쳐 쓰세요.", href: "/fun/cards", icon: "🪪" },
-  { slug: "forms", title: "직업별 이력서·자기소개서", short: "포지션 20개마다 이력서 5종·자기소개서 5종, 짜임이 모두 다른 Word 양식을 무료로 받으세요.", href: "/fun/forms", icon: "📄" },
+  { slug: "forms", title: "직업별 이력서·자기소개서", short: "포지션 30개마다 이력서 10종·자기소개서 10종, 작성 가이드가 붙은 Word 양식을 무료로 받으세요.", href: "/fun/forms", icon: "📄" },
 ];
 
 export const funItems: FunItem[] = [...unsorted].sort((a, b) => a.title.length - b.title.length);
