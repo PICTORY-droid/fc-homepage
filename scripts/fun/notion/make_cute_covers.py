@@ -1,5 +1,6 @@
 """노션 커버 — 깨끗·미니멀·귀여움. 파스텔 한 가지 배경 + 얼굴 달린 단순 도형 일러스트(SVG)를 크롬으로 그려 JPG 로 저장합니다.
-허브 커버(1500×600): public/notion/cover-<id>.jpg  /  자료실 행 배너(1500×500): public/notion/banner/<종류>-<번호>.jpg
+허브 커버·자료실 행 배너 모두 2400×400 (노션은 커버를 약 6:1 띠로 보여 주며 위아래를 잘라 내므로, 내용은 가운데 띠 안쪽에 넉넉한 여백으로 둡니다)
+저장: public/notion/cover-<id>.jpg  /  public/notion/banner/<종류>-<번호>.jpg
 글자 규칙: 노션 본문 규칙대로 '우체국'·'보험'·'연락처' 단어를 쓰지 않습니다(테마 이름의 '우체국'은 지웁니다).
 사용: python3 make_cute_covers.py [hubs|rows|all]"""
 import json
@@ -275,9 +276,21 @@ def text_block(x, y, tag, h1, em, sub, accent, w=1500, tag_fill="#FFFFFF", tag_i
     return s
 
 
-def blobs(c1, c2, w=1500, h=600):
-    return (f'<circle cx="{w - 190}" cy="{h / 2 - 20}" r="340" fill="{c1}"/><circle cx="{w - 60}" cy="{h + 40}" r="210" fill="{c2}"/>'
-            f'<circle cx="150" cy="{h + 70}" r="190" fill="{c2}" opacity=".7"/>' + sparkle(70, 90, 14, "#fff") + sparkle(1400, 70, 11, "#fff") + sparkle(640, 540, 9, "#fff"))
+CW, CH = 2400, 400
+
+
+def wide(bg, back, scene, vby, vbh, scale=0.7, cy=200):
+    """1500 폭으로 짠 장면을 축소해 2400×400 가운데 띠에 놓습니다. 내용 가운데가 cy 에 오도록 세로 위치를 맞춥니다."""
+    mid = vby + vbh / 2
+    y = cy - (mid - vby) * scale
+    x = (CW - 1500 * scale) / 2
+    inner = f'<svg x="{x:.1f}" y="{y:.1f}" width="{1500 * scale:.1f}" height="{vbh * scale:.1f}" viewBox="0 {vby} 1500 {vbh}" overflow="visible">{scene}</svg>'
+    return page(CW, CH, bg, back + inner)
+
+
+def wide_back(c1, c2, scene_cx=1500):
+    return (f'<circle cx="{scene_cx}" cy="205" r="190" fill="{c1}"/><circle cx="2330" cy="350" r="150" fill="{c2}" opacity=".85"/>'
+            f'<circle cx="150" cy="330" r="140" fill="{c2}" opacity=".7"/>' + sparkle(300, 110, 12, "#fff") + sparkle(2150, 90, 10, "#fff") + sparkle(560, 320, 8, "#fff"))
 
 
 # ---------- 허브 커버 ----------
@@ -301,13 +314,12 @@ HUBS = [
 
 def hub_html(c):
     o = c["objs"]
-    body = blobs(c["c1"], c["c2"])
-    body += text_block(96, 112, c["tag"], c["h1"], c["em"], c["sub"], c["acc"], size=62 if len(c["h1"]) > 12 else 68)
+    body = text_block(96, 112, c["tag"], c["h1"], c["em"], c["sub"], c["acc"], size=62 if len(c["h1"]) > 12 else 68)
     body += place(o[0][1], o[0][0], 975, 352, 0.82, -5)
     body += place(o[2][1], o[2][0], 1395, 348, 0.78, 6)
     body += place(o[1][1], o[1][0], 1185, 300, 1.22, 0)
     body += sparkle(930, 150, 16, c["acc"]) + heart(1420, 170, 0.7, c["acc"]) + sparkle(1260, 500, 11, c["acc"])
-    return page(1500, 600, c["bg"], body)
+    return wide(c["bg"], wide_back(c["c1"], c["c2"]), body, 70, 450)
 
 
 # ---------- 자료실 행 배너 ----------
@@ -318,8 +330,7 @@ def row_html(kind, e):
     theme = e["name"].replace("우체국", "").replace("  ", " ").strip()
     flavor = e["flavor"].replace("우체국", "").strip()
     season = e["season"]
-    body = f'<circle cx="1180" cy="230" r="330" fill="{e["soft"]}"/><circle cx="1420" cy="520" r="200" fill="{tint(e["main"], 0.55)}" opacity=".7"/><circle cx="90" cy="560" r="170" fill="{e["soft"]}" opacity=".8"/>'
-    body += sparkle(76, 80, 13, "#fff") + sparkle(700, 440, 9, "#fff")
+    body = ""
     # 계절 장식(오른쪽)
     if season == "봄":
         body += flower(940, 110, 15, tint(e["main"], 0.25)) + flower(1400, 120, 12, "#fff") + flower(1370, 410, 11, tint(e["main"], 0.3))
@@ -336,7 +347,7 @@ def row_html(kind, e):
     fs = 78 if len(theme) <= 6 else 66 if len(theme) <= 9 else 56
     body += f'<text x="96" y="{ty + 50 + fs + 14}" font-size="{fs}" font-weight="900" fill="{INK}" letter-spacing="-2">{theme}</text>'
     body += f'<text x="96" y="{ty + 50 + fs + 70}" font-size="28" font-weight="600" fill="{SUB}">{flavor}</text>'
-    return page(1500, 500, bg, body)
+    return wide(bg, wide_back(e["soft"], tint(e["main"], 0.55)), body, 60, 400, scale=0.76)
 
 
 def render(items):
@@ -347,7 +358,7 @@ def render(items):
             pg.set_viewport_size({"width": w, "height": h})
             pg.set_content(html)
             os.makedirs(os.path.dirname(path), exist_ok=True)
-            pg.screenshot(path=path, type="jpeg", quality=90)
+            pg.screenshot(path=path, type="jpeg", quality=88)
         b.close()
 
 
@@ -355,19 +366,19 @@ if __name__ == "__main__":
     mode = sys.argv[1] if len(sys.argv) > 1 else "all"
     jobs = []
     if mode in ("hubs", "all"):
-        jobs += [(os.path.join(OUT, f"cover-{c['id']}.jpg"), hub_html(c), 1500, 600) for c in HUBS]
+        jobs += [(os.path.join(OUT, f"cover-{c['id']}.jpg"), hub_html(c), CW, CH) for c in HUBS]
     if mode in ("rows", "all"):
         d = json.load(open(os.path.join(ROOT, "src", "config", "pack.data.json")))
         for kind in KIND:
             ext = "pptx" if kind.endswith("pro") else "xlsx"
             for e in d[f"{ext}-{kind}"]:
-                jobs.append((os.path.join(OUT, "banner", f"{kind}-{e['no']:02d}.jpg"), row_html(kind, e), 1500, 500))
+                jobs.append((os.path.join(OUT, "banner", f"{kind}-{e['no']:02d}.jpg"), row_html(kind, e), CW, CH))
     if mode == "sample":
         d = json.load(open(os.path.join(ROOT, "src", "config", "pack.data.json")))
-        jobs += [(f"/tmp/cv/hub-{c['id']}.jpg", hub_html(c), 1500, 600) for c in HUBS]
+        jobs += [(f"/tmp/cv/hub-{c['id']}.jpg", hub_html(c), CW, CH) for c in HUBS]
         for kind, n in (("ledger", 1), ("saving", 15), ("gift", 30), ("allowance", 47), ("quote", 22), ("talkpro", 3), ("familypro", 9), ("birthdaypro", 20), ("weddingpro", 33), ("newspro", 50)):
             ext = "pptx" if kind.endswith("pro") else "xlsx"
             e = d[f"{ext}-{kind}"][n - 1]
-            jobs.append((f"/tmp/cv/row-{kind}-{n}.jpg", row_html(kind, e), 1500, 500))
+            jobs.append((f"/tmp/cv/row-{kind}-{n}.jpg", row_html(kind, e), CW, CH))
     render(jobs)
     print("완료", len(jobs), "장")
