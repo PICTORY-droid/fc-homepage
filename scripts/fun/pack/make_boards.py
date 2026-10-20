@@ -80,7 +80,18 @@ def card(content, label, width, pad=22):
     return layer
 
 
+THUMB_DIR = os.environ.get("THUMB_DIR")  # 지정하면 격자용 대표 쪽(여백 제거)도 PNG 로 저장하고, SKIP_BOARD=1 이면 보드는 다시 만들지 않습니다
+
+
+def dump_thumb(item, k, im):
+    if THUMB_DIR:
+        os.makedirs(THUMB_DIR, exist_ok=True)
+        im.save(os.path.join(THUMB_DIR, f"{item}-{k:02d}.png"))
+
+
 def board(cards, title, sub, cols, cw, path):
+    if os.environ.get("SKIP_BOARD"):
+        return (0, 0)
     sh = 26
     margin, gap, head = 70, 10, 170
     colw = cw + 2 * sh
@@ -164,6 +175,9 @@ def excel_board(item, k=1):
     keep = sheet_first_pages(pdf, pages)
     names = [ws.title for ws in load_workbook(src, read_only=True).worksheets if ws.sheet_state == "visible"]
     cards = []
+    main_i = 0 if item == "quote" else 1
+    if THUMB_DIR and len(keep) > main_i:
+        dump_thumb(item, k, crop_content(Image.open(keep[main_i]).convert("RGB")))
     for n, p in enumerate(keep[:len(names)] if len(keep) >= len(names) else keep):
         im = crop_content(Image.open(p).convert("RGB"))
         label = f"{n + 1}  {names[n]}" if n < len(names) else f"{n + 1}"
@@ -191,6 +205,7 @@ def pptx_board(item, k=1):
     subprocess.run(["pdftoppm", "-jpeg", "-jpegopt", "quality=92", "-r", "110", "-f", "1", "-l", "20", pdf, os.path.join(work, "p")], check=True)
     pages = sorted(glob.glob(os.path.join(work, "p-*.jpg")))
     square = item.startswith("news")
+    dump_thumb(item, k, Image.open(pages[0]).convert("RGB"))
     cols, cw = (3, 520) if square else (2, 680)
     cards = [card(Image.open(p).convert("RGB"), f"{n + 1}", cw, pad=10) for n, p in enumerate(pages)]
     t, s = TITLES[item]
