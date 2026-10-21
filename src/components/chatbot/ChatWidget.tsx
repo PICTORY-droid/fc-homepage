@@ -153,7 +153,7 @@ export function ChatWidget() {
       )}
       <button ref={launcherRef} type="button" onClick={() => setOpen((v) => !v)} aria-expanded={open} aria-controls="chat-panel"
         aria-label={open ? "안내 도우미 닫기" : `안내 도우미 열기 — ${chatbotCopy.launcherLabel}`}
-        className="group flex items-center gap-2 rounded-full bg-paper p-1.5 shadow-lg ring-1 ring-brand/30 transition hover:-translate-y-0.5 hover:shadow-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">
+        className="cb-glow group flex items-center gap-2 rounded-full bg-paper p-1.5 shadow-lg ring-1 ring-brand/30 transition hover:-translate-y-0.5 hover:shadow-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">
         <span className="flex h-14 w-14 items-center justify-center rounded-full bg-brand-soft"><ChatCharacter className="cb-bob h-11 w-11" /></span>
         {!open && <span className="hidden pr-4 text-sm font-bold text-ink md:inline">{chatbotCopy.launcherLabel}</span>}
       </button>

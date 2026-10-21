@@ -134,3 +134,23 @@
   .cb-bob { animation: cbBob 3s ease-in-out infinite; }
   .cb-char .cb-eyes { transform-box: fill-box; transform-origin: center; animation: cbBlink 4s ease-in-out infinite; }
 }
+
+/* 안내 도우미 버튼 — 15초마다 한 번, 테두리를 따라 은은한 빛이 한 바퀴 돕니다(나머지 시간은 가만히). 모션 줄이기 설정이면 꺼집니다 */
+@property --cb-a { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes cbGlowSpin {
+    0% { --cb-a: 0deg; opacity: 0; }
+    2% { opacity: 1; }
+    16% { --cb-a: 360deg; opacity: 1; }
+    19%, 100% { --cb-a: 360deg; opacity: 0; }
+  }
+  .cb-glow { position: relative; }
+  .cb-glow::before {
+    content: ""; position: absolute; inset: -2px; border-radius: 9999px; padding: 2.5px; pointer-events: none; opacity: 0;
+    background: conic-gradient(from var(--cb-a), transparent 0deg, transparent 230deg, #FFDAC1 290deg, #FF883A 335deg, #FFDAC1 352deg, transparent 360deg);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor;
+    mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+    filter: drop-shadow(0 0 4px rgba(255, 136, 58, .55));
+    animation: cbGlowSpin 15s ease-in-out infinite;
+  }
+}
