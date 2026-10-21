@@ -8,6 +8,8 @@ import { LEAD_STATUSES, STATUS_LABEL, listLeads, type LeadRow } from "@/services
 import { formatPhone } from "@/lib/phone";
 import { summarizeDetail } from "@/features/consult/detailOptions";
 import { OwnerNoTrack } from "@/components/analytics/OwnerNoTrack";
+import { Pager } from "@/components/ui/Pager";
+import { paginate, parsePage } from "@/lib/pagination";
 import { AdminNav } from "./AdminNav";
 import { AdminEntry } from "./AdminEntry";
 import { logoutAction, updateLeadAction } from "./actions";
@@ -65,9 +67,11 @@ function LeadCard({ lead, memoEnabled }: { lead: LeadRow; memoEnabled: boolean }
 }
 
 // 상담 접수 관리 — 로그인(서버 세션) 후에만 목록이 보입니다.
-export default async function AdminPage() {
+export default async function AdminPage({ searchParams }: { searchParams: Promise<{ page?: string }> }) {
   if (!(await isAdminLoggedIn())) return <AdminEntry />;
   const { rows, memoEnabled, error } = await listLeads();
+  const sp = await searchParams;
+  const pg = paginate(rows, parsePage(sp.page)); // 최신 접수순(서버에서 내림차순 조회) 10건씩
   const counts = Object.fromEntries(LEAD_STATUSES.map((s) => [s, rows.filter((r) => r.status === s).length]));
   return (
     <Section title="상담 접수 관리" lead={`최근 ${rows.length}건 · 대기 ${counts.new} · 연락함 ${counts.contacted} · 완료 ${counts.done}`}>
@@ -77,7 +81,10 @@ export default async function AdminPage() {
       {error && <Notice tone="alert">{error}</Notice>}
       {!memoEnabled && !error && <div className="mb-4"><Notice>메모·유입 정보를 쓰려면 Supabase SQL Editor에서 db/admin_setup.sql 을 한 번 실행해 주세요.</Notice></div>}
       {rows.length === 0 && !error ? <p className="text-ink-sub">아직 접수된 상담이 없습니다.</p> : (
-        <ul className="space-y-3">{rows.map((r) => <LeadCard key={r.id} lead={r} memoEnabled={memoEnabled} />)}</ul>
+        <>
+          <ul className="space-y-3">{pg.items.map((r) => <LeadCard key={r.id} lead={r} memoEnabled={memoEnabled} />)}</ul>
+          <Pager basePath="/admin" page={pg.page} totalPages={pg.totalPages} total={pg.total} from={pg.from} to={pg.to} />
+        </>
       )}
     </Section>
   );

@@ -4,7 +4,9 @@ import { Notice } from "@/components/ui/Notice";
 import { OwnerNoTrack } from "@/components/analytics/OwnerNoTrack";
 import { isAdminLoggedIn } from "@/services/adminSession";
 import { loadStats } from "@/services/adminStats";
-import type { Count, SourceRow, Summary } from "@/features/analytics/summary";
+import { TrendChart } from "@/components/admin/charts/TrendChart";
+import { DonutChart } from "@/components/admin/charts/DonutChart";
+import type { Count, SourceRow } from "@/features/analytics/summary";
 import { AdminNav } from "../AdminNav";
 import { AdminEntry } from "../AdminEntry";
 import { logoutAction } from "../actions";
@@ -62,19 +64,6 @@ function SourceTable({ title, rows }: { title: string; rows: SourceRow[] }) {
   );
 }
 
-function Daily({ s }: { s: Summary }) {
-  const max = Math.max(1, ...s.daily.map((d) => d.visits));
-  return (
-    <div className="rounded-card border border-ink/10 bg-paper p-4">
-      <h3 className="font-bold text-ink">날짜별 방문</h3>
-      <div className="mt-3 flex h-28 items-end gap-px" role="img" aria-label={`날짜별 방문 수, 최대 ${max}`}>
-        {s.daily.map((d) => <div key={d.date} title={`${d.date} · 방문 ${d.visits}`} className="flex-1 rounded-t bg-brand" style={{ height: `${Math.max(2, (d.visits / max) * 100)}%` }} />)}
-      </div>
-      <p className="mt-1 flex justify-between text-xs text-ink-sub"><span>{s.daily[0]?.date}</span><span>{s.daily.at(-1)?.date}</span></p>
-    </div>
-  );
-}
-
 const MESSAGE = {
   "no-storage": "저장소(Supabase)가 설정되지 않았습니다.",
   "no-table": "통계 저장 테이블이 아직 없습니다. Supabase SQL Editor에서 db/admin_setup.sql 을 한 번만 실행해 주세요. 그 뒤로는 따로 설정할 것이 없습니다.",
@@ -113,7 +102,10 @@ export default async function StatsPage({ searchParams }: { searchParams: Promis
             <Stat label="카카오 누름" value={s.totals.kakao_click} />
             <Stat label="소식받기 가입" value={s.totals.newsletter_optin} />
           </div>
-          <Daily s={s} />
+          <div className="grid gap-4 lg:grid-cols-2">
+            <TrendChart title="날짜별 방문" unit="회" data={s.daily.map((d) => ({ label: d.date, value: d.visits }))} />
+            <DonutChart title="유입 경로 비율" unit="회" rows={s.sources.map((r) => ({ key: r.key, count: r.visits }))} />
+          </div>
           <SourceTable title="어디서 들어왔나 (유입 경로)" rows={s.sources} />
           <SourceTable title="링크 꼬리표(캠페인)별" rows={s.campaigns} />
           <div className="grid gap-4 sm:grid-cols-2">
