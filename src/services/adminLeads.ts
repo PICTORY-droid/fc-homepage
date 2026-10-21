@@ -11,6 +11,7 @@ export const STATUS_LABEL: Record<LeadStatus, string> = { new: "대기", contact
 export type LeadRow = {
   id: string; name: string | null; phone: string | null; interest: string | null; insured_age: number | null;
   status: string; created_at: string; memo: string | null; detail: DetailPayload | null;
+  utm_source: string | null; utm_medium: string | null; utm_campaign: string | null; ref_host: string | null;
 };
 
 const BASE_COLUMNS = "id,name,phone,interest,insured_age,status,created_at";
@@ -24,15 +25,23 @@ export async function listLeads(): Promise<{ rows: LeadRow[]; memoEnabled: boole
   const query = (cols: string) =>
     db.from("leads").select(cols).eq("owner_id", owner).is("deleted_at", null).order("created_at", { ascending: false }).limit(LIST_LIMIT);
 
+  // 컬럼이 아직 없는 DB(db/admin_setup.sql 미실행)에서도 목록은 보이도록, 선택 컬럼을 빼며 차례로 시도
+  const ATTR = "utm_source,utm_medium,utm_campaign,ref_host";
+  const attempts: { cols: string; memo: boolean }[] = [
+    { cols: `${BASE_COLUMNS},memo,detail,${ATTR}`, memo: true },
+    { cols: `${BASE_COLUMNS},memo,detail`, memo: true },
+    { cols: `${BASE_COLUMNS},memo`, memo: true },
+    { cols: BASE_COLUMNS, memo: false },
+  ];
+  let res = await query(attempts[0].cols);
   let memoEnabled = true;
-  let res = await query(`${BASE_COLUMNS},memo,detail`);
-  if (res.error) res = await query(`${BASE_COLUMNS},memo`); // detail 컬럼 미생성(db/leads_detail.sql 미실행)
-  if (res.error) { // memo 컬럼이 아직 없으면(db/leads_admin.sql 미실행) 메모 없이 조회
-    memoEnabled = false;
-    res = await query(BASE_COLUMNS);
+  for (let k = 1; res.error && k < attempts.length; k++) {
+    memoEnabled = attempts[k].memo;
+    res = await query(attempts[k].cols);
   }
   if (res.error) return { rows: [], memoEnabled, error: "접수 목록을 불러오지 못했습니다." };
-  const rows = (res.data as unknown as Omit<LeadRow, "memo" | "detail">[]).map((r) => ({ memo: null, detail: null, ...r })) as LeadRow[];
+  const empty = { memo: null, detail: null, utm_source: null, utm_medium: null, utm_campaign: null, ref_host: null };
+  const rows = (res.data as unknown as Partial<LeadRow>[]).map((r) => ({ ...empty, ...r })) as LeadRow[];
   return { rows, memoEnabled };
 }
 

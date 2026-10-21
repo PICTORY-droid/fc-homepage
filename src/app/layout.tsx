@@ -7,6 +7,7 @@ import { RevealObserver } from "@/components/motion/RevealObserver";
 import { ScrollProgress } from "@/components/motion/ScrollProgress";
 import { ChatWidget } from "@/components/chatbot/ChatWidget";
 import { ClickTracker } from "@/components/analytics/ClickTracker";
+import { PageViewTracker } from "@/components/analytics/PageViewTracker";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -38,6 +39,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ScrollProgress />
         <RevealObserver />
         <ClickTracker />
+        <PageViewTracker />
         <Header />
         <main id="main">{children}</main>
         <Footer />

@@ -2,7 +2,7 @@
 import { revalidatePath } from "next/cache";
 import { headers } from "next/headers";
 import { z } from "zod";
-import { endAdminSession, isAdminLoggedIn, startAdminSession } from "@/services/adminSession";
+import { endAdminSession, isAdminLoggedIn, isEntryKeyValid, startAdminSession } from "@/services/adminSession";
 import { LEAD_STATUSES, updateLead } from "@/services/adminLeads";
 import { isRateLimited } from "@/lib/rateLimit";
 
@@ -12,6 +12,7 @@ export type ActionState = { error?: string };
 export async function loginAction(_prev: ActionState, formData: FormData): Promise<ActionState> {
   const ip = (await headers()).get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
   if (isRateLimited(`admin-login:${ip}`)) return { error: "시도가 너무 많습니다. 잠시 후 다시 시도해 주세요." };
+  if (!isEntryKeyValid(String(formData.get("k") ?? ""))) return { error: "비밀번호가 맞지 않거나 관리자 기능이 설정되지 않았습니다." };
   const password = String(formData.get("password") ?? "").slice(0, 200);
   const ok = await startAdminSession(password);
   if (!ok) return { error: "비밀번호가 맞지 않거나 관리자 기능이 설정되지 않았습니다." };

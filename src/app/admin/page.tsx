@@ -1,12 +1,15 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { Section } from "@/components/ui/Section";
 import { Notice } from "@/components/ui/Notice";
 import { getCategory } from "@/config/categories";
 import { TIME_LABEL, TIMES } from "@/features/consult/schema";
-import { isAdminConfigured, isAdminLoggedIn } from "@/services/adminSession";
+import { isAdminConfigured, isAdminLoggedIn, isEntryKeyValid } from "@/services/adminSession";
 import { LEAD_STATUSES, STATUS_LABEL, listLeads, type LeadRow } from "@/services/adminLeads";
 import { formatPhone } from "@/lib/phone";
 import { summarizeDetail } from "@/features/consult/detailOptions";
+import { OwnerNoTrack } from "@/components/analytics/OwnerNoTrack";
+import { AdminNav } from "./AdminNav";
 import { LoginForm } from "./LoginForm";
 import { logoutAction, updateLeadAction } from "./actions";
 
@@ -23,6 +26,8 @@ function interestLabel(v: string | null) {
   return tm ? `${t} · ${tm}` : t;
 }
 
+const fromLabel = (l: LeadRow) => [l.utm_source || l.ref_host, l.utm_campaign].filter(Boolean).join(" / ");
+
 function LeadCard({ lead, memoEnabled }: { lead: LeadRow; memoEnabled: boolean }) {
   return (
     <li className="rounded-card border border-ink/10 bg-paper p-4">
@@ -30,6 +35,7 @@ function LeadCard({ lead, memoEnabled }: { lead: LeadRow; memoEnabled: boolean }
         <p className="text-lg font-bold text-ink">{lead.name ?? "-"} <span className="text-sm font-normal text-ink-sub">{lead.insured_age != null ? `· 만 ${lead.insured_age}세` : ""}</span></p>
         <p className="text-sm text-ink-sub">{fmtDate(lead.created_at)}</p>
       </div>
+      {fromLabel(lead) && <p className="mt-1 text-xs font-semibold text-ink-sub">유입: {fromLabel(lead)}</p>}
       <p className="mt-1 text-ink">
         {lead.phone ? <a className="font-semibold underline" href={`tel:${lead.phone}`}>{formatPhone(lead.phone)}</a> : "-"}
         <span className="ml-3 text-sm text-ink-sub">{interestLabel(lead.interest)}</span>
@@ -60,20 +66,23 @@ function LeadCard({ lead, memoEnabled }: { lead: LeadRow; memoEnabled: boolean }
 }
 
 // 상담 접수 관리 — 로그인(서버 세션) 후에만 목록이 보입니다.
-export default async function AdminPage() {
-  if (!isAdminConfigured()) {
-    return <Section title="상담 접수 관리"><Notice>관리자 기능이 아직 설정되지 않았습니다. ADMIN_PASSWORD(12자 이상)와 ADMIN_SESSION_SECRET(32자 이상) 환경변수를 설정해 주세요.</Notice></Section>;
-  }
+export default async function AdminPage({ searchParams }: { searchParams: Promise<{ k?: string }> }) {
+  // 관리자가 아닌 방문자에게는 로그인 화면도 보이지 않도록, 비밀 꼬리표(?k=)가 없으면 '없는 페이지'로 보여 줍니다.
+  if (!isAdminConfigured()) notFound();
   if (!(await isAdminLoggedIn())) {
-    return <Section title="상담 접수 관리" lead="관리자만 볼 수 있는 화면입니다."><LoginForm /></Section>;
+    const k = (await searchParams).k;
+    if (!isEntryKeyValid(k)) notFound();
+    return <Section title="상담 접수 관리" lead="관리자만 볼 수 있는 화면입니다."><LoginForm entryKey={k ?? ""} /></Section>;
   }
   const { rows, memoEnabled, error } = await listLeads();
   const counts = Object.fromEntries(LEAD_STATUSES.map((s) => [s, rows.filter((r) => r.status === s).length]));
   return (
     <Section title="상담 접수 관리" lead={`최근 ${rows.length}건 · 대기 ${counts.new} · 연락함 ${counts.contacted} · 완료 ${counts.done}`}>
+      <OwnerNoTrack />
+      <AdminNav current="leads" />
       <form action={logoutAction} className="mb-6"><button type="submit" className="text-sm font-semibold text-ink underline">로그아웃</button></form>
       {error && <Notice tone="alert">{error}</Notice>}
-      {!memoEnabled && !error && <div className="mb-4"><Notice>메모 기능을 쓰려면 Supabase에서 db/leads_admin.sql 을 한 번 실행해 주세요.</Notice></div>}
+      {!memoEnabled && !error && <div className="mb-4"><Notice>메모·유입 정보를 쓰려면 Supabase SQL Editor에서 db/admin_setup.sql 을 한 번 실행해 주세요.</Notice></div>}
       {rows.length === 0 && !error ? <p className="text-ink-sub">아직 접수된 상담이 없습니다.</p> : (
         <ul className="space-y-3">{rows.map((r) => <LeadCard key={r.id} lead={r} memoEnabled={memoEnabled} />)}</ul>
       )}
