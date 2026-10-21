@@ -5,7 +5,9 @@ export function ChatCharacter({ className = "" }: { className?: string }) {
       <rect x="35" y="55" width="130" height="100" rx="18" fill="#fff" stroke="#E8591A" strokeWidth="5" />
       <path d="M45 52 Q100 14 155 52 Z" fill="#E8591A" />
       <rect x="40" y="48" width="120" height="9" rx="4" fill="#C4540A" />
-      <circle cx="100" cy="36" r="9" fill="#FFDAC1" stroke="#C4540A" strokeWidth="3" />
+      {/* 모자 앞 우체국 심벌 — 사용 허락을 받은 공식 마크 파일을 모양 변형 없이 그대로 얹습니다(흰 배지 위) */}
+      <circle cx="100" cy="35" r="17" fill="#fff" stroke="#C4540A" strokeWidth="3" />
+      <image href="/brand/postal-insurance-mark.svg" x="87" y="21" width="26" height="28" preserveAspectRatio="xMidYMid meet" />
       <path d="M40 150 L72 128 M160 150 L128 128" stroke="#E8591A" strokeWidth="4" strokeLinecap="round" fill="none" />
       <g className="cb-eyes">
         <circle cx="78" cy="100" r="5.5" fill="#333" />
