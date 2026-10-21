@@ -99,6 +99,7 @@ def jobs(which):
             out.append((f"note/N{no:02d}.jpg", cover_html(tag + t, short_name(title), sub)))
     if which in ("hub", "all"):
         out.append(("cover-insurance-v2.jpg", cover_html("INSURANCE NOTE · 우체국보험", "보험노트", "가입 · 보장 · 청구 · 유지, 꼭 알아야 할 보험 정보")))
+        out.append(("cover-products.jpg", cover_html("POST OFFICE INSURANCE · 상품 안내", "우체국 상품노트", "상품별 정보성 안내글 모음 (공식 상품요약서 기준)")))
     return out
 
 
