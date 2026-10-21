@@ -1,55 +1,78 @@
-"""명함 디자인 v2 — 선명한 원색 + 깨끗한 흰 바탕 + 큰 여백의 미니멀 레이아웃.
-- 색: 탁한 혼합색 없이 맑은 원색 50가지(PAL). 글자는 항상 먹색/흰색, 원색은 면·선·점에만 씁니다.
-- 레이아웃: 앞면 12종 · 뒷면 10종 × 바탕 5종(흰색·먹색·원색·연회색·연한 원색)."""
-from layouts import contrast, mix, wrap
+"""명함 디자인 v3 — 차분한 톤온톤 색 + 깨끗한 바탕 + 큰 여백의 미니멀 레이아웃(2026 제작, 2030년까지 오래 쓰는 절제된 스타일).
+- 색: 채도를 낮춘 깊은 색 50가지(PAL). 형광·원색은 쓰지 않고, 글자는 항상 먹색/흰색, 색은 면·선·점에만 씁니다.
+- 바탕 5종: 흰색·먹색(어두움)·짙은 단색(어두움)·스톤 회색·연한 틴트. 앞·뒷면은 서로 밝기 계열이 반대이고 포인트 색도 다릅니다.
+- 레이아웃: 앞면 12종 · 뒷면 10종."""
+from layouts import contrast, mix, readable, wrap
 from icons import arc_pts
 from scene import PT, ellipse, line, poly, rect, text
 
 NF, NB, NFLAV = 12, 10, 5
 L = 70  # 좌우 여백
-INK, WHITE, DARK_BG, GRAY_BG = "#12151C", "#FFFFFF", "#0E1116", "#F3F4F6"
+INK, WHITE, DARK_BG, GRAY_BG = "#14171D", "#FFFFFF", "#101216", "#EFEDE8"
+LIGHT_FLAVORS, DEEP_FLAVORS = (0, 3, 4), (1, 2)  # 밝은 바탕 계열 / 어두운 바탕 계열 — 앞면과 뒷면은 서로 반대 계열을 씁니다
 
-PAL = [  # (이름, 대표색) — 한국에서 사랑받는 맑은 원색 위주
-    ("코발트 블루", "#0057FF"), ("로열 블루", "#1F5BFF"), ("스카이 블루", "#2E9BFF"), ("아이스 블루", "#4CC3FF"), ("시안", "#00B8E6"),
-    ("터콰이즈", "#00C2C0"), ("민트", "#00C896"), ("에메랄드", "#00B86B"), ("프레시 그린", "#12B76A"), ("애플 그린", "#4CD964"),
-    ("라임", "#A6E22E"), ("레몬", "#FFE600"), ("선샤인", "#FFC800"), ("골드", "#FFB300"), ("앰버", "#FF9F0A"),
-    ("오렌지", "#FF7A00"), ("탠저린", "#FF6A13"), ("코랄", "#FF5A4F"), ("레드", "#F0262F"), ("스칼렛", "#E6193C"),
-    ("로즈", "#FF3B6B"), ("핫핑크", "#FF2E93"), ("베이비 핑크", "#FF8FB8"), ("마젠타", "#E5169B"), ("오키드", "#C93CE0"),
-    ("바이올렛", "#8A3FFC"), ("퍼플", "#7A2CF5"), ("인디고", "#4A3AFF"), ("블루 바이올렛", "#5B5BFF"), ("네이비", "#0A2F7A"),
-    ("미드나잇", "#0B1B4D"), ("딥 블루", "#0A47C7"), ("청록", "#00A6A6"), ("포레스트", "#0F9D58"), ("연두", "#5CD65C"),
-    ("살구", "#FF9E6B"), ("복숭아", "#FF8A7A"), ("체리", "#E8284F"), ("와인", "#B5123E"), ("블러쉬", "#FF6F8E"),
-    ("라벤더", "#9B7BFF"), ("라일락", "#B66DFF"), ("블루베리", "#3D5AFE"), ("오션", "#0077FF"), ("아쿠아", "#00D0E0"),
-    ("네온 민트", "#00E0A4"), ("시트러스", "#FFD000"), ("피치", "#FFA07A"), ("크림슨", "#D90429"), ("블랙", "#111111"),
+PAL = [  # (이름, 대표색) — 채도를 낮춘 깊은 색. 색상 계열 순서(청·녹·황토·적·보라·무채)라서 앞뒷면 짝을 멀리 떨어진 번호로 잡으면 색 계열이 달라집니다.
+    ("잉크네이비", "#1B2A49"), ("미드나잇블루", "#23395B"), ("딥코발트", "#2F4C9A"), ("로열블루", "#3558B8"), ("스틸블루", "#4F6D8F"),
+    ("데님", "#3E5C76"), ("스카이포그", "#6C8EA8"), ("아이스슬레이트", "#7C93A6"), ("페트롤", "#1F5F6B"), ("딥틸", "#1D6F73"),
+    ("라군", "#2E8B8B"), ("아쿠아그레이", "#5A9A9B"), ("유칼립투스", "#4F8A7B"), ("세이지", "#7A9A84"), ("포레스트", "#2F5D45"),
+    ("파인", "#24493A"), ("모스", "#5D7A3A"), ("올리브", "#6B6B2F"), ("올리브그레이", "#7F8466"), ("라이트카키", "#8E8F5E"),
+    ("머스터드", "#B8892B"), ("오커", "#C08A2E"), ("앰버", "#C27B22"), ("허니", "#D19A3A"), ("샌드", "#BFA27A"),
+    ("베이지브라운", "#A68A68"), ("카멜", "#A8733C"), ("코퍼", "#B0622E"), ("테라코타", "#B5543A"), ("러스트", "#9C4A2E"),
+    ("브릭", "#A04033"), ("크랜베리", "#9B2D45"), ("와인", "#7A2237"), ("버건디", "#6B1F33"), ("더스티로즈", "#B26B7A"),
+    ("블러시", "#C98B94"), ("모브", "#9A6B83"), ("플럼", "#6E3B5C"), ("오베르진", "#4F2D4F"), ("라일락그레이", "#8A7BA0"),
+    ("슬레이트바이올렛", "#5E5A8C"), ("인디고", "#3F3F82"), ("미스트블루", "#7B8CB5"), ("차콜", "#2B2E36"), ("그라파이트", "#3C4048"),
+    ("스톤그레이", "#6F7378"), ("웜그레이", "#7A7268"), ("토프", "#8A7B6E"), ("에스프레소", "#4A3B33"), ("코코아", "#6A4A3A"),
 ]
 assert len(PAL) == 50 and len({n for n, _ in PAL}) == 50 and len({h for _, h in PAL}) == 50
 
 
+def deepen(color, ratio=4.5):
+    """흰 글자를 올려도 읽히도록 색을 조금씩 어둡게 합니다(색조는 유지)."""
+    c = color
+    for _ in range(30):
+        if contrast(WHITE, c) >= ratio:
+            return c
+        c = mix(c, "#000000", .06)
+    return c
+
+
 class Ctx:
-    """한 면의 색 묶음. acc=면·선·점에 쓰는 원색, fg=글자, sub=보조 글자, on=원색 위 글자, panel=바탕과 다른 큰 면."""
+    """한 면의 색 묶음. acc=면·선·점에 쓰는 포인트색, fg=글자, sub=보조 글자, on=포인트색 위 글자, panel=바탕과 다른 큰 면."""
 
     def __init__(self, pal_i, flavor, d, side="front"):
         self.d, self.flavor = d, flavor
         a = PAL[pal_i][1]
         self.name = PAL[pal_i][0]
-        if flavor == 0:
-            self.bg, self.fg, self.sub, self.acc, self.line = WHITE, INK, "#6B7280", a, "#E3E5E9"
-        elif flavor == 1:
+        if flavor == 0:  # 흰 바탕
+            self.bg, self.fg, self.sub, self.line = WHITE, INK, "#666B73", "#E6E4DF"
+            self.acc = readable(a, self.bg, 3.0)
+            self.panel = deepen(a)
+        elif flavor == 1:  # 먹색 바탕
+            self.bg, self.fg, self.sub, self.line = DARK_BG, WHITE, "#A7ABB4", "#2A2D34"
             pop = a
             while contrast(pop, DARK_BG) < 4.0:
-                pop = mix(pop, WHITE, .12)
-            self.bg, self.fg, self.sub, self.acc, self.line = DARK_BG, WHITE, "#A3A9B5", pop, "#2A2F38"
-        elif flavor == 2:
-            self.bg = a
-            self.fg = WHITE if contrast(WHITE, a) >= 3.2 else INK
-            self.sub, self.acc, self.line = mix(self.fg, a, .22), self.fg, mix(self.fg, a, .6)
-        elif flavor == 3:
-            self.bg, self.fg, self.sub, self.acc, self.line = GRAY_BG, INK, "#6B7280", a, "#DCDFE4"
-        else:
-            self.bg, self.fg, self.sub, self.acc, self.line = mix(a, WHITE, .9), INK, mix(INK, a, .38), a, mix(a, WHITE, .72)
-        self.on = WHITE if contrast(WHITE, self.acc) >= 3.2 else INK  # 원색 위 글자
-        self.panel = mix(a, WHITE, .2) if flavor == 2 else self.acc
+                pop = mix(pop, WHITE, .1)
+            self.acc = self.panel = pop
+        elif flavor == 2:  # 짙은 단색 바탕(톤온톤)
+            self.bg = deepen(a, 6.0)
+            self.fg = WHITE
+            self.sub = mix(WHITE, self.bg, .32)
+            self.acc = mix(self.bg, WHITE, .55)
+            self.line = mix(self.bg, WHITE, .24)
+            self.panel = mix(self.bg, WHITE, .14)
+        elif flavor == 3:  # 스톤 회색 바탕
+            self.bg, self.fg, self.sub, self.line = GRAY_BG, INK, "#686459", "#D9D5CD"
+            self.acc = readable(a, self.bg, 3.0)
+            self.panel = deepen(a)
+        else:  # 연한 틴트 바탕
+            self.bg, self.fg = mix(a, WHITE, .9), INK
+            self.sub, self.line = mix(INK, a, .38), mix(a, WHITE, .72)
+            self.acc = readable(a, self.bg, 3.0)
+            self.panel = deepen(a)
+        self.acc2 = readable(PAL[(pal_i + 7) % 50][1], self.bg, 3.0)  # 이웃 색 — 두 번째 포인트
+        self.on = WHITE if contrast(WHITE, self.acc) >= 3.2 else INK  # 포인트색 위 글자
         self.onp = WHITE if contrast(WHITE, self.panel) >= 3.2 else INK
-        self.deco = mix(self.bg, WHITE, .3) if flavor == 2 else mix(self.bg, WHITE, .1) if flavor == 1 else mix(self.bg, self.acc, .14)
+        self.deco = mix(self.bg, WHITE, .1) if flavor in (1, 2) else mix(self.bg, self.acc, .12)
         if contrast(self.sub, self.bg) < 3.2:
             self.sub = mix(self.fg, self.bg, .25)
 
@@ -82,7 +105,7 @@ def frame(c, m=26, color=None):
 
 
 def mono(c):
-    return c.d["company"][:1] if c.d["company"] else "A"
+    return "A"  # 로고 자리 표시(회사 이름의 첫 글자를 쓰면 '샵'·'상'처럼 어색해서 알파벳으로 둡니다)
 
 
 def sector(cx, cy, r, a0, a1, fill, op=1):
@@ -144,7 +167,7 @@ def co(c, x, y, w=420, color=None, align="l"):
 # ───────── 앞면 12종
 def f_grid(c):
     return [frame(c), rect(L, 70, 22, 22, c.acc), co(c, L + 40, 72, 420), hl(L, 830, 124, c.line),
-            *name_title(c, L, 268), vl(520, 262, 430, c.line), *rows(c, 560, 284, 40, 6.5, 270, 84), *ticks(c, 26)[:0]]
+            *name_title(c, L, 268), vl(500, 262, 430, c.line), *rows(c, 540, 284, 40, 6.5, 250, 84), *ticks(c, 26)[:0]]
 
 
 def f_side(c):
@@ -187,8 +210,8 @@ def f_bar(c):
 
 def f_rule(c):
     d = c.d
-    return [vl(300, 70, 430, c.line), rect(297, 70, 6, 56, c.acc), co(c, L, 70, 210), ring(L + 40, 238, 34, c.acc, 1.4), T(L, 204, 80, mono(c), 9, c.acc if c.flavor != 2 else c.fg, True, "c", anchor="m", h=70),
-            *name_title(c, 350, 120), hl(350, 830, 262, c.line), *rows(c, 350, 290, 36, 6.5, 330, 92)]
+    return [vl(340, 70, 430, c.line), rect(337, 70, 6, 56, c.acc), T(L, 70, 250, d["company"], 5.4, c.sub, True, spacing=1.4), ring(L + 40, 238, 34, c.acc, 1.4), T(L, 204, 80, mono(c), 9, c.acc if c.flavor != 2 else c.fg, True, "c", anchor="m", h=70),
+            *name_title(c, 390, 120), hl(390, 830, 262, c.line), *rows(c, 390, 290, 36, 6.5, 290, 92)]
 
 
 def f_table(c):
@@ -373,7 +396,7 @@ def b_dark(c):  # 큰 번호 + 업무
     for i, s in enumerate(d["services"]):
         out += [T(L, 118 + i * 74, 150, f"{i + 1:02d}", 15, c.acc if c.flavor != 2 else c.fg, True, h=66), T(L + 130, 132 + i * 74, 420, s, 8, c.fg, True, h=50)]
     out += [vl(620, 118, 420, c.line), T(660, 118, 180, "HOURS", 4.8, c.sub, True, spacing=1.4), T(660, 150, 200, d["hours"], 6.2, c.fg), T(660, 250, 180, d["web"][0], 4.8, c.sub, True, spacing=1.4), T(660, 282, 190, d["web"][1], 6.2, c.fg),
-            co(c, 660, 400, 190)]
+            T(640, 410, 240, d["company"], 5.0, c.sub, True, spacing=1.0)]
     return out
 
 

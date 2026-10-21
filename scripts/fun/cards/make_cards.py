@@ -1,4 +1,4 @@
-"""명함 500종 생성: 10분류 × 50장. PPTX(앞·뒤 2장) + SVG(앞·뒤) + 미리보기 SVG(앞뒤 합성).
+"""명함 500종 생성: 10분류 × 50장(앞뒷면은 밝기 계열·포인트색이 서로 다름). PPTX(앞·뒤 2장) + SVG(앞·뒤) + 미리보기 SVG(앞뒤 합성).
 실행: python3 make_cards.py   → public/fun/cards/<분류>/…, src/config/cards.data.json
 모든 카드는 (앞면 레이아웃, 색 변형, 테마색) · (뒷면 레이아웃, 색 변형, 테마색)이 전체에서 하나도 겹치지 않습니다."""
 import json
@@ -11,7 +11,8 @@ sys.path.insert(0, HERE)
 sys.path.insert(0, os.path.join(HERE, "..", "pack"))
 
 from cards_data import CATS, HOURS, LABELS, SERVICES, WEBS  # noqa: E402
-from modern import BACKS, FRONTS, NB, NF, NFLAV, PAL, Ctx  # noqa: E402
+from modern import DEEP_FLAVORS, LIGHT_FLAVORS, NFLAV, PAL, Ctx
+from modern2 import BACKS, FRONT_FLAVORS, FRONTS, NB, NF  # noqa: E402
 from pack_kit import ROOT, safe_name  # noqa: E402
 from layouts import mix  # noqa: E402
 from scene import add_to_slide, blank_slide, new_pptx, to_svg  # noqa: E402
@@ -20,11 +21,12 @@ OUT = os.path.join(ROOT, "public", "fun", "cards")
 MANIFEST = os.path.join(ROOT, "src", "config", "cards.data.json")
 PREVIEW_DIR = os.path.join(HERE, "_previews")  # 합성 SVG(임시) — 이후 JPG로 변환
 
-NAMES = ["김하늘", "이서준", "박지우", "최민재", "정유진", "강도윤", "조하린", "윤시우", "장서연", "임건우",
-         "한소율", "오지호", "서나연", "신태민", "권다은", "황주원", "안예린", "송현우", "전보라", "홍석진",
-         "문가영", "배준서", "류하은", "남도현", "고은채", "노승민", "하지안", "유재희", "심소담", "백이현",
-         "차예준", "구민아", "표세진", "맹우빈", "탁서아", "선은호", "방지민", "피유나", "곽도하", "마시현",
-         "나윤서", "봉기태", "소하영", "연주혁", "도아린", "예진우", "범채원", "공나래", "목태양", "진보미"]
+# 예시 이름은 흔한 성 + OO (어색한 이름이 나오지 않도록 실제 이름은 쓰지 않습니다)
+SURNAMES = ["김", "이", "박", "최", "정", "강", "조", "윤", "장", "임", "한", "오", "서", "신", "권", "황", "안", "송", "류", "홍",
+            "전", "고", "문", "양", "손", "배", "백", "허", "유", "남", "심", "노", "하", "곽", "성", "차", "주", "우", "구", "나",
+            "민", "진", "지", "엄", "채", "원", "천", "방", "공", "현"]
+assert len(SURNAMES) == 50 and len(set(SURNAMES)) == 50
+NAMES = [s + "OO" for s in SURNAMES]
 CAT_ORDER = ["office", "food", "beauty", "life", "creative", "expert", "teacher", "public", "care", "finance"]
 CAT_KO = {"office": "직장인", "food": "음식점카페", "beauty": "미용네일피부", "life": "생활가게", "creative": "디자인영상사진",
           "expert": "프리랜서전문가", "teacher": "선생님", "public": "공무원", "care": "병원약국돌봄", "finance": "금융보험부동산"}
@@ -36,23 +38,25 @@ def assign():
     used_f, used_b, plan = set(), set(), []
     for ci, cat in enumerate(CAT_ORDER):
         for j in range(50):
-            f = j % NF
-            v = (j // NF + ci) % NFLAV
+            f = (j + ci * 7) % NF
+            fl = FRONT_FLAVORS[f]  # 레이아웃 성격에 맞는 바탕만 씁니다
+            v = fl[(j // NF + ci + j) % len(fl)]
             p = (j + ci * 5) % 50
             for _ in range(2500):
                 if (f, v, p) not in used_f:
                     break
                 p = (p + 1) % 50
                 if (f, v, p) in used_f:
-                    v = (v + 1) % NFLAV
+                    v = fl[(fl.index(v) + 1) % len(fl)]
             used_f.add((f, v, p))
             b = (j + ci * 3) % NB
-            vb = (v + 2 + (j // NB)) % NFLAV
-            pb = p
+            opts = DEEP_FLAVORS if v in LIGHT_FLAVORS else LIGHT_FLAVORS  # 뒷면은 앞면과 밝기 계열이 반대
+            vb = opts[(j // NB + ci + j) % len(opts)]
+            pb = (p + 17) % 50  # 앞면과 색 계열이 다른 포인트색
             for _ in range(2500):
                 if (b, vb, pb) not in used_b:
                     break
-                vb = (vb + 1) % NFLAV
+                vb = opts[(opts.index(vb) + 1) % len(opts)]
                 if (b, vb, pb) in used_b:
                     pb = (pb + 1) % 50
             used_b.add((b, vb, pb))
@@ -67,7 +71,7 @@ def card_data(cat, j):
     hours = HOURS[cat][(j // 2) % len(HOURS[cat])]
     return dict(name=NAMES[j], title=c["titles"][j % len(c["titles"])], company=c["company"],
                 tel="010-1234-5678", mail="name@example.com", addr="주소를 입력해 주세요",
-                services=svc, svc_label=LABELS[cat], hours=hours, web=WEBS[(j + len(cat)) % len(WEBS)],
+                icon=c["icons"][j % len(c["icons"])], services=svc, svc_label=LABELS[cat], hours=hours, web=WEBS[(j + len(cat)) % len(WEBS)],
                 tagline=" · ".join(svc))
 
 
