@@ -4,14 +4,14 @@ export const site = {
   profileConfirmed: false,
   fcName: "우체국보험 FC",
   /** 상단 헤더에 보이는 이름 (FC 표기 없이) */
-  brandName: "우체국보험",
+  brandName: "우체국보험 길잡이",
   affiliation: "", // TODO: 소속 우체국 (예: ○○우체국). 비워두면 표시 안 함
   tagline: "",
   /** 로고: src 가 비어 있으면 자체 제작 마크 사용. 승인받은 로고를 public/ 에 넣고 경로(예: "/logo.png")를 입력 */
   logo: { src: "", alt: "" },
   /** 배너 아래 신뢰 문구 — 실제 지킬 수 있는 내용만 (심의 시 함께 검토) */
   trust: ["충분히 비교한 뒤 결정", "가입 전 약관·상품설명서 확인", "동의한 정보만 보관"],
-  title: "우체국보험 FC 상담 안내",
+  title: "우체국보험 길잡이 | FC 상담 안내",
   description: "필요한 보장을 함께 살펴보세요. 우체국보험 상품 안내와 상담 신청을 도와드립니다.",
   /** 프로필 섹션 (사진 없이 이름·소개·상담 방식만 표시) */
   profile: {

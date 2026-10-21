@@ -2,6 +2,7 @@
 import { useEffect, useRef } from "react";
 import { categories } from "@/config/categories";
 import { site } from "@/config/site";
+import { ChatCharacter } from "@/components/chatbot/ChatCharacter";
 import { TIMES, TIME_LABEL } from "@/features/consult/schema";
 import { FAMILY_HISTORY, FAMILY_HISTORY_LABEL, INSURANCE_KINDS, INSURANCE_KIND_LABEL, YESNO, YESNO_LABEL } from "@/features/consult/detailOptions";
 import { consentNote } from "@/features/consult/consentText";
@@ -76,9 +77,9 @@ export function ConsultForm({ initialTopic = "health" }: { initialTopic?: string
                 <span className="pr-5"><b className="block text-[15px] leading-snug">{c.title}</b><span className="mt-0.5 block text-xs leading-snug text-ink-sub">{c.short}</span></span>
               </label>
             ))}
-            {/* 빈 칸 장식 박스 — 같은 모양, 우체국보험 로고를 왼쪽 위에 흐리게 (선택 불가, 화면낭독기에서 제외) */}
+            {/* 빈 칸 장식 박스 — 같은 모양, 길잡이 캐릭터를 흐리게 (선택 불가, 화면낭독기에서 제외) */}
             <div aria-hidden="true" className="relative hidden items-center justify-center rounded-xl border border-ink/15 bg-paper px-4 py-3 sm:flex">
-              <img src="/brand/postal-insurance-logo.svg" alt="" width={156} height={63} className="h-7 w-auto opacity-40 blur-[0.6px]" />
+              <ChatCharacter className="h-10 w-auto opacity-40" />
             </div>
           </div>
           <Err k="topic" />
