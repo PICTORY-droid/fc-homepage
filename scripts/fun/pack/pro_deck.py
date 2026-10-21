@@ -1,4 +1,4 @@
-"""PPT 한 벌(Deck) — 디자인 언어(pro_design)를 레이아웃으로 심고, 항목 모듈이 쓰는 쪽·블록(카드·줄·타임라인·사진·표·차트)을 제공합니다."""
+"""PPT 한 벌(Deck) — 디자인 언어(pro_design·pro_palette)를 레이아웃으로 심고, 항목 모듈이 쓰는 쪽·블록(카드·줄·타임라인·사진·표·차트)을 제공합니다."""
 import pack_kit as pk
 import pro_design as D
 from pro_kit import Pro
@@ -6,7 +6,7 @@ from pptx.enum.shapes import MSO_SHAPE as SH
 
 TRANS = ["fade", "push:l", "wipe:r", "cover:l", "pull:r", "split:horz", "push:u", "wedge"]
 ANIM = ["fade", "wipe-l", "wipe-u"]
-GEOM_BY_PF = ["oval", "arch", "round"]
+GEOM_BY_PF = ["arch", "oval", "rect"]
 DEFAULT_NOTES = "글은 눌러서 바로 고치세요. 사진 자리는 가운데 아이콘을 누르면 사진을 넣을 수 있어요. 색·글꼴은 [디자인 > 변형]에서 한 번에 바꿀 수 있어요."
 
 
@@ -15,10 +15,11 @@ class Deck(Pro):
         self.cfg = D.design_of(i, k)
         pal = D.palette(i)
         super().__init__(pal, size, title, subject, keywords, fonts=self.cfg["font"])
+        D.setup_tokens(self)
         self.i, self.k = i, k
-        self.pfill = "white" if self.cfg["tone"] == "tint" else "soft"
-        self.eyebrow = f"{D.SEASON_EN[pal['season']]}  ·  {item_en}"
-        self.vw = D.short(pal["name"])
+        self.pfill = "soft"
+        self.eyebrow = f"{pal['word']}  ·  {item_en}"
+        self.vw = pal["word"]
         self.rect = (0.8, 2.0, self.W - 0.8, self.H - 0.75)
         self._anim, self._links, self._sec, self._prev = [], [], None, None
         self.begin_layouts()
@@ -70,33 +71,42 @@ class Deck(Pro):
 
     # ── 빌딩 블록 ──────────────────────────────────────
     def _box(self, x, y, w, h, name="카드"):
-        cs = self.cfg["cs"]
+        """카드 바탕 6가지 — 도자기(헤어라인)·유리·윗선·겹테두리·색면·모서리 깎기"""
+        cs, hair, night = self.cfg["cs"], self.hair_l, self.pal["night"]
         if cs == 0:
-            return self.shape(SH.ROUNDED_RECTANGLE, x, y, w, h, fill="white", shadow="soft", adj={"adj": 6000}, name=name)
+            return self.shape(SH.RECTANGLE, x, y, w, h, fill="white", line=("alpha", hair, 60), lw=.75, shadow="thin", name=name)
         if cs == 1:
-            return self.shape(SH.ROUNDED_RECTANGLE, x, y, w, h, fill="tint", adj={"adj": 5000}, name=name)
+            return self.shape(SH.RECTANGLE, x, y, w, h, fill=("alpha", "white", 70 if night else 62), line=("alpha", hair, 80), lw=.75, shadow="soft", name=name)
         if cs == 2:
-            return self.shape(SH.ROUNDED_RECTANGLE, x, y, w, h, fill=("alpha", "white", 55), line="main", lw=1.25, adj={"adj": 7000}, name=name)
-        if cs == 3:
-            b = self.shape(SH.ROUNDED_RECTANGLE, x, y, w, h, fill="white", shadow="thin", adj={"adj": 3000}, name=name)
-            self.shape(SH.RECTANGLE, x, y + .12, .07, h - .24, fill="main", name="포인트 막대")
+            b = self.shape(SH.RECTANGLE, x, y, w, h, fill="white", shadow="thin", name=name)
+            self.shape(SH.RECTANGLE, x, y, w, .07, fill="main", name="윗선")
             return b
-        b = self.shape(SH.ROUNDED_RECTANGLE, x, y, w, h, fill="white", shadow="thin", adj={"adj": 3000}, name=name)
-        self.shape(SH.RECTANGLE, x + .02, y, w - .04, .09, fill="main", name="위쪽 띠")
-        return b
+        if cs == 3:
+            b = self.shape(SH.RECTANGLE, x, y, w, h, fill="white", shadow="thin", name=name)
+            self.shape(SH.RECTANGLE, x + .09, y + .09, w - .18, h - .18, fill=None, line=("alpha", hair, 85), lw=.5, name="안쪽 선")
+            return b
+        if cs == 4:
+            b = self.shape(SH.RECTANGLE, x, y, w, h, fill="tint", name=name)
+            self.shape(SH.RECTANGLE, x, y, .06, h, fill="main", name="옆 선")
+            return b
+        return self.shape(SH.SNIP_2_DIAG_RECTANGLE, x, y, w, h, fill="white", line=("alpha", hair, 85), lw=.75, shadow="thin", adj={"adj1": 11000, "adj2": 0}, name=name)
 
     def badge(self, x, y, n, dia=0.5, size=15):
-        bs = self.cfg["bs"]
-        if bs == 2:
-            self.text(x - .1, y - .05, dia + .5, dia + .1, f"{n:02d}", size=size + 8, bold=True, color="main", anchor="m", major=True, name=f"번호 {n}")
+        """번호 표시 6가지 — 큰 숫자·고리·마름모·네모·No. 표기·채운 원"""
+        bs, numc = self.cfg["bs"], self.pal["numc"]
+        if bs == 0:
+            self.text(x - .05, y - .05, dia + .7, dia + .1, f"{n:02d}", size=size + 9, color=numc, anchor="m", major=True, name=f"번호 {n}")
         elif bs == 1:
-            self.shape(SH.OVAL, x, y, dia, dia, fill=None, line="main", lw=1.5, text=str(n), tsize=size, tbold=True, tcolor="deep", name=f"번호 {n}")
+            self.shape(SH.OVAL, x, y, dia, dia, fill=None, line=self.hair_l, lw=1.25, text=str(n), tsize=size, tbold=True, tcolor="deep", name=f"번호 {n}")
+        elif bs == 2:
+            self.shape(SH.DIAMOND, x - .05, y - .05, dia + .1, dia + .1, fill="main", text=str(n), tsize=size - 2, tbold=True, tcolor=self.onmain, name=f"번호 {n}")
         elif bs == 3:
-            self.shape(SH.ROUNDED_RECTANGLE, x, y, dia, dia, fill="main", adj={"adj": 25000}, text=str(n), tsize=size, tbold=True, tcolor="ink", name=f"번호 {n}")
+            self.shape(SH.RECTANGLE, x, y, dia, dia, fill=None, line="main", lw=1.25, text=str(n), tsize=size, tbold=True, tcolor="deep", name=f"번호 {n}")
         elif bs == 4:
-            self.shape(SH.OVAL, x, y, dia, dia, fill="accent", text=str(n), tsize=size, tbold=True, tcolor="white", name=f"번호 {n}")
+            self.text(x - .05, y + .05, dia + .7, .3, f"No.{n:02d}", size=size - 3, bold=True, color=numc, spc=150, anchor="m", name=f"번호 {n}")
+            self.line(x, y + .42, x + .5, y + .42, self.hair_l, 1, name="번호 밑줄")
         else:
-            self.shape(SH.OVAL, x, y, dia, dia, fill="main", text=str(n), tsize=size, tbold=True, tcolor="ink", name=f"번호 {n}")
+            self.shape(SH.OVAL, x, y, dia, dia, fill="main", text=str(n), tsize=size, tbold=True, tcolor=self.onmain, name=f"번호 {n}")
 
     def cards(self, items, y=None, h=None, size=16, head_size=18, numbered=True):
         """[(제목, 내용)] 가로 카드 — 카드마다 그룹으로 묶어 선택 창·애니메이션이 한 덩어리로 움직입니다."""
@@ -114,7 +124,8 @@ class Deck(Pro):
                     self.badge(x + .25, y + .28, k + 1)
                     off = .7
                 self.text(x + .2, y + .25 + off, cw - .4, .7, head, size=head_size, bold=True, color="deep", anchor="m", major=True, name="카드 제목")
-                self.text(x + .2, y + 1.0 + off, cw - .4, h - 1.15 - off, body, size=size, spacing=1.3, name="카드 내용")
+                self.line(x + .25, y + .98 + off, x + cw - .25, y + .98 + off, self.hair_l, .5, name="구분선")
+                self.text(x + .2, y + 1.08 + off, cw - .4, h - 1.2 - off, body, size=size, spacing=1.3, name="카드 내용")
             self._anim.append(g)
 
     def rows(self, items, y=None, h_each=0.95, size=15, head_size=18):
@@ -126,6 +137,7 @@ class Deck(Pro):
                 self._box(l, yy, r - l, h_each, "줄 바탕")
                 self.badge(l + .3, yy + (h_each - .5) / 2, k + 1)
                 self.text(l + 1.1, yy + .05, 3.2, h_each - .1, head, size=head_size, bold=True, color="deep", anchor="m", major=True, name="줄 제목")
+                self.line(l + 4.2, yy + .18, l + 4.2, yy + h_each - .18, self.hair_l, .5, name="구분선")
                 self.text(l + 4.4, yy + .05, r - l - 4.7, h_each - .1, body, size=size, anchor="m", name="줄 내용")
             self._anim.append(g)
 
@@ -135,14 +147,15 @@ class Deck(Pro):
         n = len(steps)
         cw = (r - l) / n
         if self.cfg["tl"] == 0:
-            self.line(l, y + .22, r, y + .22, "soft", 3, name="타임라인 선", tail="triangle")
+            self.line(l, y + .22, r, y + .22, self.hair_l, 1, name="타임라인 선")
         for k, (when, head, body) in enumerate(steps):
             cx = l + cw * k + cw / 2
             with self.group(f"때 {k + 1}") as g:
                 if self.cfg["tl"] == 0:
-                    self.shape(SH.OVAL, cx - .22, y, .44, .44, fill="main", line="white", lw=3, name="점")
+                    self.shape(SH.DIAMOND, cx - .22, y, .44, .44, fill="main", line="white", lw=2, name="점")
                 else:
-                    self.shape(SH.PENTAGON, cx - cw / 2 + .05, y - .05, cw - .1, .54, fill="main" if k % 2 == 0 else "accent", name="단계 화살표", text=when, tsize=head_size - 3, tbold=True, tcolor="ink")
+                    ev = k % 2 == 0
+                    self.shape(SH.PENTAGON, cx - cw / 2 + .05, y - .05, cw - .1, .54, fill="main" if ev else "accent", name="단계 화살표", text=when, tsize=head_size - 3, tbold=True, tcolor=self.onmain if ev else self.onaccent)
                 if self.cfg["tl"] == 0:
                     self.text(cx - cw / 2 + .05, y - .7, cw - .1, .5, when, size=head_size - 2, bold=True, color="deep", align="c", anchor="b", major=True, name="때")
                 self.text(cx - cw / 2 + .1, y + .65, cw - .2, .5, head, size=head_size, bold=True, color="deep", align="c", name="제목")
@@ -159,8 +172,8 @@ class Deck(Pro):
             x = l + k * (cw + gap)
             with self.group("왼쪽 칸" if k == 0 else "오른쪽 칸") as g:
                 self._box(x, y, cw, h, "칸 바탕")
-                self.shape(SH.ROUNDED_RECTANGLE, x + .2, y + .2, cw - .4, .65, fill="main" if k == 0 else "deep", adj={"adj": 50000}, name="칸 제목 알약",
-                           text=head, tsize=17 if self.wide else 15, tbold=True, tcolor="ink" if k == 0 else "white")
+                self.shape(SH.RECTANGLE, x + .2, y + .2, cw - .4, .65, fill="main" if k == 0 else "accent", name="칸 제목 띠",
+                           text=head, tsize=17 if self.wide else 15, tbold=True, tcolor=self.onmain if k == 0 else self.onaccent)
                 self.text(x + .3, y + 1.05, cw - .6, h - 1.2, body, size=size, bullet=True, spacing=1.3, space_after=6, name="칸 내용")
             self._anim.append(g)
 
@@ -171,7 +184,7 @@ class Deck(Pro):
         gw, gh = (pd, pd) if geom != "arch" else (pd * .86, pd)
         bh = min(h, gh + 2.3)
         self._box(x, y, w, bh, f"{role} 카드")
-        self.photo_slot(idx, x + (w - gw) / 2, y + .25, gw, gh, geom=geom, label="사진", fill="white" if self.cfg["cs"] == 1 else "tint")
+        self.photo_slot(idx, x + (w - gw) / 2, y + .25, gw, gh, geom=geom, label="사진", fill="tint")
         self.text(x, y + gh + .35, w, .45, role, size=16, bold=True, color="deep", align="c", major=True, name=f"{role} 이름")
         self.text(x + .1, y + gh + .85, w - .2, bh - gh - .95, lines, size=12 if self.wide else 11, color="mute", align="c", spacing=1.25, name=f"{role} 소개")
 
@@ -182,7 +195,7 @@ class Deck(Pro):
         gap = .22
         cw = (r - l - gap * (n_cols - 1)) / n_cols
         ch = (h - gap * (n_rows - 1)) / n_rows
-        geom = ["round", "round", "arch", "oval"][self.cfg["pf"]] if n_cols * n_rows <= 6 else "round"
+        geom = ["rect", "round", "arch"][self.cfg["pf"]] if n_cols * n_rows <= 6 else "rect"
         k = 0
         for i in range(n_rows):
             for j in range(n_cols):

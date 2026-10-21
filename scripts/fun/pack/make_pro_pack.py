@@ -2,7 +2,7 @@
 기존 PPT(make_pptx_pack.py)는 건드리지 않습니다.
 사용: python3 make_pro_pack.py [항목키 ...]   (생략하면 6항목 모두)
 
-- 디자인 엔진: pro_kit(PPT 기능) · pro_design(디자인 언어) · pro_deck(블록) · pro_items(항목별 구성)
+- 디자인 엔진: pro_kit(PPT 기능) · pro_palette(고급 팔레트 50종) · pro_design(디자인 언어) · pro_deck(블록) · pro_items(항목별 구성)
 - 미리보기: pro_preview 가 LibreOffice 로 변환하고, pro_check 가 글자 겹침이 없는지 검사합니다."""
 import os
 import shutil
@@ -52,12 +52,11 @@ def run(keys):
         d = pk.out_dir("pptx", out)
         files, entries = [], []
         for i in range(50):
-            pal = D.palette(i)
-            pal["name"] = copy_pptx.NAMES[i]
+            pal = D.palette(i)  # 이름도 팔레트(pro_palette)에서 옵니다
             f = os.path.join(d, f"{out}-{i + 1:02d}.pptx")
             build(f, i, pal, messages[i])
             files.append(f)
-            entries.append({"no": i + 1, "name": pal["name"], "tag": messages[i], "flavor": flavor(i), "main": pal["main"], "soft": pal["soft"], "dark": pal["deep"], "season": pal["season"]})
+            entries.append({"no": i + 1, "name": pal["name"], "tag": messages[i], "flavor": flavor(i), "main": pal["main"], "soft": pal["bg"], "dark": pal["ink"] if pal["night"] else pal["deep2"], "season": pal["season"]})
         thumbs(files, os.path.join(d, "thumbs"), 480 if key != "news" else 420)
         pk.write_manifest("pptx-" + out, entries)
         print(key, "50개 완료")

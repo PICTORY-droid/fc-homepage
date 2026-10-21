@@ -95,12 +95,26 @@ def _el(xml):
 SHADOW = {
     "soft": (14, 3, 9), "lift": (26, 8, 14), "thin": (6, 1.5, 8), "glow": (22, 0, 18),
 }
+SHADOW_CLR = ["deep"]  # 밤 테마에서는 검은 그림자(set_mode 가 바꿈)
+LIGHT_MODE = {"mute": (TC.TEXT_1, 0.45), "tint": (TC.ACCENT_1, 0.8), "mist": (TC.ACCENT_1, 0.9), "atint": (TC.ACCENT_2, 0.8)}
+NIGHT_MODE = {"mute": (TC.TEXT_1, -0.38), "tint": (TC.ACCENT_1, -0.75), "mist": (TC.ACCENT_1, -0.86), "atint": (TC.ACCENT_2, -0.75)}
+LIGHT_SCHEME = {"mute": ("tx1", (55000, 45000)), "tint": ("accent1", (20000, 80000)), "mist": ("accent1", (10000, 90000)), "atint": ("accent2", (20000, 80000))}
+NIGHT_SCHEME = {"mute": ("tx1", (62000, 0)), "tint": ("accent1", (25000, 0)), "mist": ("accent1", (14000, 0)), "atint": ("accent2", (25000, 0))}
+
+
+def set_mode(night):
+    """밝은 테마/밤 테마에 따라 '연한 색' 이름표(tint·mist·atint·mute)와 그림자 색을 바꿉니다. 덱을 만들기 직전에 한 번 부릅니다."""
+    TOK.update(NIGHT_MODE if night else LIGHT_MODE)
+    SCHEME.update(NIGHT_SCHEME if night else LIGHT_SCHEME)
+    SHADOW_CLR[0] = "#000000" if night else "deep"
 
 
 def shadow_xml(kind):
     blur, dist, alpha = SHADOW[kind]
+    if SHADOW_CLR[0] == "#000000":
+        alpha *= 3
     return (f'<a:effectLst><a:outerShdw blurRad="{int(blur * 12700)}" dist="{int(dist * 12700)}" dir="5400000" algn="t" rotWithShape="0">'
-            f'{clr_xml("deep", alpha)}</a:outerShdw></a:effectLst>')
+            f'{clr_xml(SHADOW_CLR[0], alpha)}</a:outerShdw></a:effectLst>')
 
 
 class Pro:
@@ -108,6 +122,12 @@ class Pro:
 
     def __init__(self, pal, size="wide", title="PPT", subject="", keywords="", fonts=("Georgia", "맑은 고딕")):
         self.pal = pal
+        set_mode(pal.get("night", False))
+        self.onmain = pal.get("onmain", "#1A1613")
+        self.onaccent = pal.get("onaccent", "#1A1613")
+        self.snow = pal.get("snow", "#FFFFFF")
+        self.snow2 = pal.get("snow2", "#FFFFFF")
+        self.snow3 = pal.get("snow3", "#FFFFFF")
         self.prs = Presentation()
         self.W, self.H = (13.333, 7.5) if size == "wide" else (7.5, 7.5)
         self.wide = size == "wide"
@@ -144,7 +164,7 @@ class Pro:
         root.set("name", name)
         cs = root.find(f".//{{{A}}}clrScheme")
         cs.set("name", name)
-        clr = {"dk1": p["ink"], "lt1": "#FFFFFF", "dk2": p["deep"], "lt2": p["bg"], "accent1": p["main"], "accent2": p["accent"],
+        clr = {"dk1": p["ink"], "lt1": p.get("white", "#FFFFFF"), "dk2": p["deep"], "lt2": p["bg"], "accent1": p["main"], "accent2": p["accent"],
                "accent3": p["deep2"], "accent4": p["soft"], "accent5": p["gold"], "accent6": p["sky"], "hlink": p["deep"], "folHlink": p["deep2"]}
         for tag, val in clr.items():
             el = root.find(f".//{{{A}}}{tag}")
@@ -473,7 +493,8 @@ class Pro:
             self.cont = prev
 
     # ── 표·차트 ──────────────────────────────────────────
-    def table(self, x, y, w, rows, col_w=None, row_h=0.45, size=12, head=True, first_col=False, name="표", head_fill="main", head_color="ink", zebra=True, line="soft"):
+    def table(self, x, y, w, rows, col_w=None, row_h=0.45, size=12, head=True, first_col=False, name="표", head_fill="main", head_color=None, zebra=True, line="soft"):
+        head_color = head_color or self.onmain
         n, m = len(rows), len(rows[0])
         gf = self.s.shapes.add_table(n, m, Inches(x), Inches(y), Inches(w), Inches(row_h * n))
         gf.name = name
