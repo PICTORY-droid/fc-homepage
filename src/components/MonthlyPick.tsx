@@ -15,7 +15,7 @@ export function MonthlyPick() {
               className="flex h-full flex-col overflow-hidden rounded-card border border-ink/10 bg-paper transition hover:-translate-y-0.5 hover:shadow-md">
               {c.thumb && (
                 <div className="relative w-full bg-paper-gray" style={{ aspectRatio: 16 / 10 }}>
-                  <Image src={c.thumb} alt="" fill sizes="(min-width:640px) 33vw, 100vw" className="object-cover object-top" />
+                  <Image src={c.thumb} alt="" fill sizes="(min-width:640px) 33vw, 100vw" className="object-contain p-2" />
                 </div>
               )}
               <div className="p-3"><h3 className="text-base font-bold text-ink">{c.title}</h3>{c.desc && <p className="mt-1 text-sm leading-snug text-ink-sub">{c.desc}</p>}</div>
