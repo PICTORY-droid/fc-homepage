@@ -12,16 +12,16 @@ export async function isAdminLoggedIn(): Promise<boolean> {
   return verifySessionToken((await cookies()).get(ADMIN_COOKIE)?.value, env.secret);
 }
 
-/** 로그인 화면을 열 수 있는 비밀 꼬리표(?k=)가 맞는지 — 틀리면 /admin 은 '없는 페이지'처럼 보입니다. */
-export function isEntryKeyValid(key: string | undefined): boolean {
+/** 등록 인증 코드(ADMIN_PASSWORD)가 맞는지 */
+export function isSetupCodeValid(code: string): boolean {
   const env = getAdminEnv();
-  return Boolean(env && key && passwordMatches(key.slice(0, 200), env.entryKey));
+  return Boolean(env && code && passwordMatches(code.slice(0, 200), env.password));
 }
 
-/** 비밀번호가 맞으면 세션을 시작하고 true */
-export async function startAdminSession(password: string): Promise<boolean> {
+/** 아이디·비밀번호 확인이 끝난 뒤 로그인 세션을 시작합니다. 설정이 없으면 false */
+export async function startAdminSession(): Promise<boolean> {
   const env = getAdminEnv();
-  if (!env || !passwordMatches(password, env.password)) return false;
+  if (!env) return false;
   (await cookies()).set(ADMIN_COOKIE, createSessionToken(env.secret), {
     httpOnly: true, sameSite: "strict", secure: process.env.NODE_ENV === "production", path: "/admin", maxAge: SESSION_TTL_MS / 1000,
   });

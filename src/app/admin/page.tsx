@@ -1,16 +1,15 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
 import { Section } from "@/components/ui/Section";
 import { Notice } from "@/components/ui/Notice";
 import { getCategory } from "@/config/categories";
 import { TIME_LABEL, TIMES } from "@/features/consult/schema";
-import { isAdminConfigured, isAdminLoggedIn, isEntryKeyValid } from "@/services/adminSession";
+import { isAdminLoggedIn } from "@/services/adminSession";
 import { LEAD_STATUSES, STATUS_LABEL, listLeads, type LeadRow } from "@/services/adminLeads";
 import { formatPhone } from "@/lib/phone";
 import { summarizeDetail } from "@/features/consult/detailOptions";
 import { OwnerNoTrack } from "@/components/analytics/OwnerNoTrack";
 import { AdminNav } from "./AdminNav";
-import { LoginForm } from "./LoginForm";
+import { AdminEntry } from "./AdminEntry";
 import { logoutAction, updateLeadAction } from "./actions";
 
 export const metadata: Metadata = { title: "상담 접수 관리", robots: { index: false, follow: false } };
@@ -66,14 +65,8 @@ function LeadCard({ lead, memoEnabled }: { lead: LeadRow; memoEnabled: boolean }
 }
 
 // 상담 접수 관리 — 로그인(서버 세션) 후에만 목록이 보입니다.
-export default async function AdminPage({ searchParams }: { searchParams: Promise<{ k?: string }> }) {
-  // 관리자가 아닌 방문자에게는 로그인 화면도 보이지 않도록, 비밀 꼬리표(?k=)가 없으면 '없는 페이지'로 보여 줍니다.
-  if (!isAdminConfigured()) notFound();
-  if (!(await isAdminLoggedIn())) {
-    const k = (await searchParams).k;
-    if (!isEntryKeyValid(k)) notFound();
-    return <Section title="상담 접수 관리" lead="관리자만 볼 수 있는 화면입니다."><LoginForm entryKey={k ?? ""} /></Section>;
-  }
+export default async function AdminPage() {
+  if (!(await isAdminLoggedIn())) return <AdminEntry />;
   const { rows, memoEnabled, error } = await listLeads();
   const counts = Object.fromEntries(LEAD_STATUSES.map((s) => [s, rows.filter((r) => r.status === s).length]));
   return (

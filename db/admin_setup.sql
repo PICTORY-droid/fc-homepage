@@ -1,6 +1,6 @@
 -- 관리자 화면(/admin) 전체 설정 — Supabase SQL Editor 에 통째로 붙여넣고 Run, 딱 한 번만 실행하세요.
--- 여러 번 실행해도 안전합니다(이미 있으면 건너뜀). 이 파일 하나로 아래 4가지가 모두 준비됩니다.
---   1) 이용 통계 테이블(site_events)  2) 상담 신청 유입 정보 컬럼  3) 관리자 메모 컬럼  4) 상세 문진 컬럼
+-- 여러 번 실행해도 안전합니다(이미 있으면 건너뜀). 이 파일 하나로 아래 5가지가 모두 준비됩니다.
+--   1) 이용 통계 테이블(site_events)  2) 상담 신청 유입 정보 컬럼  3) 관리자 메모 컬럼  4) 상세 문진 컬럼  5) 관리자 계정 테이블
 
 -- 1) 이용 통계(비식별) — 이름·연락처·IP 는 저장하지 않습니다. RLS 를 켜고 정책을 만들지 않아 브라우저는 접근 불가, 서버만 가능
 create table if not exists public.site_events (
@@ -30,3 +30,12 @@ alter table leads add column if not exists memo text;
 
 -- 4) 상세 문진(건강 관련 내용이 들어갈 수 있으니 RLS 를 켠 상태 유지)
 alter table leads add column if not exists detail jsonb;
+
+-- 5) 관리자 계정(딱 1개 — id 를 1 로 고정해서 두 번째 계정은 만들 수 없음). 비밀번호는 해시로만 저장, RLS 를 켜서 브라우저는 접근 불가
+create table if not exists public.admin_account (
+  id            smallint primary key default 1 check (id = 1),
+  username      text not null,
+  password_hash text not null,
+  created_at    timestamptz not null default now()
+);
+alter table public.admin_account enable row level security;

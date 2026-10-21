@@ -1,13 +1,12 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
 import { Section } from "@/components/ui/Section";
 import { Notice } from "@/components/ui/Notice";
 import { OwnerNoTrack } from "@/components/analytics/OwnerNoTrack";
-import { isAdminConfigured, isAdminLoggedIn, isEntryKeyValid } from "@/services/adminSession";
+import { isAdminLoggedIn } from "@/services/adminSession";
 import { loadStats } from "@/services/adminStats";
 import type { Count, SourceRow, Summary } from "@/features/analytics/summary";
 import { AdminNav } from "../AdminNav";
-import { LoginForm } from "../LoginForm";
+import { AdminEntry } from "../AdminEntry";
 import { logoutAction } from "../actions";
 
 export const metadata: Metadata = { title: "유입 통계", robots: { index: false, follow: false } };
@@ -83,13 +82,9 @@ const MESSAGE = {
 } as const;
 
 // 유입 통계 — 로그인(서버 세션)한 관리자만 볼 수 있습니다.
-export default async function StatsPage({ searchParams }: { searchParams: Promise<{ days?: string; k?: string }> }) {
-  if (!isAdminConfigured()) notFound();
+export default async function StatsPage({ searchParams }: { searchParams: Promise<{ days?: string }> }) {
+  if (!(await isAdminLoggedIn())) return <AdminEntry />;
   const sp = await searchParams;
-  if (!(await isAdminLoggedIn())) {
-    if (!isEntryKeyValid(sp.k)) notFound(); // 관리자가 아니면 로그인 화면도 보이지 않음
-    return <Section title="유입 통계" lead="관리자만 볼 수 있는 화면입니다."><LoginForm entryKey={sp.k ?? ""} /></Section>;
-  }
   const q = Number(sp.days);
   const days = (RANGES as readonly number[]).includes(q) ? q : 30;
   const { summary: s, error, truncated } = await loadStats(days);
