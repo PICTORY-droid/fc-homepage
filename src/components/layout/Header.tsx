@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import { Noto_Sans_KR } from "next/font/google";
 import { site } from "@/config/site";
@@ -15,13 +14,12 @@ export function Header() {
     <>
       <header className="sticky top-0 z-40 border-b border-ink/10 bg-paper/95 backdrop-blur">
         <div className="mx-auto flex max-w-5xl items-center justify-between gap-3 px-4 py-3 sm:px-6">
-          <Link href="/" className="flex min-w-0 items-center gap-2">
-            <ChatCharacter className="h-11 w-auto shrink-0 sm:h-14" />
+          <Link href="/" className="flex min-w-0 items-center gap-2 sm:gap-3">
+            <ChatCharacter className="h-10 w-auto shrink-0 sm:h-12" />
             <span className="min-w-0">
-              <span className={`${logoFont.className} flex items-center gap-2 whitespace-nowrap sm:gap-3`} aria-label={site.brandName}>
-                <Image src="/brand/postal-insurance-wordmark.png" alt="" width={108} height={31} priority className="h-7 w-auto sm:h-9" aria-hidden="true" />
-                <span className="h-7 w-px bg-ink/15 sm:h-9" aria-hidden="true" />
-                <span className="text-[26px] leading-none text-[#E5481F] sm:text-4xl" aria-hidden="true">길잡이</span>
+              <span className={`${logoFont.className} flex items-baseline gap-1.5 whitespace-nowrap sm:gap-2`} aria-label={site.brandName}>
+                <span className="text-[22px] leading-none text-[#9A2F1B] sm:text-3xl" aria-hidden="true">{site.brandName.replace(/\s*길잡이$/, "")}</span>
+                <span className="text-[30px] leading-none text-[#E5481F] sm:text-[42px]" aria-hidden="true">길잡이</span>
               </span>
               {(site.affiliation || site.tagline) && (
                 <span className="block truncate text-xs text-ink-sub">
