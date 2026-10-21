@@ -18,9 +18,10 @@ export function Header() {
           <Link href="/" className="flex min-w-0 items-center gap-2">
             <ChatCharacter className="h-11 w-auto shrink-0 sm:h-14" />
             <span className="min-w-0">
-              <span className={`${logoFont.className} flex items-center gap-1.5 whitespace-nowrap`} aria-label={site.brandName}>
-                <Image src="/brand/postal-insurance-wordmark.png" alt="" width={117} height={42} className="h-9 w-auto sm:h-11" aria-hidden="true" />
-                <span className="relative -top-1 text-2xl leading-none text-[#E5481F] underline decoration-brand-soft decoration-[5px] underline-offset-[6px] sm:-top-[5px] sm:text-3xl" aria-hidden="true">길잡이</span>
+              <span className={`${logoFont.className} flex items-center gap-2 whitespace-nowrap sm:gap-3`} aria-label={site.brandName}>
+                <Image src="/brand/postal-insurance-wordmark.png" alt="" width={108} height={31} priority className="h-7 w-auto sm:h-9" aria-hidden="true" />
+                <span className="h-7 w-px bg-ink/15 sm:h-9" aria-hidden="true" />
+                <span className="text-[26px] leading-none text-[#E5481F] sm:text-4xl" aria-hidden="true">길잡이</span>
               </span>
               {(site.affiliation || site.tagline) && (
                 <span className="block truncate text-xs text-ink-sub">
