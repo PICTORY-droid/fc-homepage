@@ -1,12 +1,12 @@
 import Link from "next/link";
-import { Black_Han_Sans } from "next/font/google";
+import { Noto_Sans_KR } from "next/font/google";
 import { site } from "@/config/site";
 import { navGroups } from "@/config/nav";
 import { NavMenu } from "./NavMenu";
 import { ChatCharacter } from "@/components/chatbot/ChatCharacter";
 
-// 로고 글씨체 — 굵은 고딕(공식 로고 느낌). 로고에만 적용
-const logoFont = Black_Han_Sans({ weight: "400", subsets: ["latin"], display: "swap", preload: false });
+// 로고 글씨체 — 가장 굵은 고딕(Noto Sans KR Black). 로고에만 적용
+const logoFont = Noto_Sans_KR({ weight: "900", subsets: ["latin"], display: "swap", preload: false });
 
 // 상단 헤더 — 메뉴 열고 닫기는 NavMenu(클라이언트 컴포넌트)가 담당
 export function Header() {
