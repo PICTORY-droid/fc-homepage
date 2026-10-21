@@ -19,7 +19,7 @@ export interface HeroSlideConfig {
   theme: HeroTheme;
 }
 
-export const HERO_INTERVAL_MS = 6000;
+export const HERO_INTERVAL_MS = 4500;
 
 export const heroSlides: HeroSlideConfig[] = [
   { id: "family", bannerKey: "home", art: "shield", theme: { from: "#DCEEFF", to: "#F8FBFF", soft: "#BFE0FF", accent: "#3D8BEB", deep: "#1B4F94" } },
