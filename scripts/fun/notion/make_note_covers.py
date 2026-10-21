@@ -1,7 +1,8 @@
 """노션 '상품노트'·'보험노트(FAQ)' 커버 — 1800×600, 글·그림은 정가운데(약 900×210)에만 둡니다.
 노션은 데스크톱에서 약 6:1, 모바일에서 약 2.1:1 로 가운데만 잘라 보여 주므로, 예전 1800×240 가로 띠는 모바일에서 잘렸어요.
 저장: public/notion/prod/<상품코드>.jpg, public/notion/faq/<FAQ번호>.jpg, public/notion/cover-insurance-v2.jpg
-사용: python3 scripts/fun/notion/make_note_covers.py [prod|faq|hub|all]"""
+저장(보험노트 안내 글 7개): public/notion/note/N<번호>.jpg
+사용: python3 scripts/fun/notion/make_note_covers.py [prod|faq|note|hub|all]"""
 import json
 import os
 import re
@@ -83,6 +84,19 @@ def jobs(which):
     if which in ("faq", "all"):
         for f in json.load(open(os.path.join(ROOT, "src", "config", "officialFaq.data.json"), encoding="utf-8")):
             out.append((f"faq/{f['id']}.jpg", cover_html(f"Q&A · {f['category']}", "자주 묻는 질문", "우체국보험 공식 FAQ 안내")))
+    if which in ("note", "all"):
+        # 보험노트 안내 글 7개(번호: 1·2·3·5·7·9·11) — 원래 커버가 없던 글
+        tag = "INSURANCE NOTE · "
+        for no, t, title, sub in [
+            (1, "가입 전 체크", "보험 가입 전 체크리스트", "계약 전에 꼭 확인할 6가지"),
+            (2, "보장 이해", "실손보험이란?", "보장 구조와 헷갈리는 점 5가지"),
+            (3, "보장 이해", "갱신형 비갱신형 차이", "보험료가 달라지는 이유와 확인 순서"),
+            (5, "보장성 상품", "우체국든든한건강종신보험", "가입나이·보험기간·납입 정리"),
+            (7, "보장성 상품", "우체국New건강클리닉보험", "가입나이·보험기간·납입 정리"),
+            (9, "보장성 상품", "우체국뇌심케어보험", "가입나이·보험기간·납입 정리"),
+            (11, "보장성 상품", "우체국암뇌심주요치료비보험(20년갱신형)", "가입나이·보험기간·납입 정리"),
+        ]:
+            out.append((f"note/N{no:02d}.jpg", cover_html(tag + t, short_name(title), sub)))
     if which in ("hub", "all"):
         out.append(("cover-insurance-v2.jpg", cover_html("INSURANCE NOTE · 우체국보험", "보험노트", "가입 · 보장 · 청구 · 유지, 꼭 알아야 할 보험 정보")))
     return out
