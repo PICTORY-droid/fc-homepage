@@ -20,6 +20,9 @@ export interface FaqEntry {
 
 const kakao: ChatLink[] = site.contact.kakaoUrl ? [{ label: "카카오톡으로 문의하기", short: "카카오톡", href: site.contact.kakaoUrl, external: true }] : [];
 const consult: ChatLink = { label: "상담 신청하기", short: "상담신청", href: "/consult" };
+const phoneLink: ChatLink = { label: "전화 상담하기", short: "전화", href: `tel:${site.contact.fcPhone}` };
+/** 가입 관련 질문(나이·가능 여부 등)에 보여 줄 짧은 안내 */
+const enrollmentNotice = "가입 관련 내용은 개인차이가 있어 상담 시 안내드려요. 카카오톡 상담 또는 전화를 이용해 주세요.";
 /** 우체국보험 공식 홈페이지 '자주하는 질문' 주소 (답변 원문은 officialFaq.data.json 에 있습니다) */
 export const OFFICIAL_FAQ_URL = "https://epostlife.go.kr/IPCCFQ0001.do";
 
@@ -63,11 +66,17 @@ export const faq: FaqEntry[] = [
     suggestions: ["건강·암 보장", "노후·연금", "어린이·가족", "산모·신생아", "저축·목돈 마련", "시니어·간병·치매", "병력이 있으신 분", "기업·단체"],
   },
   {
+    id: "enrollment",
+    // '가입되는/가입 가능' 같은 가입 여부 질문 — 개인차이가 있어 상담으로 안내합니다 ('promise'의 짧은 '가입되'보다 긴 단어라 먼저 맞습니다).
+    keywords: ["가입되는", "가입돼", "가입가능", "가입할수", "가입이가능", "가입이되", "세까지가입", "가입여부", "가입대상", "가입받"],
+    text: enrollmentNotice,
+    links: [phoneLink, ...kakao, consult],
+  },
+  {
     id: "conditions",
     keywords: ["가입조건", "가입나이", "나이제한", "가입한도", "보험기간", "납입기간", "몇살", "가입자격"],
-    text: "가입 나이·보험기간·가입 한도는 상품마다 달라요. 상품 이름이나 분야를 입력하시면 해당 상품 페이지에서 '상품 정보'를 확인하실 수 있게 안내해 드릴게요.",
-    links: [{ label: "보험 상품 전체 보기", short: "전체상품", href: "/products" }],
-    suggestions: ["내게 맞는 상품 찾기", "상담 신청하기"],
+    text: enrollmentNotice,
+    links: [phoneLink, ...kakao, consult],
   },
   {
     id: "premium",
