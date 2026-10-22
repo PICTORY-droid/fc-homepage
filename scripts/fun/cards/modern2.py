@@ -184,7 +184,7 @@ def svc_list(c, x, y, items, size=7.4, pitch=64, color=None, mark="dot", w=420):
 
 
 def lab2(c, x, y, w=420, color=None, align="l"):
-    return T(x, y, w, c.d["svc_label"], 5.2, color or c.sub, True, align, spacing=2.4)
+    return T(x, y, w, c.d["svc_label"], 5.2, color or c.link, True, align, spacing=2.4)
 
 
 def b_poster(c):  # 큰 글자 목록
@@ -288,7 +288,7 @@ def b_wave(c):
            T(L, 40, 700, d["svc_label"], 5.4, c.onp, True, spacing=2.4)]
     for i, s in enumerate(d["services"]):
         out += [dot(L + 7, 190 + i * 52 + 22, 6, c.acc if i % 2 == 0 else c.acc2), T(L + 30, 190 + i * 52, 420, s, 7.2, c.fg, True, h=48)]
-    out += [T(560, 190, 270, "HOURS", 4.8, c.sub, True, spacing=1.4), T(560, 222, 270, d["hours"], 6.2, c.fg), T(560, 300, 270, d["web"][0], 4.8, c.sub, True, spacing=1.4), T(560, 332, 270, d["web"][1], 6.2, c.fg)]
+    out += [T(560, 190, 270, "INFO", 4.8, c.sub, True, spacing=1.4), T(560, 222, 270, d["hours"], 6.2, c.fg), T(560, 300, 270, d["web"][0], 4.8, c.sub, True, spacing=1.4), T(560, 332, 270, d["web"][1], 6.2, c.fg)]
     return out
 
 
