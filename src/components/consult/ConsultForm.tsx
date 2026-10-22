@@ -10,7 +10,7 @@ import { useConsultForm } from "@/features/consult/useConsultForm";
 const field = "mt-2 w-full min-h-[48px] rounded-xl border border-ink/25 bg-paper px-4 text-base text-ink placeholder:text-ink-sub/70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-ink";
 // 칸 너비는 '화면 너비'가 아니라 '들어간 자리의 너비'에 맞춰 늘고 줄어듭니다(좁은 자리에서 글자가 한 줄에 한 낱말씩 쪼개지지 않게).
 const topicGrid = "grid grid-cols-1 gap-3 min-[480px]:grid-cols-2 lg:grid-cols-3"; // 분야 9개 → 3×3 로 딱 맞게 떨어짐
-const choiceGrid = "mt-3 grid grid-cols-[repeat(auto-fit,minmax(min(100%,9.5rem),1fr))] gap-3";
+const choiceGrid = "mt-3 grid grid-cols-[repeat(auto-fit,minmax(9.5rem,1fr))] gap-3";
 // 분야 선택 카드 — '전체 상담 분야' 카드와 같은 모양(라디오는 화면에서 숨기고 오른쪽 위 표시로 대신함)
 const topicCard = "relative flex h-full cursor-pointer items-start gap-3 rounded-xl border border-ink/15 bg-paper p-4 text-ink transition duration-200 hover:-translate-y-0.5 hover:border-brand hover:shadow-md has-[:checked]:border-brand-deep has-[:checked]:bg-brand-soft has-[:checked]:shadow-[0_0_0_1px_theme(colors.brand.deep)] has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-ink";
 const choice = "flex min-h-[52px] cursor-pointer items-center gap-3 break-keep rounded-xl border border-ink/20 bg-paper px-4 py-3 text-ink transition hover:border-brand has-[:checked]:border-brand-deep has-[:checked]:bg-brand-soft has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-ink";
