@@ -32,6 +32,6 @@ describe("내려받기 파일이 모두 있다", () => {
   it("편지지 이름이 서로 겹치지 않고, 내려받는 파일 이름은 한글", () => {
     expect(new Set(stationery.map((s) => s.name)).size).toBe(980);
     expect(new Set(stationery.map((s) => s.tag)).size).toBe(980);
-    expect(stationeryDownloadName(stationery[0], "docx")).toMatch(/^편지지_봄01_[가-힣]+\.docx$/);
+    expect(stationeryDownloadName(stationery[0], "docx")).toMatch(/^편지지_꽃빛01_[가-힣]+\.docx$/);
   });
 });

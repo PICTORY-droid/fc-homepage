@@ -33,7 +33,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return funMetadata({ title: `${searchTitles[`${f.group.slug}/${f.item.key}`] ?? f.item.title} ${n}종`, description: f.item.short, path: `/fun/${f.group.slug}/${f.item.key}`, ogKey: `${f.group.slug}-${f.item.key}` });
 }
 
-// 항목 페이지 — 봄·여름·가을·겨울 중 하나를 고르는 입구. 실제 양식은 계절별 상세페이지에 있어요.
+// 항목 페이지 — 빛깔 중 하나를 고르는 입구. 실제 양식은 빛깔별 상세페이지에 있어요.
 export default async function PackItemPage({ params }: Props) {
   const f = await find(params);
   if (!f) notFound();

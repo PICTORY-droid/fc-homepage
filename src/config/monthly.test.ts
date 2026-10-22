@@ -23,6 +23,6 @@ describe("이달의 양식", () => {
     expect(homeMonth(new Date("2026-10-20T00:00:00Z"))).toBe(12);
     const p = monthlyPick(homeMonth());
     expect(p.heading).toBe("12월의 양식");
-    expect(p.cards.map((c) => c.title)).toEqual(["겨울 편지지", "겨울 카드뉴스", "겨울 가계부"]);
+    expect(p.cards.map((c) => c.title)).toEqual(["포근빛 편지지", "포근빛 카드뉴스", "포근빛 가계부"]);
   });
 });

@@ -3,10 +3,10 @@
 import data from "./pack.data.json";
 
 export type PackExt = "xlsx" | "pptx" | "docx" | "svg";
-export type Season = "봄" | "여름" | "가을" | "겨울";
-export const packSeasons: Season[] = ["봄", "여름", "가을", "겨울"];
+export type Season = "꽃빛" | "초록빛" | "노을빛" | "포근빛";
+export const packSeasons: Season[] = ["꽃빛", "초록빛", "노을빛", "포근빛"];
 /** 계절별 상세페이지 주소 조각 — 예) /fun/excel/ledger/spring */
-export const seasonSlug: Record<Season, string> = { 봄: "spring", 여름: "summer", 가을: "autumn", 겨울: "winter" };
+export const seasonSlug: Record<Season, string> = { 꽃빛: "spring", 초록빛: "summer", 노을빛: "autumn", 포근빛: "winter" };
 export const seasonFromSlug = (slug: string): Season | undefined => packSeasons.find((s) => seasonSlug[s] === slug);
 
 export interface PackEntry { no: number; name: string; tag: string; flavor: string; main: string; soft: string; dark: string; season: Season }
