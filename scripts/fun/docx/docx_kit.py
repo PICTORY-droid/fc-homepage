@@ -25,7 +25,7 @@ def rgb(hexstr):
     return RGBColor.from_string(hexstr.upper().lstrip("#"))
 
 
-def new_document(title, margins_px=(46, 52, 40, 52), author="우체국보험 상담 안내"):
+def new_document(title, margins_px=(46, 52, 40, 52), author="반딧불이의 곳간"):
     """margins_px = (위, 오른쪽, 아래, 왼쪽). 기본 글꼴·문단 간격을 정리한 A4 문서를 돌려줍니다."""
     doc = Document()
     sec = doc.sections[0]

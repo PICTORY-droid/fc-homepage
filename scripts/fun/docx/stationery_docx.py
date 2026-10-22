@@ -84,7 +84,7 @@ def build(m, jpg_path):
     doc.sections[0].header_distance = Twips(0)
     _background(doc, jpg_path, m["name"])
     c = m["color"]
-    date = "날짜 :  20        년        월        일"
+    date = "날짜 :           년        월        일"
     t = m.get("title")
     if t:
         _title(doc, m["name"], t, m.get("tcolor", c))

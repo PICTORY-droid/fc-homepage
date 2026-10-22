@@ -115,7 +115,7 @@ def build(plan):
         add_to_slide(blank_slide(prs), fe, cf.bg)
         add_to_slide(blank_slide(prs), be, cb.bg)
         cp = prs.core_properties
-        cp.author, cp.title, cp.subject = "우체국보험 상담 안내", f"{d['title']} 명함 서식", "편집용 명함 서식"
+        cp.author, cp.title, cp.subject = "반딧불이의 곳간", f"{d['title']} 명함 서식", "편집용 명함 서식"
         prs.save(os.path.join(d_out, base + ".pptx"))
         # 합성 미리보기 SVG
         def inner(s, y):

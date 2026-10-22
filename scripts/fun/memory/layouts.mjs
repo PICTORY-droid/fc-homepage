@@ -9,10 +9,9 @@ const star = (cx, cy, r, f, o = 1) => `<polygon opacity="${o}" fill="${f}" point
 /** 톱니 우표 안에 소재 그림 */
 export const stampHero = (h, p, x, y, s, rot = 4, value = "330") => g(`
   <rect width="110" height="136" fill="${p.a}"/><rect x="10" y="10" width="90" height="100" fill="${p.paper}"/>${g(h(p), 6, 12, 0.49)}
-  <text x="98" y="127" text-anchor="end" font-size="15" font-weight="800" fill="#fff" font-family="Noto Sans CJK KR">${value}</text>
   <rect width="110" height="136" fill="none" stroke="${p.paper}" stroke-width="9" stroke-dasharray="0 11" stroke-linecap="round"/>`, x, y, s, rot);
 
-const pm = (p, x, y, s, label, rot = -12, o = 0.55) => postal("postmark", x, y, s, p, { label, rot, o });
+const pm = () => ""; // 소인(지역·연도 글자)은 그림에 굽지 않는다
 const shadow = (x, y, w, h, rx = 6) => rect(x + 5, y + 7, w, h, "#2b3a67", rx, 'opacity=".08"');
 const L = {};
 const flow = (bottom, minRy = 0) => { const fy = bottom + 26; const ry = Math.max(fy + 48, minRy); return { fy, ry, rows: Math.floor((1046 - ry) / GAP) }; };
@@ -33,7 +32,7 @@ L.airmail = (d, h, p) => {
   const t = titleSvg(d, 80, 150, p, { size: 44, max: 7 });
   const body = `${rect(0, 0, W, H, p.paper)}${rect(0, 0, W, B, "url(#am)")}${rect(0, H - B, W, B, "url(#am)")}${rect(0, 0, B, H, "url(#am)")}${rect(W - B, 0, B, H, "url(#am)")}
     ${rect(B, B, W - 2 * B, H - 2 * B, "none", 0, `stroke="${p.d}" stroke-width="1.5" opacity=".5"`)}
-    ${txt(80, 92, "PAR AVION   ·   항 공 우 편", { size: 14, weight: 700, fill: p.a, spacing: 3, serif: false })}${stampHero(h, p, 560, 64, 1.0, 3, d.price ?? "330")}${pm(p, 500, 70, 0.9, d.mark ?? "KOREA")}
+    ${stampHero(h, p, 560, 64, 1.0, 3, d.price ?? "330")}${pm(p, 500, 70, 0.9, d.mark ?? "KOREA")}
     ${t.svg}${rules(80, 290, 634, 17, p.line)}${credit(p)}`;
   return { defs, body, area: { fields: [80, 238, 634], rules: [80, 290, 634, 16], from: [80, 1004, 634, "left"] } };
 };
@@ -42,7 +41,7 @@ L.airmail = (d, h, p) => {
 L.notebook = (d, h, p) => {
   const holes = Array.from({ length: 15 }, (_, i) => `<circle cx="34" cy="${70 + i * 70}" r="12" fill="#e9e2d2" stroke="#00000022"/><rect x="14" y="${64 + i * 70}" width="48" height="12" rx="6" fill="${p.d}" opacity=".7"/>`).join("");
   const label = g(`${shadow(0, 0, 380, 150)}<rect width="380" height="150" rx="10" fill="${p.bg}" stroke="${p.d}" stroke-width="3"/><rect x="10" y="10" width="360" height="130" rx="6" fill="none" stroke="${p.a}" stroke-width="1.5" stroke-dasharray="6 5"/>
-    ${txt(24, 36, d.cls ?? "3 학년  2 반   이름 : ", { size: 14, fill: p.ink, opacity: .7, serif: false })}`, 130, 70, 1, 0);
+    ${txt(24, 36, " 이름 : ", { size: 14, fill: p.ink, opacity: .7, serif: false })}`, 130, 70, 1, 0);
   const t = titleSvg(d, 320, 152, p, { size: 36, anchor: "middle", max: 7, gap: 42, w: 340 });
   const body = `${rect(0, 0, W, H, p.paper)}${rect(0, 0, 94, H, mix(p.paper, p.b, 0.25))}${holes}${rect(98, 0, 2, H, p.c, 0, 'opacity=".75"')}${rect(104, 0, 2, H, p.c, 0, 'opacity=".75"')}
     ${rules(120, 250, 620, 18, mix(p.paper, p.a, 0.35))}${label}${t.svg}${hero(h, p, 650, 150, 1.0, 6)}${credit(p)}`;
@@ -178,7 +177,7 @@ export const draw = (d, heroFn) => {
   const a = full.area;
   const lab = [
     txt(a.fields[0], a.fields[1] + 28, "받는 사람 :", { size: 17, weight: 700, fill: p.ink, serif: false }),
-    d.dateLine === false ? "" : txt(a.fields[0] + a.fields[2], a.fields[1] + 28, "날짜 :  20     년     월     일", { size: 17, weight: 700, fill: p.ink, anchor: "end", serif: false }),
+    d.dateLine === false ? "" : txt(a.fields[0] + a.fields[2], a.fields[1] + 28, "날짜 :        년     월     일", { size: 17, weight: 700, fill: p.ink, anchor: "end", serif: false }),
     a.from ? txt(a.from[3] === "right" ? a.from[0] + a.from[2] : a.from[0], a.from[1] + 28, "보내는 사람 :", { size: 17, weight: 700, fill: p.ink, anchor: a.from[3] === "right" ? "end" : "start", serif: false }) : "",
   ].join("");
   return { cover: () => coverSvg(d, heroFn, p), svg: (bare) => (bare ? wrapSvg(d.id, bareRun.defs, bareRun.body, d.n ?? 3) : wrapSvg(d.id, full.defs, full.body + lab, d.n ?? 3)), area: { ...a, date: d.dateLine !== false, title: d.editTitle ? bareRun.titleArea ?? null : null } };

@@ -1,6 +1,6 @@
 """월 저축·적금 플래너 — 5가지 목표 × 10가지 기간·차트 구성 = 50종."""
 import datetime as dt
-from xlsx_kit import cover, new_book, q, rng, style_chart
+from xlsx_kit import DATE_FMT, cover, new_book, q, rng, style_chart
 
 GOALS = [("비상금 마련", 300000), ("여행 자금", 250000), ("내 집 마련", 700000), ("자녀 교육비", 400000), ("은퇴 후 생활 준비", 500000)]
 MONTHS = [24, 36, 24, 48, 36, 60, 24, 48, 60, 36]
@@ -36,7 +36,7 @@ def build(path, i, pal, message):
     wp.merge_range("B1:F1", f"{goal} 저축 플래너", fm.title(18))
     wp.merge_range("B2:F2", (f"“{message}”" if message else ""), fm.sub())
     wp.merge_range("B3:C3", "입력 칸", fm.head())
-    rows = [("목표 이름", goal, fm.inp(align="center")), ("목표 금액(원)", target, fm.inp(num_format="#,##0")), ("시작일", dt.datetime(2026, 1, 1), fm.inp(num_format="yyyy-mm-dd", align="center")),
+    rows = [("목표 이름", goal, fm.inp(align="center")), ("목표 금액(원)", target, fm.inp(num_format="#,##0")), ("시작일", dt.datetime(2026, 1, 1), fm.inp(num_format=DATE_FMT, align="center")),
             ("월 납입액(원)", monthly, fm.inp(num_format="#,##0")), ("연 이율", rate, fm.inp(num_format="0.0%")), ("기간(개월, 최대 60)", months, fm.inp(num_format='0"개월"', align="center")),
             ("이자 계산", "단리", fm.inp(align="center")), ("이자 과세", 0.154, fm.inp(num_format="0.0%"))]
     for k, (lab, val, f) in enumerate(rows):
@@ -54,7 +54,7 @@ def build(path, i, pal, message):
     wp.merge_range("E3:F3", "자동 계산 결과", fm.head())
     interest = 'IF(Mode="단리",Monthly*(Rate/12)*Months*(Months+1)/2,FV(Rate/12,Months,-Monthly,0,1)-Monthly*Months)'
     res = [("납입 원금 합계", "=Monthly*Months", "#,##0"), ("세전 이자", "=" + interest, "#,##0"), ("세금", "=F5*Tax", "#,##0"),
-           ("세후 이자", "=F5-F6", "#,##0"), ("만기 수령액", "=F4+F7", "#,##0"), ("만기일", "=EDATE(StartDate,Months)", "yyyy-mm-dd"),
+           ("세후 이자", "=F5-F6", "#,##0"), ("만기 수령액", "=F4+F7", "#,##0"), ("만기일", "=EDATE(StartDate,Months)", DATE_FMT),
            ("목표 달성률", "=IF(Goal=0,0,F8/Goal)", "0.0%"), ("목표까지 부족한 금액", "=MAX(0,Goal-F8)", "#,##0"),
            ("목표 달성에 필요한 월 납입액", '=IF(Mode="단리",Goal/(Months+(Rate/12)*(1-Tax)*Months*(Months+1)/2),IF(Rate=0,Goal/Months,Goal/(Months+(FV(Rate/12,Months,-1,0,1)-Months)*(1-Tax))))', "#,##0"),
            ("지금까지 실제 납입", f"=SUM({q('월별표')}!$G$5:$G${4 + MAXM})", "#,##0")]

@@ -78,7 +78,7 @@ export const allDesigns = [
   mk("여름", 15, { title: "매미 우는 오후", tag: "낮잠 깨면 하루가 길었다", hero: su.cicada, p: P.ice, layout: "notebook", cls: "5 학년  2 반   이름 : " }),
   mk("여름", 16, { title: "파도 소리 테이프", tag: "조개껍데기에 귀를 대면", hero: su.shell, p: P.navy, layout: "cassette" }),
   mk("여름", 17, { title: "삐삐 치던 여름밤", tag: "마당 끝에서 신호를 기다렸다", hero: su.fan, p: P.fresh, layout: "pager", lcd1: "1004", lcd2: "8282  7942", sub: "음성 사서함 2건" }),
-  mk("여름", 18, { title: "바닷가 우체국", tag: "엽서에 모래가 묻어 있었다", hero: su.parasol, p: P.lilac, layout: "postcard", price: "300", mark: "강릉" }),
+  mk("여름", 18, { title: "바닷가 우편함", tag: "엽서에 모래가 묻어 있었다", hero: su.parasol, p: P.lilac, layout: "postcard", price: "300", mark: "강릉" }),
   mk("여름", 19, { title: "수련회 가던 날", tag: "버스 맨 뒤에서 부르던 노래", hero: su.tent, p: P.apricot, layout: "diary", weather: 0 }),
   mk("여름", 20, { title: "레몬에이드 한 컵", tag: "문방구 앞 자판기 동전 소리", hero: su.lemonade, p: P.peachy, layout: "scrap", note1: "100원만", note2: "빌려줘" }),
   // ───── 가을
@@ -106,7 +106,7 @@ export const allDesigns = [
   mk("겨울", 1, { title: "첫눈", tag: "약속은 없었지만 창밖을 봤다", hero: wi.snowflake, p: P.ice, layout: "window", fx: "snow" }),
   mk("겨울", 2, { title: "군고구마", tag: "연탄불 위 신문지에 싸인 온기", hero: ob.roastpotato, p: P.sky, layout: "scrap", note1: "뜨거워", note2: "호호 불어" }),
   mk("겨울", 3, { title: "겨울방학 계획표", tag: "동그라미만 그리다 끝난", hero: ob.pencils, p: P.navy, layout: "notebook", cls: "3 학년  3 반   이름 : " }),
-  mk("겨울", 4, { title: "크리스마스 카드", tag: "우체국 앞에 줄 서서 부치던", hero: wi.tree, p: P.tomato, layout: "airmail", price: "300", mark: "12월" }),
+  mk("겨울", 4, { title: "크리스마스 카드", tag: "골목 우편함 앞에 줄 서서 부치던", hero: wi.tree, p: P.tomato, layout: "airmail", price: "300", mark: "12월" }),
   mk("겨울", 5, { title: "연하장", tag: "새해 복 많이 받으세요, 라고 쓰던", hero: wi.sunrise, p: P.wine, layout: "envelope", price: "300", mark: "1월" }),
   mk("겨울", 6, { title: "세뱃돈 봉투", tag: "빳빳한 새 돈이 든 복주머니", hero: wi.pouch, p: P.fresh, layout: "hanji", seal: "福" }),
   mk("겨울", 7, { title: "동지 팥죽", tag: "새알심은 나이만큼 먹었다", hero: ob.patjuk, p: P.emerald, layout: "almanac", month: "12월", hanja: "冬至", term: "동지", cal: "음력 11월  일" }),

@@ -44,7 +44,7 @@ export const titleSvg = (d, x, y, p, { size = 44, anchor = "start", max = 8, gap
   const t = hide ? "" : ls.map((s, i) => txt(x, y + i * gap, s, { size, weight: 700, fill: p.d, anchor, spacing: 1 })).join("");
   return { svg: eyebrow + t, bottom: y + (ls.length - 1) * gap + 22 };  // 제목 아래 보조 문장은 두지 않습니다
 };
-export const credit = (p, y = 1106) => txt(W / 2, y, "편지지 · 우체국보험 상담 안내", { size: 12, fill: p.d, anchor: "middle", opacity: 0.5, serif: false });
+export const credit = (p, y = 1106) => txt(W / 2, y, "편지지 · 반딧불이의 곳간", { size: 12, fill: p.d, anchor: "middle", opacity: 0.5, serif: false });
 export const wrapSvg = (id, defs, body, seed) => `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}"><defs>${defs}${finish(id, seed)}</defs>${body}${finishBody(id)}</svg>`;
 export const hero = (fn, p, cx, cy, s, rot = 0) => g(fn(p), cx - 100 * s, cy - 100 * s, s, rot);
 export const tape = (x, y, w, p, rot = -6, o = 0.72) => g(`<rect width="${w}" height="30" fill="${p.c}" opacity="${o}"/><path d="M0 0 l4 5 l-4 5 l4 5 l-4 5 l4 5 l-4 5Z M${w} 0 l-4 5 l4 5 l-4 5 l4 5 l-4 5 l4 5Z" fill="${p.paper}" opacity=".7"/>`, x, y, 1, rot);

@@ -23,7 +23,7 @@ A = "http://schemas.openxmlformats.org/drawingml/2006/main"
 P = "http://schemas.openxmlformats.org/presentationml/2006/main"
 R = "http://schemas.openxmlformats.org/officeDocument/2006/relationships"
 NSDECL = f'xmlns:a="{A}" xmlns:p="{P}" xmlns:r="{R}"'
-AUTHOR = "우체국보험 상담 안내"
+AUTHOR = "반딧불이의 곳간"
 
 # 색 이름표 → (테마 색, 밝기). 모든 도형·글자는 이 이름표로만 색을 정합니다.
 TOK = {
