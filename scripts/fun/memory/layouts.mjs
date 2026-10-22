@@ -20,7 +20,7 @@ const flow = (bottom, minRy = 0) => { const fy = bottom + 26; const ry = Math.ma
 L.polaroid = (d, h, p) => {
   const t = titleSvg(d, 70, 190, p, { size: 44, max: 6 });
   const photo = g(`${shadow(0, 0, 300, 340)}<rect width="300" height="340" fill="#ffffff"/><rect x="20" y="20" width="260" height="258" fill="${p.b}"/>${g(h(p), 20 + 130 - 130, 20 + 129 - 130, 1.3)}
-    <rect x="20" y="20" width="260" height="258" fill="none" stroke="#00000010"/>${txt(150, 312, d.cap ?? "20     .    .", { size: 17, anchor: "middle", fill: p.ink, opacity: .65 })}`, 440, 62, 1, 4);
+    <rect x="20" y="20" width="260" height="258" fill="none" stroke="#00000010"/>`, 440, 62, 1, 4);
   const body = `${rect(0, 0, W, H, p.paper)}${photo}${tape(520, 44, 130, p, -4)}${pm(p, 398, 300, 0.8, d.mark ?? "POST OFFICE")}${t.svg}${rules(70, 470, 654, 14, p.line)}${credit(p)}`;
   return { defs: "", body, area: { fields: [70, 422, 654], rules: [70, 470, 654, 14], from: [70, 1052, 654, "left"] } };
 };
@@ -65,7 +65,7 @@ L.diary = (d, h, p) => {
   const tab = g(`<rect width="300" height="44" rx="10" fill="${p.b}" stroke="${p.a}" stroke-width="2.5"/>`, 70, 192);
   const t = titleSvg(d, 220, 222, p, { size: 23, anchor: "middle", max: 14, w: 280 });
   const body = `${rect(0, 0, W, H, p.paper)}${rect(40, 36, W - 80, H - 72, "none", 14, `stroke="${p.a}" stroke-width="2" stroke-dasharray="3 8" stroke-linecap="round"`)}
-    ${txt(70, 138, "그 림 일 기", { size: 26, weight: 700, fill: p.d, spacing: 6 })}${wx}
+    ${txt(70, 138, "그 림 일 기", { size: 26, weight: 700, fill: p.d, spacing: 6 })}
     ${tab}${t.svg}${rect(70, 234, 654, 318, p.bg, 12, `stroke="${p.d}" stroke-width="2.5"`)}${hero(h, p, 397, 394, 1.4, 0)}${txt(86, 540, "오늘 있었던 일을 그림으로 그려 보세요", { size: 13, fill: p.ink, opacity: .45, serif: false })}
     ${rules(70, 590, 654, 10, p.line)}${credit(p)}`;
   return { defs: "", body, area: { fields: [70, 52, 654], rules: [70, 590, 654, 10], from: [70, 1052, 654, "left"] } };
@@ -78,7 +78,7 @@ L.ticket = (d, h, p) => {
   const tk = g(`${shadow(0, 0, 654, 210, 10)}<path d="M0 12 a12 12 0 0 1 12 -12 H642 a12 12 0 0 1 12 12 V92 a14 14 0 0 0 0 28 V198 a12 12 0 0 1 -12 12 H12 a12 12 0 0 1 -12 -12 V120 a14 14 0 0 0 0 -28Z" fill="#ffffff" stroke="${p.d}" stroke-width="2.5"/>
     <rect x="0" y="0" width="654" height="44" rx="12" fill="${p.a}"/><rect x="0" y="22" width="654" height="22" fill="${p.a}"/>${txt(24, 31, "승  차  권", { size: 20, weight: 700, fill: "#fff", spacing: 8 })}${txt(630, 30, d.train ?? "무궁화호", { size: 18, weight: 700, fill: "#fff", anchor: "end" })}
     ${txt(30, 96, "출발", { size: 14, fill: p.ink, opacity: .6, serif: false })}${txt(30, 140, d.from ?? "추억역", { size: 38, weight: 700, fill: p.d })}${txt(300, 140, "→", { size: 34, fill: p.a, anchor: "middle" })}${txt(340, 96, "도착", { size: 14, fill: p.ink, opacity: .6, serif: false })}${txt(340, 140, d.to ?? "그리움역", { size: 38, weight: 700, fill: p.d })}
-    <path d="M24 164 H630" stroke="${p.d}" stroke-width="1.5" stroke-dasharray="4 5" opacity=".6"/>${txt(30, 192, "20      .      .      발행        일반실  1매", { size: 14, fill: p.ink, opacity: .7, serif: false })}
+    <path d="M24 164 H630" stroke="${p.d}" stroke-width="1.5" stroke-dasharray="4 5" opacity=".6"/>${txt(30, 192, "일반실  1매", { size: 14, fill: p.ink, opacity: .7, serif: false })}
     ${g(h(p), 520, 62, 0.5)}`, 70, 66, 1, d.tilt ?? -1.5);
   const body = `${rect(0, 0, W, H, p.paper)}${tk}${t.svg}${rules(70, f.ry, 654, f.rows, p.line)}${credit(p)}`;
   return { defs: "", body, area: { fields: [70, f.fy, 654], rules: [70, f.ry, 654, f.rows], from: [70, 1052, 654, "left"] } };
@@ -101,9 +101,9 @@ L.cassette = (d, h, p) => {
 L.almanac = (d, h, p) => {
   const t = titleSvg(d, 360, 150, p, { size: 40, max: 6 });
   const cal = g(`${shadow(0, 0, 250, 300, 6)}<rect width="250" height="300" rx="6" fill="#ffffff"/><rect width="250" height="62" rx="6" fill="${p.a}"/><rect y="40" width="250" height="22" fill="${p.a}"/>
-    ${circle(60, 10, 7, "#fff", `stroke="${p.d}" stroke-width="2"`)}${circle(190, 10, 7, "#fff", `stroke="${p.d}" stroke-width="2"`)}${txt(125, 42, d.month ?? "3월", { size: 26, weight: 700, fill: "#fff", anchor: "middle", spacing: 4 })}
-    ${txt(125, 180, d.hanja ?? "立春", { size: 76, weight: 700, fill: p.d, anchor: "middle" })}${txt(125, 226, d.term ?? "입춘", { size: 26, weight: 700, fill: p.a, anchor: "middle", spacing: 8 })}
-    <path d="M30 246 H220" stroke="${p.d}" stroke-width="1.5" opacity=".4"/>${txt(125, 276, d.cal ?? "음력  월  일", { size: 15, fill: p.ink, anchor: "middle", opacity: .65, serif: false })}`, 70, 70, 1, -3);
+    ${circle(60, 10, 7, "#fff", `stroke="${p.d}" stroke-width="2"`)}${circle(190, 10, 7, "#fff", `stroke="${p.d}" stroke-width="2"`)}
+    ${txt(125, 184, "한 줄", { size: 64, weight: 700, fill: p.d, anchor: "middle" })}${txt(125, 228, "오늘의 마음", { size: 24, weight: 700, fill: p.a, anchor: "middle", spacing: 4 })}
+    <path d="M30 246 H220" stroke="${p.d}" stroke-width="1.5" opacity=".4"/>`, 70, 70, 1, -3);
   const body = `${rect(0, 0, W, H, p.paper)}${cal}${t.svg}${hero(h, p, 600, 260, 0.78, 6)}${rules(70, 410, 654, 16, p.line)}${credit(p)}`;
   return { defs: "", body, area: { fields: [70, 362, 654], rules: [70, 410, 654, 14], from: [70, 1052, 654, "left"] } };
 };
