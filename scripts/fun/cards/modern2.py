@@ -71,7 +71,7 @@ def f_cute(c):  # 귀여운 — 둥근 도형 + 웃는 얼굴 로고
 
 def f_wit(c):  # 재치 — 말풍선 인사
     d = c.d
-    return [rect(L, 62, 330, 112, c.acc, r=28), poly([(L + 60, 172), (L + 112, 172), (L + 66, 220)], fill=c.acc), T(L, 62, 330, "안녕하세요!", 11, c.on, True, "c", anchor="m", h=112),
+    return [rect(L, 62, 330, 112, c.acc, r=28), poly([(L + 60, 172), (L + 112, 172), (L + 66, 220)], fill=c.acc), T(L, 62, 330, "한 줄 소개", 11, c.on, True, "c", anchor="m", h=112),
             dot(560, 110, 14, c.acc2), rect(610, 84, 40, 40, c.acc, r=6, rot=18), poly([(720, 70), (760, 140), (690, 140)], fill=c.line), dot(820, 96, 8, c.acc),
             T(L, 244, 500, d["name"], 13.5, c.fg, True, spacing=1.0, h=66), T(L, 314, 500, d["title"], 6.6, c.sub), co(c, L + 280, 318, 420, c.sub, "r"),
             hl(L, 830, 372, c.line), *cols(c, L, 392, [250, 280, 270], 6.0)]
