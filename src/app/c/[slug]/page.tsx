@@ -35,7 +35,7 @@ export default async function CategoryPage({ params }: Props) {
         {category.notice && <div className="mt-6"><Notice tone="alert">{category.notice}</Notice></div>}
       </Section>
       <Section title={`${category.title} 상담 신청`} tone="card">
-        <div className="max-w-xl"><ConsultForm initialTopic={category.slug} /></div>
+        <ConsultForm initialTopic={category.slug} />
       </Section>
     </>
   );

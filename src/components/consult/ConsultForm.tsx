@@ -2,16 +2,18 @@
 import { useEffect, useRef } from "react";
 import { categories } from "@/config/categories";
 import { site } from "@/config/site";
-import { ChatCharacter } from "@/components/chatbot/ChatCharacter";
 import { TIMES, TIME_LABEL } from "@/features/consult/schema";
 import { FAMILY_HISTORY, FAMILY_HISTORY_LABEL, INSURANCE_KINDS, INSURANCE_KIND_LABEL, YESNO, YESNO_LABEL } from "@/features/consult/detailOptions";
 import { consentNote } from "@/features/consult/consentText";
 import { useConsultForm } from "@/features/consult/useConsultForm";
 
-const field = "mt-1 w-full min-h-[48px] rounded-xl border border-ink/25 bg-paper px-4 text-base text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-ink";
+const field = "mt-2 w-full min-h-[48px] rounded-xl border border-ink/25 bg-paper px-4 text-base text-ink placeholder:text-ink-sub/70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-ink";
+// 칸 너비는 '화면 너비'가 아니라 '들어간 자리의 너비'에 맞춰 늘고 줄어듭니다(좁은 자리에서 글자가 한 줄에 한 낱말씩 쪼개지지 않게).
+const topicGrid = "grid grid-cols-1 gap-3 min-[480px]:grid-cols-2 lg:grid-cols-3"; // 분야 9개 → 3×3 로 딱 맞게 떨어짐
+const choiceGrid = "mt-3 grid grid-cols-[repeat(auto-fit,minmax(min(100%,9.5rem),1fr))] gap-3";
 // 분야 선택 카드 — '전체 상담 분야' 카드와 같은 모양(라디오는 화면에서 숨기고 오른쪽 위 표시로 대신함)
-const topicCard = "relative flex cursor-pointer flex-col rounded-xl border border-ink/15 bg-paper px-4 py-3 text-ink transition duration-200 hover:-translate-y-0.5 hover:border-brand hover:shadow-md has-[:checked]:border-brand-deep has-[:checked]:bg-brand-soft has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-ink";
-const choice = "flex min-h-[56px] cursor-pointer items-center gap-3 rounded-xl border border-ink/20 bg-paper px-4 py-3 text-ink has-[:checked]:border-brand-deep has-[:checked]:bg-brand-soft has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-ink";
+const topicCard = "relative flex h-full cursor-pointer items-start gap-3 rounded-xl border border-ink/15 bg-paper p-4 text-ink transition duration-200 hover:-translate-y-0.5 hover:border-brand hover:shadow-md has-[:checked]:border-brand-deep has-[:checked]:bg-brand-soft has-[:checked]:shadow-[0_0_0_1px_theme(colors.brand.deep)] has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-ink";
+const choice = "flex min-h-[52px] cursor-pointer items-center gap-3 break-keep rounded-xl border border-ink/20 bg-paper px-4 py-3 text-ink transition hover:border-brand has-[:checked]:border-brand-deep has-[:checked]:bg-brand-soft has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-ink";
 
 // 상담 신청 폼(3단계) — 화면 표시만 담당 (로직은 useConsultForm, 전송은 features/consult/api.ts)
 export function ConsultForm({ initialTopic = "health" }: { initialTopic?: string }) {
@@ -50,44 +52,44 @@ export function ConsultForm({ initialTopic = "health" }: { initialTopic?: string
     <form
       noValidate
       onSubmit={(e) => { e.preventDefault(); void submit(); }}
-      className="space-y-6 rounded-card border border-ink/10 bg-paper p-6 sm:p-8"
+      className="space-y-8 rounded-card border border-ink/10 bg-paper p-5 sm:p-8"
     >
-      <ol className="flex items-center gap-2" aria-label="신청 단계">
+      <ol className="flex items-center" aria-label="신청 단계">
         {steps.map((s, i) => (
-          <li key={s.key} className="flex flex-1 items-center gap-2" aria-current={i === step ? "step" : undefined}>
-            <span className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-sm font-bold ${i <= step ? "bg-brand text-ink" : "bg-paper-gray text-ink-sub"}`}>{i + 1}</span>
-            <span className={`truncate text-sm ${i === step ? "font-bold text-ink" : "text-ink-sub"}`}>{s.label}</span>
+          <li key={s.key} className={`flex items-center gap-2.5 ${i < steps.length - 1 ? "flex-1" : ""}`} aria-current={i === step ? "step" : undefined}>
+            <span className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-sm font-bold ${i <= step ? "bg-brand text-ink" : "bg-paper-gray text-ink-sub"}`}>{i + 1}</span>
+            <span className={`whitespace-nowrap text-sm ${i === step ? "font-bold text-ink" : "text-ink-sub"}`}>{s.label}</span>
+            {i < steps.length - 1 && <span aria-hidden="true" className={`mx-2 h-0.5 flex-1 rounded-full ${i < step ? "bg-brand" : "bg-ink/10"}`} />}
           </li>
         ))}
       </ol>
 
       <div key={steps[step].key} className="step-enter space-y-6">
-      <h3 ref={titleRef} tabIndex={-1} className="text-xl font-bold text-ink outline-none">{steps[step].title}</h3>
+      <div>
+        <h3 ref={titleRef} tabIndex={-1} className="break-keep text-xl font-bold text-ink outline-none sm:text-2xl">{steps[step].title}</h3>
+        {steps[step].key === "topic" && <p className="mt-1.5 text-sm text-ink-sub">가장 가까운 분야를 하나 골라 주세요.</p>}
+      </div>
 
       {steps[step].key === "topic" && (
         <fieldset>
           <legend className="sr-only">관심 분야</legend>
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+          <div className={topicGrid}>
             {[...categories.map((c) => ({ slug: c.slug as string, title: c.title, short: c.short })),
               { slug: "other", title: "기타 / 잘 모르겠어요", short: "어떤 보장이 필요한지 함께 정리해 드립니다." }].map((c) => (
               <label key={c.slug} className={topicCard}>
                 <input type="radio" name="topic" className="peer sr-only" value={c.slug}
                   checked={values.topic === c.slug} onChange={() => setField("topic", c.slug as typeof values.topic)} />
-                <span aria-hidden="true" className="absolute right-3 top-3 h-4 w-4 rounded-full border-2 border-ink/30 bg-paper peer-checked:border-brand-deep peer-checked:bg-brand-deep peer-checked:shadow-[inset_0_0_0_2.5px_#FFDAC1]" />
-                <span className="pr-5"><b className="block text-[15px] leading-snug">{c.title}</b><span className="mt-0.5 block text-xs leading-snug text-ink-sub">{c.short}</span></span>
+                <span aria-hidden="true" className="mt-0.5 h-5 w-5 shrink-0 rounded-full border-2 border-ink/30 bg-paper peer-checked:border-brand-deep peer-checked:bg-brand-deep peer-checked:shadow-[inset_0_0_0_3px_#FFDAC1]" />
+                <span className="min-w-0"><b className="block break-keep text-base leading-snug">{c.title}</b><span className="mt-1 block break-keep text-sm leading-relaxed text-ink-sub">{c.short}</span></span>
               </label>
             ))}
-            {/* 빈 칸 장식 박스 — 같은 모양, 길잡이 캐릭터를 흐리게 (선택 불가, 화면낭독기에서 제외) */}
-            <div aria-hidden="true" className="relative hidden items-center justify-center rounded-xl border border-ink/15 bg-paper px-4 py-3 sm:flex">
-              <ChatCharacter className="h-10 w-auto opacity-40" />
-            </div>
           </div>
           <Err k="topic" />
         </fieldset>
       )}
 
       {steps[step].key === "contact" && (
-        <div className="mx-auto max-w-xl space-y-5">
+        <div className="mx-auto max-w-xl space-y-6">
           <div>
             <label htmlFor="name" className="font-semibold text-ink">이름</label>
             <input id="name" autoComplete="name" className={field} value={values.name}
@@ -108,9 +110,12 @@ export function ConsultForm({ initialTopic = "health" }: { initialTopic?: string
             <Err k="memo" />
           </div>
 
-          <details className="rounded-xl border border-ink/15 p-4">
-            <summary className="cursor-pointer font-semibold text-ink">더 알려 주실 내용이 있다면 (선택)</summary>
-            <div className="mt-4 space-y-6">
+          <details className="group rounded-xl border border-ink/15 bg-paper">
+            <summary className="flex min-h-[52px] cursor-pointer list-none items-center justify-between gap-3 rounded-xl px-4 py-3 font-semibold text-ink [&::-webkit-details-marker]:hidden">
+              <span>더 알려 주실 내용이 있다면 <span className="font-normal text-ink-sub">(선택)</span></span>
+              <span aria-hidden="true" className="text-ink-sub transition-transform group-open:rotate-180">▾</span>
+            </summary>
+            <div className="space-y-7 border-t border-ink/10 px-4 pb-5 pt-5">
           <div>
             <label htmlFor="age" className="font-semibold text-ink">가입 대상 연령 (만 나이, 선택)</label>
             <input id="age" inputMode="numeric" placeholder="예: 8" className={field} value={values.age}
@@ -120,7 +125,7 @@ export function ConsultForm({ initialTopic = "health" }: { initialTopic?: string
           </div>
           <fieldset>
             <legend className="font-semibold text-ink">연락 희망 시간</legend>
-            <div className="mt-2 grid gap-3 sm:grid-cols-3">
+            <div className={choiceGrid}>
               {TIMES.map((t) => (
                 <label key={t} className={choice}>
                   <input type="radio" name="time" className="h-5 w-5 accent-brand" value={t}
@@ -134,7 +139,7 @@ export function ConsultForm({ initialTopic = "health" }: { initialTopic?: string
         
           <fieldset>
             <legend className="font-semibold text-ink">현재 가입 중인 보험이 있나요?</legend>
-            <div className="mt-2 grid gap-3 sm:grid-cols-3">
+            <div className={choiceGrid}>
               {YESNO.map((v) => (
                 <label key={v} className={choice}>
                   <input type="radio" name="hasInsurance" className="h-5 w-5 accent-brand" value={v}
@@ -144,7 +149,7 @@ export function ConsultForm({ initialTopic = "health" }: { initialTopic?: string
               ))}
             </div>
             {values.hasInsurance === "yes" && (
-              <div className="mt-3 grid gap-3 sm:grid-cols-2">
+              <div className={choiceGrid}>
                 {INSURANCE_KINDS.map((k) => (
                   <label key={k} className={choice}>
                     <input type="checkbox" className="h-5 w-5 accent-brand" checked={(values.insuranceKinds ?? []).includes(k)}
@@ -156,7 +161,7 @@ export function ConsultForm({ initialTopic = "health" }: { initialTopic?: string
             )}
           </fieldset>
 
-          <div className="rounded-xl border border-ink/15 p-4">
+          <div className="rounded-xl border border-ink/15 p-4 sm:p-5">
             <p className="font-semibold text-ink">건강 관련 내용 (선택)</p>
             <label className="mt-3 flex min-h-[44px] items-center gap-3 text-ink">
               <input type="checkbox" className="h-5 w-5 accent-brand" checked={values.healthConsent}
@@ -169,7 +174,7 @@ export function ConsultForm({ initialTopic = "health" }: { initialTopic?: string
               <div className="mt-4 space-y-5">
                 <fieldset>
                   <legend className="font-semibold text-ink">최근 5년 내 입원 또는 수술 이력</legend>
-                  <div className="mt-2 grid gap-3 sm:grid-cols-3">
+                  <div className={choiceGrid}>
                     {YESNO.map((v) => (
                       <label key={v} className={choice}>
                         <input type="radio" name="surgery" className="h-5 w-5 accent-brand" value={v}
@@ -187,7 +192,7 @@ export function ConsultForm({ initialTopic = "health" }: { initialTopic?: string
 
                 <fieldset>
                   <legend className="font-semibold text-ink">현재 치료·복약 중인 질환</legend>
-                  <div className="mt-2 grid gap-3 sm:grid-cols-3">
+                  <div className={choiceGrid}>
                     {YESNO.map((v) => (
                       <label key={v} className={choice}>
                         <input type="radio" name="treatment" className="h-5 w-5 accent-brand" value={v}
@@ -205,7 +210,7 @@ export function ConsultForm({ initialTopic = "health" }: { initialTopic?: string
 
                 <fieldset>
                   <legend className="font-semibold text-ink">가족력 (해당하는 것 모두)</legend>
-                  <div className="mt-2 grid gap-3 sm:grid-cols-2">
+                  <div className={choiceGrid}>
                     {FAMILY_HISTORY.map((f) => (
                       <label key={f} className={choice}>
                         <input type="checkbox" className="h-5 w-5 accent-brand" checked={(values.familyHistory ?? []).includes(f)}
@@ -227,13 +232,13 @@ export function ConsultForm({ initialTopic = "health" }: { initialTopic?: string
               onChange={(e) => setField("website", e.target.value)} /></label>
           </div>
 
-          <div>
+          <div className="rounded-xl bg-paper-card p-4">
             <label className="flex min-h-[44px] cursor-pointer items-start gap-3 text-ink">
               <input type="checkbox" className="mt-0.5 h-5 w-5 shrink-0 accent-brand" checked={Boolean(values.consent)}
                 onChange={(e) => setField("consent", e.target.checked as unknown as true)} aria-describedby="consent-note" />
               <span><b>(필수)</b> 개인정보 수집·이용에 동의합니다. <a className="text-sm underline" href="/privacy" target="_blank" rel="noopener noreferrer">자세히<span className="sr-only"> (새 창으로 열림)</span></a></span>
             </label>
-            <p id="consent-note" className="mt-1 pl-8 text-xs leading-relaxed text-ink-sub">{consentNote(site.privacy.retentionMonths)}</p>
+            <p id="consent-note" className="mt-1 break-keep pl-8 text-sm leading-relaxed text-ink-sub">{consentNote(site.privacy.retentionMonths)}</p>
             <Err k="consent" />
           </div>
           {status === "error" && <p role="alert" className="text-alert">{serverMessage}</p>}
@@ -242,7 +247,7 @@ export function ConsultForm({ initialTopic = "health" }: { initialTopic?: string
 
       </div>
 
-      <div className="mx-auto flex max-w-xl gap-3 sm:max-w-sm">
+      <div className="mx-auto flex w-full max-w-md gap-3">
         {step > 0 && (
           <button type="button" onClick={back}
             className="min-h-[48px] rounded-xl border border-ink/30 bg-paper px-6 text-base font-semibold text-ink hover:bg-paper-gray">
@@ -261,7 +266,7 @@ export function ConsultForm({ initialTopic = "health" }: { initialTopic?: string
           </button>
         )}
       </div>
-      <p className="text-center text-xs text-ink-sub">신청하시면 {site.contact.responseTime} 안에 연락드립니다. {site.notices.promise}</p>
+      <p className="mx-auto max-w-md text-balance break-keep text-center text-sm leading-relaxed text-ink-sub">신청하시면 {site.contact.responseTime} 안에 연락드립니다. {site.notices.promise}</p>
     </form>
   );
 }
