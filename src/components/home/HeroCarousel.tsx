@@ -19,7 +19,7 @@ export interface HeroSlideView {
 const btn = "flex min-h-[44px] items-center justify-center whitespace-nowrap rounded-xl px-2 text-sm font-bold sm:text-base";
 const ctl = "flex h-9 w-9 items-center justify-center rounded-full bg-white/85 text-ink shadow-sm ring-1 ring-black/5 transition hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2";
 
-export function HeroCarousel({ slides, phone, intervalMs }: { slides: HeroSlideView[]; phone: string; intervalMs: number }) {
+export function HeroCarousel({ slides, intervalMs }: { slides: HeroSlideView[]; phone?: string; intervalMs: number }) {
   const c = useCarousel(slides.length, intervalMs);
   const cur = slides[c.index].theme;
   const track = [slides[slides.length - 1], ...slides, slides[0]];
@@ -65,9 +65,8 @@ export function HeroCarousel({ slides, phone, intervalMs }: { slides: HeroSlideV
                 </p>
                 <H className="mt-3 whitespace-pre-line break-keep text-2xl font-extrabold leading-snug text-ink sm:text-4xl md:leading-tight">{s.headline}</H>
                 <p className="mt-2 max-w-xl break-keep text-sm text-ink-sub sm:text-base md:mt-3">{s.sub}</p>
-                <div className="mt-4 grid grid-cols-3 gap-2 md:mt-5 md:max-w-md">
+                <div className="mt-4 grid grid-cols-2 gap-2 md:mt-5 md:max-w-xs">
                   <Link href="/find" className={`${btn} text-white`} style={{ background: s.theme.deep }}>30초 보장 점검</Link>
-                  <a href={`tel:${phone}`} className={`${btn} bg-white`} style={{ color: s.theme.deep, boxShadow: `inset 0 0 0 1.5px ${s.theme.accent}` }}>전화 상담</a>
                   <Link href={s.detailPath} className={`${btn} bg-white`} style={{ color: s.theme.deep, boxShadow: `inset 0 0 0 1.5px ${s.theme.accent}` }}>상품 보기</Link>
                 </div>
               </div>
