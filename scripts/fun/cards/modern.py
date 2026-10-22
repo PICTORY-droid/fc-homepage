@@ -487,11 +487,11 @@ def b_qr(c):
             T(610, 336, 200, d["web"][1], 6.2, c.fg, False, "c"), T(610, 376, 200, d["hours"], 6.2, c.sub, False, "c")]
 
 
-def b_dark(c):  # 큰 번호 + 업무
+def b_dark(c):  # 번호 + 업무
     d = c.d
     out = [rect(0, 0, 900, 8, c.acc), lab(c, L, 62)]
     for i, s in enumerate(d["services"]):
-        out += [T(L, 118 + i * 74, 150, f"{i + 1:02d}", 15, c.acc if c.flavor != 2 else c.fg, True, h=66), T(L + 130, 132 + i * 74, 420, s, 8, c.fg, True, h=50)]
+        out += [T(L, 138 + i * 74, 100, f"{i + 1:02d}", 6.4, c.acc if c.flavor != 2 else c.fg, True, spacing=1.2, h=40), T(L + 90, 132 + i * 74, 460, s, 8, c.fg, True, h=50)]
     out += [vl(620, 118, 420, c.line), T(660, 118, 180, "INFO", 4.8, c.sub, True, spacing=1.4), T(660, 150, 200, d["hours"], 6.2, c.fg), T(660, 250, 180, d["web"][0], 4.8, c.sub, True, spacing=1.4), T(660, 282, 190, d["web"][1], 6.2, c.fg),
             T(640, 410, 240, d["company"], 5.0, c.sub, True, spacing=1.0)]
     return out

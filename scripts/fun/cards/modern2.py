@@ -43,11 +43,11 @@ def bullets(c, x, y, pitch=40, size=6.5, w=420, color=None):
 
 
 # ───────── 앞면 새 17종
-def f_poster(c):  # 당당 — 큰 이름 + 굵은 막대
+def f_poster(c):  # 당당 — 이름 + 굵은 막대
     d = c.d
     pw = max(150, len(d["title"]) * 7 * PT + 70)
     return [rect(820, 0, 80, 500, c.panel), rect(820, 0, 80, 150, c.acc2), co(c, L, 64, 420),
-            T(L, 110, 700, d["name"], 25, c.fg, True, spacing=1.0, h=120), rect(L, 262, pw, 48, c.acc, r=24),
+            T(L, 150, 700, d["name"], 14, c.fg, True, spacing=1.0, h=76), rect(L, 262, pw, 48, c.acc, r=24),
             T(L, 262, pw, d["title"], 6.6, c.on, True, "c", anchor="m", spacing=.8, h=48), hl(L, 760, 352, c.line),
             *cols(c, L, 376, [240, 260, 260], 6.2)]
 
@@ -163,9 +163,10 @@ def f_frame2(c):  # 굵은 테두리
             rect(76, 316, 40, 5, c.acc2), *cols(c, 76, 350, [250, 280, 250], 6.0)]
 
 
-def f_initial(c):  # 큰 머리글자 — 이름 첫 글자를 크게
+def f_initial(c):  # 미니멀 포인트 — 짧은 막대 + 가는 원 + 가는 선(큰 글자 없음)
     d = c.d
-    return [T(L, 20, 360, d["name"][:1], 60, c.panel, True, h=280, op=.95), co(c, 470, 74, 360, None, "r"), T(L, 300, 700, d["name"], 12, c.fg, True, spacing=1.0, h=56), T(L, 358, 700, d["title"], 6.4, c.sub),
+    return [rect(L, 74, 64, 6, c.acc), ring(790, 96, 30, c.acc, 1.4), dot(790, 96, 5, c.acc2), co(c, L, 112, 420), hl(L, 830, 176, c.line),
+            T(L, 280, 700, d["name"], 12, c.fg, True, spacing=1.0, h=56), T(L, 342, 700, d["title"], 6.4, c.sub),
             hl(L, 830, 408, c.line), T(L, 424, 760, f'{d["tel"]}   ·   {d["mail"]}', 5.8, c.fg)]
 
 
@@ -312,13 +313,14 @@ def b_split(c):
     return out
 
 
-def b_numbers(c):  # 큰 번호
+def b_numbers(c):  # 번호 + 업무
     d = c.d
     out = [lab2(c, L, 56)]
     for i, s in enumerate(d["services"]):
         col, row = i % 2, i // 2
         x, y = L + col * 390, 108 + row * 150
-        out += [T(x, y, 160, f"{i + 1:02d}", 18, c.acc if (i + row) % 2 == 0 else c.acc2, True, h=90), T(x, y + 90, 360, s, 7, c.fg, True, h=50)]
+        col_ = c.acc if (i + row) % 2 == 0 else c.acc2
+        out += [T(x, y, 160, f"{i + 1:02d}", 6.4, col_, True, spacing=1.2, h=36), rect(x, y + 46, 40, 4, col_), T(x, y + 66, 360, s, 7.4, c.fg, True, h=50)]
     out += [T(L, 424, 760, f'{d["hours"]}   ·   {d["web"][1]}', 5.8, c.sub)]
     return out
 
