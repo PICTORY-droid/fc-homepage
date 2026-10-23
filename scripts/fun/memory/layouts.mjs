@@ -6,10 +6,8 @@ import { L2, coverSvg } from "./layouts2.mjs";
 
 const star = (cx, cy, r, f, o = 1) => `<polygon opacity="${o}" fill="${f}" points="${[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((i) => { const a = (i * 36 - 90) * Math.PI / 180, rr = i % 2 ? r * 0.45 : r; return `${(cx + Math.cos(a) * rr).toFixed(1)},${(cy + Math.sin(a) * rr).toFixed(1)}`; }).join(" ")}"/>`;
 
-/** 톱니 우표 안에 소재 그림 */
-export const stampHero = (h, p, x, y, s, rot = 4, value = "330") => g(`
-  <rect width="110" height="136" fill="${p.a}"/><rect x="10" y="10" width="90" height="100" fill="${p.paper}"/>${g(h(p), 6, 12, 0.49)}
-  <rect width="110" height="136" fill="none" stroke="${p.paper}" stroke-width="9" stroke-dasharray="0 11" stroke-linecap="round"/>`, x, y, s, rot);
+/** 맑은 동그라미 안에 소재 그림 — 우표·도장 대신 쓰는 깨끗한 장식 (cx, cy 는 원의 중심, r 은 반지름) */
+export const roundHero = (h, p, cx, cy, r) => `${circle(cx, cy, r + 9, p.b, 'opacity=".55"')}${circle(cx, cy, r, p.paper)}${circle(cx, cy, r, "none", `stroke="${p.a}" stroke-width="2.5" opacity=".7"`)}${hero(h, p, cx, cy, (r * 1.5) / 200)}`;
 
 const pm = () => ""; // 소인(지역·연도 글자)은 그림에 굽지 않는다
 const shadow = (x, y, w, h, rx = 6) => rect(x + 5, y + 7, w, h, "#2b3a67", rx, 'opacity=".08"');
@@ -25,16 +23,14 @@ L.polaroid = (d, h, p) => {
   return { defs: "", body, area: { fields: [70, 422, 654], rules: [70, 470, 654, 14], from: [70, 1052, 654, "left"] } };
 };
 
-// 2. 항공우편 봉투 테두리
+// 2. 맑은 테두리 편지지(연한 색 테두리 + 점선 한 줄, 오른쪽 위 둥근 그림)
 L.airmail = (d, h, p) => {
-  const defs = `<pattern id="am" width="44" height="44" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="44" height="44" fill="${p.paper}"/><rect width="22" height="44" fill="${p.a}"/><rect x="22" width="11" height="44" fill="${p.c}"/></pattern>`;
-  const B = 24;
   const t = titleSvg(d, 80, 150, p, { size: 44, max: 7 });
-  const body = `${rect(0, 0, W, H, p.paper)}${rect(0, 0, W, B, "url(#am)")}${rect(0, H - B, W, B, "url(#am)")}${rect(0, 0, B, H, "url(#am)")}${rect(W - B, 0, B, H, "url(#am)")}
-    ${rect(B, B, W - 2 * B, H - 2 * B, "none", 0, `stroke="${p.d}" stroke-width="1.5" opacity=".5"`)}
-    ${stampHero(h, p, 560, 64, 1.0, 3, d.price ?? "330")}${pm(p, 500, 70, 0.9, d.mark ?? "KOREA")}
+  const body = `${rect(0, 0, W, H, p.paper)}${rect(16, 16, W - 32, H - 32, "none", 30, `stroke="${p.b}" stroke-width="14"`)}
+    ${rect(34, 34, W - 68, H - 68, "none", 20, `stroke="${p.a}" stroke-width="2" stroke-dasharray="1 9" stroke-linecap="round" opacity=".75"`)}
+    ${roundHero(h, p, 628, 138, 62)}
     ${t.svg}${rules(80, 290, 634, 17, p.line)}${credit(p)}`;
-  return { defs, body, area: { fields: [80, 238, 634], rules: [80, 290, 634, 16], from: [80, 1004, 634, "left"] } };
+  return { defs: "", body, area: { fields: [80, 238, 634], rules: [80, 290, 634, 16], from: [80, 1004, 634, "left"] } };
 };
 
 // 3. 줄공책(스프링) + 이름표 스티커
@@ -48,14 +44,13 @@ L.notebook = (d, h, p) => {
   return { defs: "", body, area: { fields: [120, 212, 620], rules: [120, 250, 620, 18], from: [120, 1042, 620, "left"] } };
 };
 
-// 4. 엽서 뒷면(우표·소인·우편번호 칸)
+// 4. 두 칸 카드(왼쪽 글쓰기 · 오른쪽 연한 색 칸에 큰 그림)
 L.postcard = (d, h, p) => {
   const t = titleSvg(d, 64, 112, p, { size: 36, max: 9, gap: 44 });
-  const body = `${rect(0, 0, W, H, p.paper)}${rect(26, 26, W - 52, H - 52, "none", 0, `stroke="${p.d}" stroke-width="1.5" opacity=".35"`)}${rect(528, 70, 1.8, 960, p.d, 0, 'opacity=".35"')}
-    ${txt(64, 70, "POST   CARD", { size: 13, weight: 700, fill: p.a, spacing: 5, serif: false })}${t.svg}
-    ${stampHero(h, p, 612, 60, 1.05, 2, d.price ?? "330")}${pm(p, 560, 64, 1.0, d.mark ?? "POST OFFICE")}
-    ${postal("zip", 556, 320, 0.8, p)}${[0, 1, 2].map((i) => rect(556, 420 + i * 58, 190, 1.8, p.d, 0, 'opacity=".5"')).join("")}${txt(556, 410, "받는 분", { size: 13, fill: p.ink, opacity: .6, serif: false })}
-    ${hero(h, p, 640, 800, 1.2, -4)}${rules(64, 248, 440, 18, p.line)}${credit(p)}`;
+  const body = `${rect(0, 0, W, H, p.paper)}${rect(548, 0, W - 548, H, p.b, 0, 'opacity=".55"')}${rect(528, 70, 1.8, 960, p.a, 0, 'opacity=".35"')}
+    ${t.svg}
+    ${roundHero(h, p, 660, 190, 64)}
+    ${hero(h, p, 660, 640, 1.2, -4)}${rules(64, 248, 440, 18, p.line)}${credit(p)}`;
   return { defs: "", body, area: { fields: [64, 200, 440], rules: [64, 248, 440, 18], from: null } };
 };
 
@@ -122,26 +117,25 @@ L.window = (d, h, p) => {
   return { defs: "", body, area: { fields: [80, f.fy, 634], rules: [80, f.ry, 634, f.rows], from: [80, 1052, 634, "left"] } };
 };
 
-// 10. 봉투 안쪽(속지 무늬)과 우표
+// 10. 물결 머리 편지지(위쪽 연한 물결 면 + 가운데 둥근 그림)
 L.envelope = (d, h, p) => {
-  const defs = `<pattern id="sec" width="26" height="26" patternUnits="userSpaceOnUse" patternTransform="rotate(28)"><rect width="26" height="26" fill="${p.a}"/><path d="M0 13 H26" stroke="${p.paper}" stroke-width="1.6" opacity=".35"/><circle cx="6" cy="6" r="2" fill="${p.paper}" opacity=".35"/></pattern>`;
+  const defs = `<pattern id="sec" width="26" height="26" patternUnits="userSpaceOnUse" patternTransform="rotate(28)"><rect width="26" height="26" fill="${p.b}"/><circle cx="6" cy="6" r="2.2" fill="${p.paper}" opacity=".7"/><circle cx="19" cy="19" r="2.2" fill="${p.paper}" opacity=".7"/></pattern>`;
   const t = titleSvg(d, 80, 410, p, { size: 42, max: 8 });
   const f = flow(t.bottom);
-  const body = `${rect(0, 0, W, H, p.paper)}${path(`M0 0 H${W} V250 L${W / 2} 340 L0 250Z`, "url(#sec)")}${path(`M0 250 L${W / 2} 340 L${W} 250`, "none", p.d, 3, 'opacity=".55"')}
-    ${circle(397, 330, 44, p.c)}${circle(397, 330, 34, "none", `stroke="${p.paper}" stroke-width="2" opacity=".7"`)}${g(h(p), 397 - 38, 330 - 38, 0.38)}${stampHero(h, p, 60, 36, 0.8, -4, d.price ?? "330")}${pm(p, 560, 40, 0.9, d.mark ?? "POST OFFICE")}
+  const body = `${rect(0, 0, W, H, p.paper)}${path(`M0 0 H${W} V250 Q${W * 0.75} 330 ${W / 2} 290 T0 270Z`, "url(#sec)")}${path(`M0 270 Q${W * 0.25} 310 ${W / 2} 290 T${W} 250`, "none", p.a, 3, 'opacity=".5"')}
+    ${roundHero(h, p, 397, 290, 70)}
     ${t.svg}${rules(80, f.ry, 634, f.rows, p.line)}${credit(p)}`;
   return { defs, body, area: { fields: [80, f.fy, 634], rules: [80, f.ry, 634, f.rows], from: [80, 1052, 634, "left"] } };
 };
 
-// 11. 한지·문살·낙관
+// 11. 한지·문살
 L.hanji = (d, h, p) => {
   const r = rng(d.n ?? 11);
   const fib = Array.from({ length: 160 }, () => { const x = r() * W, y = r() * H, l = 10 + r() * 30, a = r() * Math.PI; return `<path d="M${x.toFixed(0)} ${y.toFixed(0)} l${(Math.cos(a) * l).toFixed(0)} ${(Math.sin(a) * l).toFixed(0)}" stroke="${p.d}" stroke-width=".8" opacity=".10"/>`; }).join("");
   const lat = Array.from({ length: 8 }, (_, i) => rect(10 + i * 0, 60 + i * 130, 76, 4, p.d, 0, 'opacity=".5"')).join("") + Array.from({ length: 3 }, (_, i) => rect(10 + i * 38, 56, 4, 960, p.d, 0, 'opacity=".5"')).join("") + rect(10, 56, 76, 4, p.d);
   const t = titleSvg(d, 450, 190, p, { size: 46, anchor: "middle", max: 6 });
   const f = flow(Math.max(t.bottom, 260));
-  const seal = g(`<rect width="70" height="70" rx="6" fill="${p.a}"/><rect x="5" y="5" width="60" height="60" rx="3" fill="none" stroke="${p.paper}" stroke-width="2" opacity=".8"/>${txt(35, 48, d.seal ?? "福", { size: 38, weight: 800, fill: p.paper, anchor: "middle" })}`, 650, 70, 1, 4);
-  const body = `${rect(0, 0, W, H, p.paper)}${fib}${rect(0, 0, 96, H, mix(p.paper, p.d, 0.08))}${lat}${rect(96, 0, 3, H, p.d, 0, 'opacity=".5"')}${seal}${hero(h, p, 220, 150, 0.7, -4)}${t.svg}${rules(140, f.ry, 590, f.rows, p.line)}${credit(p)}`;
+  const body = `${rect(0, 0, W, H, p.paper)}${fib}${rect(0, 0, 96, H, mix(p.paper, p.d, 0.08))}${lat}${rect(96, 0, 3, H, p.d, 0, 'opacity=".5"')}${hero(h, p, 220, 150, 0.7, -4)}${t.svg}${rules(140, f.ry, 590, f.rows, p.line)}${credit(p)}`;
   return { defs: "", body, area: { fields: [140, f.fy, 590], rules: [140, f.ry, 590, f.rows], from: [140, 1040, 590, "left"] } };
 };
 

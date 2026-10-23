@@ -42,7 +42,7 @@ export const allDesigns = [
   // ───── 봄
   mk("봄", 1, { title: "새 학기 첫날", tag: "이름표 달고 어색하게 앉은 자리", hero: ob.schoolbag, p: P.blush, layout: "notebook", cls: "1 학년  3 반   이름 : " }),
   mk("봄", 2, { title: "벚꽃 엔딩", tag: "교정 가득 흩날리던 하굣길", hero: sp.cherry, p: P.peachy, layout: "polaroid", cap: "20     .  4  .", mark: "SPRING" }),
-  mk("봄", 3, { title: "우체통 앞에서", tag: "썼다 지웠다 겨우 붙인 우표 한 장", hero: ob.mailbox, p: P.butter, layout: "airmail", price: "250", mark: "서울" }),
+  mk("봄", 3, { title: "우체통 앞에서", tag: "썼다 지웠다 겨우 부친 편지 한 통", hero: ob.mailbox, p: P.butter, layout: "airmail", price: "250", mark: "서울" }),
   mk("봄", 4, { title: "봄비 오는 창가", tag: "우산 하나에 어깨가 젖던 하굣길", hero: sp.umbrella, p: P.lime, layout: "window", fx: "rain" }),
   mk("봄", 5, { title: "개학 전날 밤", tag: "날씨 칸은 늘 '맑음'이었다", hero: sp.kite, p: P.mint, layout: "diary", weather: 0 }),
   mk("봄", 6, { title: "입춘대길", tag: "대문에 붙이던 붉은 글씨", hero: sp.sprout, p: P.aqua, layout: "almanac", month: "2월", hanja: "立春", term: "입춘", cal: "음력  월  일" }),
