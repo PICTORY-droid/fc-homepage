@@ -4,17 +4,9 @@ import { circle, rect, path, g, text, star, ellipse } from "./kit.mjs";
 /** 톱니 가장자리 우표 */
 const stamp = (x, y, s, p, { rot = 5, value = "100", inner = "" } = {}) => g(`
   <rect width="110" height="136" fill="${p.a}"/>${inner || `${circle(55, 54, 24, p.paper, 'opacity=".9"')}${path("M20 112 Q55 70 90 112Z", p.paper, "none", 0, 'opacity=".45"')}`}
-  <text x="98" y="124" text-anchor="end" font-size="16" font-weight="900" fill="#fff" font-family="Noto Sans CJK KR">${value}</text>
   <rect width="110" height="136" fill="none" stroke="${p.paper}" stroke-width="9" stroke-dasharray="0 11" stroke-linecap="round"/>`, x, y, s, rot);
 
-const postmark = (x, y, s, p, { label = "POST OFFICE", rot = -12, o = 0.6 } = {}) => {
-  const id = `pm${Math.round(x)}${Math.round(y)}`;
-  return g(`<defs><path id="${id}" d="M100,100 m-70,0 a70,70 0 1,1 140,0 a70,70 0 1,1 -140,0"/></defs>
-  <circle cx="100" cy="100" r="92" fill="none" stroke="${p.d}" stroke-width="5" opacity="${o}"/><circle cx="100" cy="100" r="58" fill="none" stroke="${p.d}" stroke-width="3" opacity="${o}"/>
-  <text font-size="17" font-weight="800" letter-spacing="2" fill="${p.d}" opacity="${o}" font-family="Noto Sans CJK KR"><textPath href="#${id}">${label} ·</textPath></text>
-  <text x="100" y="98" text-anchor="middle" font-size="19" font-weight="900" fill="${p.d}" opacity="${o}" font-family="Noto Sans CJK KR">20  .  .</text>
-  <path d="M54 114 h92 M58 126 h84" stroke="${p.d}" stroke-width="3" stroke-linecap="round" opacity="${o}"/>`, x, y, s, rot);
-};
+const postmark = () => ""; // 도장(소인)은 쓰지 않는다
 
 const envelope = (x, y, s, p, { rot = 8 } = {}) => g(`<rect x="3" y="3" width="104" height="70" rx="8" fill="${p.paper}" stroke="${p.d}" stroke-width="4"/><path d="M6 8 L55 46 L104 8" fill="none" stroke="${p.d}" stroke-width="4" stroke-linejoin="round"/>${circle(55, 40, 7, p.c)}`, x, y, s, rot);
 
@@ -24,7 +16,7 @@ const mailbox = (x, y, s, p) => g(`<rect x="86" y="150" width="18" height="100" 
   <path d="M20 150 V86 a65 65 0 0 1 130 0 V150 Z" fill="${p.a}"/><rect x="20" y="124" width="130" height="30" rx="6" fill="${p.d}"/><rect x="48" y="104" width="74" height="9" rx="4.5" fill="${p.paper}" opacity=".85"/>
   <rect x="150" y="62" width="8" height="64" fill="#8a6a4a"/><path d="M158 62 h30 v22 h-30z" fill="${p.c}"/>`, x, y, s);
 
-const parcelTag = (x, y, s, p, { label = "To." } = {}) => g(`<path d="M0 20 L24 0 H110 a10 10 0 0 1 10 10 V70 a10 10 0 0 1 -10 10 H24 L0 60Z" fill="${p.paper}" stroke="${p.d}" stroke-width="3"/>${circle(22, 30, 5, p.d, 'opacity=".5"')}<path d="M22 30 Q-20 10 -34 40" fill="none" stroke="${p.d}" stroke-width="3"/>${text(66, 49, label, { size: 20, fill: p.d, weight: 900, anchor: "middle" })}`, x, y, s, -8);
+const parcelTag = (x, y, s, p, { label = "" } = {}) => g(`<path d="M0 20 L24 0 H110 a10 10 0 0 1 10 10 V70 a10 10 0 0 1 -10 10 H24 L0 60Z" fill="${p.paper}" stroke="${p.d}" stroke-width="3"/>${circle(22, 30, 5, p.d, 'opacity=".5"')}<path d="M22 30 Q-20 10 -34 40" fill="none" stroke="${p.d}" stroke-width="3"/>${text(66, 49, label, { size: 20, fill: p.d, weight: 900, anchor: "middle" })}`, x, y, s, -8);
 
 const plane = (x, y, s, p) => g(`<path d="M0 40 L120 0 L84 90 L58 56 Z" fill="${p.paper}" stroke="${p.d}" stroke-width="4" stroke-linejoin="round"/><path d="M58 56 L120 0" stroke="${p.d}" stroke-width="3"/><path d="M58 56 L56 82 L72 66" fill="${p.c}" stroke="${p.d}" stroke-width="3" stroke-linejoin="round"/><path d="M-10 70 q-30 6 -50 -14" fill="none" stroke="${p.d}" stroke-width="3" stroke-dasharray="3 7" stroke-linecap="round"/>`, x, y, s, -6);
 
@@ -37,7 +29,7 @@ const bike = (x, y, s, p) => g(`<g fill="#3d3d3d"><circle cx="40" cy="78" r="18"
   <rect x="2" y="28" width="52" height="36" rx="6" fill="${p.a}"/><rect x="8" y="34" width="40" height="24" rx="4" fill="${p.paper}"/><path d="M9 35 L28 48 L47 35" fill="none" stroke="${p.a}" stroke-width="3"/>
   ${circle(92, 24, 12, "#FFD9B8")}<path d="M78 22 Q92 4 106 22Z" fill="${p.d}"/><path d="M84 38 Q86 56 104 56 L118 50 L120 40Z" fill="${p.a}"/>`, x, y, s);
 
-const ticket = (x, y, s, p, { label = "SEASON" } = {}) => g(`<path d="M0 8 a8 8 0 0 1 8 -8 H122 a8 8 0 0 1 8 8 v16 a10 10 0 0 0 0 20 v16 a8 8 0 0 1 -8 8 H8 a8 8 0 0 1 -8 -8 v-16 a10 10 0 0 0 0 -20Z" fill="${p.paper}" stroke="${p.d}" stroke-width="3"/><path d="M92 6 v60" stroke="${p.d}" stroke-width="2" stroke-dasharray="4 5"/>${text(44, 40, label, { size: 16, fill: p.d, weight: 900, anchor: "middle", spacing: 1 })}${star(111, 36, 9, p.c)}`, x, y, s, 4);
+const ticket = (x, y, s, p, { label = "TICKET" } = {}) => g(`<path d="M0 8 a8 8 0 0 1 8 -8 H122 a8 8 0 0 1 8 8 v16 a10 10 0 0 0 0 20 v16 a8 8 0 0 1 -8 8 H8 a8 8 0 0 1 -8 -8 v-16 a10 10 0 0 0 0 -20Z" fill="${p.paper}" stroke="${p.d}" stroke-width="3"/><path d="M92 6 v60" stroke="${p.d}" stroke-width="2" stroke-dasharray="4 5"/>${text(44, 40, label, { size: 16, fill: p.d, weight: 900, anchor: "middle", spacing: 1 })}${star(111, 36, 9, p.c)}`, x, y, s, 4);
 
 const sealTape = (x, y, s, p, { w = 220 } = {}) => g(`<rect width="${w}" height="26" fill="${p.c}" opacity=".85"/>${Array.from({ length: Math.floor(w / 36) }, (_, i) => text(10 + i * 36, 19, "♥", { size: 14, fill: p.paper, weight: 900 })).join("")}<path d="M0 0 l-6 4 l6 4 l-6 4 l6 4 l-6 5 l6 5 M${w} 0 l6 4 l-6 4 l6 4 l-6 4 l6 5 l-6 5" fill="none" stroke="${p.c}" stroke-width="2"/>`, x, y, s, -2);
 

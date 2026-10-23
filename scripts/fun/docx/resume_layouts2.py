@@ -94,7 +94,7 @@ def r_ncs(pos, sk, k):
             else:
                 t.cell(ri, 1).merge(t.cell(ri, 3))
         spacer(d, 6)
-    fp(d, "위 내용은 사실과 다름이 없음을 확인합니다.     20      년      월      일     작성자 :  ______________  (서명)", 9.5, None, None, "center", before=10)
+    fp(d, "위 내용은 사실과 다름이 없음을 확인합니다.           년      월      일     작성자 :  ______________  (서명)", 9.5, None, None, "center", before=10)
     return d
 
 

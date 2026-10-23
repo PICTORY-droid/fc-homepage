@@ -156,7 +156,7 @@ def c_letter(pid, name, sk, k):
         p = ct(b, "", 10); p.paragraph_format.left_indent = Pt(12)
     p = fp(d, "마무리 한 문장", 8.5, True, sk["mid"], before=14, after=2)
     answer_box(d, sk, cw, 60, "", True, sk["soft"])
-    fp(d, "20        년        월        일        지원자  ____________________  (서명)", 10, None, None, "right", before=12)
+    fp(d, "          년        월        일        지원자  ____________________  (서명)", 10, None, None, "right", before=12)
     return d
 
 

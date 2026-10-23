@@ -17,7 +17,7 @@ from pptx.oxml.ns import qn
 from pptx.util import Emu, Inches, Pt
 
 FONT = "맑은 고딕"
-AUTHOR = "우체국보험 상담 안내"
+AUTHOR = "반딧불이의 곳간"
 A = "http://schemas.openxmlformats.org/drawingml/2006/main"
 
 # 테마 번호(0~49) → 모티프 종류
@@ -61,6 +61,7 @@ class Deck:
         self.modern, self.hero, self.label = modern, hero, label
         self.occ = 0  # 같은 구도가 몇 번째로 나오는지(0~4) — 좌우 반전·바탕색을 바꿔 서로 다르게
         self.item = 0
+        self.photo_cover = False  # True 면 표지 큰 도형이 사진 자리(그림 채우기로 사진을 넣는 칸)가 된다
         self.card_style, self.badge_style, self.tal = 0, 0, "l"
         self.on_main = "#FFFFFF"  # 강조색 위에 올리는 글자색(새 디자인은 진한 먹색)
         if modern:
@@ -240,6 +241,7 @@ class Deck:
         if self.modern:  # 사진 자리: 파스텔 면 + 작은 글자(점선 없음)
             shp.line.fill.background()
             self._fill_text(shp.text_frame, label, size, False, "#8E8780", "c", "m", False, 1.0, False)
+            return shp
         self._fill_text(shp.text_frame, label, size, False, p["dark"], "c", "m", False, 1.0, False)
         return shp
 
@@ -415,9 +417,17 @@ class Deck:
         self.card_style = (v // 2) % 5
         self.badge_style = v % 5
 
+    def _photo_spot(self, shp):
+        """표지 큰 도형을 사진 자리로 — 도형 서식 > 채우기 > 그림 으로 사진을 넣을 수 있다."""
+        shp.name = "사진 자리"
+        self._fill_text(shp.text_frame, "사진을 넣어 주세요", 14, False, self.pal["dark"], "c", "m", False, 1.0, False)
+        return shp
+
     def _cover_modern(self, s, v, wide, sh):
         p, W, H, occ = self.pal, self.W, self.H, self.occ
-        inv = occ in (2, 3)          # 어두운 바탕 표지
+        if self.photo_cover and wide and v not in (0, 2, 4):
+            v = (0, 4, 2)[(self.occ + self.ti) % 3]  # 사진 칸이 생기는 구도만 쓴다
+        inv = occ in (2, 3) and not self.photo_cover   # 어두운 바탕 표지(사진 표지는 파스텔만)
         mirror = occ in (1, 3)       # 좌우 반전
         tinted = occ == 4            # 파스텔 바탕 표지
         ink = "#FFFFFF" if inv else p["ink"]
@@ -438,20 +448,26 @@ class Deck:
         tx, ty, tw = 0.9, H * 0.38, W * 0.46
         al = "l"
         if v == 0:   # 아치
-            sh(SH.ROUND_2_SAME_RECTANGLE, fx(W * 0.62, W * 0.26), H * 0.1, W * 0.26, H * 0.8, fill=shape_c, adj=0.5)
+            a0 = sh(SH.ROUND_2_SAME_RECTANGLE, fx(W * 0.62, W * 0.26), H * 0.1, W * 0.26, H * 0.8, fill=(p["tint"] if self.photo_cover else shape_c), adj=0.5)
+            if self.photo_cover:
+                self._photo_spot(a0)
             sh(SH.OVAL, fx(W * 0.56, 1.1), H * 0.62, 1.1, 1.1, fill=shape2)
         elif v == 1:  # 큰 원 두 겹
             sh(SH.OVAL, fx(W * 0.52, 7.2), H * 0.5 - 3.6, 7.2, 7.2, fill=shape2)
             sh(SH.OVAL, fx(W * 0.6, 4.6), H * 0.5 - 2.3, 4.6, 4.6, fill=shape_c)
         elif v == 2:  # 오른쪽 색 면 + 안쪽 얇은 선 프레임
-            sh(SH.RECTANGLE, fx(W * 0.64, W * 0.36), 0, W * 0.36, H, fill=shape_c)
+            a0 = sh(SH.RECTANGLE, fx(W * 0.64, W * 0.36), 0, W * 0.36, H, fill=(p["tint"] if self.photo_cover else shape_c))
+            if self.photo_cover:
+                self._photo_spot(a0)
             sh(SH.RECTANGLE, fx(W * 0.67, W * 0.3), 0.4, W * 0.3, H - 0.8, fill=None, line=ink if not inv else "#FFFFFF", lw=0.75)
         elif v == 3:  # 위쪽 색 면 + 걸친 원
             sh(SH.RECTANGLE, 0, 0, W, H * 0.46, fill=shape_c)
             sh(SH.OVAL, fx(W * 0.72, 2.6), H * 0.46 - 1.3, 2.6, 2.6, fill=shape2)
             tx, ty, tw = 0.9, H * 0.6, W * 0.6
         elif v == 4:  # 어긋난 사각 + 선 프레임
-            sh(SH.ROUNDED_RECTANGLE, fx(W * 0.58, W * 0.3), H * 0.14, W * 0.3, H * 0.66, fill=shape_c, adj=0.04)
+            a0 = sh(SH.ROUNDED_RECTANGLE, fx(W * 0.58, W * 0.3), H * 0.14, W * 0.3, H * 0.66, fill=(p["tint"] if self.photo_cover else shape_c), adj=0.04)
+            if self.photo_cover:
+                self._photo_spot(a0)
             sh(SH.ROUNDED_RECTANGLE, fx(W * 0.62, W * 0.3), H * 0.18, W * 0.3, H * 0.66, fill=None, line=ink if not inv else "#FFFFFF", lw=0.75, adj=0.04)
         elif v == 5:  # 아치 세 개
             for k, c in enumerate((shape2, shape_c, p["soft"] if not inv else shape2)):

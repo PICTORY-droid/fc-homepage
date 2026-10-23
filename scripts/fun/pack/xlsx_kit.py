@@ -2,8 +2,8 @@
 import xlsxwriter
 
 FONT = "맑은 고딕"
-AUTHOR = "우체국보험 상담 안내"
-FOOTER = "우체국보험 상담 안내 · 자유롭게 고쳐 쓰세요"
+AUTHOR = "반딧불이의 곳간"
+FOOTER = "반딧불이의 곳간 · 자유롭게 고쳐 쓰세요"
 
 
 def q(sheet):
@@ -14,6 +14,9 @@ def q(sheet):
 def rng(sheet, a1):
     return f"{q(sheet)}!{a1}"
 
+
+# 날짜 칸은 연도를 드러내지 않고 월·일만 보여 준다(내용은 진짜 날짜라 계산·정렬은 그대로 동작)
+DATE_FMT = 'm"월" d"일"'
 
 class Fmt:
     """팔레트에 맞춘 서식 모음(같은 서식은 한 번만 만든다)."""
@@ -47,7 +50,7 @@ class Fmt:
         return self.cell(**kw)
 
     def date(self, **kw):
-        kw.setdefault("num_format", "yyyy-mm-dd")
+        kw.setdefault("num_format", DATE_FMT)
         kw.setdefault("align", "center")
         return self.cell(**kw)
 

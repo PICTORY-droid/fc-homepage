@@ -1,6 +1,6 @@
 """보험 증권 정리표 — 본인·부부·가족·부모님·사업자 5유형 × 10가지 차트 구성 = 50종. (정리용 중립 양식)"""
 import datetime as dt
-from xlsx_kit import cover, new_book, q, rng, slice_colors, style_chart
+from xlsx_kit import DATE_FMT, cover, new_book, q, rng, slice_colors, style_chart
 
 FLAVORS = [
     ("본인용", ["본인", "배우자", "부모님", "자녀", "형제·자매", "기타"]),
@@ -73,9 +73,9 @@ def build(path, i, pal, message):
     for c, h in enumerate(heads):
         wt.write(4, c, h, fm.head())
     wt.set_row(4, 28)
-    ex = [(people[0], "우체국", "예시 상품(지우고 쓰세요)", KINDS[2], dt.date(2022, 3, 15), dt.date(2042, 3, 15), "월납", 52000, "유지", "예시", "서랍 파일 1번"),
+    ex = [(people[0], "보험사", "예시 상품(지우고 쓰세요)", KINDS[2], dt.date(2022, 3, 15), dt.date(2042, 3, 15), "월납", 52000, "유지", "예시", "서랍 파일 1번"),
           (people[1], "예시 보험사", "예시 상품 B", KINDS[5], dt.date(2023, 7, 1), dt.date(2026, 12, 31), "월납", 18000, "유지", "예시", "스마트폰 사진"),
-          (people[2], "우체국", "예시 상품 C", KINDS[6], dt.date(2019, 11, 20), dt.date(2049, 11, 20), "연납", 600000, "유지", "예시", "")]
+          (people[2], "보험사", "예시 상품 C", KINDS[6], dt.date(2019, 11, 20), dt.date(2049, 11, 20), "연납", 600000, "유지", "예시", "")]
     for r in range(F1 - 1, FN):
         e = ex[r - (F1 - 1)] if r - (F1 - 1) < len(ex) else None
         wt.write_number(r, 0, r - (F1 - 2), fm.cell(align="center", font_color="#888888"))
@@ -84,9 +84,9 @@ def build(path, i, pal, message):
             wt.write(r, c, v, fm.inp(align="center" if c in (1, 4) else "left"))
         for c, idx in ((5, 4), (6, 5)):
             if e:
-                wt.write_datetime(r, c, dt.datetime.combine(e[idx], dt.time()), fm.inp(num_format="yyyy-mm-dd", align="center"))
+                wt.write_datetime(r, c, dt.datetime.combine(e[idx], dt.time()), fm.inp(num_format=DATE_FMT, align="center"))
             else:
-                wt.write_blank(r, c, None, fm.inp(num_format="yyyy-mm-dd", align="center"))
+                wt.write_blank(r, c, None, fm.inp(num_format=DATE_FMT, align="center"))
         wt.write(r, 7, e[6] if e else "", fm.inp(align="center"))
         wt.write(r, 8, e[7] if e else "", fm.inp(num_format="#,##0"))
         rr = r + 1
@@ -153,7 +153,7 @@ def build(path, i, pal, message):
     wchk.hide_gridlines(2); wchk.set_tab_color(pal["main"])
     wchk.set_column("A:A", 3); wchk.set_column("B:B", 20); wchk.set_column("C:H", 14)
     wchk.merge_range("B1:H1", "보장 체크 — 증권·약관을 보며 직접 표시해요", fm.title(16))
-    wchk.write("B2", "확인한 날", fm.head()); wchk.write_datetime("C2", dt.datetime(2026, 1, 1), fm.inp(num_format="yyyy-mm-dd", align="center"))
+    wchk.write("B2", "확인한 날", fm.head()); wchk.write_datetime("C2", dt.datetime(2026, 1, 1), fm.inp(num_format=DATE_FMT, align="center"))
     wchk.write("B4", "보장 항목 \\ 대상", fm.head())
     for k in range(6):
         wchk.write_formula(3, 2 + k, f"={q('설정')}!B{4 + k}", fm.head())

@@ -11,7 +11,7 @@ sys.path.insert(0, HERE)
 sys.path.insert(0, os.path.join(HERE, "..", "pack"))
 
 from cards_data import CATS, HOURS, LABELS, SERVICES, WEBS  # noqa: E402
-from modern import DEEP_FLAVORS, LIGHT_FLAVORS, NFLAV, PAL, Ctx
+from modern import DEEP_FLAVORS, LIGHT_FLAVORS, NFLAV, PAL, PARTNERS, Ctx
 from modern2 import BACKS, FRONT_FLAVORS, FRONTS, NB, NF  # noqa: E402
 from pack_kit import ROOT, safe_name  # noqa: E402
 from layouts import mix  # noqa: E402
@@ -52,13 +52,16 @@ def assign():
             b = (j + ci * 3) % NB
             opts = DEEP_FLAVORS if v in LIGHT_FLAVORS else LIGHT_FLAVORS  # 뒷면은 앞면과 밝기 계열이 반대
             vb = opts[(j // NB + ci + j) % len(opts)]
-            pb = (p + 17) % 50  # 앞면과 색 계열이 다른 포인트색
+            cands = PARTNERS[p]  # 앞면 색과 어울리는 뒷면 색 후보(이웃 색상·보색 계열)
+            k = (j // 3 + ci) % len(cands)
+            pb = cands[k]
             for _ in range(2500):
                 if (b, vb, pb) not in used_b:
                     break
                 vb = opts[(opts.index(vb) + 1) % len(opts)]
                 if (b, vb, pb) in used_b:
-                    pb = (pb + 1) % 50
+                    k = (k + 1) % len(cands)
+                    pb = cands[k]
             used_b.add((b, vb, pb))
             plan.append(dict(cat=cat, j=j, f=f, v=v, p=p, b=b, vb=vb, pb=pb))
     assert len(used_f) == 500 and len(used_b) == 500
@@ -90,8 +93,8 @@ def build(plan):
         cat, j = it["cat"], it["j"]
         d = card_data(cat, j)
         nfont = "sans"
-        cf = Ctx(it["p"], it["v"], d)
-        cb = Ctx(it["pb"], it["vb"], d)
+        cf = Ctx(it["p"], it["v"], d, partner=it["pb"])
+        cb = Ctx(it["pb"], it["vb"], d, partner=it["p"])
         fe, be = FRONTS[it["f"]](cf), BACKS[it["b"]](cb)
         title = f"{d['name']} {d['title']} 명함"
         fsvg, bsvg = to_svg(fe, cf.bg, title + " 앞면"), to_svg(be, cb.bg, title + " 뒷면")
@@ -115,7 +118,7 @@ def build(plan):
         add_to_slide(blank_slide(prs), fe, cf.bg)
         add_to_slide(blank_slide(prs), be, cb.bg)
         cp = prs.core_properties
-        cp.author, cp.title, cp.subject = "우체국보험 상담 안내", f"{d['title']} 명함 서식", "편집용 명함 서식"
+        cp.author, cp.title, cp.subject = "반딧불이의 곳간", f"{d['title']} 명함 서식", "편집용 명함 서식"
         prs.save(os.path.join(d_out, base + ".pptx"))
         # 합성 미리보기 SVG
         def inner(s, y):

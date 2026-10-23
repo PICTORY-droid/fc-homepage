@@ -51,7 +51,7 @@ export const winterDesigns = [
   D(9, { title: "동백꽃 편지", tag: "눈 속에 핀 붉은 동백 소식", hero: camellia, p: pal({ a: "#E0506A", b: "#BFD8EA", c: "#9CC9EE", d: "#9A2A44", bg: "#FFF0F3" }), layout: "ribbon", v: 0, pat: "diamonds", postal: "zip" }),
   D(10, { title: "눈 내리는 오두막", tag: "눈 덮인 오두막에서 보내는 한 장", hero: cabin, p: pal({ a: "#7FA9D6", b: "#C7DDF2", c: "#FFE08A", d: "#34608F", bg: "#EDF4FC" }), layout: "scene", v: 1, pat: "grid", postal: "mailbox" }),
   D(11, { title: "오로라 밤하늘", tag: "오로라가 춤추는 북쪽 나라 소식", hero: aurora, p: pal({ a: "#4FC3A8", b: "#7B8FE0", c: "#B08AE8", d: "#1F3A6E", bg: "#E5EEFA" }), layout: "arch", v: 1, pat: "gradient", postal: "plane" }),
-  D(12, { title: "펭귄 우체국", tag: "뒤뚱뒤뚱 펭귄이 배달해요", hero: penguin, p: pal({ a: "#5B7FC4", b: "#BFD3F0", c: "#F6C84F", d: "#243B73", bg: "#E9F0FB" }), layout: "banner", v: 2, pat: "waves", postal: "stamp", price: "南極" }),
+  D(12, { title: "펭귄 우편함", tag: "뒤뚱뒤뚱 펭귄이 배달해요", hero: penguin, p: pal({ a: "#5B7FC4", b: "#BFD3F0", c: "#F6C84F", d: "#243B73", bg: "#E9F0FB" }), layout: "banner", v: 2, pat: "waves", postal: "stamp", price: "南極" }),
   D(13, { title: "북극곰 안부", tag: "북극곰이 보낸 포근한 겨울 인사", hero: polarbear, p: pal({ a: "#6BB5C8", b: "#BFE0EA", c: "#D8EEF6", d: "#2A6579", bg: "#E8F5F9" }), layout: "frame", v: 1, pat: "checks", postal: "sealTape" }),
   D(14, { title: "귤 한 상자", tag: "새콤달콤 귤 까먹는 겨울밤", hero: tangerine, p: pal({ a: "#F59A2A", b: "#FBCB84", c: "#BFDDF0", d: "#A65A00", bg: "#FFF3E0" }), layout: "card", v: 1, pat: "confetti", postal: "scale" }),
   D(15, { title: "호호 찐빵", tag: "김이 모락모락, 따끈한 안부", hero: bun, p: pal({ a: "#D9A066", b: "#E8C39A", c: "#F2D07A", d: "#85541E", bg: "#FBF0E2" }), layout: "corner", v: 1, pat: "linen", postal: "postmark", pp: { label: "따끈따끈" } }),

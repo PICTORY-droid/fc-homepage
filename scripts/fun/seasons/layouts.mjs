@@ -5,7 +5,7 @@ import { pattern } from "./patterns.mjs";
 import { postal } from "./postal.mjs";
 
 const hero = (fn, p, cx, cy, s, rot = 0) => g(fn(p), cx - 100 * s, cy - 100 * s, s, rot);
-const credit = (p, y = 1108) => text(W / 2, y, "계절 편지지 · 우체국보험 상담 안내", { size: 12, fill: p.d, weight: 500, anchor: "middle", opacity: 0.55 });
+const credit = (p, y = 1108) => text(W / 2, y, "계절 편지지 · 반딧불이의 곳간", { size: 12, fill: p.d, weight: 500, anchor: "middle", opacity: 0.55 });
 const titleBlock = (x, y, d, p, { size = 44, anchor = "start", gap = 36 } = {}) =>
   text(x, y, d.title, { size, weight: 900, fill: p.d, anchor, spacing: 1 }) + text(x, y + gap, d.tag, { size: 17, weight: 600, fill: p.ink, anchor, opacity: 0.85 });
 const wrap = (d, p, defs, body) => `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}"><defs>${defs}</defs>${body}</svg>`;

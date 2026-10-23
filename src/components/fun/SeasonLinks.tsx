@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export interface SeasonLink { slug: string; label: string; count: number; href: string; group?: "season" | "theme" }
 
-const GROUPS: { key: "season" | "theme"; label: string }[] = [{ key: "season", label: "계절" }, { key: "theme", label: "주제" }];
+const GROUPS: { key: "season" | "theme"; label: string }[] = [{ key: "season", label: "빛깔" }, { key: "theme", label: "주제" }];
 
 // 편지지 상세페이지 사이를 오가는 메뉴 — 계절 / 주제 두 줄로 나누어 같은 크기의 칸으로 가지런히 보여 줍니다. 지금 보는 곳은 진하게 표시해요.
 export function SeasonLinks({ items, current }: { items: SeasonLink[]; current?: string }) {

@@ -11,6 +11,7 @@ import json
 import copy_pptx
 import pack_kit as pk
 import pptx_items as I
+import pptx_style as ST
 
 ITEMS = {
     "talk": (I.build_talk, I.talk_flavor, "발표템플릿"),
@@ -22,7 +23,7 @@ ITEMS = {
 }
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
 LABEL = {"talk": "PRESENTATION", "family": "FAMILY ALBUM", "birthday": "FIRST BIRTHDAY", "wedding": "WEDDING", "review": "INSURANCE CHECK", "news": "CARD NEWS"}
-MARKS = ["서울", "대전", "광주", "부산", "춘천", "전주", "강릉", "속초", "여수", "경주"]
+MARKS = ["3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"]
 # 테마(이름) 순서와 같은 표지 그림 — 계절 감성에 맞춘 소재
 HERO = ("sp.magnolia sp.sprout sp.cherry sp.rapeseed au.rice sp.umbrella sp.azalea sp.swallow sp.lunch sp.carnation sp.lilac sp.butterfly sp.bicycle "
         "su.rain su.hydrangea su.watermelon su.sunflower su.shell su.firefly sp.rainbow su.fan su.surfboard su.cicada su.windchime su.lotus "
@@ -91,14 +92,16 @@ def run(keys):
     for key in keys:
         build, flavor, label = ITEMS[key]
         messages = copy_pptx.COPY[key]
-        I.COVER["dir"], I.COVER["key"] = make_covers(key, list(ITEMS).index(key)), key
+        # 표지도 PPT 도형으로 만든다(그림으로 굳힌 우표·소인 틀은 쓰지 않는다) — 글자·도형·사진 칸을 모두 PPT 에서 고칠 수 있다
+        I.COVER["dir"], I.COVER["key"] = None, key
+        I.MODERN.update(on=True, item=list(ITEMS).index(key), label=LABEL[key], photo=key in ("family", "birthday", "wedding"))
         pk.check_unique(messages, key)
         d = pk.out_dir("pptx", key)
         shutil.rmtree(d, ignore_errors=True)
         d = pk.out_dir("pptx", key)
         files, entries = [], []
         for i in range(50):
-            pal = fresh_palette(i, pk.palette(i))
+            pal = ST.palette(i)
             pal["name"] = copy_pptx.NAMES[i]
             f = os.path.join(d, f"{key}-{i + 1:02d}.pptx")
             build(f, i, pal, messages[i])

@@ -1,6 +1,6 @@
 """경조사비 장부 — 5가지 중심 경조사 × 10가지 차트 구성 = 50종."""
 import datetime as dt
-from xlsx_kit import cover, new_book, q, rng, slice_colors, style_chart
+from xlsx_kit import DATE_FMT, cover, new_book, q, rng, slice_colors, style_chart
 
 KINDS = ["결혼", "돌잔치", "장례", "칠순·팔순", "집들이·개업", "병문안", "졸업·입학", "명절·선물", "기타"]
 RELS = ["가족", "친척", "친구", "직장", "이웃", "거래처", "지인", "기타"]
@@ -124,7 +124,7 @@ def build(path, i, pal, message):
     wn.data_validation("C3", {"validate": "list", "source": "=" + D, "error_type": "warning", "error_message": "장부에 없는 이름이에요."})
     rows = [("받은 금액 합계", f'=SUMIFS({F},{D},$C$3,{B},"받음")', "#,##0"), ("드린 금액 합계", f'=SUMIFS({F},{D},$C$3,{B},"드림")', "#,##0"),
             ("차이(받음−드림)", "=C5-C6", "#,##0;[Red]-#,##0"), ("오간 횟수", f'=COUNTIFS({D},$C$3,{F},">0")', "0"),
-            ("마지막으로 오간 날", f"=IF(C8=0,\"\",SUMPRODUCT(MAX(({D}=$C$3)*{A})))", "yyyy-mm-dd"), ("답례가 필요한 건", f'=COUNTIFS({D},$C$3,{G},"필요")', "0")]
+            ("마지막으로 오간 날", f"=IF(C8=0,\"\",SUMPRODUCT(MAX(({D}=$C$3)*{A})))", DATE_FMT), ("답례가 필요한 건", f'=COUNTIFS({D},$C$3,{G},"필요")', "0")]
     for k, (lab, fo, nf) in enumerate(rows):
         wn.write(4 + k - 0, 1, lab, fm.cell(bold=True, bg_color=pal["soft"]))
         wn.write_formula(4 + k - 0, 2, fo, fm.cell(num_format=nf, align="center"))

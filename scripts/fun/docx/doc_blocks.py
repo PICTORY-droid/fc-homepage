@@ -8,7 +8,7 @@ from docx.shared import Pt, Twips
 from docx_kit import (cell_borders, exact_height, make_table, new_document, para_border, px, rgb, row_height, save_document, shade,
                       valign)
 
-AUTHOR = "우체국보험 상담 안내"  # 파일 속성에만 남기고, 인쇄되는 쪽에는 넣지 않습니다.
+AUTHOR = "반딧불이의 곳간"  # 파일 속성에만 남기고, 인쇄되는 쪽에는 넣지 않습니다.
 
 
 def set_fonts(rpr_owner_el, name):

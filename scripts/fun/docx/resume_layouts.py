@@ -105,7 +105,7 @@ def r_classic(pos, sk, k):
         sec_head(d, s["title"], sk, cw, 12, "left")
         classic_block(d, s, sk, cw)
     fp(d, "위 내용은 사실과 다름이 없음을 확인합니다.", 10, None, None, "center", before=14)
-    fp(d, "20        년        월        일        작성자 :  ____________________  (서명)", 10, None, None, "center", before=6)
+    fp(d, "          년        월        일        작성자 :  ____________________  (서명)", 10, None, None, "center", before=6)
     return d
 
 

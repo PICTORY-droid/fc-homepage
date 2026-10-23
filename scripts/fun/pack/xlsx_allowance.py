@@ -35,7 +35,7 @@ def build(path, i, pal, message):
     for col, w in zip("ABCDEF", [12, 28, 14, 14, 14, 14]):
         wl.set_column(f"{col}:{col}", w)
     wl.merge_range("A1:F1", f"{age} 용돈기입장", fm.title(18))
-    wl.write("A2", "기준 연도", fm.head()); wl.write("B2", 2026, fm.inp(num_format="0", align="center"))
+    wl.write("A2", "기준 연도", fm.head()); wl.write("B2", 2026, fm.inp(num_format='"올해"', align="center"))
     wl.write("A3", "시작 잔액(원)", fm.head()); wl.write("B3", 0, fm.inp(num_format="#,##0"))
     wl.merge_range("C2:F3", (f"“{message}”" if message else ""), fm.f(italic=True, font_color=pal["main"], text_wrap=True, align="center"))
     wb.define_name("Year", "=" + rng("기입장", "$B$2")); wb.define_name("StartBal", "=" + rng("기입장", "$B$3"))

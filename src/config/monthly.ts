@@ -6,9 +6,9 @@ export interface MonthlyCard { href: string; title: string; desc: string; thumb?
 export interface MonthlyPick { month: number; heading: string; lead: string; cards: MonthlyCard[] }
 
 const SEASON_OF_MONTH: Record<number, { key: SeasonKey; label: Season }> = {
-  1: { key: "winter", label: "겨울" }, 2: { key: "winter", label: "겨울" }, 3: { key: "spring", label: "봄" }, 4: { key: "spring", label: "봄" }, 5: { key: "spring", label: "봄" },
-  6: { key: "summer", label: "여름" }, 7: { key: "summer", label: "여름" }, 8: { key: "summer", label: "여름" }, 9: { key: "autumn", label: "가을" }, 10: { key: "autumn", label: "가을" }, 11: { key: "autumn", label: "가을" },
-  12: { key: "winter", label: "겨울" },
+  1: { key: "winter", label: "포근빛" }, 2: { key: "winter", label: "포근빛" }, 3: { key: "spring", label: "꽃빛" }, 4: { key: "spring", label: "꽃빛" }, 5: { key: "spring", label: "꽃빛" },
+  6: { key: "summer", label: "초록빛" }, 7: { key: "summer", label: "초록빛" }, 8: { key: "summer", label: "초록빛" }, 9: { key: "autumn", label: "노을빛" }, 10: { key: "autumn", label: "노을빛" }, 11: { key: "autumn", label: "노을빛" },
+  12: { key: "winter", label: "포근빛" },
 };
 // 달마다 한 줄 — 단정·권유 없이 계절 분위기만 담습니다.
 const LEAD: Record<number, string> = {

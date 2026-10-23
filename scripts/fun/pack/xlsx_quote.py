@@ -1,5 +1,5 @@
 """자동 계산 견적서 — 5가지 업종 × 10가지 단가표 구성 = 50종."""
-from xlsx_kit import cover, new_book, rng
+from xlsx_kit import DATE_FMT, cover, new_book, rng
 
 TRADES = [
     ("인테리어·시공", "공사"), ("디자인·제작", "제작"), ("행사·케이터링", "행사"), ("교육·강의", "교육"), ("일반 상품 공급", "상품"),
@@ -72,8 +72,8 @@ def build(path, i, pal, message):
         wq.write(r - 1, 1, a, lab()); wq.write(r - 1, 4, b, lab())
         wq.merge_range(r - 1, 5, r - 1, 7, "", fm.inp())
     wq.merge_range("C4:D4", "", fm.inp()); wq.merge_range("C5:D5", "", fm.inp())
-    wq.write_formula("C6", "=TODAY()", fm.inp(num_format="yyyy-mm-dd", align="center")); wq.write("D6", "", fm.inp())
-    wq.write("C7", 30, fm.inp(num_format='0"일"', align="center")); wq.write_formula("D7", '=IF(C6="","",C6+C7)', fm.cell(num_format='yyyy-mm-dd"까지"', align="center"))
+    wq.write_formula("C6", "=TODAY()", fm.inp(num_format=DATE_FMT, align="center")); wq.write("D6", "", fm.inp())
+    wq.write("C7", 30, fm.inp(num_format='0"일"', align="center")); wq.write_formula("D7", '=IF(C6="","",C6+C7)', fm.cell(num_format='m"월" d"일 까지"', align="center"))
     wq.merge_range("C8:D8", f"{trade} 견적", fm.inp())
     wq.data_validation("C7", {"validate": "integer", "criteria": "between", "minimum": 1, "maximum": 365, "error_message": "유효기간은 1~365일 사이로 입력해 주세요."})
     wq.merge_range("B10:C10", "견적 합계금액", fm.f(bold=True, font_size=13, font_color="#FFFFFF", bg_color=pal["dark"], align="center"))

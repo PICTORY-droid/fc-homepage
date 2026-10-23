@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export interface SeasonChoice { slug: string; label: string; count: number; href: string; lead: string; thumbs: string[]; aspect?: number }
 
-// 계절 고르기 — 봄·여름·가을·겨울 카드 네 장. 카드마다 미리보기 세 장을 보여 주고, 누르면 그 계절 상세페이지로 이동합니다.
+// 빛깔 고르기 — 카드 네 장. 카드마다 미리보기 세 장을 보여 주고, 누르면 그 모음 상세페이지로 이동합니다.
 export function SeasonChooser({ items }: { items: SeasonChoice[] }) {
   return (
     <ul data-reveal="stagger" className="grid gap-4 sm:grid-cols-2">

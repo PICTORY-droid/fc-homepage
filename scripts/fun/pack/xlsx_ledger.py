@@ -54,7 +54,7 @@ def build(path, i, pal, message):
     ws_.set_column("A:A", 3); ws_.set_column("B:B", 20); ws_.set_column("C:C", 16); ws_.set_column("D:D", 3)
     ws_.set_column("E:E", 18); ws_.set_column("F:F", 3); ws_.set_column("G:G", 14); ws_.set_column("H:H", 3); ws_.set_column("I:I", 22)
     ws_.merge_range("B1:G1", "설정 — 내 상황에 맞게 고쳐요", fm.title(16))
-    ws_.write("B3", "기준 연도", fm.head()); ws_.write("C3", 2026, fm.inp(num_format="0", align="center"))
+    ws_.write("B3", "기준 연도", fm.head()); ws_.write("C3", 2026, fm.inp(num_format='"올해"', align="center"))
     ws_.write("B4", "시작 잔액(원)", fm.head()); ws_.write("C4", 0, fm.inp(num_format="#,##0"))
     for c, h in (("B", "지출 분류"), ("C", "월 예산(원)"), ("E", "수입 분류"), ("G", "결제수단"), ("I", "전체 분류(자동)")):
         ws_.write(f"{c}6", h, fm.head())

@@ -64,7 +64,7 @@ export const summerDesigns = [
   D(10, { title: "튜브 타고 둥둥", tag: "물놀이 가는 날의 설레는 인사", hero: floatring, p: pal({ a: "#F28B6B", b: "#FFC4A8", c: "#7FD0D8", d: "#B04A2E", bg: "#FFF1EA" }), layout: "ribbon", v: 0, pat: "waves", postal: "parcelTag", pp: { label: "첨벙" } }),
   D(11, { title: "수국 정원", tag: "장마철에도 피어나는 보랏빛 마음", hero: hydrangea, p: pal({ a: "#8FA6E8", b: "#C2B3F0", c: "#F3A6D0", d: "#4B58A8", bg: "#F0F2FD" }), layout: "frame", v: 1, pat: "dots", postal: "sealTape" }),
   D(12, { title: "연꽃 향기", tag: "연못 가득 피어난 고요한 안부", hero: lotus, p: pal({ a: "#F2A0C0", b: "#F9CFDF", c: "#F1D46A", d: "#9B3F66", bg: "#FDF0F5" }), layout: "arch", v: 1, pat: "waves", postal: "stamp", price: "蓮" }),
-  D(13, { title: "고래 우체국", tag: "푸른 바다를 건너온 편지", hero: whale, p: pal({ a: "#4F93D6", b: "#9CC8EE", c: "#FFD27A", d: "#1F4F8A", bg: "#E5F1FB" }), layout: "scene", v: 1, pat: "solid", postal: "bike" }),
+  D(13, { title: "고래 우편함", tag: "푸른 바다를 건너온 편지", hero: whale, p: pal({ a: "#4F93D6", b: "#9CC8EE", c: "#FFD27A", d: "#1F4F8A", bg: "#E5F1FB" }), layout: "scene", v: 1, pat: "solid", postal: "bike" }),
   D(14, { title: "파라솔 아래", tag: "파라솔 그늘 아래 쓰는 휴가 편지", hero: parasol, p: pal({ a: "#F2B53D", b: "#7FC9E0", c: "#F58B7A", d: "#A5700F", bg: "#FFF6E0" }), layout: "card", v: 1, pat: "stripes", postal: "scale" }),
   D(15, { title: "매미 우는 날", tag: "맴맴, 한여름의 소식", hero: cicada, p: pal({ a: "#6FB46A", b: "#B1DB93", c: "#F2D062", d: "#386E3A", bg: "#EFF9E8" }), layout: "sidebar", v: 1, pat: "linen", postal: "ticket", pp: { label: "맴맴" } }),
   D(16, { title: "서핑 보드", tag: "큰 파도를 타고 달려가요", hero: surfboard, p: pal({ a: "#3FB8C8", b: "#86DCE4", c: "#FFD86B", d: "#1B6E7A", bg: "#E2F8FA" }), layout: "wavetop", v: 1, pat: "diamonds", postal: "postmark", pp: { label: "SURF" } }),

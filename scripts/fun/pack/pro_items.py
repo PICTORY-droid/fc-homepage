@@ -15,7 +15,7 @@ def _rows_text(n, text="내용을 입력하세요"):
 def build_talk(path, i, pal, message):
     fl, toc, points, cmp_, heads = TALK[i % 5]
     d = Deck(i, 0, "PRESENTATION", f"{fl} 발표 템플릿", subject=f"{fl} 발표 자료", keywords="발표,PPT,템플릿")
-    d.cover("발표 제목을 입력하세요", message, [f"{fl} · 발표자 이름", "0000. 00. 00"], notes=f"표지입니다. 날짜·발표자는 아래 안내 문구를 눌러 고치세요. {HOW}")
+    d.cover("발표 제목을 입력하세요", message, [f"{fl} · 발표자 이름", "날짜 입력"], notes=f"표지입니다. 날짜·발표자는 아래 안내 문구를 눌러 고치세요. {HOW}")
     s_toc = d.page("목차", "CONTENTS", notes="목차의 각 줄을 누르면 해당 쪽으로 이동합니다(슬라이드 쇼에서). 줄을 지우거나 늘려도 됩니다.")
     d.rows([(t, "한 줄로 내용을 적어 주세요") for t in toc], h_each=1.0)
     toc_groups = list(d._anim)
@@ -41,7 +41,7 @@ def build_talk(path, i, pal, message):
 def build_family(path, i, pal, message):
     fl, members, steps, promises = FAMILY[i % 5]
     d = Deck(i, 1, "FAMILY ALBUM", f"{fl} 가족 소개", subject=f"{fl} 가족 소개 슬라이드", keywords="가족,소개,PPT")
-    d.cover("우리 가족을 소개합니다", message, [f"{fl} · 0000. 00. 00"], notes=f"표지입니다. {HOW}")
+    d.cover("우리 가족을 소개합니다", message, [f"{fl} · 날짜 입력"], notes=f"표지입니다. {HOW}")
     d.page("가족 구성원", "MEMBERS", photo=True, notes="사진 자리의 아이콘을 눌러 가족 사진을 넣으세요. 이름·소개 글은 눌러서 고칩니다.")
     l, t, r, b = d.rect
     n, gap = len(members), .3
@@ -65,7 +65,7 @@ def build_birthday(path, i, pal, message):
     fl, ta, tb = BDAY[i % 5]
     f = i % 5
     d = Deck(i, 2, "FIRST BIRTHDAY", f"돌잔치 슬라이드({fl})", subject=f"돌잔치 슬라이드 · {fl}", keywords="돌잔치,첫돌,PPT")
-    d.cover("첫 번째 생일", message, ["아기 이름 · 0000. 00. 00", "장소를 입력하세요"], notes=f"표지입니다. {HOW}")
+    d.cover("첫 번째 생일", message, ["아기 이름 · 날짜 입력", "장소를 입력하세요"], notes=f"표지입니다. {HOW}")
     d.page("우리 아기를 소개합니다", "BABY", photo=True, notes="아기 사진을 넣고, 오른쪽 표의 칸을 눌러 내용을 적으세요.")
     l, t, r, b = d.rect
     d.photo_slot(13, l, t, 4.2, b - t - .2, geom=["round", "arch", "oval"][d.cfg["pf"]] if d.cfg["pf"] != 2 else "round", label="아기 사진")
@@ -119,7 +119,7 @@ def build_wedding(path, i, pal, message):
     fl, ta, tb = WED[i % 5]
     f = i % 5
     d = Deck(i, 3, "WEDDING", f"결혼식 슬라이드({fl})", subject=f"결혼식 상영용 슬라이드 · {fl}", keywords="결혼식,웨딩,PPT")
-    d.cover("저희 결혼합니다", message, ["신랑 이름 ♥ 신부 이름", "0000. 00. 00 · 예식장 이름"], notes=f"표지입니다. {HOW}")
+    d.cover("저희 결혼합니다", message, ["신랑 이름 ♥ 신부 이름", "날짜 입력 · 예식장 이름"], notes=f"표지입니다. {HOW}")
     d.page("신랑 · 신부 소개", "GROOM & BRIDE", photo=True, notes="사진 자리에 두 사람의 사진을 넣으세요.")
     l, t, r, b = d.rect
     pw = (r - l - 1.0) / 2
@@ -166,7 +166,7 @@ def build_wedding(path, i, pal, message):
 def build_review(path, i, pal, message):
     fl, cur = REVIEW[i % 5]
     d = Deck(i, 4, "INSURANCE CHECK", f"보험 보장 점검 발표자료({fl})", subject=f"보험 가입 내용 정리 양식 · {fl}", keywords="보험,점검,양식,PPT")
-    d.cover("우리 보험 점검 시간", message, [f"{fl} · 0000. 00. 00", "가입 내용을 정리하고 함께 확인하는 양식"], notes=f"표지입니다. {HOW}")
+    d.cover("우리 보험 점검 시간", message, [f"{fl} · 날짜 입력", "가입 내용을 정리하고 함께 확인하는 양식"], notes=f"표지입니다. {HOW}")
     d.page("점검 대상 현황", "PROFILE", notes="표의 칸을 눌러 내용을 입력하세요.")
     l, t, r, b = d.rect
     d.table(l, t, r - l, cur, row_h=.8, size=16, first_col=True)

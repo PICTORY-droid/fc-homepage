@@ -6,7 +6,7 @@ from pptx_kit import Deck
 
 
 COVER = {"dir": None, "key": None}
-MODERN = {"on": False, "item": 0, "label": ""}  # 새 디자인(파스텔·미니멀)  # make_pptx_pack 이 표지 그림 폴더와 항목 키를 넣어 줍니다
+MODERN = {"on": False, "item": 0, "label": "", "photo": False}  # 새 디자인(파스텔·미니멀)  # make_pptx_pack 이 표지 그림 폴더와 항목 키를 넣어 줍니다
 
 
 def new(i, pal, title, size="wide"):
@@ -19,7 +19,8 @@ def new(i, pal, title, size="wide"):
         import pptx_style as ST
         shift = 3 * MODERN["item"]  # 항목(발표·가족·…)마다 구도를 돌려서, 같은 테마도 항목마다 다른 모습이 되게 합니다
         st = (style + shift) % 10
-        d = Deck(pal, st, i, size, title, modern=True, label=f"{ST.SEASON_EN[pal['season']]}  ·  {MODERN['label']}")
+        d = Deck(pal, st, i, size, title, modern=True, label=MODERN["label"])
+        d.photo_cover = bool(MODERN.get("photo"))
         d.occ = sum(1 for j in range(i) if ((j // 5 + 3 * (j % 5)) + shift) % 10 == st)  # 같은 구도 중 몇 번째인지(0~4)
         d.item = MODERN["item"]
         return d
@@ -47,7 +48,7 @@ def talk_flavor(i):
 def build_talk(path, i, pal, message):
     fl, toc, points, cmp_, heads = TALK[i % 5]
     d = new(i, pal, f"{fl} 발표 템플릿")
-    cover(d, "발표 제목을 입력하세요", [f"{fl} · 발표자 이름", "2027. 00. 00"], message)
+    cover(d, "발표 제목을 입력하세요", [f"{fl} · 발표자 이름", "날짜 입력"], message)
     heading(d, "목차")
     rows(d, [(t, "한 줄로 내용을 적어 주세요") for t in toc], h_each=1.0)
     heading(d, "핵심 메시지")
@@ -90,7 +91,7 @@ def family_flavor(i):
 def build_family(path, i, pal, message):
     fl, members, steps, promises = FAMILY[i % 5]
     d = new(i, pal, f"{fl} 가족 소개")
-    cover(d, "우리 가족을 소개합니다", [f"{fl} · 2027. 00. 00"], message)
+    cover(d, "우리 가족을 소개합니다", [f"{fl} · 날짜 입력"], message)
     heading(d, "가족 구성원")
     l, t, r, b = d.rect
     n, gap = len(members), 0.25
@@ -125,7 +126,7 @@ def build_birthday(path, i, pal, message):
     fl, ta, tb = BDAY[i % 5]
     f = i % 5
     d = new(i, pal, f"돌잔치 슬라이드({fl})")
-    cover(d, "첫 번째 생일", ["아기 이름 · 2027. 00. 00", "장소를 입력하세요"], message, size=40)
+    cover(d, "첫 번째 생일", ["아기 이름 · 날짜 입력", "장소를 입력하세요"], message, size=40)
     heading(d, "우리 아기를 소개합니다")
     l, t, r, b = d.rect
     d.photo(l, t, 4.2, b - t - 0.2, "아기 사진을 넣어 주세요", size=14)
@@ -184,7 +185,7 @@ def build_wedding(path, i, pal, message):
     fl, ta, tb = WED[i % 5]
     f = i % 5
     d = new(i, pal, f"결혼식 슬라이드({fl})")
-    cover(d, "저희 결혼합니다", ["신랑 이름 ♥ 신부 이름", "2027. 00. 00 · 예식장 이름"], message, size=36)
+    cover(d, "저희 결혼합니다", ["신랑 이름 ♥ 신부 이름", "날짜 입력 · 예식장 이름"], message, size=36)
     heading(d, "신랑 · 신부 소개")
     l, t, r, b = d.rect
     pw = (r - l - 1.0) / 2
@@ -240,7 +241,7 @@ def review_flavor(i):
 def build_review(path, i, pal, message):
     fl, cur = REVIEW[i % 5]
     d = new(i, pal, f"보험 보장 점검 발표자료({fl})")
-    cover(d, "우리 보험 점검 시간", [f"{fl} · 2027. 00. 00", "가입 내용을 정리하고 함께 확인하는 양식"], message, size=36)
+    cover(d, "우리 보험 점검 시간", [f"{fl} · 날짜 입력", "가입 내용을 정리하고 함께 확인하는 양식"], message, size=36)
     heading(d, "점검 대상 현황")
     l, t, r, b = d.rect
     d.table(l, t, r - l, cur, row_h=0.8, size=16, first_col=True)
@@ -265,7 +266,7 @@ def build_review(path, i, pal, message):
 NEWS = [
     ("알뜰 생활 팁", [("이번 달 고정지출부터 적어요", "월세·통신비·구독료처럼 매달 나가는 돈부터 한곳에 적어 보면 새는 곳이 보여요."), ("카드 대신 현금 한 주", "일주일만 현금으로 써 보면 충동구매가 눈에 띄게 줄어요."), ("장보기 전 냉장고 사진", "있는 재료를 확인하고 가면 같은 식재료를 또 사는 일이 줄어요."), ("작은 목표 통장 만들기", "여행·선물·비상금처럼 이름을 붙이면 모으는 재미가 커져요."), ("주말 5분 가계부", "영수증을 모아 두었다가 주말에 5분만 적어 보세요.")]),
     ("건강·안심 습관", [("아침 물 한 잔", "일어나자마자 미지근한 물 한 잔으로 하루를 시작해 보세요."), ("하루 십 분 걷기", "점심 식사 후 십 분만 걸어도 몸이 한결 가벼워져요."), ("검진 날짜 적어 두기", "달력에 검진 예정일을 적어 두면 미루지 않게 돼요."), ("잠들기 전 스마트폰 내려놓기", "잠자리에 들기 삼십 분 전에는 화면을 꺼 보세요."), ("가족 건강 이야기 나누기", "일주일에 한 번, 서로의 안부와 컨디션을 물어보세요.")]),
-    ("계절 안부", [("겉옷 한 벌 챙기세요", "아침저녁 기온 차가 큰 때에는 얇은 겉옷이 든든해요."), ("계절 인사 한 줄 보내기", "안부를 묻는 짧은 메시지가 하루를 따뜻하게 해요."), ("제철 음식으로 기운 채우기", "지금 가장 맛있는 제철 음식을 가족과 나눠 보세요."), ("창문 열고 환기하기", "하루 두 번 십 분씩 환기하면 집 안 공기가 달라져요."), ("계절 사진 한 장 남기기", "같은 자리에서 계절마다 사진을 찍어 보세요.")]),
+    ("안부 인사", [("겉옷 한 벌 챙기세요", "옷차림이 애매한 날에는 얇은 겉옷이 든든해요."), ("안부 인사 한 줄 보내기", "안부를 묻는 짧은 메시지가 하루를 따뜻하게 해요."), ("맛있는 음식으로 기운 채우기", "좋아하는 음식을 가족과 나눠 보세요."), ("창문 열고 환기하기", "하루 두 번 십 분씩 환기하면 집 안 공기가 달라져요."), ("사진 한 장 남기기", "같은 자리에서 가끔 사진을 찍어 보세요.")]),
     ("감사·칭찬", [("고맙다는 말 먼저 건네기", "작은 일에도 ‘고마워요’를 먼저 말해 보세요."), ("칭찬 한 줄 적어 주기", "메모지에 칭찬 한 줄을 적어 가족 책상에 붙여 보세요."), ("퇴근한 사람에게 한마디", "‘오늘도 고생했어’ 한마디면 충분해요."), ("감사 일기 세 줄", "오늘 고마웠던 일 세 가지를 적어 보세요."), ("엽서 한 장 쓰기", "짧아도 좋아요. 우체통에 넣는 순간 설레요.")]),
     ("오늘의 한마디", [("점심은 거르지 마세요", "바빠도 한 끼는 앉아서 먹어요. 오후가 달라져요."), ("전화 한 통 걸어 보세요", "문자보다 목소리가 먼저 떠오르는 사람이 있다면 지금 걸어 보세요."), ("메모 한 장 남기기", "생각났을 때 적어 두면 다음 주의 내가 고마워해요."), ("퇴근길 한 정거장 걷기", "한 정거장 먼저 내려 걸으면 머리가 정리돼요."), ("오늘은 일찍 자기", "미룬 일은 내일 해도 돼요. 오늘은 불을 일찍 끄세요.")]),
 ]
