@@ -1,4 +1,6 @@
 // 이용 통계 요약 — 저장된 이벤트 목록을 관리자 화면용 숫자로 묶는 순수 함수입니다. (DB·화면과 분리)
+import { summarizeInterest, type Interest } from "./interest";
+
 export type EventRow = {
   name: string; path: string; label: string | null; source: string | null; medium: string | null;
   campaign: string | null; ref_host: string | null; created_at: string;
@@ -8,12 +10,14 @@ export type Count = { key: string; count: number };
 export type SourceRow = { key: string; visits: number; consultDone: number; downloads: number };
 export type DayRow = { date: string; visits: number; pageViews: number };
 export type Summary = {
-  totals: Record<"visit" | "page_view" | "download" | "phone_click" | "kakao_click" | "consult_start" | "consult_done" | "newsletter_optin", number>;
+  totals: Record<"visit" | "page_view" | "download" | "phone_click" | "kakao_click" | "consult_start" | "consult_done" | "newsletter_optin" | "preview" | "age_band", number>;
   daily: DayRow[];
   sources: SourceRow[];
   campaigns: SourceRow[];
   topPages: Count[];
   topDownloads: Count[];
+  /** 자료 종류·세부 분야별 미리보기·다운로드, 연령대 (features/analytics/interest.ts) */
+  interest: Interest;
 };
 
 const kstDate = (d: Date) => new Intl.DateTimeFormat("sv-SE", { timeZone: "Asia/Seoul" }).format(d);
@@ -25,7 +29,7 @@ const top = (m: Map<string, number>, n: number): Count[] =>
   [...m.entries()].map(([key, count]) => ({ key, count })).sort((a, b) => b.count - a.count || a.key.localeCompare(b.key)).slice(0, n);
 
 export function summarize(rows: EventRow[], days: number, now: Date = new Date()): Summary {
-  const totals = { visit: 0, page_view: 0, download: 0, phone_click: 0, kakao_click: 0, consult_start: 0, consult_done: 0, newsletter_optin: 0 };
+  const totals = { visit: 0, page_view: 0, download: 0, phone_click: 0, kakao_click: 0, consult_start: 0, consult_done: 0, newsletter_optin: 0, preview: 0, age_band: 0 };
   const daily = new Map<string, DayRow>();
   for (let k = days - 1; k >= 0; k--) {
     const date = kstDate(new Date(now.getTime() - k * 86_400_000));
@@ -60,5 +64,6 @@ export function summarize(rows: EventRow[], days: number, now: Date = new Date()
   return {
     totals, daily: [...daily.values()], sources: [...sources.values()].sort(byVisits).slice(0, 15),
     campaigns: [...campaigns.values()].sort(byVisits).slice(0, 15), topPages: top(pages, 15), topDownloads: top(downloads, 15),
+    interest: summarizeInterest(rows),
   };
 }

@@ -6,6 +6,8 @@ import { isAdminLoggedIn } from "@/services/adminSession";
 import { loadStats } from "@/services/adminStats";
 import { TrendChart } from "@/components/admin/charts/TrendChart";
 import { DonutChart } from "@/components/admin/charts/DonutChart";
+import { InterestTable } from "@/components/admin/InterestTable";
+import { AgeTable } from "@/components/admin/AgeTable";
 import type { Count, SourceRow } from "@/features/analytics/summary";
 import { AdminNav } from "../AdminNav";
 import { AdminEntry } from "../AdminEntry";
@@ -101,6 +103,8 @@ export default async function StatsPage({ searchParams }: { searchParams: Promis
             <Stat label="전화 누름" value={s.totals.phone_click} />
             <Stat label="카카오 누름" value={s.totals.kakao_click} />
             <Stat label="소식받기 가입" value={s.totals.newsletter_optin} />
+            <Stat label="미리보기 열기" value={s.totals.preview} hint="자료 그림을 크게 본 것" />
+            <Stat label="연령대 응답" value={s.totals.age_band} hint="자료를 받은 뒤 고른 것(선택)" />
           </div>
           <div className="grid gap-4 lg:grid-cols-2">
             <TrendChart title="날짜별 방문" unit="회" data={s.daily.map((d) => ({ label: d.date, value: d.visits }))} />
@@ -111,6 +115,14 @@ export default async function StatsPage({ searchParams }: { searchParams: Promis
           <div className="grid gap-4 sm:grid-cols-2">
             <Bars title="많이 본 페이지" rows={s.topPages} />
             <Bars title="많이 받은 자료" rows={s.topDownloads} />
+          </div>
+          <h2 className="pt-4 text-xl font-bold text-ink">자료 관심도</h2>
+          <InterestTable title="자료 종류별" firstCol="자료 종류" rows={s.interest.types}
+            lead="받은 비율 = 다운로드 ÷ 미리보기. 미리보기는 많은데 비율이 낮으면 '관심은 있지만 마음에 안 든' 자료예요." />
+          <InterestTable title="세부 분야 TOP 15" firstCol="자료 종류 › 세부 분야" rows={s.interest.subs} />
+          <div className="grid gap-4 lg:grid-cols-2">
+            <DonutChart title="받은 분의 연령대" unit="명" rows={s.interest.ages.filter((r) => r.count > 0)} empty="아직 응답이 없습니다." />
+            <AgeTable rows={s.interest.ageByType} />
           </div>
           <p className="text-xs text-ink-sub">경로는 링크의 utm_source 꼬리표가 있으면 그 값, 없으면 이전 사이트 주소(네이버·구글 등), 둘 다 없으면 &lsquo;직접&rsquo;(주소 입력·즐겨찾기·일부 앱)으로 묶습니다. 본인 브라우저는 관리자 로그인 후 자동으로 집계에서 빠집니다.</p>
         </div>

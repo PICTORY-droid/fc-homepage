@@ -1,6 +1,7 @@
 "use client";
 import { useEffect } from "react";
 import { captureAttribution, track } from "@/features/analytics/track";
+import { emitDownload } from "@/features/analytics/downloadSignal";
 
 // 사이트 전체의 '다운로드·전화·카카오' 클릭을 한 곳에서 기록합니다. (화면 컴포넌트마다 코드를 넣지 않기 위해 이벤트 위임 사용)
 // 전화번호·이름 같은 개인정보는 기록하지 않고, 다운로드는 파일의 한글 이름만 남깁니다.
@@ -13,8 +14,9 @@ export function ClickTracker() {
       const href = a.getAttribute("href") ?? "";
       if (a.dataset.track === "cta") track("cta_click", a.dataset.label);
       else if (a.hasAttribute("download")) {
-        const name = a.getAttribute("download");
-        track("download", name || decodeURIComponent(href.split("/").pop() ?? ""));
+        const label = a.getAttribute("download") || decodeURIComponent(href.split("/").pop() ?? "");
+        track("download", label);
+        emitDownload(label); // 연령대 질문(AgePrompt)에 '방금 받았다'고 알림
       } else if (href.startsWith("tel:")) track("phone_click");
       else if (/^https?:\/\/([\w-]+\.)*kakao\.com\//.test(href)) track("kakao_click");
     };

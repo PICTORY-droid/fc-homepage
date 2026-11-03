@@ -8,6 +8,7 @@ import { ScrollProgress } from "@/components/motion/ScrollProgress";
 import { ChatWidget } from "@/components/chatbot/ChatWidget";
 import { ClickTracker } from "@/components/analytics/ClickTracker";
 import { PageViewTracker } from "@/components/analytics/PageViewTracker";
+import { AgePrompt } from "@/components/analytics/AgePrompt";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -44,6 +45,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <main id="main">{children}</main>
         <Footer />
         <ChatWidget />
+        <AgePrompt />
       </body>
     </html>
   );
