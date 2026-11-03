@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { CardCta } from "@/components/ui/CardCta";
 import { funMetadata } from "@/lib/seo/funMeta";
 import { Section } from "@/components/ui/Section";
 import { DownloadCard } from "@/components/fun/DownloadCard";
 import { CollectionCard } from "@/components/fun/CollectionCard";
 import { SHEET_ASPECT, featuredSheets, sheetCardDesc, sheetCollections, sheetDownloadName, sheetFile, sheetGroups, sheetLarge, sheetTemplates, sheetThumb } from "@/config/sheets";
+import { cardLinkClass, textLink } from "@/components/ui/styles";
 
 export const metadata: Metadata = funMetadata({
   title: "엑셀 서식 무료 다운로드 — 가계부·보험 정리표·견적서·취업·소상공인",
@@ -22,15 +24,15 @@ export default function SheetsPage() {
           {sheetGroups.map((g) => {
             const cover = g.items.find((t) => t.featured) ?? g.items[0];
             return (
-              <li key={g.key} className="overflow-hidden rounded-card border border-ink/10 bg-paper">
-                <Link href={`/fun/sheets/${g.key}`} className="flex h-full flex-col">
+              <li key={g.key} className={cardLinkClass}>
+                <Link href={`/fun/sheets/${g.key}`} className="flex h-full flex-col outline-none">
                   <div className="relative w-full bg-paper-gray" style={{ aspectRatio: SHEET_ASPECT }}>
                     <Image src={sheetThumb(cover)} alt={`${g.label} 엑셀 서식 미리보기`} fill sizes="(min-width:1024px) 30vw, (min-width:640px) 45vw, 92vw" className="object-cover" />
                   </div>
                   <div className="p-4">
                     <h3 className="text-base font-bold text-ink">{g.label}</h3>
                     <p className="mt-1 text-sm leading-snug text-ink-sub">{g.short}</p>
-                    <p className="mt-2 text-sm font-semibold text-brand-deep">서식 {g.items.length}종{g.collections.length ? ` · 테마 모음 ${g.collections.length}가지` : ""} 보기</p>
+                    <CardCta>서식 {g.items.length}종{g.collections.length ? ` · 테마 모음 ${g.collections.length}가지` : ""} 보기</CardCta>
                   </div>
                 </Link>
               </li>
@@ -47,13 +49,13 @@ export default function SheetsPage() {
         <ul data-reveal="stagger" className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {featuredSheets.map((t) => (
             <DownloadCard key={t.id} title={t.title} desc={sheetCardDesc(t)} thumb={sheetThumb(t)} zoom={sheetLarge(t)} aspect={SHEET_ASPECT}
-              thumbAlt={`${t.title} 엑셀 서식 미리보기`} links={[{ label: "엑셀 받기", href: sheetFile(t), filename: sheetDownloadName(t) }]} />
+              thumbAlt={`${t.title} 엑셀 서식 미리보기`} links={[{ label: "엑셀", href: sheetFile(t), filename: sheetDownloadName(t) }]} />
           ))}
         </ul>
       </Section>
       <Section>
         <p className="text-sm text-ink-sub">엑셀(.xlsx) 파일이에요. 첫 시트 &lsquo;시작하기&rsquo;에 쓰는 방법이 있고, 자동 계산 칸과 요약 시트는 건드리지 않아도 돼요. &lsquo;설정&rsquo; 시트가 있는 서식은 분류·상태 같은 목록을 그곳에서 바꿀 수 있어요.</p>
-        <p className="mt-3 text-ink-sub">다른 즐길거리도 둘러보세요. <Link href="/fun" className="font-semibold text-brand-deep underline">즐길거리 전체 보기</Link></p>
+        <p className="mt-3 text-ink-sub">다른 즐길거리도 둘러보세요. <Link href="/fun" className={textLink}>즐길거리 전체 보기</Link></p>
       </Section>
     </>
   );

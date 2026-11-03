@@ -8,6 +8,7 @@ import { DownloadCard } from "@/components/fun/DownloadCard";
 import { allPositions, formDocx, formDownloadName, formFile, formLargeFile, getPosition, groupOf, kindLabel, variantDesc, variantNames, variants, type DocKind } from "@/config/forms";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { breadcrumbJsonLd } from "@/lib/seo/jsonLd";
+import { pillClass, textLink } from "@/components/ui/styles";
 
 type Props = { params: Promise<{ position: string }> };
 
@@ -36,7 +37,7 @@ export default async function PositionFormsPage({ params }: Props) {
       <Section as="h1" title={`${p.name} 이력서·자기소개서`} lead={`${group?.label ?? ""} · ${p.desc}`}>
         <nav aria-label="문서 종류 바로가기" className="flex flex-wrap gap-2">
           {kinds.map((k) => (
-            <a key={k} href={`#${k}`} className="flex min-h-[44px] items-center rounded-full border border-ink/25 bg-paper px-5 text-sm font-bold text-ink hover:bg-paper-gray">{kindLabel[k]} 10종</a>
+            <a key={k} href={`#${k}`} className={pillClass(false)}>{kindLabel[k]} 10종</a>
           ))}
         </nav>
       </Section>
@@ -52,7 +53,7 @@ export default async function PositionFormsPage({ params }: Props) {
       ))}
       <Section>
         <p className="text-sm text-ink-sub">A4 양식이에요. 연한 회색 글씨는 안내 문구이니 지우고 입력하세요. 마지막 장의 작성 가이드·예시는 제출 전에 삭제하세요. 칸은 글이 길어지면 자동으로 늘어나요.</p>
-        <p className="mt-3 text-ink-sub"><Link href="/fun/forms" className="font-semibold text-brand-deep underline">다른 포지션 보기</Link> · <Link href="/fun" className="font-semibold text-brand-deep underline">즐길거리 전체 보기</Link></p>
+        <p className="mt-3 text-ink-sub"><Link href="/fun/forms" className={textLink}>다른 포지션 보기</Link> · <Link href="/fun" className={textLink}>즐길거리 전체 보기</Link></p>
       </Section>
       <Section><FunPageExtras path={`/fun/forms/${p.id}`} /></Section>
     </>

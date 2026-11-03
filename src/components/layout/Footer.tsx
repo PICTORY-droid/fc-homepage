@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { site } from "@/config/site";
+import { buttonClass } from "@/components/ui/styles";
 
 // 하단 고지 영역 — 법적/안내 문구는 config/site.ts 에서 수정
 export function Footer() {
@@ -14,7 +15,7 @@ export function Footer() {
               <a className="text-xl font-bold text-ink" href={`tel:${site.contact.fcPhone}`}>{site.contact.fcPhone}</a>
               <a
                 href={`tel:${site.contact.fcPhone}`}
-                className="flex min-h-[44px] items-center whitespace-nowrap rounded-lg bg-brand px-4 text-sm font-semibold text-ink"
+                className={buttonClass("primary", "sm", "whitespace-nowrap")}
               >
                 전화 상담
               </a>

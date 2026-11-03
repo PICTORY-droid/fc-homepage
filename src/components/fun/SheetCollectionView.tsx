@@ -9,6 +9,7 @@ import { breadcrumbJsonLd } from "@/lib/seo/jsonLd";
 import { getFunCta } from "@/config/funCta";
 import { EXCEL_PACK, entriesBySeason, getGroup as getPackGroup, packDownloadName, packEntries, packFile, packLarge, seasonSlug, type Season } from "@/config/pack";
 import { SHEET_ASPECT, collectionCardThumb, collectionPath, collectionSeasons, getSheetGroup, sheetGroups, type SheetCollection } from "@/config/sheets";
+import { textLink } from "@/components/ui/styles";
 
 const nn = (n: number) => String(n).padStart(2, "0");
 
@@ -31,14 +32,14 @@ export function SheetCollectionView({ c, season }: { c: SheetCollection; season?
         <ul data-reveal="stagger" className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {list.map((e) => (
             <DownloadCard key={e.no} title={`${nn(e.no)}. ${e.name}`} desc={`${e.flavor} · ${e.tag}`} thumb={collectionCardThumb(c, e.no)} zoom={packLarge(item, e.no)} aspect={SHEET_ASPECT}
-              thumbAlt={`${item.title} ${e.name} 테마 미리보기`} links={[{ label: "엑셀 받기", href: packFile(item, e), filename: packDownloadName(item, e) }]} />
+              thumbAlt={`${item.title} ${e.name} 테마 미리보기`} links={[{ label: "엑셀", href: packFile(item, e), filename: packDownloadName(item, e) }]} />
           ))}
         </ul>
       </Section>
       {cta && <Section><FunCtaBox cta={cta} from={path.replace("/fun/", "")} /></Section>}
       <Section>
         {howto && <p className="text-sm text-ink-sub">{howto}</p>}
-        <p className="mt-3 text-ink-sub"><Link href={`/fun/sheets/${c.group}`} className="font-semibold text-brand-deep underline">{group?.label} 서식 보기</Link> · <Link href="/fun/sheets" className="font-semibold text-brand-deep underline">엑셀 서식 전체</Link> · <Link href="/fun" className="font-semibold text-brand-deep underline">즐길거리 전체 보기</Link></p>
+        <p className="mt-3 text-ink-sub"><Link href={`/fun/sheets/${c.group}`} className={textLink}>{group?.label} 서식 보기</Link> · <Link href="/fun/sheets" className={textLink}>엑셀 서식 전체</Link> · <Link href="/fun" className={textLink}>즐길거리 전체 보기</Link></p>
       </Section>
       <Section><FunPageExtras path={path} /></Section>
     </>

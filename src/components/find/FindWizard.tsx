@@ -8,6 +8,7 @@ import { Notice } from "@/components/ui/Notice";
 import { BulletList } from "@/components/ui/BulletList";
 import { FindDetailStep } from "@/components/find/FindDetailStep";
 import { useFinder } from "@/features/find/useFinder";
+import { buttonClass, textLink } from "@/components/ui/styles";
 
 const choice = "flex min-h-[56px] w-full items-center rounded-xl border border-ink/20 bg-paper px-5 py-3 text-left text-base text-ink hover:border-brand-deep hover:bg-brand-soft focus-visible:outline focus-visible:outline-2 focus-visible:outline-ink";
 const TITLES = ["누구를 위한 보장인가요?", "연령대를 알려 주세요", "가장 마음에 걸리는 것은 무엇인가요?", "조금만 더 알려 주세요"];
@@ -41,7 +42,7 @@ export function FindWizard() {
           <div className="flex flex-col gap-3 sm:flex-row">
             <ButtonLink href={`/consult?topic=${primary}`}>이 분야로 상담 신청</ButtonLink>
             <ButtonLink href="/products" variant="outline">전체 상품 보기</ButtonLink>
-            <button type="button" onClick={f.restart} className="min-h-[48px] rounded-xl px-6 text-base font-semibold text-ink underline">다시 해보기</button>
+            <button type="button" onClick={f.restart} className={buttonClass("outline")}>다시 해보기</button>
           </div>
         </div>
       </div>
@@ -67,7 +68,7 @@ export function FindWizard() {
         ))}
       </div>
       {step === 3 && <div className="mt-6"><FindDetailStep detail={f.detail} setAnswer={f.setAnswer} toggleIn={f.toggleIn} onSubmit={f.showResult} /></div>}
-      {step > 0 && <button type="button" onClick={f.back} className="mt-6 min-h-[44px] text-base font-semibold text-ink underline">이전 문항</button>}
+      {step > 0 && <button type="button" onClick={f.back} className={`mt-6 inline-flex min-h-[44px] items-center ${textLink}`}>이전 문항</button>}
     </div>
   );
 }

@@ -23,7 +23,7 @@ export default async function ComparePage({ searchParams }: Props) {
   const list = parseCompareIds((await searchParams).ids);
   if (list.length < 2) {
     return (
-      <Section title="상품 나란히 비교" lead="비교할 상품을 2~3개 선택해 주세요.">
+      <Section as="h1" title="상품 나란히 비교" lead="비교할 상품을 2~3개 선택해 주세요.">
         <ButtonLink href="/products">상품 목록에서 선택하기</ButtonLink>
       </Section>
     );
@@ -34,7 +34,7 @@ export default async function ComparePage({ searchParams }: Props) {
 
   return (
     <>
-      <Section title="상품 나란히 비교" lead="가입 조건과 보장 항목을 같은 기준으로 놓고 살펴보세요. 우열을 매기는 표가 아니며, 가입 가능 여부는 상품요약서와 약관으로 확인해야 합니다.">
+      <Section as="h1" title="상품 나란히 비교" lead="가입 조건과 보장 항목을 같은 기준으로 놓고 살펴보세요. 우열을 매기는 표가 아니며, 가입 가능 여부는 상품요약서와 약관으로 확인해야 합니다.">
         {/* 모바일 세로 화면에서만 표시 — 가로로 돌리면 사라집니다 */}
         <p role="note" className="mb-4 hidden items-center gap-2 rounded-card bg-brand-soft px-4 py-3 text-sm font-semibold text-ink max-sm:portrait:flex">
           <span aria-hidden="true">↻</span>

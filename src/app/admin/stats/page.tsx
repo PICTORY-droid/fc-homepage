@@ -12,6 +12,7 @@ import type { Count, SourceRow } from "@/features/analytics/summary";
 import { AdminNav } from "../AdminNav";
 import { AdminEntry } from "../AdminEntry";
 import { logoutAction } from "../actions";
+import { pillClass } from "@/components/ui/styles";
 
 export const metadata: Metadata = { title: "유입 통계", robots: { index: false, follow: false } };
 export const dynamic = "force-dynamic";
@@ -80,13 +81,13 @@ export default async function StatsPage({ searchParams }: { searchParams: Promis
   const days = (RANGES as readonly number[]).includes(q) ? q : 30;
   const { summary: s, error, truncated } = await loadStats(days);
   return (
-    <Section title="유입 통계" lead={`최근 ${days}일 · 방문자가 어디서 들어와 무엇을 했는지 (이름·연락처·IP 는 저장하지 않아요)`}>
+    <Section as="h1" title="유입 통계" lead={`최근 ${days}일 · 방문자가 어디서 들어와 무엇을 했는지 (이름·연락처·IP 는 저장하지 않아요)`}>
       <OwnerNoTrack />
       <AdminNav current="stats" />
       <div className="mb-6 flex flex-wrap items-center gap-2">
         {RANGES.map((r) => (
           <a key={r} href={`/admin/stats?days=${r}`} aria-current={r === days ? "page" : undefined}
-            className={`min-h-[44px] rounded-xl px-4 py-2.5 text-sm font-bold ${r === days ? "bg-ink text-paper" : "border border-ink/20 text-ink"}`}>{r}일</a>
+            className={pillClass(r === days)}>{r}일</a>
         ))}
         <form action={logoutAction} className="ml-auto"><button type="submit" className="text-sm font-semibold text-ink underline">로그아웃</button></form>
       </div>

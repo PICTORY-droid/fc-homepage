@@ -6,6 +6,7 @@ import { TIMES, TIME_LABEL } from "@/features/consult/schema";
 import { FAMILY_HISTORY, FAMILY_HISTORY_LABEL, INSURANCE_KINDS, INSURANCE_KIND_LABEL, YESNO, YESNO_LABEL } from "@/features/consult/detailOptions";
 import { consentNote } from "@/features/consult/consentText";
 import { useConsultForm } from "@/features/consult/useConsultForm";
+import { buttonClass } from "@/components/ui/styles";
 
 const field = "mt-2 w-full min-h-[48px] rounded-xl border border-ink/25 bg-paper px-4 text-base text-ink placeholder:text-ink-sub/70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-ink";
 // 칸 너비는 '화면 너비'가 아니라 '들어간 자리의 너비'에 맞춰 늘고 줄어듭니다(좁은 자리에서 글자가 한 줄에 한 낱말씩 쪼개지지 않게).
@@ -250,18 +251,18 @@ export function ConsultForm({ initialTopic = "health" }: { initialTopic?: string
       <div className="mx-auto flex w-full max-w-md gap-3">
         {step > 0 && (
           <button type="button" onClick={back}
-            className="min-h-[48px] rounded-xl border border-ink/30 bg-paper px-6 text-base font-semibold text-ink hover:bg-paper-gray">
+            className={buttonClass("outline")}>
             이전
           </button>
         )}
         {isLast ? (
           <button key="submit" type="submit" disabled={status === "submitting"}
-            className="min-h-[48px] flex-1 rounded-xl bg-brand text-base font-bold text-ink hover:brightness-95 disabled:opacity-60">
+            className={buttonClass("primary", "md", "flex-1")}>
             {status === "submitting" ? "접수 중..." : "상담 신청하기"}
           </button>
         ) : (
           <button key="next" type="button" onClick={next}
-            className="min-h-[48px] flex-1 rounded-xl bg-brand text-base font-bold text-ink hover:brightness-95">
+            className={buttonClass("primary", "md", "flex-1")}>
             다음
           </button>
         )}

@@ -3,8 +3,9 @@ import { site } from "@/config/site";
 import { track } from "@/features/analytics/track";
 import { newsletterConsentText } from "@/features/newsletter/consentText";
 import { useNewsletterForm } from "@/features/newsletter/useNewsletterForm";
+import { buttonClass, inputClass, textLink } from "@/components/ui/styles";
 
-const input = "mt-1 w-full min-h-[48px] rounded-xl border border-ink/25 bg-paper px-4 text-base text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-ink";
+const input = `mt-1 ${inputClass}`;
 
 // 자료 받기 페이지 끝의 '새 양식 알림(선택)' — 체크하면 연락처 입력칸이 열립니다. 동의 문구는 features/newsletter/consentText.ts 에서 옵니다.
 export function NewsletterOptIn({ from }: { from: string }) {
@@ -15,7 +16,7 @@ export function NewsletterOptIn({ from }: { from: string }) {
   });
 
   if (f.status === "done") {
-    return <aside role="status" className="rounded-card border border-ink/10 bg-paper-card p-5 text-ink">알림 신청이 접수됐어요. 새 양식이 나오면 알려 드릴게요. 해지는 언제든 <a className="font-semibold underline" href="/unsubscribe">여기</a>에서 하실 수 있어요.</aside>;
+    return <aside role="status" className="rounded-card border border-ink/10 bg-paper-card p-5 text-ink">알림 신청이 접수됐어요. 새 양식이 나오면 알려 드릴게요. 해지는 언제든 <a className={textLink} href="/unsubscribe">여기</a>에서 하실 수 있어요.</aside>;
   }
   return (
     <aside aria-label="새 양식 알림" className="rounded-card border border-ink/10 bg-paper-card p-5">
@@ -32,7 +33,7 @@ export function NewsletterOptIn({ from }: { from: string }) {
               onChange={(e) => f.setPhone(e.target.value)} aria-invalid={Boolean(f.error)} />
             <div className="absolute -left-[9999px]" aria-hidden="true"><label>웹사이트<input tabIndex={-1} autoComplete="off" value={f.website} onChange={(e) => f.setWebsite(e.target.value)} /></label></div>
             {f.error && <p role="alert" className="mt-1 text-sm text-alert">{f.error}</p>}
-            <button type="submit" disabled={f.status === "submitting"} className="mt-3 min-h-[48px] w-full rounded-xl bg-brand text-base font-bold text-ink hover:brightness-95 disabled:opacity-60">
+            <button type="submit" disabled={f.status === "submitting"} className={buttonClass("primary", "md", "mt-3 w-full")}>
               {f.status === "submitting" ? "접수 중..." : "알림 신청하기"}
             </button>
           </div>

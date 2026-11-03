@@ -7,6 +7,7 @@ import { FunPageExtras } from "@/components/fun/FunPageExtras";
 import { FunCtaBox } from "@/components/fun/FunCtaBox";
 import { stationeryCta } from "@/config/funCta";
 import { seasons, stationeryBySeason, stationeryFile } from "@/config/stationery";
+import { textLink } from "@/components/ui/styles";
 
 export const metadata: Metadata = funMetadata({
   title: "편지지 무료 다운로드 — 감성 편지지 980장 (Word·PNG)",
@@ -22,7 +23,7 @@ export default function StationeryPage() {
   });
   return (
     <>
-      <Section title="빛깔 편지지 80장" lead="꽃빛·초록빛·노을빛·포근빛 각 20장. 손편지를 쓰던 그 시절의 따뜻한 분위기로 만들었어요. 마음에 드는 빛깔을 골라 들어가 보세요.">
+      <Section as="h1" title="빛깔 편지지 80장" lead="꽃빛·초록빛·노을빛·포근빛 각 20장. 손편지를 쓰던 그 시절의 따뜻한 분위기로 만들었어요. 마음에 드는 빛깔을 골라 들어가 보세요.">
         <SeasonChooser items={toChoices("season")} />
       </Section>
       <Section title="주제 편지지 900장" lead="언제든 쓰는 감성 편지지. 한국 전통문화 500 · 장소 100 · 정원과 꽃 100 · 동물 50 · 하늘 50 · 커피 50 · 창가 50장이에요. 제목은 Word에서 원하는 글로 고칠 수 있어요.">
@@ -31,7 +32,7 @@ export default function StationeryPage() {
       <Section><FunCtaBox cta={stationeryCta} from="stationery" /></Section>
       <Section>
         <p className="text-sm text-ink-sub">A4 크기예요. Word 파일은 받는 사람·본문을 눌러 바로 입력할 수 있고, 줄에 맞춰 글이 써져요. 개인적인 편지와 SNS 공유는 자유롭게 쓰셔도 좋아요.</p>
-        <p className="mt-3 text-ink-sub">다른 즐길거리도 둘러보세요. <Link href="/fun" className="font-semibold text-brand-deep underline">즐길거리 전체 보기</Link></p>
+        <p className="mt-3 text-ink-sub">다른 즐길거리도 둘러보세요. <Link href="/fun" className={textLink}>즐길거리 전체 보기</Link></p>
       </Section>
       <Section><FunPageExtras path={"/fun/stationery"} /></Section>
     </>

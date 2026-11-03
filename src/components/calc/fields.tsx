@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
+import { buttonClass, inputClass } from "@/components/ui/styles";
 
 // 계산기 공통 UI 조각 — 표시만 담당
-export const inputCls =
-  "mt-1 w-full min-h-[48px] rounded-xl border border-ink/25 bg-paper px-4 text-base text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-ink";
+export const inputCls = `mt-1 ${inputClass}`;
 
 interface FieldProps {
   id: string; label: string; error?: string; help?: string; children: ReactNode;
@@ -92,8 +92,8 @@ export function CalcShell({ id, title, lead, children, defaultOpen = false }: {
 export function Buttons({ onReset }: { onReset: () => void }) {
   return (
     <div className="flex gap-3">
-      <button type="submit" className="min-h-[52px] flex-1 rounded-xl bg-brand text-lg font-bold text-ink hover:brightness-95">계산하기</button>
-      <button type="button" onClick={onReset} className="min-h-[52px] rounded-xl border border-ink/30 bg-paper px-5 font-semibold text-ink hover:bg-paper-gray">처음부터</button>
+      <button type="submit" className={buttonClass("primary", "lg", "flex-1")}>계산하기</button>
+      <button type="button" onClick={onReset} className={buttonClass("outline", "lg")}>처음부터</button>
     </div>
   );
 }

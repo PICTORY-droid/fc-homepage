@@ -2,6 +2,7 @@
 import { track } from "@/features/analytics/track";
 import { TEMPLATE_REQUEST_MAX } from "@/features/templateRequest/schema";
 import { useTemplateRequest } from "@/features/templateRequest/useTemplateRequest";
+import { buttonClass } from "@/components/ui/styles";
 
 const field = "mt-1 w-full rounded-xl border border-ink/25 bg-paper px-4 py-3 text-base text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-ink";
 
@@ -21,7 +22,7 @@ export function TemplateRequest({ from }: { from: string }) {
           onChange={(e) => f.setRequest(e.target.value)} aria-describedby="tr-note" aria-invalid={Boolean(f.error)} />
         <div className="absolute -left-[9999px]" aria-hidden="true"><label>웹사이트<input tabIndex={-1} autoComplete="off" value={f.website} onChange={(e) => f.setWebsite(e.target.value)} /></label></div>
         {f.error && <p role="alert" className="mt-1 text-sm text-alert">{f.error}</p>}
-        <button type="submit" disabled={f.status === "submitting"} className="mt-3 min-h-[48px] w-full max-w-sm rounded-xl bg-brand text-base font-bold text-ink hover:brightness-95 disabled:opacity-60">
+        <button type="submit" disabled={f.status === "submitting"} className={buttonClass("primary", "md", "mt-3 w-full max-w-sm")}>
           {f.status === "submitting" ? "보내는 중..." : "요청 보내기"}
         </button>
       </form>

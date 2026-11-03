@@ -1,12 +1,14 @@
 import Image from "next/image";
 import { ZoomThumb } from "./ZoomThumb";
+import { DownloadIcon } from "@/components/ui/DownloadIcon";
+import { buttonClass, cardClass } from "@/components/ui/styles";
 
 export interface DownloadLink { label: string; href: string; filename?: string }
 
 // 미리보기 + 받기 버튼 카드 — 편지지·이력서 양식·가계부 같은 내려받기 페이지가 같이 씁니다. zoom 을 주면 그림을 눌러 큰 미리보기를 엽니다.
 export function DownloadCard({ title, desc, thumb, thumbAlt, zoom, aspect, links }: { title: string; desc: string; thumb?: string; thumbAlt?: string; zoom?: string; aspect?: number; links: DownloadLink[] }) {
   return (
-    <li className="flex flex-col overflow-hidden rounded-card border border-ink/10 bg-paper">
+    <li className={`flex flex-col ${cardClass}`}>
       {thumb && zoom && <ZoomThumb thumb={thumb} large={zoom} alt={thumbAlt ?? `${title} 미리보기`} title={title} aspect={aspect} />}
       {thumb && !zoom && (
         <div className="relative w-full bg-paper-gray" style={{ aspectRatio: aspect ?? 794 / 1123 }}>
@@ -19,8 +21,8 @@ export function DownloadCard({ title, desc, thumb, thumbAlt, zoom, aspect, links
         <div className="mt-3 flex flex-wrap gap-2">
           {links.map((l, i) => (
             <a key={l.href} href={l.href} download={l.filename ?? true}
-              className={`flex min-h-[44px] min-w-[4.25rem] flex-1 items-center justify-center rounded-xl px-2 text-sm font-bold text-ink ${i === 0 ? "bg-brand hover:brightness-95" : "border border-ink/25 bg-paper hover:bg-paper-gray"}`}>
-              {l.label}<span className="sr-only"> ({title})</span>
+              className={buttonClass(i === 0 ? "primary" : "outline", "sm", "min-w-[4.25rem] flex-1 gap-1 !px-2")}>
+              <DownloadIcon />{l.label}<span className="sr-only"> 받기 ({title})</span>
             </a>
           ))}
         </div>

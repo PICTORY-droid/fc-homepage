@@ -11,6 +11,7 @@ import { EXCEL_PACK, entriesBySeason, getGroup, getItem, packEntries, packGroups
 import { collectionByItem, collectionPath } from "@/config/sheets";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { breadcrumbJsonLd } from "@/lib/seo/jsonLd";
+import { textLink } from "@/components/ui/styles";
 
 type Props = { params: Promise<{ group: string; item: string }> };
 
@@ -56,7 +57,7 @@ export default async function PackItemPage({ params }: Props) {
       {cta && <Section><FunCtaBox cta={cta} from={`${group.slug}/${item.key}`} /></Section>}
       <Section>
         <p className="text-sm text-ink-sub">{group.howto}</p>
-        <p className="mt-3 text-ink-sub"><Link href={`/fun/${group.slug}`} className="font-semibold text-brand-deep underline">{group.title} 목록으로</Link> · <Link href="/fun" className="font-semibold text-brand-deep underline">즐길거리 전체 보기</Link></p>
+        <p className="mt-3 text-ink-sub"><Link href={`/fun/${group.slug}`} className={textLink}>{group.title} 목록으로</Link> · <Link href="/fun" className={textLink}>즐길거리 전체 보기</Link></p>
       </Section>
       <Section><FunPageExtras path={`/fun/${group.slug}/${item.key}`} /></Section>
     </>

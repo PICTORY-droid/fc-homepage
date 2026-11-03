@@ -13,6 +13,7 @@ import { paginate, parsePage } from "@/lib/pagination";
 import { AdminNav } from "./AdminNav";
 import { AdminEntry } from "./AdminEntry";
 import { logoutAction, updateLeadAction } from "./actions";
+import { buttonClass, inputClass } from "@/components/ui/styles";
 
 export const metadata: Metadata = { title: "상담 접수 관리", robots: { index: false, follow: false } };
 export const dynamic = "force-dynamic"; // 접수 목록은 항상 최신 값으로
@@ -50,17 +51,17 @@ function LeadCard({ lead, memoEnabled }: { lead: LeadRow; memoEnabled: boolean }
       <form action={updateLeadAction} className="mt-3 flex flex-col gap-2 sm:flex-row sm:items-end">
         <input type="hidden" name="id" value={lead.id} />
         <label className="text-sm font-semibold text-ink-sub">상태
-          <select name="status" defaultValue={lead.status} className="mt-1 block min-h-[44px] rounded-xl border border-ink/25 bg-paper px-3 text-base text-ink">
+          <select name="status" defaultValue={lead.status} className={`mt-1 ${inputClass} sm:w-auto`}>
             {LEAD_STATUSES.map((s) => <option key={s} value={s}>{STATUS_LABEL[s]}</option>)}
           </select>
         </label>
         {memoEnabled && (
           <label className="flex-1 text-sm font-semibold text-ink-sub">메모
             <input name="memo" defaultValue={lead.memo ?? ""} maxLength={500} placeholder="통화 내용, 다음 연락 일정"
-              className="mt-1 block min-h-[44px] w-full rounded-xl border border-ink/25 bg-paper px-3 text-base text-ink" />
+              className={`mt-1 ${inputClass}`} />
           </label>
         )}
-        <button type="submit" className="min-h-[44px] rounded-xl bg-brand px-5 font-bold text-ink">저장</button>
+        <button type="submit" className={buttonClass("primary", "sm")}>저장</button>
       </form>
     </li>
   );
@@ -74,7 +75,7 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
   const pg = paginate(rows, parsePage(sp.page)); // 최신 접수순(서버에서 내림차순 조회) 10건씩
   const counts = Object.fromEntries(LEAD_STATUSES.map((s) => [s, rows.filter((r) => r.status === s).length]));
   return (
-    <Section title="상담 접수 관리" lead={`최근 ${rows.length}건 · 대기 ${counts.new} · 연락함 ${counts.contacted} · 완료 ${counts.done}`}>
+    <Section as="h1" title="상담 접수 관리" lead={`최근 ${rows.length}건 · 대기 ${counts.new} · 연락함 ${counts.contacted} · 완료 ${counts.done}`}>
       <OwnerNoTrack />
       <AdminNav current="leads" />
       <form action={logoutAction} className="mb-6"><button type="submit" className="text-sm font-semibold text-ink underline">로그아웃</button></form>

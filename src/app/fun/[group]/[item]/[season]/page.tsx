@@ -10,6 +10,7 @@ import { SeasonLinks } from "@/components/fun/SeasonLinks";
 import { getFunCta } from "@/config/funCta";
 import { EXCEL_PACK, entriesBySeason, getGroup, getItem, packGroups, packSeasons, seasonFromSlug, seasonSlug } from "@/config/pack";
 import { collectionByItem, collectionPath } from "@/config/sheets";
+import { textLink } from "@/components/ui/styles";
 
 type Props = { params: Promise<{ group: string; item: string; season: string }> };
 
@@ -45,7 +46,7 @@ export default async function PackSeasonPage({ params }: Props) {
   const links = packSeasons.map((s) => ({ slug: seasonSlug[s], label: s, count: entriesBySeason(item, s).length, href: `/fun/${group.slug}/${item.key}/${seasonSlug[s]}` }));
   return (
     <>
-      <Section title={`${season} ${item.title} ${list.length}종`} lead={item.short}>
+      <Section as="h1" title={`${season} ${item.title} ${list.length}종`} lead={item.short}>
         <SeasonLinks items={links} current={seasonSlug[season]} />
       </Section>
       <Section tone="card">
@@ -56,7 +57,7 @@ export default async function PackSeasonPage({ params }: Props) {
       {cta && <Section><FunCtaBox cta={cta} from={`${group.slug}/${item.key}/${seasonSlug[season]}`} /></Section>}
       <Section>
         <p className="text-sm text-ink-sub">{group.howto}</p>
-        <p className="mt-3 text-ink-sub"><Link href={`/fun/${group.slug}/${item.key}`} className="font-semibold text-brand-deep underline">{item.title} 계절 고르기</Link> · <Link href={`/fun/${group.slug}`} className="font-semibold text-brand-deep underline">{group.title} 목록으로</Link> · <Link href="/fun" className="font-semibold text-brand-deep underline">즐길거리 전체 보기</Link></p>
+        <p className="mt-3 text-ink-sub"><Link href={`/fun/${group.slug}/${item.key}`} className={textLink}>{item.title} 계절 고르기</Link> · <Link href={`/fun/${group.slug}`} className={textLink}>{group.title} 목록으로</Link> · <Link href="/fun" className={textLink}>즐길거리 전체 보기</Link></p>
       </Section>
       <Section><FunPageExtras path={`/fun/${group.slug}/${item.key}/${seasonSlug[season]}`} /></Section>
     </>

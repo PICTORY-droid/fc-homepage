@@ -6,8 +6,8 @@ import { GROUP_ORDER, type Product } from "@/config/products";
 import { ProductCard } from "./ProductCard";
 import { useProductExplorer } from "@/features/products/useProductExplorer";
 import { MAX_COMPARE } from "@/features/compare/compare";
+import { buttonClass, pillClass } from "@/components/ui/styles";
 
-const chip = "min-h-[44px] rounded-full px-4 text-sm font-semibold";
 const fieldLabel = "mb-2 block text-sm font-semibold text-ink";
 const fieldControl = "block w-full min-h-[48px] rounded-xl border border-ink/25 bg-paper px-4 text-base text-ink";
 
@@ -43,7 +43,7 @@ export function ProductExplorer({ products }: { products: Product[] }) {
           <div role="group" aria-labelledby="product-group-label" className="flex flex-wrap gap-2">
             {(["all", ...GROUP_ORDER] as const).map((g) => (
               <button key={g} type="button" aria-pressed={filter.group === g} onClick={() => setGroup(g)}
-                className={`${chip} ${filter.group === g ? "bg-brand text-ink" : "bg-paper-gray text-ink-sub"}`}>
+                className={pillClass(filter.group === g)}>
                 {g === "all" ? "전체" : g}
               </button>
             ))}
@@ -82,9 +82,9 @@ export function ProductExplorer({ products }: { products: Product[] }) {
           <div className="mx-auto flex max-w-5xl items-center justify-between gap-3">
             <p className="text-sm text-ink"><b>{selected.length}</b>개 선택 <span className="text-ink-sub">(최대 {MAX_COMPARE}개)</span></p>
             <div className="flex gap-2">
-              <button type="button" onClick={() => selected.forEach(toggle)} className="min-h-[44px] rounded-xl border border-ink/30 px-4 text-sm font-semibold text-ink">비우기</button>
+              <button type="button" onClick={() => selected.forEach(toggle)} className={buttonClass("outline", "sm")}>비우기</button>
               <Link href={`/compare?ids=${selected.join(",")}`}
-                className={`flex min-h-[44px] items-center rounded-xl px-5 text-sm font-bold ${selected.length >= 2 ? "bg-brand text-ink" : "pointer-events-none bg-paper-gray text-ink-sub"}`}
+                className={selected.length >= 2 ? buttonClass("primary", "sm") : buttonClass("outline", "sm", "pointer-events-none opacity-60")}
                 aria-disabled={selected.length < 2}>
                 {selected.length >= 2 ? "나란히 비교하기" : "2개 이상 선택하세요"}
               </Link>

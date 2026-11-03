@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { pillClass } from "@/components/ui/styles";
 
 export interface SeasonLink { slug: string; label: string; count: number; href: string; group?: "season" | "theme" }
 
@@ -15,7 +16,7 @@ export function SeasonLinks({ items, current }: { items: SeasonLink[]; current?:
           <div className={`grid flex-1 gap-2 ${g.list.length <= 4 ? "grid-cols-2 sm:grid-cols-4" : "grid-cols-3 sm:grid-cols-4 lg:grid-cols-6"}`}>
             {g.list.map((s) => (
               <Link key={s.slug} href={s.href} aria-current={s.slug === current ? "page" : undefined}
-                className={`flex min-h-[44px] flex-col items-center justify-center rounded-xl border px-2 py-1 text-center text-sm font-bold leading-tight ${s.slug === current ? "border-brand bg-brand text-ink" : "border-ink/25 bg-paper text-ink hover:bg-paper-gray"}`}>
+                className={pillClass(s.slug === current, "flex-col !px-2 py-1 text-center leading-tight")}>
                 {s.label}<span className="text-xs font-semibold opacity-70">{s.count}종</span>
               </Link>
             ))}

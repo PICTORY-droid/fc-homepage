@@ -3,6 +3,7 @@ import {
   FAMILY_HISTORY, FAMILY_HISTORY_LABEL, INSURANCE_KINDS, INSURANCE_KIND_LABEL, YESNO, YESNO_LABEL, type YesNo,
 } from "@/features/consult/detailOptions";
 import type { DetailAnswers } from "@/features/find/recommend";
+import { buttonClass } from "@/components/ui/styles";
 
 const choice = "flex min-h-[52px] w-full items-center gap-3 rounded-xl border border-ink/20 bg-paper px-4 py-3 text-left text-base text-ink hover:border-brand-deep hover:bg-brand-soft focus-visible:outline focus-visible:outline-2 focus-visible:outline-ink aria-pressed:border-brand-deep aria-pressed:bg-brand-soft";
 
@@ -57,7 +58,7 @@ export function FindDetailStep({ detail, setAnswer, toggleIn, onSubmit }: Props)
       </fieldset>
       <p className="text-sm text-ink-sub">모두 선택 사항이에요. 여기에서 고르신 내용은 서버로 전송·저장되지 않고, 결과를 보여드리는 데에만 쓰입니다.</p>
       <button type="button" onClick={onSubmit}
-        className="min-h-[52px] w-full rounded-xl bg-brand px-6 text-lg font-bold text-ink hover:brightness-95 sm:w-auto">
+        className={buttonClass("primary", "lg", "w-full sm:w-auto")}>
         결과 보기
       </button>
     </div>

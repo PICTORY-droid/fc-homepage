@@ -8,6 +8,7 @@ import { CompoundCalc } from "@/components/calc/CompoundCalc";
 import { BudgetCalc } from "@/components/calc/BudgetCalc";
 import { calcNotices } from "@/config/calculators";
 import { site } from "@/config/site";
+import { buttonClass, pillClass } from "@/components/ui/styles";
 
 export const metadata: Metadata = {
   title: "간편 계산기",
@@ -17,12 +18,12 @@ export const metadata: Metadata = {
 // 간편 계산기 — 입력값은 브라우저 안에서만 계산하며 서버로 보내지 않습니다.
 export default function ToolsPage() {
   return (
-    <Section title="간편 계산기" lead="직접 넣어 보고 확인하는 참고용 계산기입니다.">
+    <Section as="h1" title="간편 계산기" lead="직접 넣어 보고 확인하는 참고용 계산기입니다.">
       <div className="space-y-8">
         <Notice>{calcNotices.common}</Notice>
         <nav aria-label="계산기 바로가기" className="flex flex-wrap gap-2 text-sm">
           {[["#age", "보험나이·만기·납입"], ["#retire", "은퇴 생활비 부족분"], ["#compound", "복리 적립·수령"], ["#budget", "가계부"]].map(([h, t]) => (
-            <a key={h} href={h} className="rounded-full bg-paper-gray px-4 py-2 font-semibold text-ink">{t}</a>
+            <a key={h} href={h} className={pillClass(false)}>{t}</a>
           ))}
         </nav>
         <p className="text-sm text-ink-sub">
@@ -35,7 +36,7 @@ export default function ToolsPage() {
         <div className="rounded-card bg-paper-card p-6 text-center">
           <p className="text-ink">결과가 궁금하거나 더 알아보고 싶으시면 편하게 문의해 주세요.</p>
           <p className="mt-1 text-sm text-ink-sub">{site.notices.promise}</p>
-          <Link href="/consult" className="mt-4 inline-flex min-h-[48px] items-center rounded-xl bg-brand px-6 font-semibold text-ink hover:brightness-95">상담 신청 페이지로 이동</Link>
+          <Link href="/consult" className={buttonClass("primary", "md", "mt-4")}>상담 신청 페이지로 이동</Link>
         </div>
       </div>
     </Section>

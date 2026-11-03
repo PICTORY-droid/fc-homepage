@@ -7,11 +7,11 @@ import { ChatCharacter } from "./ChatCharacter";
 import { useChat, type ChatMessage } from "./useChat";
 
 // 작은 알약 버튼(짧은 선택지·링크) / 긴 질문 목록(한 상자 안에서 줄로 구분)
-const pillBase = "inline-flex h-9 items-center whitespace-nowrap rounded-full border px-3.5 text-[13px] font-semibold text-ink [.compact_&]:h-8 [.compact_&]:px-3 [.compact_&]:text-xs";
+const pillBase = "inline-flex h-9 items-center whitespace-nowrap rounded-full border px-3.5 text-compact font-semibold text-ink [.compact_&]:h-8 [.compact_&]:px-3 [.compact_&]:text-xs";
 const pillPlain = `${pillBase} border-ink/20 bg-paper hover:bg-paper-gray`;
 const pillPrimary = `${pillBase} border-transparent bg-brand hover:brightness-95`;
-const pillKakao = `${pillBase} border-transparent bg-[#FEE500] hover:brightness-95`;
-const pillChoice = "inline-flex h-8 items-center rounded-full border border-brand-deep/35 bg-paper px-3 text-[13px] font-medium text-brand-deep hover:bg-brand-soft";
+const pillKakao = `${pillBase} border-transparent bg-kakao hover:brightness-95`;
+const pillChoice = "inline-flex h-8 items-center rounded-full border border-brand-deep/35 bg-paper px-3 text-compact font-medium text-brand-deep hover:bg-brand-soft";
 const LONG_CHOICE = 14; // 이 글자 수를 넘는 선택지는 목록 줄로 보여줍니다
 
 function LinkPill({ link, compact, onNavigate }: { link: ChatLink; compact: boolean; onNavigate: () => void }) {
@@ -37,7 +37,7 @@ function Choices({ items, onPick }: { items: string[]; onPick: (t: string) => vo
         <ul className="divide-y divide-ink/10 overflow-hidden rounded-xl border border-ink/15 bg-paper">
           {long.map((s) => (
             <li key={s}>
-              <button type="button" onClick={() => onPick(s)} className="flex min-h-[40px] w-full items-center gap-2 px-3 py-2 text-left text-[13px] leading-snug text-ink hover:bg-brand-soft">
+              <button type="button" onClick={() => onPick(s)} className="flex min-h-[40px] w-full items-center gap-2 px-3 py-2 text-left text-compact leading-snug text-ink hover:bg-brand-soft">
                 <span className="line-clamp-2 flex-1">{s}</span>
                 <span aria-hidden="true" className="text-brand-deep">›</span>
               </button>
@@ -62,7 +62,7 @@ function Links({ links, onNavigate }: { links: ChatLink[]; onNavigate: () => voi
         <ul className="divide-y divide-ink/10 overflow-hidden rounded-xl border border-ink/15 bg-paper" aria-label="관련 상품">
           {rows.map((l) => (
             <li key={l.href}>
-              <Link href={l.href} onClick={onNavigate} className="flex min-h-[40px] items-center gap-2 px-3 py-2 text-[13px] leading-snug text-ink hover:bg-brand-soft">
+              <Link href={l.href} onClick={onNavigate} className="flex min-h-[40px] items-center gap-2 px-3 py-2 text-compact leading-snug text-ink hover:bg-brand-soft">
                 <span className="line-clamp-2 flex-1">{l.label}</span><span aria-hidden="true" className="text-brand-deep">›</span>
               </Link>
             </li>
@@ -130,14 +130,14 @@ export function ChatWidget() {
           className="flex h-[min(32rem,calc(100dvh-8rem))] w-[calc(100vw-2rem)] max-w-[22rem] flex-col overflow-hidden rounded-2xl border border-ink/10 bg-paper shadow-2xl">
           <header className="flex items-center gap-1 bg-brand-soft px-3 py-2">
             <span className="mr-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-paper"><ChatCharacter className="h-6 w-6" /></span>
-            <h2 className="min-w-0 flex-1 whitespace-nowrap max-[359px]:sr-only text-[15px] font-bold text-ink">{chatbotCopy.shortTitle}</h2>
-            <button type="button" onClick={back} disabled={messages.length <= 1} className="ml-auto h-9 rounded-lg px-1.5 text-[13px] text-ink-sub hover:text-ink disabled:opacity-40 disabled:hover:text-ink-sub">이전으로</button>
-            <button type="button" onClick={reset} disabled={messages.length <= 1} className="h-9 rounded-lg px-1.5 text-[13px] text-ink-sub hover:text-ink disabled:opacity-40 disabled:hover:text-ink-sub">처음으로</button>
+            <h2 className="min-w-0 flex-1 whitespace-nowrap max-[359px]:sr-only text-base font-bold text-ink">{chatbotCopy.shortTitle}</h2>
+            <button type="button" onClick={back} disabled={messages.length <= 1} className="ml-auto h-9 rounded-lg px-1.5 text-compact text-ink-sub hover:text-ink disabled:opacity-40 disabled:hover:text-ink-sub">이전으로</button>
+            <button type="button" onClick={reset} disabled={messages.length <= 1} className="h-9 rounded-lg px-1.5 text-compact text-ink-sub hover:text-ink disabled:opacity-40 disabled:hover:text-ink-sub">처음으로</button>
             <button type="button" onClick={close} aria-label="안내 도우미 닫기" className="flex h-9 w-9 items-center justify-center rounded-lg text-lg text-ink hover:bg-paper/60">✕</button>
           </header>
           <div ref={listRef} className="relative flex-1 space-y-2.5 overflow-y-auto px-3 py-3" aria-live="polite" aria-relevant="additions">
             {messages.map((m, i) => <Bubble key={m.id} m={m} isLast={i === messages.length - 1} onNavigate={close} onPick={send} />)}
-            {typing && <p className="pl-9 text-[13px] text-ink-sub" role="status">입력 중…</p>}
+            {typing && <p className="pl-9 text-compact text-ink-sub" role="status">입력 중…</p>}
           </div>
           <form onSubmit={submit} className="border-t border-ink/10 px-3 pb-2 pt-2.5">
             <div className="flex gap-2">

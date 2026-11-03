@@ -10,6 +10,7 @@ import { PillNav } from "@/components/fun/PillNav";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { breadcrumbJsonLd } from "@/lib/seo/jsonLd";
 import { SHEET_ASPECT, getSheetGroup, sheetCardDesc, sheetDownloadName, sheetFile, sheetGroups, sheetLarge, sheetThumb } from "@/config/sheets";
+import { textLink } from "@/components/ui/styles";
 
 type Props = { params: Promise<{ group: string }> };
 
@@ -48,13 +49,13 @@ export default async function SheetGroupPage({ params }: Props) {
         <ul data-reveal="stagger" className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {g.items.map((t) => (
             <DownloadCard key={t.id} title={t.title} desc={sheetCardDesc(t)} thumb={sheetThumb(t)} zoom={sheetLarge(t)} aspect={SHEET_ASPECT}
-              thumbAlt={`${t.title} 엑셀 서식 미리보기`} links={[{ label: "엑셀 받기", href: sheetFile(t), filename: sheetDownloadName(t) }]} />
+              thumbAlt={`${t.title} 엑셀 서식 미리보기`} links={[{ label: "엑셀", href: sheetFile(t), filename: sheetDownloadName(t) }]} />
           ))}
         </ul>
       </Section>
       <Section>
         <p className="text-sm text-ink-sub">첫 시트 &lsquo;시작하기&rsquo;에 쓰는 방법이 있어요. 입력 칸에 적으면 합계와 요약 화면이 자동으로 채워지고, 들어 있는 내용은 예시이니 지우고 쓰세요.</p>
-        <p className="mt-3 text-ink-sub"><Link href="/fun/sheets" className="font-semibold text-brand-deep underline">다른 분야 보기</Link> · <Link href="/fun" className="font-semibold text-brand-deep underline">즐길거리 전체 보기</Link></p>
+        <p className="mt-3 text-ink-sub"><Link href="/fun/sheets" className={textLink}>다른 분야 보기</Link> · <Link href="/fun" className={textLink}>즐길거리 전체 보기</Link></p>
       </Section>
       <Section><FunPageExtras path={path} /></Section>
     </>

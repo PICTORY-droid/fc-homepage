@@ -8,7 +8,7 @@ export const metadata: Metadata = { title: "개인정보처리방침" };
 export default function PrivacyPage() {
   const p = site.privacy;
   return (
-    <Section title="개인정보처리방침">
+    <Section as="h1" title="개인정보처리방침">
       <dl className="space-y-6 text-ink">
         <div><dt className="font-bold">1. 수집·이용 목적</dt><dd className="text-ink-sub">{p.purpose}</dd></div>
         <div><dt className="font-bold">2. 수집 항목</dt><dd className="text-ink-sub">{p.items}</dd></div>

@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { funMetadata } from "@/lib/seo/funMeta";
 import Link from "next/link";
+import { CardCta } from "@/components/ui/CardCta";
 import { Section } from "@/components/ui/Section";
 import { funItems } from "@/config/fun";
+import { cardLinkClass } from "@/components/ui/styles";
 
 export const metadata: Metadata = funMetadata({
   title: "무료 양식 모음 — 엑셀·PPT·편지지·명함",
@@ -17,11 +19,12 @@ export default function FunPage() {
       <ul data-reveal="stagger" className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {funItems.map((f) => (
           <li key={f.slug}>
-            <Link href={f.href} className="group flex h-full items-start gap-4 rounded-card border border-ink/10 bg-paper-card p-5 transition duration-200 hover:-translate-y-0.5 hover:border-brand hover:shadow-md">
+            <Link href={f.href} className={`flex h-full items-start gap-4 p-5 outline-none ${cardLinkClass}`}>
               <span aria-hidden="true" className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-brand-soft text-2xl">{f.icon}</span>
               <span className="min-w-0">
                 <span className="block text-lg font-bold text-ink">{f.title}</span>
                 <span className="mt-1 block text-sm leading-relaxed text-ink-sub">{f.short}</span>
+                <CardCta>둘러보기</CardCta>
               </span>
             </Link>
           </li>

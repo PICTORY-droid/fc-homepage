@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Section } from "@/components/ui/Section";
 import { homeMonth, monthlyPick } from "@/config/monthly";
+import { textLink } from "@/components/ui/styles";
 
 // 홈의 '이달의 양식' — 홈에 올리기로 정한 달(config/monthly 의 FEATURED_MONTH, 지금은 12월)의 무료 자료 3가지. 각 카드는 자료 상세페이지로 이어지고 클릭 수가 기록됩니다.
 export function MonthlyPick() {
@@ -23,7 +24,7 @@ export function MonthlyPick() {
           </li>
         ))}
       </ul>
-      <p className="mt-3 text-sm text-ink-sub"><Link href="/fun" className="font-semibold text-brand-deep underline">즐길거리 전체 보기</Link></p>
+      <p className="mt-3 text-sm text-ink-sub"><Link href="/fun" className={textLink}>즐길거리 전체 보기</Link></p>
     </Section>
   );
 }

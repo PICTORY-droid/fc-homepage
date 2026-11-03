@@ -2,11 +2,12 @@ import Link from "next/link";
 import type { Product } from "@/config/products";
 import { productPath } from "@/lib/products";
 import { ProductThumb } from "./ProductThumb";
+import { buttonClass, cardLinkClass } from "@/components/ui/styles";
 
 // 상품 목록 카드 — 표시만 담당
 export function ProductCard({ product, compare }: { product: Product; compare?: { checked: boolean; disabled: boolean; onToggle: () => void } }) {
   return (
-    <li className="flex flex-col overflow-hidden rounded-card border border-ink/10 bg-paper transition duration-300 hover:-translate-y-1 hover:border-brand hover:shadow-lg">
+    <li className={`flex flex-col ${cardLinkClass}`}>
       <ProductThumb product={product} />
       <div className="flex flex-1 flex-col p-5">
         <p className="text-xs font-semibold text-brand-deep">{product.group}</p>
@@ -21,7 +22,7 @@ export function ProductCard({ product, compare }: { product: Product; compare?: 
           </label>
         )}
         <Link href={productPath(product.id)}
-          className="flex min-h-[48px] w-full items-center justify-center rounded-xl bg-brand px-6 text-base font-semibold text-ink hover:brightness-95 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">
+          className={buttonClass("primary", "md", "w-full")}>
           상세보기<span className="sr-only"> — {product.displayName}</span>
         </Link>
         </div>

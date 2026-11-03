@@ -2,6 +2,7 @@
 import { useMemo, useState } from "react";
 import { DownloadCard } from "./DownloadCard";
 import { stationeryCoverFile, stationeryCoverName, stationeryDownloadName, stationeryFile, type Stationery } from "@/config/stationery";
+import { pillClass } from "@/components/ui/styles";
 
 export interface SubOption { key: string; label: string }
 
@@ -16,7 +17,7 @@ export function StationeryGrid({ items, subs }: { items: Stationery[]; subs: Sub
   const shown = sub === "all" ? items : items.filter((it) => it.sub === sub);
   const chip = (key: string, label: string, count: number) => (
     <button key={key} type="button" onClick={() => setSub(key)} aria-pressed={sub === key}
-      className={`min-h-[44px] rounded-full border px-4 text-sm font-bold ${sub === key ? "border-brand bg-brand text-ink" : "border-ink/25 bg-paper text-ink hover:bg-paper-gray"}`}>
+      className={pillClass(sub === key)}>
       {label} {count}
     </button>
   );

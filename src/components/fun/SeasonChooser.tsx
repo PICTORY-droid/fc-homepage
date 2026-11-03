@@ -1,5 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
+import { CardCta } from "@/components/ui/CardCta";
+import { cardLinkClass } from "@/components/ui/styles";
 
 export interface SeasonChoice { slug: string; label: string; count: number; href: string; lead: string; thumbs: string[]; aspect?: number }
 
@@ -9,7 +11,7 @@ export function SeasonChooser({ items }: { items: SeasonChoice[] }) {
     <ul data-reveal="stagger" className="grid gap-4 sm:grid-cols-2">
       {items.map((s) => (
         <li key={s.slug}>
-          <Link href={s.href} className="group flex h-full flex-col overflow-hidden rounded-card border border-ink/10 bg-paper-card p-4 transition duration-200 hover:-translate-y-0.5 hover:border-brand hover:shadow-md">
+          <Link href={s.href} className={`flex h-full flex-col p-4 outline-none ${cardLinkClass}`}>
             <div className="grid grid-cols-3 gap-2">
               {s.thumbs.map((t) => (
                 <div key={t} className="relative w-full overflow-hidden rounded-lg bg-paper-gray" style={{ aspectRatio: s.aspect ?? 794 / 1123 }}>
@@ -19,7 +21,7 @@ export function SeasonChooser({ items }: { items: SeasonChoice[] }) {
             </div>
             <span className="mt-4 text-xl font-bold text-ink">{s.label} <span className="text-sm font-semibold text-brand-deep">{s.count}종</span></span>
             <span className="mt-1 flex-1 text-sm leading-relaxed text-ink-sub">{s.lead}</span>
-            <span className="mt-3 text-sm font-bold text-brand-deep">{s.label} 보러 가기 →</span>
+            <CardCta className="mt-3">{s.label} 보기</CardCta>
           </Link>
         </li>
       ))}

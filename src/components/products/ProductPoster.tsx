@@ -1,5 +1,6 @@
 "use client";
 import { useRef, type ReactNode } from "react";
+import { buttonClass } from "@/components/ui/styles";
 
 interface Props { src: string; alt: string; width: number; height: number; /** 있으면 미리보기 자리에 이 일러스트를 보여 주고, 누르면 공식 안내 이미지(src)를 크게 보여 줍니다. */ art?: ReactNode }
 
@@ -27,7 +28,7 @@ export function ProductPoster({ src, alt, width, height, art }: Props) {
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={src} alt={alt} width={width} height={height} className="mx-auto block max-h-[86vh] w-auto max-w-full rounded-xl" />
           <button type="button" onClick={close} autoFocus
-            className="mt-2 flex min-h-[48px] w-full items-center justify-center rounded-xl bg-brand text-base font-bold text-ink hover:brightness-95 focus-visible:outline focus-visible:outline-2 focus-visible:outline-ink">
+            className={buttonClass("primary", "md", "mt-2 w-full")}>
             닫기
           </button>
         </div>

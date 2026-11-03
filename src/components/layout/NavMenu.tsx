@@ -58,7 +58,7 @@ export function NavMenu({ groups }: { groups: NavGroup[] }) {
                       {g.items.map((it) => (
                         <li key={it.href}>
                           <Link href={it.href} onClick={() => close()} aria-current={pathname === it.href ? "page" : undefined}
-                            className={`block rounded-lg px-3 py-2.5 text-[15px] text-ink hover:bg-paper-gray ${pathname === it.href ? "font-bold text-brand-deep" : ""}`}>
+                            className={`block rounded-lg px-3 py-2.5 text-base text-ink hover:bg-paper-gray ${pathname === it.href ? "font-bold text-brand-deep" : ""}`}>
                             {it.label}
                           </Link>
                         </li>
