@@ -4,16 +4,23 @@
 
 하는 일 (템블리 쪽 파일은 읽기만 하고 고치지 않습니다)
   1) src/features/excel/data/catalog.data.ts 의 목록 → src/config/sheets.data.json
-  2) content/excel/<id>.xlsx                  → public/fun/sheets/files/<id>.xlsx
+  2) content/excel/<id>.xlsx                  → public/fun/sheets/files/<id>.xlsx   (템블리 표기를 지운 사본)
   3) public/excel/thumbs/<id>.jpg             → public/fun/sheets/thumbs/<id>.jpg   (카드용, 크기를 760×500 으로 통일)
   4) <id>.jpg + <id>-dash.jpg                 → public/fun/sheets/large/<id>.jpg    (팝업용, 입력 화면 아래 요약 화면을 이어 붙임)
+
+템블리 표기 지우기 — 우체국보험 길잡이에서 받은 파일이 템블리를 홍보하지 않도록, 사본에서만 아래를 비웁니다.
+  · 시트마다 인쇄 머리글·바닥글의 '템블리 · tembly.vercel.app'
+  · 시작하기 시트의 '템블리 · tembly.vercel.app · 로그인하면 …' 안내 줄 (칸 서식은 그대로)
+  · 파일 속성의 작성자·마지막 수정자·설명
+  엑셀 파일 속 XML 글자만 바꾸므로 수식·차트·서식은 그대로입니다. 다 지운 뒤에도 표기가 남아 있으면 멈춥니다.
 """
 from __future__ import annotations
 
+import html
 import json
 import re
-import shutil
 import sys
+import zipfile
 from pathlib import Path
 
 from PIL import Image
@@ -27,6 +34,39 @@ GAP = 24
 ID_SHAPE = re.compile(r"^[a-z0-9-]{1,40}$")
 GROUPS = {"work", "office", "biz", "life", "study", "event"}
 FIELDS = ("id", "title", "desc", "group", "tag", "kind", "featured", "dashboard", "sheets", "highlights")
+
+BRAND = re.compile(r"템블리|tembly", re.I)
+# 글자가 든 요소(안쪽 글자에 표기가 있으면 비움): 셀 글자 · 인쇄 머리글/바닥글 · 파일 속성
+TEXT_ELEMENTS = re.compile(
+    r"(<(t|oddHeader|oddFooter|evenHeader|evenFooter|firstHeader|firstFooter|dc:creator|cp:lastModifiedBy|dc:description|dc:subject|cp:keywords)(?:\s[^>]*)?>)(.*?)(</\2>)",
+    re.S,
+)
+
+
+def has_brand(xml: str) -> bool:
+    return bool(BRAND.search(html.unescape(xml)))
+
+
+def strip_brand_xml(xml: str) -> str:
+    return TEXT_ELEMENTS.sub(lambda m: m.group(1) + ("" if has_brand(m.group(3)) else m.group(3)) + m.group(4), xml)
+
+
+def copy_without_brand(src: Path, dst: Path) -> int:
+    """엑셀 파일을 복사하면서 템블리 표기를 지웁니다. 바꾼 부분(XML 파일)의 수를 돌려줍니다."""
+    changed = 0
+    with zipfile.ZipFile(src) as zin, zipfile.ZipFile(dst, "w", zipfile.ZIP_DEFLATED) as zout:
+        for info in zin.infolist():
+            data = zin.read(info.filename)
+            if info.filename.endswith(".xml"):
+                text = data.decode("utf-8")
+                if has_brand(text):
+                    text = strip_brand_xml(text)
+                    changed += 1
+                    if has_brand(text):
+                        raise SystemExit(f"템블리 표기를 다 지우지 못했습니다: {src.name} / {info.filename}")
+                    data = text.encode("utf-8")
+            zout.writestr(info, data)
+    return changed
 
 
 def load_catalog(tembly: Path) -> list[dict]:
@@ -89,7 +129,7 @@ def main() -> None:
                 raise SystemExit(f"파일이 없습니다: {need}")
         if item["dashboard"] and not dash.exists():
             raise SystemExit(f"요약 화면 그림이 없습니다: {dash}")
-        shutil.copyfile(xlsx, OUT_PUBLIC / "files" / f"{tid}.xlsx")
+        copy_without_brand(xlsx, OUT_PUBLIC / "files" / f"{tid}.xlsx")
         card_thumb(thumb, OUT_PUBLIC / "thumbs" / f"{tid}.jpg")
         large_preview(thumb, dash if item["dashboard"] else None, OUT_PUBLIC / "large" / f"{tid}.jpg")
 
