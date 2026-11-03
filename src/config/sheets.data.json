@@ -1,0 +1,2084 @@
+{
+ "source": "tembly",
+ "count": 100,
+ "items": [
+  {
+   "id": "job-tracker",
+   "title": "입사 지원 현황 관리표",
+   "desc": "지원한 회사와 진행 상황을 한눈에 정리해요.",
+   "group": "work",
+   "tag": "취업",
+   "kind": "ledger",
+   "featured": true,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 전체 지원 · 면접 진행 · 최종 합격 · 평균 희망 연봉(만원)",
+    "표와 차트: 상태별 건수 · 월별 지원 건수",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "career-sum",
+   "title": "경력 기간 합계(겹침 제외)",
+   "desc": "겹치는 근무 기간을 한 번만 세어 경력을 합산해요.",
+   "group": "work",
+   "tag": "경력",
+   "kind": "form",
+   "featured": true,
+   "dashboard": false,
+   "sheets": [
+    "시작하기",
+    "입력"
+   ],
+   "highlights": [
+    "겹치는 근무 기간을 한 번만 계산",
+    "입력 순서가 뒤섞여도 정확히 계산",
+    "총 일수와 년·개월·일 환산"
+   ]
+  },
+  {
+   "id": "severance",
+   "title": "퇴직금 계산표",
+   "desc": "입사일·퇴사일과 최근 3개월 임금으로 예상 퇴직금을 계산해요.",
+   "group": "work",
+   "tag": "퇴직금",
+   "kind": "form",
+   "featured": true,
+   "dashboard": false,
+   "sheets": [
+    "시작하기",
+    "퇴직금"
+   ],
+   "highlights": [
+    "재직일수와 대상 여부 자동 표시",
+    "평균임금과 통상임금 중 큰 값 적용",
+    "퇴직 전 3개월 임금 입력"
+   ]
+  },
+  {
+   "id": "interview-prep",
+   "title": "면접 일정·준비 체크표",
+   "desc": "면접 날짜와 준비물, 결과를 한 곳에서 챙겨요.",
+   "group": "work",
+   "tag": "면접",
+   "kind": "ledger",
+   "featured": false,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 면접 건수 · 준비물 완료 · 질문 준비 완료 · 합격",
+    "표와 차트: 결과별 건수 · 면접 종류별 건수 · 월별 면접 건수",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "cert-schedule",
+   "title": "자격증 시험 일정 관리표",
+   "desc": "시험일·접수 마감·응시료를 놓치지 않게 정리해요.",
+   "group": "work",
+   "tag": "자격증",
+   "kind": "ledger",
+   "featured": false,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 자격증 수 · 합격 · 응시료 합계 · 평균 공부 진도",
+    "표와 차트: 상태별 건수 · 월별 응시 건수",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "offer-compare",
+   "title": "연봉·조건 비교표",
+   "desc": "합격한 회사들의 조건을 점수로 비교해 고르세요.",
+   "group": "work",
+   "tag": "비교",
+   "kind": "ledger",
+   "featured": false,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 비교 회사 수 · 최고 연봉(만원) · 최고 종합 점수",
+    "표와 차트: 근무 형태별 건수",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "leave-log",
+   "title": "연차 사용 관리대장",
+   "desc": "연차·반차·병가를 기록하고 사용한 날수를 합산해요.",
+   "group": "work",
+   "tag": "근태",
+   "kind": "ledger",
+   "featured": false,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 사용 기록 · 사용 일수 합계 · 승인 건수",
+    "표와 차트: 구분별 일수 · 월별 사용 일수",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "weekly-report",
+   "title": "주간 업무 보고표",
+   "desc": "이번 주 한 일과 다음 주 계획을 표로 정리해요.",
+   "group": "work",
+   "tag": "보고",
+   "kind": "ledger",
+   "featured": false,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 업무 건수 · 완료 · 총 소요 시간(h)",
+    "표와 차트: 프로젝트별 시간 · 월별 소요 시간",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "daily-worklog",
+   "title": "업무일지",
+   "desc": "날짜별 업무와 진행률, 이슈를 짧게 기록해요.",
+   "group": "work",
+   "tag": "일지",
+   "kind": "ledger",
+   "featured": false,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 기록 일수 · 평균 진행률",
+    "표와 차트: 분류별 건수 · 월별 기록 건수",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "jobchange-checklist",
+   "title": "이직 준비 체크리스트",
+   "desc": "이력서·포트폴리오·면접까지 이직 준비 항목을 체크해요.",
+   "group": "work",
+   "tag": "이직",
+   "kind": "ledger",
+   "featured": false,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 전체 항목 · 완료 · 완료율",
+    "표와 차트: 분류별 항목 수",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "interview-qa",
+   "title": "면접 예상질문 답변 정리표",
+   "desc": "자주 나오는 질문과 내 답변 핵심을 정리하고 연습 횟수를 세요.",
+   "group": "work",
+   "tag": "면접",
+   "kind": "ledger",
+   "featured": false,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 질문 수 · 완성 · 연습 횟수 합계",
+    "표와 차트: 분류별 질문 수 · 준비 상태별",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "cover-letter-track",
+   "title": "자기소개서 문항 관리표",
+   "desc": "문항별 글자 수 제한을 지켰는지 자동으로 확인해요.",
+   "group": "work",
+   "tag": "자소서",
+   "kind": "ledger",
+   "featured": false,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 문항 수 · 제출 완료 · 글자 초과",
+    "표와 차트: 상태별 건수",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "portfolio-list",
+   "title": "포트폴리오 프로젝트 정리표",
+   "desc": "한 일을 기간·역할·성과로 정리해 두면 이력서 쓰기가 쉬워져요.",
+   "group": "work",
+   "tag": "포트폴리오",
+   "kind": "ledger",
+   "featured": false,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 프로젝트 수 · 총 기간(일) · 공개",
+    "표와 차트: 공개 여부별",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "contact-book",
+   "title": "명함 수집·인맥 관리표",
+   "desc": "받은 명함을 정리하고 다음 연락일을 챙겨요.",
+   "group": "work",
+   "tag": "인맥",
+   "kind": "ledger",
+   "featured": false,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 저장한 명함 · 거래처 · 채용 담당",
+    "표와 차트: 분류별 인원 · 월별 만난 사람 수",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "job-posting-scrap",
+   "title": "채용 공고 스크랩표",
+   "desc": "관심 있는 공고를 모아 마감일 순으로 챙겨요.",
+   "group": "work",
+   "tag": "공고",
+   "kind": "ledger",
+   "featured": false,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 저장한 공고 · 지원함 · 관심 ★★★",
+    "표와 차트: 올라온 곳별 건수 · 지원 여부별",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "work-hours",
+   "title": "근무시간 기록표",
+   "desc": "출근·퇴근 시각을 적으면 하루 근무시간이 계산돼요.",
+   "group": "work",
+   "tag": "근태",
+   "kind": "ledger",
+   "featured": false,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 기록 일수 · 총 근무시간 · 평균 근무시간",
+    "표와 차트: 구분별 건수 · 월별 근무시간",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "project-schedule",
+   "title": "프로젝트 일정 관리표",
+   "desc": "업무별 시작·종료일과 진행률을 한 장에서 관리해요.",
+   "group": "office",
+   "tag": "일정",
+   "kind": "ledger",
+   "featured": true,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 업무 수 · 완료 · 평균 진행률 · 총 기간(일)",
+    "표와 차트: 상태별 건수 · 월별 시작 건수",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "todo-priority",
+   "title": "우선순위 할 일 관리표",
+   "desc": "급한 일부터 처리하도록 우선순위와 마감일을 정리해요.",
+   "group": "office",
+   "tag": "할 일",
+   "kind": "ledger",
+   "featured": true,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 전체 할 일 · 완료 · 완료율 · 우선순위 높음",
+    "표와 차트: 우선순위별 건수",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "year-calendar",
+   "title": "연간 달력",
+   "desc": "연도만 바꾸면 12개월 달력과 공휴일 표시가 바뀌어요.",
+   "group": "office",
+   "tag": "달력",
+   "kind": "form",
+   "featured": true,
+   "dashboard": false,
+   "sheets": [
+    "시작하기",
+    "연간달력",
+    "휴일"
+   ],
+   "highlights": [
+    "연도만 바꾸면 12개월 달력 변경",
+    "공휴일을 붉게 표시(2027년 입력됨)",
+    "휴일 목록에 직접 추가"
+   ]
+  },
+  {
+   "id": "meeting-minutes",
+   "title": "회의록 정리표",
+   "desc": "회의 안건과 결정 사항, 다음 할 일을 한 줄씩 남겨요.",
+   "group": "office",
+   "tag": "회의",
+   "kind": "ledger",
+   "featured": false,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 회의 수 · 진행 중 할 일 · 완료",
+    "표와 차트: 상태별 · 월별 회의 수",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "request-desk",
+   "title": "업무 요청 접수 대장",
+   "desc": "들어온 요청과 처리 결과, 걸린 일수를 기록해요.",
+   "group": "office",
+   "tag": "접수",
+   "kind": "ledger",
+   "featured": false,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 접수 건수 · 완료 · 평균 걸린 일수",
+    "표와 차트: 처리 상태별 · 월별 접수 건수",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "document-register",
+   "title": "문서 수발신 대장",
+   "desc": "받은 문서와 보낸 문서를 날짜순으로 기록해요.",
+   "group": "office",
+   "tag": "문서",
+   "kind": "ledger",
+   "featured": false,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 전체 문서 · 수신 · 발신",
+    "표와 차트: 구분별 · 월별 문서 수",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "supplies-stock",
+   "title": "비품 재고 관리표",
+   "desc": "현재고가 최소 수량보다 적으면 ‘부족’으로 알려 줘요.",
+   "group": "office",
+   "tag": "재고",
+   "kind": "ledger",
+   "featured": false,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 품목 수 · 부족 품목 · 재고 금액 합계",
+    "표와 차트: 분류별 재고 금액",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "address-book",
+   "title": "연락처 주소록",
+   "desc": "이름·소속·연락처를 모아 두고 분류로 걸러 봐요.",
+   "group": "office",
+   "tag": "연락처",
+   "kind": "ledger",
+   "featured": false,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 저장한 사람 · 거래처 · 고객",
+    "표와 차트: 분류별 인원",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "trip-expense",
+   "title": "출장 비용 정산표",
+   "desc": "출장 중 쓴 비용을 항목별로 모아 정산해요.",
+   "group": "office",
+   "tag": "정산",
+   "kind": "ledger",
+   "featured": false,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 기록 건수 · 지출 합계 · 미정산 금액 · 영수증 있음",
+    "표와 차트: 항목별 금액 · 월별 지출",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "corp-card-log",
+   "title": "법인카드 사용 내역표",
+   "desc": "사용처·금액·증빙 여부를 기록하고 분류별로 합산해요.",
+   "group": "office",
+   "tag": "카드",
+   "kind": "ledger",
+   "featured": false,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 사용 건수 · 사용 합계 · 증빙 완료",
+    "표와 차트: 분류별 금액 · 월별 사용액",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "room-booking",
+   "title": "회의실 예약 현황표",
+   "desc": "회의실별 예약 시간과 사용 시간을 한눈에 봐요.",
+   "group": "office",
+   "tag": "예약",
+   "kind": "ledger",
+   "featured": false,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 예약 건수 · 총 사용 시간",
+    "표와 차트: 회의실별 사용 시간 · 월별 예약 건수",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "visitor-log",
+   "title": "방문자 출입 기록부",
+   "desc": "방문 목적과 입·퇴실 시각, 머문 시간을 기록해요.",
+   "group": "office",
+   "tag": "출입",
+   "kind": "ledger",
+   "featured": false,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 방문 건수 · 면접",
+    "표와 차트: 방문 목적별 · 월별 방문 수",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "handover-sheet",
+   "title": "업무 인수인계표",
+   "desc": "맡던 일을 빠짐없이 넘기도록 업무별로 정리해요.",
+   "group": "office",
+   "tag": "인수인계",
+   "kind": "ledger",
+   "featured": false,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 인수 업무 · 인수 완료 · 중요도 높음",
+    "표와 차트: 주기별 · 중요도별",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "issue-tracker",
+   "title": "이슈 추적표",
+   "desc": "문제가 생긴 날과 해결한 날을 기록해 처리 일수를 봐요.",
+   "group": "office",
+   "tag": "이슈",
+   "kind": "ledger",
+   "featured": false,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 이슈 수 · 해결 · 평균 처리 일수",
+    "표와 차트: 상태별 · 중요도별 · 월별 등록 건수",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "goal-achievement",
+   "title": "월간 목표 달성표",
+   "desc": "목표값과 실적을 적으면 달성률이 자동 계산돼요.",
+   "group": "office",
+   "tag": "목표",
+   "kind": "ledger",
+   "featured": false,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 목표 항목 수 · 평균 달성률 · 실적 합계",
+    "표와 차트: 월별 실적 합계",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "month-calendar",
+   "title": "월간 일정표",
+   "desc": "연·월을 바꾸고 날짜마다 일정을 적는 한 달 달력이에요.",
+   "group": "office",
+   "tag": "일정",
+   "kind": "form",
+   "featured": false,
+   "dashboard": false,
+   "sheets": [
+    "시작하기",
+    "월간달력",
+    "휴일"
+   ],
+   "highlights": [
+    "연·월을 바꾸면 달력 변경",
+    "날짜별 메모 칸",
+    "공휴일 이름 표시(2027년 입력됨)"
+   ]
+  },
+  {
+   "id": "receivables-ledger",
+   "title": "청구·입금 미수금 장부",
+   "desc": "청구한 금액과 입금된 금액을 적으면 남은 미수금이 계산돼요.",
+   "group": "biz",
+   "tag": "미수금",
+   "kind": "ledger",
+   "featured": true,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 청구 건수 · 청구 합계 · 입금 합계 · 미수금 합계",
+    "표와 차트: 상태별 미수금 · 월별 청구액",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "quote",
+   "title": "견적서",
+   "desc": "품목·수량·단가를 적으면 공급가액과 부가세 합계가 나와요.",
+   "group": "biz",
+   "tag": "견적",
+   "kind": "form",
+   "featured": true,
+   "dashboard": false,
+   "sheets": [
+    "시작하기",
+    "견적서"
+   ],
+   "highlights": [
+    "공급가액·부가세·총 합계 자동 계산",
+    "품목 15줄",
+    "부가세율 바꾸기(면세 가능)"
+   ]
+  },
+  {
+   "id": "salary-slip",
+   "title": "급여명세서",
+   "desc": "지급 내역을 적으면 4대보험 공제와 실수령액이 계산돼요.",
+   "group": "biz",
+   "tag": "급여",
+   "kind": "form",
+   "featured": true,
+   "dashboard": false,
+   "sheets": [
+    "시작하기",
+    "급여명세서",
+    "설정"
+   ],
+   "highlights": [
+    "4대보험 공제 자동 계산",
+    "요율은 설정 시트에서 수정",
+    "실수령액 자동 계산"
+   ]
+  },
+  {
+   "id": "sales-ledger",
+   "title": "간이 매출 장부",
+   "desc": "공급가액을 적으면 부가세(10%)와 합계가 계산돼요.",
+   "group": "biz",
+   "tag": "매출",
+   "kind": "ledger",
+   "featured": false,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 매출 건수 · 공급가액 합계 · 부가세 합계 · 합계 금액",
+    "표와 차트: 결제수단별 합계 · 월별 공급가액",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "purchase-ledger",
+   "title": "간이 매입·지출 장부",
+   "desc": "사업에 쓴 돈을 분류별로 모아 월별로 확인해요.",
+   "group": "biz",
+   "tag": "매입",
+   "kind": "ledger",
+   "featured": false,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 지출 건수 · 공급가액 합계 · 부가세 합계 · 합계 금액",
+    "표와 차트: 분류별 합계 · 월별 공급가액",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "vat-prep",
+   "title": "부가세 신고 준비표",
+   "desc": "매출과 매입을 한 표에 모아 세액을 미리 확인해요(참고용).",
+   "group": "biz",
+   "tag": "부가세",
+   "kind": "ledger",
+   "featured": false,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 매출 공급가액 · 매출 세액 · 매입 공급가액 · 매입 세액",
+    "표와 차트: 구분별 세액 · 월별 공급가액",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "tax-expense",
+   "title": "종합소득세 경비 정리표",
+   "desc": "1년 동안의 사업 경비를 항목·증빙별로 모아 두세요.",
+   "group": "biz",
+   "tag": "경비",
+   "kind": "ledger",
+   "featured": false,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 경비 건수 · 경비 합계 · 사업 관련 표시",
+    "표와 차트: 항목별 금액 · 월별 경비",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "freelance-3-3",
+   "title": "프리랜서 3.3% 정산표",
+   "desc": "세전 지급액을 적으면 3.3% 원천징수 후 실수령액이 나와요.",
+   "group": "biz",
+   "tag": "정산",
+   "kind": "ledger",
+   "featured": false,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 정산 건수 · 지급액 합계 · 원천징수 합계 · 실수령액 합계",
+    "표와 차트: 월별 실수령액",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "crm-customers",
+   "title": "고객 관리 대장",
+   "desc": "고객별 구매 이력과 다음 연락일을 챙겨요.",
+   "group": "biz",
+   "tag": "고객",
+   "kind": "ledger",
+   "featured": false,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 고객 수 · 누적 금액 합계 · 평균 구매 횟수 · 단골 이상",
+    "표와 차트: 등급별 고객 수 · 등급별 누적 금액",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "stock-simple",
+   "title": "상품 재고 관리표",
+   "desc": "기초재고·입고·출고를 적으면 현재고가 자동으로 계산돼요.",
+   "group": "biz",
+   "tag": "재고",
+   "kind": "ledger",
+   "featured": false,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 상품 수 · 현재고 합계 · 부족 상품",
+    "표와 차트: 분류별 현재고",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "reservation-book",
+   "title": "예약 관리표",
+   "desc": "예약 일시와 고객, 서비스, 금액을 정리해요.",
+   "group": "biz",
+   "tag": "예약",
+   "kind": "ledger",
+   "featured": false,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 예약 건수 · 방문 · 취소·노쇼 · 금액 합계",
+    "표와 차트: 서비스별 금액 · 상태별 · 월별 예약 건수",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "customer-chart",
+   "title": "상담·시술 고객 차트",
+   "desc": "방문 내용과 다음 방문 권유일을 고객별로 기록해요.",
+   "group": "biz",
+   "tag": "차트",
+   "kind": "ledger",
+   "featured": false,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 방문 기록 · 금액 합계 · 평균 금액",
+    "표와 차트: 결제수단별 금액 · 월별 방문 수",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "daily-sales-close",
+   "title": "일 매출 정산표",
+   "desc": "현금·카드·간편결제 매출을 적으면 순매출이 나와요.",
+   "group": "biz",
+   "tag": "마감",
+   "kind": "ledger",
+   "featured": false,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 영업 일수 · 매출 합계 · 순매출 합계 · 하루 평균 매출",
+    "표와 차트: 월별 매출",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "staff-schedule",
+   "title": "직원 근무 스케줄표",
+   "desc": "직원별 근무 시간을 적고 총 근무시간을 합산해요.",
+   "group": "biz",
+   "tag": "스케줄",
+   "kind": "ledger",
+   "featured": false,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 근무 기록 · 총 근무시간 · 휴무",
+    "표와 차트: 근무 형태별 · 월별 근무시간",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "payroll-ledger",
+   "title": "급여 대장",
+   "desc": "기본급·수당·공제액을 적으면 실지급액이 계산돼요.",
+   "group": "biz",
+   "tag": "급여",
+   "kind": "ledger",
+   "featured": false,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 지급 건수 · 기본급 합계 · 실지급액 합계",
+    "표와 차트: 월별 실지급액",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "shipping-log",
+   "title": "배송·택배 발송 대장",
+   "desc": "발송일과 운송장 번호, 배송 상태를 기록해요.",
+   "group": "biz",
+   "tag": "발송",
+   "kind": "ledger",
+   "featured": false,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 발송 건수 · 배송 완료 · 배송비 합계",
+    "표와 차트: 택배사별 건수 · 상태별 · 월별 발송 건수",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "returns-log",
+   "title": "반품·교환 접수 대장",
+   "desc": "반품·교환 사유와 처리 기간, 환불 금액을 기록해요.",
+   "group": "biz",
+   "tag": "반품",
+   "kind": "ledger",
+   "featured": false,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 접수 건수 · 환불 금액 합계 · 평균 처리 일수",
+    "표와 차트: 사유별 건수 · 구분별 · 월별 접수 건수",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "vendor-book",
+   "title": "거래처 관리표",
+   "desc": "거래처의 담당자, 결제 조건, 마지막 거래일을 모아요.",
+   "group": "biz",
+   "tag": "거래처",
+   "kind": "ledger",
+   "featured": false,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 거래처 수",
+    "표와 차트: 결제 조건별",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "fixed-cost-biz",
+   "title": "사업장 월 고정비 점검표",
+   "desc": "매달 나가는 돈을 모아 연 금액과 줄일 후보를 확인해요.",
+   "group": "biz",
+   "tag": "고정비",
+   "kind": "ledger",
+   "featured": false,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 고정비 항목 · 월 합계 · 연 합계 · 줄일 후보",
+    "표와 차트: 분류별 월 금액",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "receipt-register",
+   "title": "영수증 정리표",
+   "desc": "받은 영수증을 날짜순으로 적고 보관 위치를 남겨요.",
+   "group": "biz",
+   "tag": "영수증",
+   "kind": "ledger",
+   "featured": false,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 영수증 수 · 금액 합계 · 사업 관련",
+    "표와 차트: 분류별 금액 · 월별 금액",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "quote-compare",
+   "title": "업체 견적 비교표",
+   "desc": "여러 업체의 견적과 점수를 비교해 고르세요.",
+   "group": "biz",
+   "tag": "비교",
+   "kind": "ledger",
+   "featured": false,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 비교 업체 · 최저 견적 · 최고 종합 점수",
+    "표와 차트: 선정 상태별",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "coupon-points",
+   "title": "쿠폰·포인트 적립 관리표",
+   "desc": "고객별 적립과 사용 포인트를 적으면 잔여가 계산돼요.",
+   "group": "biz",
+   "tag": "포인트",
+   "kind": "ledger",
+   "featured": false,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 고객 수 · 적립 합계 · 잔여 포인트 합계",
+    "표와 차트: 월별 적립 포인트",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "statement",
+   "title": "거래명세서",
+   "desc": "줄마다 세액을 계산하고 전잔액·입금액으로 미수 잔액을 알려 줘요.",
+   "group": "biz",
+   "tag": "거래",
+   "kind": "form",
+   "featured": false,
+   "dashboard": false,
+   "sheets": [
+    "시작하기",
+    "거래명세서"
+   ],
+   "highlights": [
+    "줄마다 세액까지 계산",
+    "전잔액과 입금액으로 미수 잔액 계산",
+    "품목 15줄"
+   ]
+  },
+  {
+   "id": "purchase-order",
+   "title": "발주서",
+   "desc": "발주 품목과 납기일, 부가세 포함 총액을 정리해요.",
+   "group": "biz",
+   "tag": "발주",
+   "kind": "form",
+   "featured": false,
+   "dashboard": false,
+   "sheets": [
+    "시작하기",
+    "발주서"
+   ],
+   "highlights": [
+    "품목별 납기일 칸",
+    "부가세 포함 총액",
+    "품목 15줄"
+   ]
+  },
+  {
+   "id": "household-monthly",
+   "title": "월간 가계부",
+   "desc": "수입과 지출을 적으면 분류별·월별로 자동 정리돼요.",
+   "group": "life",
+   "tag": "가계부",
+   "kind": "ledger",
+   "featured": true,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 총 수입 · 총 지출 · 입력 건수 · 최대 금액",
+    "표와 차트: 분류별 합계 · 월별 합계",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "loan-calc",
+   "title": "대출 상환 계산표",
+   "desc": "원리금균등·원금균등·만기일시 상환 일정을 회차별로 보여 줘요.",
+   "group": "life",
+   "tag": "대출",
+   "kind": "form",
+   "featured": true,
+   "dashboard": false,
+   "sheets": [
+    "시작하기",
+    "대출계산"
+   ],
+   "highlights": [
+    "원리금균등·원금균등·만기일시 3가지",
+    "최대 360회차 상환표",
+    "총 이자와 총 납입액"
+   ]
+  },
+  {
+   "id": "habit-tracker",
+   "title": "월간 습관 트래커",
+   "desc": "날짜별 ✓로 습관을 기록하고 달성률을 확인해요.",
+   "group": "life",
+   "tag": "습관",
+   "kind": "form",
+   "featured": true,
+   "dashboard": false,
+   "sheets": [
+    "시작하기",
+    "습관"
+   ],
+   "highlights": [
+    "달을 바꾸면 날짜·요일이 자동 변경",
+    "달성 횟수와 달성률",
+    "토·일요일 칸 구분"
+   ]
+  },
+  {
+   "id": "couple-ledger",
+   "title": "공동 가계부(부부·커플)",
+   "desc": "누가 얼마를 썼는지 나눠서 함께 관리해요.",
+   "group": "life",
+   "tag": "가계부",
+   "kind": "ledger",
+   "featured": false,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 지출 건수 · 나 · 상대 · 공동",
+    "표와 차트: 지출자별 합계 · 분류별 합계 · 월별 지출",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "family-ledger",
+   "title": "가족 가계부",
+   "desc": "가족 구성원별 지출을 나눠서 적고 분류별로 확인해요.",
+   "group": "life",
+   "tag": "가계부",
+   "kind": "ledger",
+   "featured": false,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 지출 건수 · 지출 합계 · 평균 지출",
+    "표와 차트: 구성원별 합계 · 분류별 합계 · 월별 지출",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "allowance-book",
+   "title": "용돈기입장",
+   "desc": "들어온 돈과 쓴 돈을 적으면 잔액이 자동으로 이어서 계산돼요.",
+   "group": "life",
+   "tag": "용돈",
+   "kind": "ledger",
+   "featured": false,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 기록 수 · 들어온 돈 합계 · 나간 돈 합계",
+    "표와 차트: 분류별 지출 · 월별 지출",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "saving-goal",
+   "title": "목표 저축 플래너",
+   "desc": "목표 금액과 모은 돈을 적으면 달성률과 남은 금액이 나와요.",
+   "group": "life",
+   "tag": "저축",
+   "kind": "ledger",
+   "featured": false,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 목표 수 · 목표 금액 합계 · 모은 금액 합계 · 평균 달성률",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "savings-deposit",
+   "title": "적금·예금 납입 관리표",
+   "desc": "가입한 상품의 납입일과 만기를 한 곳에서 챙겨요.",
+   "group": "life",
+   "tag": "적금",
+   "kind": "ledger",
+   "featured": false,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 상품 수 · 월 납입액 합계 · 평균 이율",
+    "표와 차트: 종류별 월 납입액",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "card-usage",
+   "title": "신용카드 사용 관리표",
+   "desc": "카드별 사용 내역을 적고 할부와 분류를 함께 확인해요.",
+   "group": "life",
+   "tag": "카드",
+   "kind": "ledger",
+   "featured": false,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 사용 건수 · 사용 합계 · 최대 금액",
+    "표와 차트: 카드별 합계 · 분류별 합계 · 월별 사용액",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "yearend-docs",
+   "title": "연말정산 서류 준비 체크표",
+   "desc": "공제 항목별로 필요한 서류를 챙겼는지 체크해요.",
+   "group": "life",
+   "tag": "연말정산",
+   "kind": "ledger",
+   "featured": false,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 확인 항목 · 준비 완료 · 준비율",
+    "표와 차트: 분류별 항목",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "insurance-list",
+   "title": "보험 가입 현황표",
+   "desc": "가입한 보험을 한눈에 정리하고 연간 보험료를 확인해요.",
+   "group": "life",
+   "tag": "보험",
+   "kind": "ledger",
+   "featured": false,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 가입 건수 · 월 보험료 합계 · 연 보험료 합계",
+    "표와 차트: 종류별 월 보험료",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "car-log",
+   "title": "자동차 정비·주유 기록부",
+   "desc": "주유와 정비, 세금 비용을 날짜별로 기록해요.",
+   "group": "life",
+   "tag": "자동차",
+   "kind": "ledger",
+   "featured": false,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 기록 건수 · 지출 합계 · 최대 주행거리(km)",
+    "표와 차트: 구분별 금액 · 월별 지출",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "moving-checklist",
+   "title": "이사 체크리스트·비용표",
+   "desc": "이사 전후 할 일과 드는 비용을 한 번에 챙겨요.",
+   "group": "life",
+   "tag": "이사",
+   "kind": "ledger",
+   "featured": false,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 할 일 · 완료 · 비용 합계",
+    "표와 차트: 분류별 비용",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "meal-plan",
+   "title": "주간 식단·장보기표",
+   "desc": "식단을 짜고 장볼 재료와 예상 비용을 적어요.",
+   "group": "life",
+   "tag": "식단",
+   "kind": "ledger",
+   "featured": false,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 식단 수 · 예상 비용 합계",
+    "표와 차트: 끼니별 예상 비용",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "fridge-expiry",
+   "title": "냉장고 유통기한 관리표",
+   "desc": "유통기한이 임박한 식재료를 먼저 먹도록 알려 줘요.",
+   "group": "life",
+   "tag": "식재료",
+   "kind": "ledger",
+   "featured": false,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 보관 식품 · 수량 합계",
+    "표와 차트: 보관 장소별",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "warranty-tracker",
+   "title": "가전·물품 보증기간 관리표",
+   "desc": "구입일과 보증 개월을 적으면 보증 만료일이 계산돼요.",
+   "group": "life",
+   "tag": "보증",
+   "kind": "ledger",
+   "featured": false,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 등록 물품 · 구입 금액 합계",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "subscription-check",
+   "title": "구독료·멤버십 점검표",
+   "desc": "매달 나가는 구독료를 모아 연 금액과 줄일 후보를 확인해요.",
+   "group": "life",
+   "tag": "구독",
+   "kind": "ledger",
+   "featured": false,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 구독 수 · 월 합계 · 연 합계 · 해지 후보",
+    "표와 차트: 분류별 월 요금",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "health-log",
+   "title": "건강 기록표(체중·혈압)",
+   "desc": "체중과 혈압, 걸음 수를 기록해 변화를 확인해요.",
+   "group": "life",
+   "tag": "건강",
+   "kind": "ledger",
+   "featured": false,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 기록 일수 · 평균 체중(kg) · 평균 걸음 수 · 평균 수면(시간)",
+    "표와 차트: 월별 걸음 수 합계",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "pet-care",
+   "title": "반려동물 관리표",
+   "desc": "접종·병원·미용 기록과 다음 일정을 챙겨요.",
+   "group": "life",
+   "tag": "반려동물",
+   "kind": "ledger",
+   "featured": false,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 기록 수 · 비용 합계",
+    "표와 차트: 항목별 비용 · 월별 비용",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "travel-budget",
+   "title": "여행 예산·지출표",
+   "desc": "예산과 실제 지출을 적으면 차액이 계산돼요.",
+   "group": "life",
+   "tag": "여행",
+   "kind": "ledger",
+   "featured": false,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 항목 수 · 예산 합계 · 지출 합계 · 남은 예산 합계",
+    "표와 차트: 구분별 지출",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "year-summary",
+   "title": "연간 수입·지출 요약표",
+   "desc": "월별 수입과 지출을 적으면 한 해 흐름이 보여요.",
+   "group": "life",
+   "tag": "연간",
+   "kind": "ledger",
+   "featured": false,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 입력한 달 · 수입 합계 · 지출 합계 · 저축 합계",
+    "표와 차트: 월별 지출 · 월별 저축",
+    "입력 60줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "attendance-sheet",
+   "title": "출석부",
+   "desc": "날짜별 출석·결석·지각을 기록하고 출석 횟수를 세요.",
+   "group": "study",
+   "tag": "출석",
+   "kind": "ledger",
+   "featured": false,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 기록 수 · 출석 · 지각 · 결석",
+    "표와 차트: 상태별 건수 · 월별 기록 수",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "study-plan-week",
+   "title": "주간 학습 계획표",
+   "desc": "과목별 계획 시간과 실제 공부 시간을 비교해요.",
+   "group": "study",
+   "tag": "학습",
+   "kind": "ledger",
+   "featured": false,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 계획 수 · 계획 시간 합계 · 실제 시간 합계 · 완료",
+    "표와 차트: 과목별 실제 시간",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "grade-book",
+   "title": "성적 기록표",
+   "desc": "시험 점수를 적으면 과목별 평균과 최고점이 나와요.",
+   "group": "study",
+   "tag": "성적",
+   "kind": "ledger",
+   "featured": false,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 기록 수 · 평균 점수 · 최고 점수 · 평균 득점률",
+    "표와 차트: 과목별 평균 점수",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "exam-countdown",
+   "title": "시험 D-day 관리표",
+   "desc": "시험 날짜를 적으면 남은 일수가 자동으로 나와요.",
+   "group": "study",
+   "tag": "시험",
+   "kind": "ledger",
+   "featured": false,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 시험 수 · 준비 중 · 완료",
+    "표와 차트: 준비 상태별",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "vocab-check",
+   "title": "단어 암기 체크표",
+   "desc": "단어와 뜻을 적고 외운 횟수와 상태를 체크해요.",
+   "group": "study",
+   "tag": "어학",
+   "kind": "ledger",
+   "featured": false,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 단어 수 · 외움 · 복습 합계",
+    "표와 차트: 암기 상태별",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "class-progress",
+   "title": "수업 진도표",
+   "desc": "계획한 단원과 실제 진행 날짜를 비교해요.",
+   "group": "study",
+   "tag": "진도",
+   "kind": "ledger",
+   "featured": false,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 단원 수 · 완료 · 지연 합계(일)",
+    "표와 차트: 진행 상태별",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "student-counsel",
+   "title": "상담 기록부",
+   "desc": "상담 일자와 내용, 다음 상담 일정을 기록해요.",
+   "group": "study",
+   "tag": "상담",
+   "kind": "ledger",
+   "featured": false,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 상담 건수",
+    "표와 차트: 구분별 건수 · 월별 상담 건수",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "homework-status",
+   "title": "과제 제출 현황표",
+   "desc": "제출 여부와 마감일을 한눈에 확인해요.",
+   "group": "study",
+   "tag": "과제",
+   "kind": "ledger",
+   "featured": false,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 전체 · 제출 · 미제출 · 평균 점수",
+    "표와 차트: 제출 상태별",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "reading-log",
+   "title": "독서 기록표",
+   "desc": "읽은 책과 쪽수, 별점, 한 줄 감상을 모아요.",
+   "group": "study",
+   "tag": "독서",
+   "kind": "ledger",
+   "featured": false,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 읽은 책 · 쪽수 합계 · 평균 별점",
+    "표와 차트: 분야별 권수 · 월별 권수",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "lecture-roster",
+   "title": "수강생 명단·수강료 관리표",
+   "desc": "수강생 명단과 수강료 납부 여부를 관리해요.",
+   "group": "study",
+   "tag": "수강",
+   "kind": "ledger",
+   "featured": false,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 수강생 · 수강료 합계 · 납부 · 미납",
+    "표와 차트: 강좌별 수강료 · 납부 여부별",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "learning-history",
+   "title": "교육·연수 이수 기록표",
+   "desc": "들은 교육과 이수 시간, 수료증 보관 여부를 기록해요.",
+   "group": "study",
+   "tag": "이수",
+   "kind": "ledger",
+   "featured": false,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 교육 수 · 이수 시간 합계 · 수료증 보관",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "senior-edu-log",
+   "title": "평생학습 기록표",
+   "desc": "배우는 강좌와 횟수, 배운 점을 꾸준히 적어요.",
+   "group": "study",
+   "tag": "학습",
+   "kind": "ledger",
+   "featured": false,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 학습 횟수 · 총 학습 시간(분)",
+    "표와 차트: 분야별 시간(분) · 월별 시간(분)",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "timetable",
+   "title": "주간 시간표",
+   "desc": "과목 이름만 같으면 같은 색으로 칠해지고 횟수가 세어져요.",
+   "group": "study",
+   "tag": "시간표",
+   "kind": "form",
+   "featured": false,
+   "dashboard": false,
+   "sheets": [
+    "시작하기",
+    "시간표"
+   ],
+   "highlights": [
+    "과목 이름이 같으면 같은 색으로 표시",
+    "과목별 수업 횟수 집계",
+    "10교시까지"
+   ]
+  },
+  {
+   "id": "dues-ledger",
+   "title": "회비 수입·지출 장부",
+   "desc": "모임 회비의 들어온 돈과 쓴 돈, 잔액을 투명하게 관리해요.",
+   "group": "event",
+   "tag": "회비",
+   "kind": "ledger",
+   "featured": false,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 기록 수 · 들어온 돈 · 나간 돈",
+    "표와 차트: 분류별 지출 · 월별 지출",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "gift-ledger",
+   "title": "경조사비 기록장",
+   "desc": "주고받은 경조사비를 정리해 두고 나중에 참고해요.",
+   "group": "event",
+   "tag": "경조사",
+   "kind": "ledger",
+   "featured": false,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 기록 수 · 보낸 금액 · 받은 금액",
+    "표와 차트: 행사별 금액 · 관계별 건수",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "event-checklist",
+   "title": "행사 준비 체크리스트",
+   "desc": "행사 전 준비 일정과 담당자, 비용을 한 번에 챙겨요.",
+   "group": "event",
+   "tag": "행사",
+   "kind": "ledger",
+   "featured": false,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 할 일 · 완료 · 예상 비용 합계",
+    "표와 차트: 분류별 비용",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "wedding-budget",
+   "title": "결혼 준비 예산표",
+   "desc": "항목별 예산과 실제 지출을 비교해 남은 돈을 확인해요.",
+   "group": "event",
+   "tag": "결혼",
+   "kind": "ledger",
+   "featured": false,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 항목 수 · 예산 합계 · 지출 합계 · 남은 예산 합계",
+    "표와 차트: 분류별 지출",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "party-prep",
+   "title": "파티·집들이 준비표",
+   "desc": "메뉴와 장보기, 예산을 정리해 준비해요.",
+   "group": "event",
+   "tag": "파티",
+   "kind": "ledger",
+   "featured": false,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 항목 수 · 예상 금액 · 구입 완료",
+    "표와 차트: 구분별 금액",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "club-members",
+   "title": "동호회·모임 회원 명부",
+   "desc": "회원 정보와 가입일, 회비 납부 상태를 정리해요.",
+   "group": "event",
+   "tag": "회원",
+   "kind": "ledger",
+   "featured": false,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 회원 수 · 납부 · 미납",
+    "표와 차트: 등급별 인원 · 월별 가입 수",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "camping-pack",
+   "title": "캠핑·여행 짐 체크리스트",
+   "desc": "준비물을 분류별로 챙기고 빠진 것이 없는지 체크해요.",
+   "group": "event",
+   "tag": "짐",
+   "kind": "ledger",
+   "featured": false,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 물품 수 · 챙김 · 챙김율",
+    "표와 차트: 분류별 물품",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "volunteer-log",
+   "title": "봉사활동 기록표",
+   "desc": "봉사 일자와 시간을 기록하고 누적 시간을 확인해요.",
+   "group": "event",
+   "tag": "봉사",
+   "kind": "ledger",
+   "featured": false,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 활동 수 · 누적 시간 · 확인서 보관",
+    "표와 차트: 월별 시간",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "party-guests",
+   "title": "초대 손님 명단·참석 확인표",
+   "desc": "초대한 사람과 참석 여부, 인원을 정리해요.",
+   "group": "event",
+   "tag": "초대",
+   "kind": "ledger",
+   "featured": false,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 초대 수 · 참석 확정 · 미정 · 동반 인원 합계",
+    "표와 차트: 참석별 · 관계별",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  },
+  {
+   "id": "donation-log",
+   "title": "후원·기부 내역표",
+   "desc": "후원한 곳과 금액, 영수증 보관 여부를 기록해요.",
+   "group": "event",
+   "tag": "기부",
+   "kind": "ledger",
+   "featured": false,
+   "dashboard": true,
+   "sheets": [
+    "시작하기",
+    "입력",
+    "대시보드",
+    "설정"
+   ],
+   "highlights": [
+    "요약 칸: 기록 수 · 후원 합계 · 영수증 보관",
+    "표와 차트: 구분별 금액 · 월별 금액",
+    "입력 200줄, 목록은 설정 시트에서 수정"
+   ]
+  }
+ ]
+}
