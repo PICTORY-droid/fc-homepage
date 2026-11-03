@@ -7,7 +7,7 @@ describe("이달의 양식", () => {
       const p = monthlyPick(m);
       expect(p.cards, `${m}월`).toHaveLength(3);
       expect(p.lead.length).toBeGreaterThan(5);
-      for (const c of p.cards) expect(c.href).toMatch(/^\/fun\/(stationery|ppt|excel)\//);
+      for (const c of p.cards) expect(c.href).toMatch(/^\/fun\/(stationery|ppt|sheets)\//);
     }
   });
   it("10월은 가을, 12월은 겨울, 3월은 봄", () => {
@@ -24,5 +24,6 @@ describe("이달의 양식", () => {
     const p = monthlyPick(homeMonth());
     expect(p.heading).toBe("12월의 양식");
     expect(p.cards.map((c) => c.title)).toEqual(["포근빛 편지지", "포근빛 카드뉴스", "포근빛 가계부"]);
+    expect(p.cards[2].href).toBe("/fun/sheets/life/ledger/winter"); // 가계부는 엑셀 서식의 테마 모음으로 바로 연결
   });
 });

@@ -30,7 +30,8 @@ describe("자료 분류", () => {
     expect(categorize("/fun/sheets/biz", "견적서")).toEqual({ type: "엑셀 서식", sub: "소상공인·프리랜서" });
     expect(categorize("/fun/cards/office")).toEqual({ type: "명함 템플릿", sub: "직장인·포지션별" });
     expect(categorize("/fun/stationery/spring")?.type).toBe("감성 편지지");
-    expect(categorize("/fun/excel/ledger/spring")).toEqual({ type: "엑셀 양식", sub: "가계부" });
+    expect(categorize("/fun/excel/ledger/spring")).toEqual({ type: "엑셀 양식", sub: "가계부" }); // 옮기기 전에 쌓인 기록
+    expect(categorize("/fun/sheets/life/ledger/spring")).toEqual({ type: "엑셀 서식", sub: "생활·가계" });
     expect(categorize("/fun/forms")).toEqual({ type: "이력서·자기소개서", sub: "전체" });
   });
   it("엑셀 서식 허브에서는 제목이나 파일 이름으로 분야를 찾는다", () => {

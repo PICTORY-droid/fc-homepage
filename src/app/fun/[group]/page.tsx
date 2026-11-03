@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { funMetadata } from "@/lib/seo/funMeta";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import { Section } from "@/components/ui/Section";
-import { getGroup, packEntries, packGroups } from "@/config/pack";
+import { EXCEL_PACK, getGroup, packEntries, packGroups } from "@/config/pack";
 
 type Props = { params: Promise<{ group: string }> };
 
@@ -22,6 +22,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function PackGroupPage({ params }: Props) {
   const g = getGroup((await params).group);
   if (!g) notFound();
+  if (g.slug === EXCEL_PACK) permanentRedirect("/fun/sheets"); // 엑셀 양식은 생활·업무 엑셀 서식으로 옮겨 감
   return (
     <>
       <Section title={g.title} lead={g.lead}>

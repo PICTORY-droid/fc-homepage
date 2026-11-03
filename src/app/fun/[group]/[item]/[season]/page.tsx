@@ -1,14 +1,15 @@
 import type { Metadata } from "next";
 import { funMetadata, searchTitles } from "@/lib/seo/funMeta";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import { Section } from "@/components/ui/Section";
 import { PackCard } from "@/components/fun/PackCard";
 import { FunPageExtras } from "@/components/fun/FunPageExtras";
 import { FunCtaBox } from "@/components/fun/FunCtaBox";
 import { SeasonLinks } from "@/components/fun/SeasonLinks";
 import { getFunCta } from "@/config/funCta";
-import { entriesBySeason, getGroup, getItem, packGroups, packSeasons, seasonFromSlug, seasonSlug } from "@/config/pack";
+import { EXCEL_PACK, entriesBySeason, getGroup, getItem, packGroups, packSeasons, seasonFromSlug, seasonSlug } from "@/config/pack";
+import { collectionByItem, collectionPath } from "@/config/sheets";
 
 type Props = { params: Promise<{ group: string; item: string; season: string }> };
 
@@ -38,6 +39,7 @@ export default async function PackSeasonPage({ params }: Props) {
   const f = await find(params);
   if (!f) notFound();
   const { group, item, season } = f;
+  if (group.slug === EXCEL_PACK) { const c = collectionByItem(item.key); permanentRedirect(c ? collectionPath(c, season) : "/fun/sheets"); } // 테마 모음으로 옮겨 감
   const list = entriesBySeason(item, season);
   const cta = getFunCta(group.slug, item.key);
   const links = packSeasons.map((s) => ({ slug: seasonSlug[s], label: s, count: entriesBySeason(item, s).length, href: `/fun/${group.slug}/${item.key}/${seasonSlug[s]}` }));

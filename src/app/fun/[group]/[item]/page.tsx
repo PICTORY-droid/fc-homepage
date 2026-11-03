@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
 import { funMetadata, searchTitles } from "@/lib/seo/funMeta";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import { Section } from "@/components/ui/Section";
 import { SeasonChooser } from "@/components/fun/SeasonChooser";
 import { FunPageExtras } from "@/components/fun/FunPageExtras";
 import { FunCtaBox } from "@/components/fun/FunCtaBox";
 import { getFunCta } from "@/config/funCta";
-import { entriesBySeason, getGroup, getItem, packEntries, packGroups, packSeasons, packThumb, seasonSlug } from "@/config/pack";
+import { EXCEL_PACK, entriesBySeason, getGroup, getItem, packEntries, packGroups, packSeasons, packThumb, seasonSlug } from "@/config/pack";
+import { collectionByItem, collectionPath } from "@/config/sheets";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { breadcrumbJsonLd } from "@/lib/seo/jsonLd";
 
@@ -38,6 +39,7 @@ export default async function PackItemPage({ params }: Props) {
   const f = await find(params);
   if (!f) notFound();
   const { group, item } = f;
+  if (group.slug === EXCEL_PACK) { const c = collectionByItem(item.key); permanentRedirect(c ? collectionPath(c) : "/fun/sheets"); } // 테마 모음으로 옮겨 감
   const total = packEntries(item).length;
   const cta = getFunCta(group.slug, item.key);
   const choices = packSeasons.map((s) => {

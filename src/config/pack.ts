@@ -5,7 +5,7 @@ import data from "./pack.data.json";
 export type PackExt = "xlsx" | "pptx" | "docx" | "svg";
 export type Season = "꽃빛" | "초록빛" | "노을빛" | "포근빛";
 export const packSeasons: Season[] = ["꽃빛", "초록빛", "노을빛", "포근빛"];
-/** 계절별 상세페이지 주소 조각 — 예) /fun/excel/ledger/spring */
+/** 계절별 상세페이지 주소 조각 — 예) /fun/ppt/talk/spring */
 export const seasonSlug: Record<Season, string> = { 꽃빛: "spring", 초록빛: "summer", 노을빛: "autumn", 포근빛: "winter" };
 export const seasonFromSlug = (slug: string): Season | undefined => packSeasons.find((s) => seasonSlug[s] === slug);
 
@@ -67,6 +67,11 @@ export const packGroups: PackGroup[] = [
 ];
 
 const all = data as unknown as Record<string, PackEntry[]>;
+
+/** 엑셀 양식 묶음은 따로 메뉴를 두지 않고 '생활·업무 엑셀 서식'의 테마 모음(config/sheets.ts)으로 보여 줍니다. 예전 /fun/excel 주소는 그쪽으로 옮겨 갑니다. */
+export const EXCEL_PACK = "excel";
+/** 즐길거리 메뉴와 /fun/<묶음> 페이지에 그대로 보이는 묶음 (PPT·PPT 프리미엄) */
+export const listedPackGroups: PackGroup[] = packGroups.filter((g) => g.slug !== EXCEL_PACK);
 
 export const getGroup = (slug: string) => packGroups.find((g) => g.slug === slug);
 export const getItem = (group: PackGroup, key: string) => group.items.find((i) => i.key === key);
