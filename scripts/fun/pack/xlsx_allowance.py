@@ -1,6 +1,6 @@
 """용돈기입장 — 5가지 연령대 × 10가지 차트 구성 = 50종."""
 import datetime as dt
-from xlsx_kit import cover, new_book, q, rng, slice_colors, style_chart
+from xlsx_kit import cover, lock_summary, new_book, q, rng, slice_colors, style_chart
 
 AGES = [
     ("유치원·초등 저학년", ["간식", "장난감", "문구", "저금", "나눔·선물", "기타"], 5000, 3000),
@@ -122,5 +122,6 @@ def build(path, i, pal, message):
     wg.conditional_format("C7", {"type": "data_bar", "bar_color": pal["main"], "bar_solid": True, "min_type": "num", "min_value": 0, "max_type": "num", "max_value": 1})
     wg.merge_range("B12:C14", "막대가 가득 차면 목표를 이룬 거예요. 잘 모으고 있어요, 계속 해 봐요!", fm.note())
     wg.set_portrait(); wg.fit_to_pages(1, 1)
+    lock_summary(wm)  # 월 요약은 잠금(분류 이름 칸은 입력 칸이라 그대로 고칠 수 있음)
     wb.get_worksheet_by_name("시작하기").activate()
     wb.close()

@@ -1,4 +1,6 @@
 """자동 계산 견적서 — 5가지 업종 × 10가지 단가표 구성 = 50종."""
+import datetime as _dt
+
 from xlsx_kit import DATE_FMT, cover, new_book, rng
 
 TRADES = [
@@ -19,6 +21,8 @@ NOTES = [
     "• 재고 및 납기는 주문 시 확정됩니다.\n• 결제: 주문 시 선결제 또는 납품 후 7일 이내",
 ]
 FIRST_ITEM, N_ITEMS = 13, 15
+# 예시 견적일 — 받은 사람이 자기 날짜로 고쳐 씁니다(자동으로 바뀌지 않음).
+EXAMPLE_DATE = _dt.datetime(2026, 11, 4)
 CNT = 8
 
 
@@ -72,7 +76,9 @@ def build(path, i, pal, message):
         wq.write(r - 1, 1, a, lab()); wq.write(r - 1, 4, b, lab())
         wq.merge_range(r - 1, 5, r - 1, 7, "", fm.inp())
     wq.merge_range("C4:D4", "", fm.inp()); wq.merge_range("C5:D5", "", fm.inp())
-    wq.write_formula("C6", "=TODAY()", fm.inp(num_format=DATE_FMT, align="center")); wq.write("D6", "", fm.inp())
+    # 견적일은 직접 입력하는 칸 — =TODAY() 로 두면 저장한 견적서를 다시 열 때마다 날짜가 바뀝니다.
+    wq.write_datetime("C6", EXAMPLE_DATE, fm.inp(num_format=DATE_FMT, align="center")); wq.write("D6", "", fm.inp())
+    wq.data_validation("C6", {"validate": "date", "criteria": "between", "minimum": dt.date(2000, 1, 1), "maximum": dt.date(2100, 12, 31), "error_message": "날짜 형식(예: 2026-11-04)으로 입력해 주세요."})
     wq.write("C7", 30, fm.inp(num_format='0"일"', align="center")); wq.write_formula("D7", '=IF(C6="","",C6+C7)', fm.cell(num_format='m"월" d"일 까지"', align="center"))
     wq.merge_range("C8:D8", f"{trade} 견적", fm.inp())
     wq.data_validation("C7", {"validate": "integer", "criteria": "between", "minimum": 1, "maximum": 365, "error_message": "유효기간은 1~365일 사이로 입력해 주세요."})

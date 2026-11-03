@@ -2,8 +2,8 @@
 import xlsxwriter
 
 FONT = "맑은 고딕"
-AUTHOR = "반딧불이의 곳간"
-FOOTER = "반딧불이의 곳간 · 자유롭게 고쳐 쓰세요"
+# 파일 속성·표지에 다른 브랜드 이름을 넣지 않습니다(작성자 칸은 비워 둠).
+FOOTER = "자유롭게 고쳐 쓰세요"
 
 
 def q(sheet):
@@ -54,7 +54,8 @@ class Fmt:
         kw.setdefault("align", "center")
         return self.cell(**kw)
 
-    def inp(self, **kw):  # 입력 칸(연한 바탕)
+    def inp(self, **kw):  # 입력 칸(연한 바탕) — 잠금 해제: 시트를 보호해도 이 칸은 입력할 수 있음
+        kw.setdefault("locked", False)
         return self.f(border=1, border_color=self.p["main"], bg_color=self.p["pale"], **kw)
 
     def note(self):
@@ -72,9 +73,15 @@ class Fmt:
 
 def new_book(path, title, pal):
     wb = xlsxwriter.Workbook(path)
-    wb.set_properties({"title": title, "author": AUTHOR, "company": AUTHOR, "comments": "자유롭게 편집해서 사용하세요."})
+    wb.set_properties({"title": title, "comments": "자유롭게 편집해서 사용하세요."})
     wb.set_calc_mode("auto")
     return wb, Fmt(wb, pal)
+
+
+def lock_summary(ws):
+    """자동 계산만 있는 요약 시트를 보호합니다(비밀번호 없음 — 검토 › 시트 보호 해제로 풀 수 있음).
+    입력 칸(Fmt.inp)은 잠금 해제돼 있어 그대로 입력되고, 차트는 옮기거나 크기를 바꿀 수 있습니다."""
+    ws.protect("", {"objects": True})
 
 
 def cover(wb, fm, name, title, message, theme_name, steps, extra=None, tab=None):

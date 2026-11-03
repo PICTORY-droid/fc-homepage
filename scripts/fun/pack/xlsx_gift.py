@@ -1,6 +1,6 @@
 """경조사비 장부 — 5가지 중심 경조사 × 10가지 차트 구성 = 50종."""
 import datetime as dt
-from xlsx_kit import DATE_FMT, cover, new_book, q, rng, slice_colors, style_chart
+from xlsx_kit import DATE_FMT, cover, lock_summary, new_book, q, rng, slice_colors, style_chart
 
 KINDS = ["결혼", "돌잔치", "장례", "칠순·팔순", "집들이·개업", "병문안", "졸업·입학", "명절·선물", "기타"]
 RELS = ["가족", "친척", "친구", "직장", "이웃", "거래처", "지인", "기타"]
@@ -130,5 +130,6 @@ def build(path, i, pal, message):
         wn.write_formula(4 + k - 0, 2, fo, fm.cell(num_format=nf, align="center"))
     wn.merge_range("B12:C13", "이름을 바꿔 고르면 아래 숫자가 바로 바뀌어요.", fm.note())
     wn.set_landscape(); wn.fit_to_pages(1, 1)
+    lock_summary(wr)  # 자동 계산만 있는 정산 시트는 잠금
     wb.get_worksheet_by_name("시작하기").activate()
     wb.close()

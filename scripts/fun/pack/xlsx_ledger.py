@@ -1,6 +1,6 @@
 """가계부 — 5가지 가구 유형 × 10가지 차트 구성 = 50종."""
 import datetime as dt
-from xlsx_kit import cover, new_book, q, rng, series_colors, slice_colors, style_chart
+from xlsx_kit import cover, lock_summary, new_book, q, rng, series_colors, slice_colors, style_chart
 
 TYPES = [
     {"name": "1인가구", "inc": ["월급", "부수입", "기타수입"], "salary": 2800000,
@@ -185,5 +185,7 @@ def build(path, i, pal, message):
     c2.add_series(sd)
     style_chart(c2, fm, "분류별 지출 비중", 480, 320, "right" if ctype in ("pie", "doughnut") else None); wdash.insert_chart("H8", c2)
     wdash.set_landscape(); wdash.fit_to_pages(1, 1)
+    for w in (wsum, wdash):  # 자동 계산만 있는 요약 시트는 잠금
+        lock_summary(w)
     wb.get_worksheet_by_name("시작하기").activate()
     wb.close()

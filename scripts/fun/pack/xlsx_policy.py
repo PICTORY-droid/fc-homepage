@@ -1,6 +1,6 @@
 """보험 증권 정리표 — 본인·부부·가족·부모님·사업자 5유형 × 10가지 차트 구성 = 50종. (정리용 중립 양식)"""
 import datetime as dt
-from xlsx_kit import DATE_FMT, cover, new_book, q, rng, slice_colors, style_chart
+from xlsx_kit import DATE_FMT, cover, lock_summary, new_book, q, rng, slice_colors, style_chart
 
 FLAVORS = [
     ("본인용", ["본인", "배우자", "부모님", "자녀", "형제·자매", "기타"]),
@@ -167,5 +167,6 @@ def build(path, i, pal, message):
     wchk.conditional_format(4, 2, 4 + len(CHECKS) - 1, 7, {"type": "cell", "criteria": "==", "value": '"해당 없음"', "format": wb.add_format({"font_color": "#999999"})})
     wchk.merge_range(4 + len(CHECKS) + 1, 1, 4 + len(CHECKS) + 2, 7, "칸을 눌러 ‘가입 확인 / 확인 필요 / 해당 없음’ 중에서 고르세요. 보장의 적정성을 판단하는 표가 아니라, 내가 가진 보험을 점검하는 메모용 표예요.", fm.note())
     wchk.set_landscape(); wchk.fit_to_pages(1, 1)
+    lock_summary(wsum)  # 자동 계산만 있는 요약 시트는 잠금
     wb.get_worksheet_by_name("시작하기").activate()
     wb.close()

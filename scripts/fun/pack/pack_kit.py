@@ -56,7 +56,8 @@ def palette(i):
 
 
 def season_of(i):
-    return ["봄", "여름", "가을", "겨울"][0 if i < 13 else 1 if i < 25 else 2 if i < 38 else 3]
+    # 사이트의 계절 이름(src/config/pack.ts 의 packSeasons)과 같아야 계절별 페이지에 들어갑니다.
+    return ["꽃빛", "초록빛", "노을빛", "포근빛"][0 if i < 13 else 1 if i < 25 else 2 if i < 38 else 3]
 
 
 def safe_name(text):

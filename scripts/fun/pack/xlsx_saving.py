@@ -56,7 +56,7 @@ def build(path, i, pal, message):
     res = [("납입 원금 합계", "=Monthly*Months", "#,##0"), ("세전 이자", "=" + interest, "#,##0"), ("세금", "=F5*Tax", "#,##0"),
            ("세후 이자", "=F5-F6", "#,##0"), ("만기 수령액", "=F4+F7", "#,##0"), ("만기일", "=EDATE(StartDate,Months)", DATE_FMT),
            ("목표 달성률", "=IF(Goal=0,0,F8/Goal)", "0.0%"), ("목표까지 부족한 금액", "=MAX(0,Goal-F8)", "#,##0"),
-           ("목표 달성에 필요한 월 납입액", '=IF(Mode="단리",Goal/(Months+(Rate/12)*(1-Tax)*Months*(Months+1)/2),IF(Rate=0,Goal/Months,Goal/(Months+(FV(Rate/12,Months,-1,0,1)-Months)*(1-Tax))))', "#,##0"),
+           ("목표 달성에 필요한 월 납입액", '=IF(N(Months)<=0,"",IF(Mode="단리",Goal/(Months+(Rate/12)*(1-Tax)*Months*(Months+1)/2),IF(Rate=0,Goal/Months,Goal/(Months+(FV(Rate/12,Months,-1,0,1)-Months)*(1-Tax)))))', "#,##0"),  # 기간이 비면 빈칸
            ("지금까지 실제 납입", f"=SUM({q('월별표')}!$G$5:$G${4 + MAXM})", "#,##0")]
     for k, (lab, fo, nf) in enumerate(res):
         wp.write(3 + k, 4, lab, fm.cell(bold=True, bg_color=pal["soft"]))
