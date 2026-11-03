@@ -6,10 +6,10 @@ import { GROUP_ORDER, type Product } from "@/config/products";
 import { ProductCard } from "./ProductCard";
 import { useProductExplorer } from "@/features/products/useProductExplorer";
 import { MAX_COMPARE } from "@/features/compare/compare";
-import { buttonClass, pillClass } from "@/components/ui/styles";
+import { buttonClass, inputClass, pillClass, textLink } from "@/components/ui/styles";
 
 const fieldLabel = "mb-2 block text-sm font-semibold text-ink";
-const fieldControl = "block w-full min-h-[48px] rounded-xl border border-ink/25 bg-paper px-4 text-base text-ink";
+const fieldControl = inputClass;
 
 // 상품 목록 — 검색·분류 필터·비교 담기 (표시 담당, 로직은 useProductExplorer)
 export function ProductExplorer({ products }: { products: Product[] }) {
@@ -54,7 +54,7 @@ export function ProductExplorer({ products }: { products: Product[] }) {
       <p role="status" className="mt-4 text-sm text-ink-sub">
         {result.length}개 상품
         {(filter.q || filter.group !== "all" || filter.topic !== "all") && (
-          <button type="button" onClick={reset} className="ml-3 underline">필터 초기화</button>
+          <button type="button" onClick={reset} className={`ml-3 ${textLink}`}>필터 초기화</button>
         )}
       </p>
 
@@ -78,7 +78,7 @@ export function ProductExplorer({ products }: { products: Product[] }) {
       )}
 
       {selected.length > 0 && (
-        <div className="fixed inset-x-0 bottom-0 z-40 border-t border-ink/15 bg-paper px-4 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-3 shadow-[0_-4px_16px_rgba(0,0,0,0.08)]">
+        <div className="fixed inset-x-0 bottom-0 z-40 border-t border-ink/10 bg-paper px-4 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-3 shadow-[0_-4px_16px_rgba(0,0,0,0.08)]">
           <div className="mx-auto flex max-w-5xl items-center justify-between gap-3">
             <p className="text-sm text-ink"><b>{selected.length}</b>개 선택 <span className="text-ink-sub">(최대 {MAX_COMPARE}개)</span></p>
             <div className="flex gap-2">

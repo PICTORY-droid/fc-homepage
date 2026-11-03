@@ -19,6 +19,7 @@ import { renderProductArt } from "@/components/products/art";
 import { buildKeyFacts } from "@/lib/productKeyFacts";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { productJsonLd } from "@/lib/seo/jsonLd";
+import { textLink } from "@/components/ui/styles";
 
 type Props = { params: Promise<{ id: string }> };
 
@@ -64,7 +65,7 @@ export default async function ProductPage({ params }: Props) {
       <JsonLd data={productJsonLd(p)} />
       <Section>
         <nav aria-label="현재 위치" className="mb-6 text-sm text-ink-sub">
-          <Link href="/" className="underline">홈</Link> · <Link href="/products" className="underline">보험 상품</Link> · {p.displayName}
+          <Link href="/" className={textLink}>홈</Link> · <Link href="/products" className={textLink}>보험 상품</Link> · {p.displayName}
         </nav>
         {/* 왼쪽 글 영역과 오른쪽 이미지의 위·아래 선을 맞춥니다: 큰 화면에서 두 칸을 같은 높이로 늘리고, 글은 위·가운데·아래로 나눠 배치 */}
         <div className="grid gap-8 lg:grid-cols-[1fr_18rem] lg:items-stretch lg:gap-12">

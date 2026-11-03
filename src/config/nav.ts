@@ -1,10 +1,13 @@
 // 상단 메뉴 구성 — 항목을 바꾸려면 이 파일만 고치면 됩니다. (그룹을 누르면 펼쳐지는 토글 메뉴)
 import { categories } from "./categories";
 import { funItems } from "./fun";
+import { funMenuChildren } from "./funMenu";
 
-export interface NavLink { label: string; href: string }
+// children 이 있으면 그 메뉴는 링크가 아니라 한 번 더 펼쳐지는 토글이 됩니다(즐길거리의 각 자료).
+export interface NavLink { label: string; href: string; children?: NavLink[] }
 export interface NavGroup { id: string; title: string; items: NavLink[] }
 
+// 개인정보 처리방침은 모든 화면 맨 아래(푸터)에 있어 메뉴에는 넣지 않습니다.
 // 그룹은 제목이, 그룹 안의 메뉴는 글자 수가 짧은 순으로 보여 줍니다(같은 길이는 아래 선언 순서). 그룹을 추가해도 자동으로 제자리를 찾아요.
 const groups: NavGroup[] = [
   {
@@ -24,7 +27,7 @@ const groups: NavGroup[] = [
   },
   {
     id: "fun", title: "즐길거리",
-    items: [{ label: "즐길거리 전체 보기", href: "/fun" }, ...funItems.map((f) => ({ label: f.title, href: f.href }))],
+    items: funItems.map((f) => ({ label: f.title, href: f.href, children: funMenuChildren[f.slug] })),
   },
   {
     id: "info", title: "안내·상담",
@@ -32,7 +35,6 @@ const groups: NavGroup[] = [
       { label: "상담 신청", href: "/consult" },
       { label: "담당 FC 소개", href: "/profile" },
       { label: "이용 안내", href: "/guide" },
-      { label: "개인정보 처리방침", href: "/privacy" },
     ],
   },
 ];

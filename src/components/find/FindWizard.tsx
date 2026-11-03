@@ -8,9 +8,9 @@ import { Notice } from "@/components/ui/Notice";
 import { BulletList } from "@/components/ui/BulletList";
 import { FindDetailStep } from "@/components/find/FindDetailStep";
 import { useFinder } from "@/features/find/useFinder";
-import { buttonClass, textLink } from "@/components/ui/styles";
+import { buttonClass, choiceClass, textLink } from "@/components/ui/styles";
 
-const choice = "flex min-h-[56px] w-full items-center rounded-xl border border-ink/20 bg-paper px-5 py-3 text-left text-base text-ink hover:border-brand-deep hover:bg-brand-soft focus-visible:outline focus-visible:outline-2 focus-visible:outline-ink";
+const choice = `${choiceClass} min-h-[56px]`;
 const TITLES = ["누구를 위한 보장인가요?", "연령대를 알려 주세요", "가장 마음에 걸리는 것은 무엇인가요?", "조금만 더 알려 주세요"];
 
 // 내게 맞는 보장 찾기 — 3개 문항('잘 모르겠어요'는 추가 문항 1단계) 후 관련 분야·상품을 보여줍니다. (가입 권유가 아니라 살펴볼 곳을 안내)

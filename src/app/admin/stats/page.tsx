@@ -12,7 +12,7 @@ import type { Count, SourceRow } from "@/features/analytics/summary";
 import { AdminNav } from "../AdminNav";
 import { AdminEntry } from "../AdminEntry";
 import { logoutAction } from "../actions";
-import { pillClass } from "@/components/ui/styles";
+import { pillClass, textLink } from "@/components/ui/styles";
 
 export const metadata: Metadata = { title: "유입 통계", robots: { index: false, follow: false } };
 export const dynamic = "force-dynamic";
@@ -89,7 +89,7 @@ export default async function StatsPage({ searchParams }: { searchParams: Promis
           <a key={r} href={`/admin/stats?days=${r}`} aria-current={r === days ? "page" : undefined}
             className={pillClass(r === days)}>{r}일</a>
         ))}
-        <form action={logoutAction} className="ml-auto"><button type="submit" className="text-sm font-semibold text-ink underline">로그아웃</button></form>
+        <form action={logoutAction} className="ml-auto"><button type="submit" className={`text-sm ${textLink}`}>로그아웃</button></form>
       </div>
       {error && <Notice tone="alert">{MESSAGE[error]}</Notice>}
       {truncated && <div className="mb-4"><Notice>기록이 많아 최근 일부만 집계했습니다. 기간을 줄여 보세요.</Notice></div>}

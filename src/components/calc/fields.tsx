@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import { buttonClass, inputClass } from "@/components/ui/styles";
+import { buttonClass, disclosureBodyClass, disclosureClass, disclosureHeadClass, inputClass } from "@/components/ui/styles";
+import { Chevron } from "@/components/ui/Chevron";
 
 // 계산기 공통 UI 조각 — 표시만 담당
 export const inputCls = `mt-1 ${inputClass}`;
@@ -73,18 +74,19 @@ export function CalcShell({ id, title, lead, children, defaultOpen = false }: {
   }, [id]);
 
   return (
-    <section id={id} className="scroll-mt-24 rounded-card border border-ink/10 bg-paper">
+    <section id={id} className={`scroll-mt-24 ${disclosureClass(open)}`}>
       <h2>
         <button type="button" aria-expanded={open} aria-controls={`${id}-panel`} onClick={() => setOpen((o) => !o)}
-          className="flex min-h-[64px] w-full items-center justify-between gap-4 rounded-card px-6 py-5 text-left sm:px-8 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">
-          <span className="text-xl font-bold text-ink sm:text-2xl">{title}</span>
-          <span className="shrink-0 rounded-full bg-paper-gray px-3 py-1 text-sm font-semibold text-ink">
-            {open ? "접기 ▲" : "클릭하여 열기 ▼"}
+          className={`${disclosureHeadClass} items-start gap-4 py-5 sm:px-6`}>
+          <span className="min-w-0">
+            <span className="block text-lg font-bold text-ink sm:text-xl">{title}</span>
+            <span className="mt-1 block text-sm font-normal leading-relaxed text-ink-sub">{lead}</span>
+            <span className="mt-2 inline-flex items-center gap-1 text-sm font-bold text-brand-deep">{open ? "접기" : "펼쳐서 계산하기"}</span>
           </span>
+          <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brand-tint"><Chevron open={open} /></span>
         </button>
       </h2>
-      <p className="px-6 pb-4 text-sm text-ink-sub sm:px-8 sm:text-base">{lead}</p>
-      <div id={`${id}-panel`} hidden={!open} className="px-6 pb-6 sm:px-8 sm:pb-8">{children}</div>
+      <div id={`${id}-panel`} hidden={!open} className={`${disclosureBodyClass} sm:px-6 sm:pb-6`}>{children}</div>
     </section>
   );
 }

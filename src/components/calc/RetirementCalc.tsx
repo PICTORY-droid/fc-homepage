@@ -5,6 +5,7 @@ import { parseNum } from "@/lib/calc/result";
 import { computeRetirement, type RetirementRaw } from "@/lib/calc/retirement";
 import { formatWon, formatWonKorean } from "@/lib/format";
 import { Buttons, CalcShell, ResultBox, Row, TextField } from "./fields";
+import { buttonClass } from "@/components/ui/styles";
 
 const INITIAL: RetirementRaw = {
   currentAge: "", retireAge: "", lifeAge: "", monthlyExpense: "", monthlyPension: "", inflationPct: "0", pensionGrowthPct: "0",
@@ -35,7 +36,7 @@ export function RetirementCalc() {
           <li>나이는 <strong className="text-ink">만 나이</strong>로 입력합니다.</li>
           <li>% 칸은 <strong className="text-ink">2</strong>라고 쓰면 2%입니다. 잘 모르겠으면 0을 두세요.</li>
         </ul>
-        <button type="button" onClick={fillExample} className="mt-3 min-h-[44px] rounded-xl border border-ink/30 bg-paper px-4 font-semibold text-ink hover:bg-paper-gray">
+        <button type="button" onClick={fillExample} className={buttonClass("outline", "sm", "mt-3")}>
           예시 숫자로 채워 보기
         </button>
         <span className="ml-2 text-xs">(사용법을 보여 주는 숫자일 뿐, 추천값이 아닙니다)</span>

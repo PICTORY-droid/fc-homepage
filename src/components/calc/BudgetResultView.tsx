@@ -2,6 +2,8 @@ import { calcNotices } from "@/config/calculators";
 import type { BudgetResult } from "@/lib/calc/budget";
 import { formatWon, formatWonKorean } from "@/lib/format";
 import { ResultBox, Row } from "./fields";
+import { disclosureBodyClass, disclosureClass, disclosureHeadClass } from "@/components/ui/styles";
+import { Chevron } from "@/components/ui/Chevron";
 
 const pct = (r: number) => `${(r * 100).toFixed(1)}%`;
 
@@ -31,7 +33,7 @@ export function BudgetResultView({ r }: { r: BudgetResult }) {
       </p>
 
       <div className="mt-4" role="img" aria-label={`${over ? "지출과 저축 합계" : "월 수입"} 대비 항목별 비중: ${segs.map((s) => `${s.name} ${pct(s.value / base)}`).join(", ")}`}>
-        <div className="flex h-5 w-full overflow-hidden rounded-full border border-ink/15 bg-paper">
+        <div className="flex h-5 w-full overflow-hidden rounded-full border border-ink/10 bg-paper">
           {segs.filter((s) => s.value > 0).map((s) => (
             <div key={s.name} className={s.cls} style={{ width: `${(s.value / base) * 100}%` }} />
           ))}
@@ -39,7 +41,7 @@ export function BudgetResultView({ r }: { r: BudgetResult }) {
         <ul className="mt-3 grid gap-x-4 gap-y-1 text-sm sm:grid-cols-2">
           {segs.map((s) => (
             <li key={s.name} className="flex items-center gap-2 text-ink">
-              <span className={`inline-block h-3 w-3 shrink-0 rounded-sm border border-ink/20 ${s.cls}`} aria-hidden="true" />
+              <span className={`inline-block h-3 w-3 shrink-0 rounded-sm border border-ink/25 ${s.cls}`} aria-hidden="true" />
               <span>{s.name}</span>
               <span className="ml-auto font-semibold">{formatWon(s.value)} <span className="font-normal text-ink-sub">({pct(s.value / r.incomeMonthly)})</span></span>
             </li>
@@ -95,13 +97,14 @@ export function BudgetResultView({ r }: { r: BudgetResult }) {
         </>
       )}
 
-      <details className="mt-6">
-        <summary className="min-h-[44px] cursor-pointer py-2 font-bold text-ink">항목별 상세 보기 (월 금액 · 수입 대비)</summary>
+      <details className={`mt-6 ${disclosureClass()}`}>
+        <summary className={`${disclosureHeadClass} items-center font-bold`}>항목별 상세 보기 (월 금액 · 수입 대비)<Chevron /></summary>
+        <div className={disclosureBodyClass}>
         {r.groups.map((g) => {
           const rows = g.items.filter((i) => i.monthly > 0);
           if (!rows.length) return null;
           return (
-            <div key={g.key} className="mt-3">
+            <div key={g.key} className="mt-3 first:mt-0">
               <p className="text-sm font-semibold text-ink">{g.title} · {formatWon(g.monthly)}</p>
               <dl>
                 {rows.map((i) => <Row key={i.key} label={i.label} value={`${formatWon(i.monthly)} (${pct(i.monthly / r.incomeMonthly)})`} />)}
@@ -109,6 +112,7 @@ export function BudgetResultView({ r }: { r: BudgetResult }) {
             </div>
           );
         })}
+        </div>
       </details>
 
       <p className="mt-4 text-xs text-ink-sub">{calcNotices.budget}</p>

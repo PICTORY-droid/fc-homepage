@@ -17,7 +17,7 @@ export interface HeroSlideView {
 }
 
 const btn = "flex min-h-[44px] items-center justify-center whitespace-nowrap rounded-xl px-2 text-sm font-bold sm:text-base";
-const ctl = "flex h-9 w-9 items-center justify-center rounded-full bg-white/85 text-ink shadow-sm ring-1 ring-black/5 transition hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2";
+const ctl = "flex h-9 w-9 items-center justify-center rounded-full bg-paper/85 text-ink shadow-sm ring-1 ring-ink/10 transition hover:bg-paper focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink";
 
 export function HeroCarousel({ slides, intervalMs }: { slides: HeroSlideView[]; phone?: string; intervalMs: number }) {
   const c = useCarousel(slides.length, intervalMs);
@@ -60,14 +60,14 @@ export function HeroCarousel({ slides, intervalMs }: { slides: HeroSlideView[]; 
           >
             <div className="mx-auto grid max-w-5xl items-center gap-2 px-4 pb-14 pt-5 sm:px-6 sm:pb-16 sm:pt-10 md:grid-cols-[1.3fr_1fr] md:gap-8">
               <div className="order-2 md:order-1">
-                <p className="inline-block rounded-full bg-white px-3 py-1 text-xs font-semibold shadow-sm" style={{ color: s.theme.deep }}>
+                <p className="inline-block rounded-full bg-paper px-3 py-1 text-xs font-semibold shadow-sm" style={{ color: s.theme.deep }}>
                   대표 상품 · {s.product}
                 </p>
                 <H className="mt-3 whitespace-pre-line break-keep text-2xl font-extrabold leading-snug text-ink sm:text-4xl md:leading-tight">{s.headline}</H>
                 <p className="mt-2 max-w-xl break-keep text-sm text-ink-sub sm:text-base md:mt-3">{s.sub}</p>
                 <div className="mt-4 grid grid-cols-2 gap-2 md:mt-5 md:max-w-xs">
-                  <Link href="/find" className={`${btn} text-white`} style={{ background: s.theme.deep }}>30초 보장 점검</Link>
-                  <Link href={s.detailPath} className={`${btn} bg-white`} style={{ color: s.theme.deep, boxShadow: `inset 0 0 0 1.5px ${s.theme.accent}` }}>상품 보기</Link>
+                  <Link href="/find" className={`${btn} text-paper`} style={{ background: s.theme.deep }}>30초 보장 점검</Link>
+                  <Link href={s.detailPath} className={`${btn} bg-paper`} style={{ color: s.theme.deep, boxShadow: `inset 0 0 0 1.5px ${s.theme.accent}` }}>상품 보기</Link>
                 </div>
               </div>
               <div className="order-1 mx-auto h-32 w-full max-w-[13rem] md:order-2 md:h-60 md:max-w-none">

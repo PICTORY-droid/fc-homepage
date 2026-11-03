@@ -1,10 +1,10 @@
 "use client";
 import { useActionState } from "react";
 import { loginAction, registerAction, type ActionState } from "./actions";
-import { buttonClass } from "@/components/ui/styles";
+import { buttonClass, cardClass, inputClass } from "@/components/ui/styles";
 
-const input = "mt-1 w-full min-h-[48px] rounded-xl border border-ink/25 bg-paper px-4 text-base text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-ink";
-const wrap = "max-w-sm space-y-4 rounded-card border border-ink/10 bg-paper p-6";
+const input = `mt-1 ${inputClass}`;
+const wrap = `max-w-sm space-y-4 ${cardClass} p-6`;
 
 function Field({ id, label, type = "text", auto }: { id: string; label: string; type?: string; auto?: string }) {
   return (

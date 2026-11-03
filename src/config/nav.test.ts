@@ -13,3 +13,20 @@ describe("상단 메뉴 정렬", () => {
     }
   });
 });
+
+describe("즐길거리 메뉴", () => {
+  const fun = navGroups.find((g) => g.id === "fun");
+  it("즐길거리의 모든 자료는 하위 목록이 있는 토글이다", () => {
+    expect(fun?.items.length).toBeGreaterThan(0);
+    for (const it of fun?.items ?? []) expect(it.children?.length, it.label).toBeGreaterThan(0);
+  });
+  it("'즐길거리 전체 보기'와 '개인정보 처리방침'은 메뉴에 없다", () => {
+    const all = navGroups.flatMap((g) => g.items.flatMap((i) => [i, ...(i.children ?? [])]));
+    expect(all.some((i) => i.href === "/fun")).toBe(false);
+    expect(all.some((i) => i.href === "/privacy")).toBe(false);
+  });
+  it("하위 메뉴 주소는 서로 겹치지 않는다", () => {
+    const hrefs = (fun?.items ?? []).flatMap((i) => (i.children ?? []).map((c) => c.href));
+    expect(new Set(hrefs).size).toBe(hrefs.length);
+  });
+});

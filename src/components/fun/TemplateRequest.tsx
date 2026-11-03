@@ -2,9 +2,9 @@
 import { track } from "@/features/analytics/track";
 import { TEMPLATE_REQUEST_MAX } from "@/features/templateRequest/schema";
 import { useTemplateRequest } from "@/features/templateRequest/useTemplateRequest";
-import { buttonClass } from "@/components/ui/styles";
+import { buttonClass, inputClass } from "@/components/ui/styles";
 
-const field = "mt-1 w-full rounded-xl border border-ink/25 bg-paper px-4 py-3 text-base text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-ink";
+const field = `mt-1 ${inputClass} py-3`;
 
 // 자료 받기 페이지 끝의 '만들어 줬으면 하는 템플릿' 요청 — 글만 받고 연락처는 받지 않습니다. 내용은 담당 FC 이메일로 전달돼요.
 export function TemplateRequest({ from }: { from: string }) {

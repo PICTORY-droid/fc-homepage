@@ -1,6 +1,8 @@
 import { Section } from "@/components/ui/Section";
 import { BulletList } from "@/components/ui/BulletList";
 import { coverageMeta, getCoverage } from "@/config/productCoverage";
+import { disclosureClass, disclosureHeadClass } from "@/components/ui/styles";
+import { Chevron } from "@/components/ui/Chevron";
 
 // 보험금 지급사유·지급액 — 상품요약서의 '보험금 지급사유 및 지급제한 사항' 정리 (표시 전용, 서버 컴포넌트)
 export function CoverageSection({ productId }: { productId: string }) {
@@ -14,10 +16,10 @@ export function CoverageSection({ productId }: { productId: string }) {
       </div>
       <div className="space-y-3">
         {c.covs.map((t, i) => (
-          <details key={t.title} open={i === 0} className="group rounded-card border border-ink/10 bg-paper">
-            <summary className="flex min-h-[52px] cursor-pointer list-none items-center justify-between gap-3 px-5 py-3 font-semibold text-ink">
+          <details key={t.title} open={i === 0} className={disclosureClass()}>
+            <summary className={`${disclosureHeadClass} items-center font-bold`}>
               <span>{t.title}</span>
-              <span aria-hidden="true" className="text-ink-sub transition group-open:rotate-180">▾</span>
+              <Chevron />
             </summary>
             <div className="overflow-x-auto px-3 pb-4 sm:px-5">
               <table className="w-full min-w-[30rem] border-collapse text-left text-sm">

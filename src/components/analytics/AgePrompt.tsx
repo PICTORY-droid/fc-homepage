@@ -17,7 +17,7 @@ export function AgePrompt() {
         <>
           <div className="flex items-start justify-between gap-3">
             <p className="text-sm font-bold text-ink">자료를 받으신 분의 연령대를 알려 주세요</p>
-            <button type="button" onClick={skip} className={`-mr-1 -mt-1 inline-flex min-h-[44px] min-w-[44px] shrink-0 items-center justify-center rounded-xl text-sm font-semibold text-ink-sub hover:bg-paper-gray ${focusRing}`}>건너뛰기</button>
+            <button type="button" onClick={skip} className={`-mr-1 -mt-1 inline-flex min-h-[44px] min-w-[44px] shrink-0 items-center justify-center rounded-xl text-sm font-semibold text-ink-sub hover:bg-brand-tint ${focusRing}`}>건너뛰기</button>
           </div>
           <p className="text-xs text-ink-sub">선택 사항이에요. 어떤 자료를 더 만들지 정하는 데만 써요.</p>
           <div className="mt-3 grid grid-cols-3 gap-2">

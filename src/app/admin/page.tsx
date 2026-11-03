@@ -13,7 +13,8 @@ import { paginate, parsePage } from "@/lib/pagination";
 import { AdminNav } from "./AdminNav";
 import { AdminEntry } from "./AdminEntry";
 import { logoutAction, updateLeadAction } from "./actions";
-import { buttonClass, inputClass } from "@/components/ui/styles";
+import { buttonClass, disclosureBodyClass, disclosureClass, disclosureHeadClass, inputClass, textLink } from "@/components/ui/styles";
+import { Chevron } from "@/components/ui/Chevron";
 
 export const metadata: Metadata = { title: "상담 접수 관리", robots: { index: false, follow: false } };
 export const dynamic = "force-dynamic"; // 접수 목록은 항상 최신 값으로
@@ -39,13 +40,13 @@ function LeadCard({ lead, memoEnabled }: { lead: LeadRow; memoEnabled: boolean }
       </div>
       {fromLabel(lead) && <p className="mt-1 text-xs font-semibold text-ink-sub">유입: {fromLabel(lead)}</p>}
       <p className="mt-1 text-ink">
-        {lead.phone ? <a className="font-semibold underline" href={`tel:${lead.phone}`}>{formatPhone(lead.phone)}</a> : "-"}
+        {lead.phone ? <a className={textLink} href={`tel:${lead.phone}`}>{formatPhone(lead.phone)}</a> : "-"}
         <span className="ml-3 text-sm text-ink-sub">{interestLabel(lead.interest)}</span>
       </p>
       {summarizeDetail(lead.detail).length > 0 && (
-        <details className="mt-2 rounded-xl bg-paper-card p-3 text-sm text-ink">
-          <summary className="cursor-pointer font-semibold">상세 문진 보기</summary>
-          <ul className="mt-2 space-y-1">{summarizeDetail(lead.detail).map((l) => <li key={l}>{l}</li>)}</ul>
+        <details className={`mt-2 text-sm ${disclosureClass()}`}>
+          <summary className={`${disclosureHeadClass} min-h-[44px] items-center font-semibold`}>상세 문진 보기<Chevron /></summary>
+          <ul className={`space-y-1 ${disclosureBodyClass}`}>{summarizeDetail(lead.detail).map((l) => <li key={l}>{l}</li>)}</ul>
         </details>
       )}
       <form action={updateLeadAction} className="mt-3 flex flex-col gap-2 sm:flex-row sm:items-end">
@@ -78,7 +79,7 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
     <Section as="h1" title="상담 접수 관리" lead={`최근 ${rows.length}건 · 대기 ${counts.new} · 연락함 ${counts.contacted} · 완료 ${counts.done}`}>
       <OwnerNoTrack />
       <AdminNav current="leads" />
-      <form action={logoutAction} className="mb-6"><button type="submit" className="text-sm font-semibold text-ink underline">로그아웃</button></form>
+      <form action={logoutAction} className="mb-6"><button type="submit" className={`text-sm ${textLink}`}>로그아웃</button></form>
       {error && <Notice tone="alert">{error}</Notice>}
       {!memoEnabled && !error && <div className="mb-4"><Notice>메모·유입 정보를 쓰려면 Supabase SQL Editor에서 db/admin_setup.sql 을 한 번 실행해 주세요.</Notice></div>}
       {rows.length === 0 && !error ? <p className="text-ink-sub">아직 접수된 상담이 없습니다.</p> : (

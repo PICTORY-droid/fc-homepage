@@ -9,6 +9,7 @@ import { productsMeta } from "@/config/products";
 import { productPath } from "@/lib/products";
 import { buildFactRows, parseCompareIds } from "@/features/compare/compare";
 import { site } from "@/config/site";
+import { textLink } from "@/components/ui/styles";
 
 export const metadata: Metadata = {
   title: "상품 나란히 비교",
@@ -49,7 +50,7 @@ export default async function ComparePage({ searchParams }: Props) {
                 {list.map((p) => (
                   <th key={p.id} scope="col" className={`${td} bg-paper font-bold`}>
                     <span className="block text-xs font-semibold text-brand-deep">{p.group}</span>
-                    <Link href={productPath(p.id)} className="underline">{p.displayName}</Link>
+                    <Link href={productPath(p.id)} className={textLink}>{p.displayName}</Link>
                   </th>
                 ))}
               </tr>

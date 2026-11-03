@@ -5,6 +5,7 @@ import { BulletList } from "@/components/ui/BulletList";
 import { ButtonLink } from "@/components/ui/Button";
 import { site } from "@/config/site";
 import { productsMeta } from "@/config/products";
+import { textLink } from "@/components/ui/styles";
 
 export const metadata: Metadata = {
   title: "이용 안내",
@@ -68,7 +69,7 @@ export default function GuidePage() {
           <ButtonLink href={`tel:${site.contact.officialCenterPhone}`} variant="outline">공식 고객센터 {site.contact.officialCenterPhone}</ButtonLink>
         </div>
         <p className="mt-6 text-sm text-ink-sub">
-          개인정보는 상담 회신 목적으로만 사용합니다. 자세한 내용은 <Link className="underline" href="/privacy">개인정보처리방침</Link>을 확인하세요.
+          개인정보는 상담 회신 목적으로만 사용합니다. 자세한 내용은 <Link className={textLink} href="/privacy">개인정보처리방침</Link>을 확인하세요.
         </p>
       </Section>
     </>

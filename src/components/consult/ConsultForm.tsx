@@ -6,15 +6,16 @@ import { TIMES, TIME_LABEL } from "@/features/consult/schema";
 import { FAMILY_HISTORY, FAMILY_HISTORY_LABEL, INSURANCE_KINDS, INSURANCE_KIND_LABEL, YESNO, YESNO_LABEL } from "@/features/consult/detailOptions";
 import { consentNote } from "@/features/consult/consentText";
 import { useConsultForm } from "@/features/consult/useConsultForm";
-import { buttonClass } from "@/components/ui/styles";
+import { buttonClass, choiceClass, disclosureBodyClass, disclosureClass, disclosureHeadClass, inputClass, panelClass, textLink } from "@/components/ui/styles";
+import { Chevron } from "@/components/ui/Chevron";
 
-const field = "mt-2 w-full min-h-[48px] rounded-xl border border-ink/25 bg-paper px-4 text-base text-ink placeholder:text-ink-sub/70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-ink";
+const field = `mt-2 ${inputClass}`;
 // 칸 너비는 '화면 너비'가 아니라 '들어간 자리의 너비'에 맞춰 늘고 줄어듭니다(좁은 자리에서 글자가 한 줄에 한 낱말씩 쪼개지지 않게).
 const topicGrid = "grid grid-cols-1 gap-3 min-[480px]:grid-cols-2 lg:grid-cols-3"; // 분야 9개 → 3×3 로 딱 맞게 떨어짐
 const choiceGrid = "mt-3 grid grid-cols-[repeat(auto-fit,minmax(9.5rem,1fr))] gap-3";
 // 분야 선택 카드 — '전체 상담 분야' 카드와 같은 모양(라디오는 화면에서 숨기고 오른쪽 위 표시로 대신함)
-const topicCard = "relative flex h-full cursor-pointer items-start gap-3 rounded-xl border border-ink/15 bg-paper p-4 text-ink transition duration-200 hover:-translate-y-0.5 hover:border-brand hover:shadow-md has-[:checked]:border-brand-deep has-[:checked]:bg-brand-soft has-[:checked]:shadow-[0_0_0_1px_theme(colors.brand.deep)] has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-ink";
-const choice = "flex min-h-[52px] cursor-pointer items-center gap-3 break-keep rounded-xl border border-ink/20 bg-paper px-4 py-3 text-ink transition hover:border-brand has-[:checked]:border-brand-deep has-[:checked]:bg-brand-soft has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-ink";
+const topicCard = "relative flex h-full cursor-pointer items-start gap-3 rounded-xl border border-ink/25 bg-paper p-4 text-ink transition duration-200 hover:-translate-y-0.5 hover:border-brand hover:shadow-md has-[:checked]:border-brand-deep has-[:checked]:bg-brand-soft has-[:checked]:shadow-[0_0_0_1px_theme(colors.brand.deep)] has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-ink";
+const choice = choiceClass;
 
 // 상담 신청 폼(3단계) — 화면 표시만 담당 (로직은 useConsultForm, 전송은 features/consult/api.ts)
 export function ConsultForm({ initialTopic = "health" }: { initialTopic?: string }) {
@@ -39,7 +40,7 @@ export function ConsultForm({ initialTopic = "health" }: { initialTopic?: string
           <li className="flex gap-3"><span className="font-bold text-brand-deep">3</span>상담만으로 가입이 진행되지 않으니 편하게 물어보세요.</li>
         </ol>
         <p className="mt-6 text-center text-sm text-ink-sub">
-          급하시면 <a className="font-semibold underline" href={`tel:${site.contact.fcPhone}`}>{site.contact.fcPhone}</a> · {site.contact.hours}
+          급하시면 <a className={textLink} href={`tel:${site.contact.fcPhone}`}>{site.contact.fcPhone}</a> · {site.contact.hours}
         </p>
       </div>
     );
@@ -80,7 +81,7 @@ export function ConsultForm({ initialTopic = "health" }: { initialTopic?: string
               <label key={c.slug} className={topicCard}>
                 <input type="radio" name="topic" className="peer sr-only" value={c.slug}
                   checked={values.topic === c.slug} onChange={() => setField("topic", c.slug as typeof values.topic)} />
-                <span aria-hidden="true" className="mt-0.5 h-5 w-5 shrink-0 rounded-full border-2 border-ink/30 bg-paper peer-checked:border-brand-deep peer-checked:bg-brand-deep peer-checked:shadow-[inset_0_0_0_3px_#FFDAC1]" />
+                <span aria-hidden="true" className="mt-0.5 h-5 w-5 shrink-0 rounded-full border-2 border-ink/25 bg-paper peer-checked:border-brand-deep peer-checked:bg-brand-deep peer-checked:shadow-[inset_0_0_0_3px_theme(colors.brand.soft)]" />
                 <span className="min-w-0"><b className="block break-keep text-base leading-snug">{c.title}</b><span className="mt-1 block break-keep text-sm leading-relaxed text-ink-sub">{c.short}</span></span>
               </label>
             ))}
@@ -111,12 +112,12 @@ export function ConsultForm({ initialTopic = "health" }: { initialTopic?: string
             <Err k="memo" />
           </div>
 
-          <details className="group rounded-xl border border-ink/15 bg-paper">
-            <summary className="flex min-h-[52px] cursor-pointer list-none items-center justify-between gap-3 rounded-xl px-4 py-3 font-semibold text-ink [&::-webkit-details-marker]:hidden">
+          <details className={disclosureClass()}>
+            <summary className={`${disclosureHeadClass} items-center font-bold`}>
               <span>더 알려 주실 내용이 있다면 <span className="font-normal text-ink-sub">(선택)</span></span>
-              <span aria-hidden="true" className="text-ink-sub transition-transform group-open:rotate-180">▾</span>
+              <Chevron />
             </summary>
-            <div className="space-y-7 border-t border-ink/10 px-4 pb-5 pt-5">
+            <div className={`space-y-7 ${disclosureBodyClass}`}>
           <div>
             <label htmlFor="age" className="font-semibold text-ink">가입 대상 연령 (만 나이, 선택)</label>
             <input id="age" inputMode="numeric" placeholder="예: 8" className={field} value={values.age}
@@ -162,7 +163,7 @@ export function ConsultForm({ initialTopic = "health" }: { initialTopic?: string
             )}
           </fieldset>
 
-          <div className="rounded-xl border border-ink/15 p-4 sm:p-5">
+          <div className={`${panelClass} p-4 sm:p-5`}>
             <p className="font-semibold text-ink">건강 관련 내용 (선택)</p>
             <label className="mt-3 flex min-h-[44px] items-center gap-3 text-ink">
               <input type="checkbox" className="h-5 w-5 accent-brand" checked={values.healthConsent}
@@ -237,7 +238,7 @@ export function ConsultForm({ initialTopic = "health" }: { initialTopic?: string
             <label className="flex min-h-[44px] cursor-pointer items-start gap-3 text-ink">
               <input type="checkbox" className="mt-0.5 h-5 w-5 shrink-0 accent-brand" checked={Boolean(values.consent)}
                 onChange={(e) => setField("consent", e.target.checked as unknown as true)} aria-describedby="consent-note" />
-              <span><b>(필수)</b> 개인정보 수집·이용에 동의합니다. <a className="text-sm underline" href="/privacy" target="_blank" rel="noopener noreferrer">자세히<span className="sr-only"> (새 창으로 열림)</span></a></span>
+              <span><b>(필수)</b> 개인정보 수집·이용에 동의합니다. <a className={`text-sm ${textLink}`} href="/privacy" target="_blank" rel="noopener noreferrer">자세히<span className="sr-only"> (새 창으로 열림)</span></a></span>
             </label>
             <p id="consent-note" className="mt-1 break-keep pl-8 text-sm leading-relaxed text-ink-sub">{consentNote(site.privacy.retentionMonths)}</p>
             <Err k="consent" />

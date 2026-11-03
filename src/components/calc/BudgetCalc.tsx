@@ -6,6 +6,8 @@ import { computeBudget, previewGroupMonthly, type BudgetGroupDef } from "@/lib/c
 import { formatWon } from "@/lib/format";
 import { BudgetResultView } from "./BudgetResultView";
 import { Buttons, CalcShell, TextField } from "./fields";
+import { buttonClass, disclosureBodyClass, disclosureClass, disclosureHeadClass, panelClass } from "@/components/ui/styles";
+import { Chevron } from "@/components/ui/Chevron";
 
 const EXTRA_KEYS = ["targetPct", "emergency"];
 const INITIAL: Record<string, string> = Object.fromEntries(
@@ -22,14 +24,15 @@ function GroupFields({ g, open, values, errors, setField }: {
   // 오류가 생기면 접혀 있던 그룹을 펼칩니다. (open 속성은 고정해 두어 사용자가 접는 동작을 막지 않음)
   useEffect(() => { if (hasError && ref.current) ref.current.open = true; }, [hasError]);
   return (
-    <details ref={ref} open={open} className="rounded-xl border border-ink/15 bg-paper">
-      <summary className="flex min-h-[52px] cursor-pointer flex-wrap items-center justify-between gap-2 px-4 py-3">
+    <details ref={ref} open={open} className={disclosureClass()}>
+      <summary className={`${disclosureHeadClass} flex-wrap items-center gap-2`}>
         <span className="font-bold text-ink">{g.title}</span>
         <span className="text-sm text-ink-sub">
           {hasError ? <span className="font-semibold text-alert">입력값 확인 필요</span> : <>월 합계 <strong className="text-ink">{formatWon(subtotal)}</strong></>}
+          <Chevron className="ml-2 inline-block align-middle" />
         </span>
       </summary>
-      <div className="border-t border-ink/10 px-4 pb-5 pt-3">
+      <div className={disclosureBodyClass}>
         <p className="mb-4 text-sm text-ink-sub">{g.lead}</p>
         <div className="grid gap-4 sm:grid-cols-2">
           {g.items.map((it) => (
@@ -66,7 +69,7 @@ export function BudgetCalc() {
           <li>변동 지출은 최근 두세 달 평균을 넣으면 정확해요. 칸 이름에 <strong className="text-ink">(연 합계)</strong>가 있으면 1년 동안 쓰는 총액을 넣습니다.</li>
           <li>이 계산기는 입력한 내용을 저장하지 않습니다. 페이지를 닫으면 사라져요.</li>
         </ul>
-        <button type="button" onClick={fillExample} className="mt-3 min-h-[44px] rounded-xl border border-ink/30 bg-paper px-4 font-semibold text-ink hover:bg-paper-gray">
+        <button type="button" onClick={fillExample} className={buttonClass("outline", "sm", "mt-3")}>
           예시 숫자로 채워 보기
         </button>
         <span className="ml-2 text-xs">(사용법을 보여 주는 숫자일 뿐, 추천값이 아닙니다)</span>
@@ -77,7 +80,7 @@ export function BudgetCalc() {
           <GroupFields key={g.key} g={g} open={i < 2} values={values} errors={errors} setField={setField} />
         ))}
 
-        <div className="rounded-xl border border-ink/15 bg-paper p-4">
+        <div className={`${panelClass} p-4`}>
           <p className="font-bold text-ink">⑥ 추가 정보 (선택)</p>
           <div className="mt-3 grid gap-4 sm:grid-cols-2">
             <TextField id="bg-targetPct" label="목표 저축률" unit="%" inputMode="decimal" placeholder="예: 20" value={values.targetPct}

@@ -3,9 +3,9 @@ import {
   FAMILY_HISTORY, FAMILY_HISTORY_LABEL, INSURANCE_KINDS, INSURANCE_KIND_LABEL, YESNO, YESNO_LABEL, type YesNo,
 } from "@/features/consult/detailOptions";
 import type { DetailAnswers } from "@/features/find/recommend";
-import { buttonClass } from "@/components/ui/styles";
+import { buttonClass, choiceClass } from "@/components/ui/styles";
 
-const choice = "flex min-h-[52px] w-full items-center gap-3 rounded-xl border border-ink/20 bg-paper px-4 py-3 text-left text-base text-ink hover:border-brand-deep hover:bg-brand-soft focus-visible:outline focus-visible:outline-2 focus-visible:outline-ink aria-pressed:border-brand-deep aria-pressed:bg-brand-soft";
+const choice = choiceClass;
 
 interface Props {
   detail: DetailAnswers;

@@ -17,7 +17,7 @@ export function PageBanner({ bannerKey }: { bannerKey: BannerKey }) {
       <div className="mx-auto grid max-w-5xl items-center gap-4 px-4 py-4 sm:px-6 sm:py-10 md:grid-cols-[1.3fr_1fr] md:gap-8">
         <div>
           {/* 이미지 카드(모바일) — 문구는 그림 안에 들어갑니다 */}
-          <div className="max-md:relative max-md:overflow-hidden max-md:rounded-3xl max-md:bg-gradient-to-br max-md:from-brand-soft max-md:to-paper max-md:px-4 max-md:pt-5 max-md:shadow-sm max-md:ring-1 max-md:ring-brand/15">
+          <div className="max-md:relative max-md:overflow-hidden max-md:rounded-card max-md:bg-gradient-to-br max-md:from-brand-soft max-md:to-paper max-md:px-4 max-md:pt-5 max-md:shadow-sm max-md:ring-1 max-md:ring-brand/15">
             <p style={delay("0s")} className="hero-rise inline-block rounded-full bg-paper px-3 py-1 text-xs font-semibold text-brand-deep">
               대표 상품 · {b.product}
             </p>

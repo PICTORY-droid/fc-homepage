@@ -8,7 +8,7 @@ import { useChat, type ChatMessage } from "./useChat";
 
 // 작은 알약 버튼(짧은 선택지·링크) / 긴 질문 목록(한 상자 안에서 줄로 구분)
 const pillBase = "inline-flex h-9 items-center whitespace-nowrap rounded-full border px-3.5 text-compact font-semibold text-ink [.compact_&]:h-8 [.compact_&]:px-3 [.compact_&]:text-xs";
-const pillPlain = `${pillBase} border-ink/20 bg-paper hover:bg-paper-gray`;
+const pillPlain = `${pillBase} border-ink/25 bg-paper hover:bg-brand-tint`;
 const pillPrimary = `${pillBase} border-transparent bg-brand hover:brightness-95`;
 const pillKakao = `${pillBase} border-transparent bg-kakao hover:brightness-95`;
 const pillChoice = "inline-flex h-8 items-center rounded-full border border-brand-deep/35 bg-paper px-3 text-compact font-medium text-brand-deep hover:bg-brand-soft";
@@ -34,7 +34,7 @@ function Choices({ items, onPick }: { items: string[]; onPick: (t: string) => vo
         </div>
       )}
       {long.length > 0 && (
-        <ul className="divide-y divide-ink/10 overflow-hidden rounded-xl border border-ink/15 bg-paper">
+        <ul className="divide-y divide-ink/10 overflow-hidden rounded-xl border border-ink/10 bg-paper">
           {long.map((s) => (
             <li key={s}>
               <button type="button" onClick={() => onPick(s)} className="flex min-h-[40px] w-full items-center gap-2 px-3 py-2 text-left text-compact leading-snug text-ink hover:bg-brand-soft">
@@ -59,7 +59,7 @@ function Links({ links, onNavigate }: { links: ChatLink[]; onNavigate: () => voi
     <div className={`mt-2 space-y-2 ${compact ? "compact" : ""}`}>
       {pills.length > 0 && <div className={pills.length === 3 ? "grid grid-cols-3 gap-1.5 [&>*]:w-full [&>*]:justify-center [&>*]:px-1.5" : "flex flex-wrap gap-1.5"}>{pills.map((l) => <LinkPill key={l.href + l.label} link={l} compact={compact} onNavigate={onNavigate} />)}</div>}
       {rows.length > 0 && (
-        <ul className="divide-y divide-ink/10 overflow-hidden rounded-xl border border-ink/15 bg-paper" aria-label="관련 상품">
+        <ul className="divide-y divide-ink/10 overflow-hidden rounded-xl border border-ink/10 bg-paper" aria-label="관련 상품">
           {rows.map((l) => (
             <li key={l.href}>
               <Link href={l.href} onClick={onNavigate} className="flex min-h-[40px] items-center gap-2 px-3 py-2 text-compact leading-snug text-ink hover:bg-brand-soft">
@@ -144,7 +144,7 @@ export function ChatWidget() {
               <label htmlFor="chat-input" className="sr-only">{chatbotCopy.inputLabel}</label>
               <input id="chat-input" ref={inputRef} value={text} onChange={(e) => setText(e.target.value)} maxLength={chatbotCopy.maxInputLength}
                 placeholder={chatbotCopy.inputPlaceholder} autoComplete="off"
-                className="h-10 min-w-0 flex-1 rounded-xl border border-ink/20 bg-paper px-3 text-base text-ink placeholder:text-ink-sub/70" />
+                className="h-10 min-w-0 flex-1 rounded-xl border border-ink/25 bg-paper px-3 text-base text-ink placeholder:text-ink-sub/70" />
               <button type="submit" disabled={typing || !text.trim()} className="h-10 rounded-xl bg-brand px-3.5 text-sm font-bold text-ink hover:brightness-95 disabled:opacity-50">보내기</button>
             </div>
             <p className="mt-1.5 text-xs leading-snug text-ink-sub">{chatbotCopy.privacyNote}</p>

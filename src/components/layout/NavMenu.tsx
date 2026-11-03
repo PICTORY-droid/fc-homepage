@@ -2,10 +2,42 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
-import type { NavGroup } from "@/config/nav";
+import type { NavGroup, NavLink } from "@/config/nav";
+import { Chevron } from "@/components/ui/Chevron";
+import { focusRing } from "@/components/ui/styles";
 
 // 상단 삼선(햄버거) 메뉴 — 누르면 항목 묶음이 나오고, 묶음 제목을 누르면 그 안의 메뉴가 펼쳐집니다.
+// 하위 목록(children)이 있는 메뉴(즐길거리의 각 자료)는 한 번 더 펼쳤다 접었다 하는 토글입니다.
 // 닫히는 경우: 삼선 다시 누르기 · 바깥 누르기 · Esc · 링크 선택 · 페이지 이동 · Tab 으로 메뉴 밖으로 나가기
+const rowBase = `flex w-full items-center justify-between gap-2 rounded-xl px-3 text-left text-ink transition duration-200 hover:bg-brand-tint ${focusRing}`;
+const linkCls = (current: boolean) =>
+  `block rounded-lg px-3 py-2.5 text-base transition duration-200 hover:bg-brand-tint ${focusRing} ${current ? "font-bold text-brand-deep" : "text-ink"}`;
+
+function SubMenu({ item, pathname, onNavigate }: { item: NavLink; pathname: string; onNavigate: () => void }) {
+  const children = item.children ?? [];
+  const inside = children.some((c) => pathname === c.href.split("#")[0]);
+  const [open, setOpen] = useState(inside); // 지금 보고 있는 화면이 들어 있으면 펼친 채로 시작
+  const id = `nav-sub-${item.href.replace(/\W+/g, "-")}`;
+  return (
+    <li>
+      <button type="button" aria-expanded={open} aria-controls={id} onClick={() => setOpen((o) => !o)}
+        className={`${rowBase} min-h-[44px] py-2 text-base font-semibold ${open ? "bg-brand-tint" : ""}`}>
+        {item.label}
+        <Chevron open={open} className="h-4 w-4" />
+      </button>
+      {open && (
+        <ul id={id} className="mb-1 ml-3 mt-0.5 space-y-0.5 border-l-2 border-brand-soft pl-2">
+          {children.map((c) => (
+            <li key={c.href}>
+              <Link href={c.href} onClick={onNavigate} aria-current={pathname === c.href ? "page" : undefined} className={linkCls(pathname === c.href)}>{c.label}</Link>
+            </li>
+          ))}
+        </ul>
+      )}
+    </li>
+  );
+}
+
 export function NavMenu({ groups }: { groups: NavGroup[] }) {
   const [open, setOpen] = useState(false);
   const [openGroup, setOpenGroup] = useState<string | null>(null);
@@ -36,29 +68,30 @@ export function NavMenu({ groups }: { groups: NavGroup[] }) {
     <div ref={root} className="relative" onBlur={(e) => { const next = e.relatedTarget as Node | null; if (open && next && !root.current?.contains(next)) close(); }}>
       <button ref={button} type="button" aria-expanded={open} aria-controls="site-menu" aria-label={open ? "메뉴 닫기" : "메뉴 열기"}
         onClick={() => (open ? close() : setOpen(true))}
-        className="flex h-11 w-11 shrink-0 cursor-pointer flex-col items-center justify-center gap-[5px] rounded-lg bg-paper-gray hover:bg-brand-soft focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">
+        className={`flex h-11 w-11 shrink-0 cursor-pointer flex-col items-center justify-center gap-[5px] rounded-xl bg-paper-gray transition duration-200 hover:bg-brand-soft ${focusRing}`}>
         <span aria-hidden="true" className={`${bar} ${open ? "translate-y-[7px] rotate-45" : ""}`} />
         <span aria-hidden="true" className={`${bar} ${open ? "opacity-0" : ""}`} />
         <span aria-hidden="true" className={`${bar} ${open ? "-translate-y-[7px] -rotate-45" : ""}`} />
       </button>
       {open && (
-        <div id="site-menu" className="absolute right-0 z-50 mt-2 max-h-[calc(100dvh-5.5rem)] w-[min(20rem,calc(100vw-2rem))] overflow-y-auto overscroll-contain rounded-2xl border border-ink/10 bg-paper p-2 shadow-xl">
+        <div id="site-menu" className="absolute right-0 z-50 mt-2 max-h-[calc(100dvh-5.5rem)] w-[min(20rem,calc(100vw-2rem))] overflow-y-auto overscroll-contain rounded-card border border-ink/10 bg-paper p-2 shadow-xl">
           <ul className="space-y-1">
             {groups.map((g) => {
               const expanded = openGroup === g.id;
               return (
-                <li key={g.id} className="rounded-xl">
+                <li key={g.id}>
                   <button type="button" aria-expanded={expanded} aria-controls={`nav-${g.id}`} onClick={() => setOpenGroup(expanded ? null : g.id)}
-                    className={`flex min-h-[48px] w-full items-center justify-between rounded-xl px-3 text-left text-base font-bold text-ink hover:bg-paper-gray ${expanded ? "bg-brand-soft/60" : ""}`}>
+                    className={`${rowBase} min-h-[48px] text-base font-bold ${expanded ? "bg-brand-soft/60" : ""}`}>
                     {g.title}
-                    <svg aria-hidden="true" viewBox="0 0 20 20" className={`h-4 w-4 shrink-0 text-ink-sub transition-transform duration-200 motion-reduce:transition-none ${expanded ? "rotate-180" : ""}`} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m5 8 5 5 5-5" /></svg>
+                    <Chevron open={expanded} />
                   </button>
                   {expanded && (
                     <ul id={`nav-${g.id}`} className="mb-1 mt-1 space-y-0.5 pl-2">
-                      {g.items.map((it) => (
+                      {g.items.map((it) => it.children?.length ? (
+                        <SubMenu key={it.href} item={it} pathname={pathname} onNavigate={() => close()} />
+                      ) : (
                         <li key={it.href}>
-                          <Link href={it.href} onClick={() => close()} aria-current={pathname === it.href ? "page" : undefined}
-                            className={`block rounded-lg px-3 py-2.5 text-base text-ink hover:bg-paper-gray ${pathname === it.href ? "font-bold text-brand-deep" : ""}`}>
+                          <Link href={it.href} onClick={() => close()} aria-current={pathname === it.href ? "page" : undefined} className={linkCls(pathname === it.href)}>
                             {it.label}
                           </Link>
                         </li>

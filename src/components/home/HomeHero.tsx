@@ -15,7 +15,7 @@ export function HomeHero() {
       <div className="mx-auto max-w-5xl px-4 py-4 sm:px-6">
         <ul className="flex flex-wrap gap-1.5" aria-label="상담 원칙">
           {site.trust.map((t) => (
-            <li key={t} className="rounded-full bg-paper px-2.5 py-0.5 text-xs font-medium text-ink shadow-sm ring-1 ring-black/5">✓ {t}</li>
+            <li key={t} className="rounded-full bg-paper px-2.5 py-0.5 text-xs font-medium text-ink shadow-sm ring-1 ring-ink/10">✓ {t}</li>
           ))}
         </ul>
         <p className="mt-3 text-xs leading-relaxed text-ink-sub">

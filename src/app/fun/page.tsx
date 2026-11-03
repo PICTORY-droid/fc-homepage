@@ -20,7 +20,7 @@ export default function FunPage() {
         {funItems.map((f) => (
           <li key={f.slug}>
             <Link href={f.href} className={`flex h-full items-start gap-4 p-5 outline-none ${cardLinkClass}`}>
-              <span aria-hidden="true" className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-brand-soft text-2xl">{f.icon}</span>
+              <span aria-hidden="true" className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-brand-soft text-2xl">{f.icon}</span>
               <span className="min-w-0">
                 <span className="block text-lg font-bold text-ink">{f.title}</span>
                 <span className="mt-1 block text-sm leading-relaxed text-ink-sub">{f.short}</span>
