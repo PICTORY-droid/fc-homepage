@@ -17,7 +17,7 @@ from pptx.oxml.ns import qn
 from pptx.util import Emu, Inches, Pt
 
 FONT = "맑은 고딕"
-AUTHOR = "반딧불이의 곳간"
+AUTHOR = ""  # 파일 속성의 작성자 칸은 비워 둡니다(다른 브랜드 이름을 넣지 않음)
 A = "http://schemas.openxmlformats.org/drawingml/2006/main"
 
 # 테마 번호(0~49) → 모티프 종류
