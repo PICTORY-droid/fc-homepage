@@ -21,7 +21,7 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const p = getPosition((await params).position);
   if (!p) return {};
-  return funMetadata({ title: `${p.name} 이력서·자기소개서 양식 무료 (Word)`, description: `${p.name} 이력서 10종과 자기소개서 10종 — ${p.desc}. 무료 Word 파일.`, path: `/fun/forms/${p.id}`, ogKey: `forms-${p.id}` });
+  return funMetadata({ title: `${p.name} 이력서·자기소개서 양식 무료 (Word)`, description: `${p.name} 이력서와 자기소개서 — ${p.desc}. 무료 Word 파일.`, path: `/fun/forms/${p.id}`, ogKey: `forms-${p.id}` });
 }
 
 const kinds: DocKind[] = ["resume", "cover"];
@@ -37,12 +37,12 @@ export default async function PositionFormsPage({ params }: Props) {
       <Section as="h1" title={`${p.name} 이력서·자기소개서`} lead={`${group?.label ?? ""} · ${p.desc}`}>
         <nav aria-label="문서 종류 바로가기" className="flex flex-wrap gap-2">
           {kinds.map((k) => (
-            <a key={k} href={`#${k}`} className={pillClass(false)}>{kindLabel[k]} 10종</a>
+            <a key={k} href={`#${k}`} className={pillClass(false)}>{kindLabel[k]}</a>
           ))}
         </nav>
       </Section>
       {kinds.map((k, i) => (
-        <Section key={k} id={k} tone={i % 2 ? "card" : undefined} title={`${kindLabel[k]} 10종`}>
+        <Section key={k} id={k} tone={i % 2 ? "card" : undefined} title={kindLabel[k]}>
           <ul data-reveal="stagger" className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
             {variants.map((v) => (
               <DownloadCard key={v} title={`${v}. ${variantNames[k][v - 1]}`} desc={variantDesc[k][v - 1]} thumb={formFile(p.id, k, v, "jpg")} zoom={formLargeFile(p.id, k, v)} thumbAlt={`${p.name} ${kindLabel[k]} ${variantNames[k][v - 1]} 미리보기`}

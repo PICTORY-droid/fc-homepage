@@ -9,7 +9,6 @@ import { filterSections, withMode, type HubEntry, type HubMode, type HubSection 
 // 즐길거리 첫 페이지 — (종류 고르기) → 검색 → 분류별 토글. 누르면 펼쳐지고 다시 누르면 접혀요. (표시·화면 상태만 담당, 검색 규칙은 lib/fun/hubDirectory.ts)
 interface Props {
   sections: HubSection[];
-  totalLabel: string; // 예: "직무 30개"
   searchLabel: string; // 예: "직무 검색"
   placeholder: string;
   modes?: HubMode[];
@@ -27,7 +26,6 @@ function EntryToggle({ e, open, onToggle, mode }: { e: HubEntry; open: boolean; 
           <span className="min-w-0">
             <span className="flex flex-wrap items-center gap-2">
               <span className="text-lg font-bold text-ink">{e.title}</span>
-              {e.count && <span className="text-sm font-semibold text-brand-deep">{e.count}</span>}
             </span>
             {e.lead && <span className="mt-1 block text-sm font-normal leading-relaxed text-ink-sub">{e.lead}</span>}
           </span>
@@ -48,8 +46,8 @@ function EntryToggle({ e, open, onToggle, mode }: { e: HubEntry; open: boolean; 
           <ul className="flex flex-wrap gap-2">
             {e.links.map((l) => (
               <li key={l.href}>
-                <Link href={withMode(l.href, mode)} className={pillClass(false, "gap-1.5")}>
-                  {l.label}{l.note && <span className="text-xs font-semibold text-brand-deep">{l.note}</span>}
+                <Link href={withMode(l.href, mode)} className={pillClass(false)}>
+                  {l.label}
                 </Link>
               </li>
             ))}
@@ -65,7 +63,7 @@ function EntryToggle({ e, open, onToggle, mode }: { e: HubEntry; open: boolean; 
   );
 }
 
-export function HubDirectory({ sections, totalLabel, searchLabel, placeholder, modes, modeCta = "고르기" }: Props) {
+export function HubDirectory({ sections, searchLabel, placeholder, modes, modeCta = "고르기" }: Props) {
   const [query, setQuery] = useState("");
   const [opened, setOpened] = useState<Set<string>>(() => new Set());
   const [mode, setMode] = useState<string | undefined>();
@@ -114,7 +112,6 @@ export function HubDirectory({ sections, totalLabel, searchLabel, placeholder, m
           <input id={inputId} type="search" value={query} onChange={(ev) => setQuery(ev.target.value.slice(0, 40))} placeholder={placeholder} className={`${inputClass} pl-11`} />
         </div>
         <div className="flex flex-wrap items-center gap-3">
-          <span className={chip}>{totalLabel}</span>
           {modeLabel && <span className="text-sm text-ink-sub"><b className="text-ink">{modeLabel}</b>로 바로 이동해요</span>}
           {!searching && (
             <span className="ml-auto flex gap-3 text-sm">
@@ -123,7 +120,7 @@ export function HubDirectory({ sections, totalLabel, searchLabel, placeholder, m
             </span>
           )}
         </div>
-        <p role="status" aria-live="polite" className="sr-only">{searching ? `검색 결과 ${shown.reduce((n, s) => n + s.entries.length, 0)}개 묶음` : ""}</p>
+        <p role="status" aria-live="polite" className="sr-only">{searching ? shown.length ? "검색 결과를 보여 드려요" : "검색 결과가 없어요" : ""}</p>
       </div>
 
       {shown.length === 0 ? (

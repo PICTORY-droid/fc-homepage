@@ -1,6 +1,5 @@
 import Image from "next/image";
 import { ZoomThumb } from "./ZoomThumb";
-import { DownloadIcon } from "@/components/ui/DownloadIcon";
 import { buttonClass, cardClass } from "@/components/ui/styles";
 
 export interface DownloadLink { label: string; href: string; filename?: string }
@@ -18,11 +17,11 @@ export function DownloadCard({ title, desc, thumb, thumbAlt, zoom, aspect, links
       <div className="flex flex-1 flex-col p-4">
         <h3 className="text-base font-bold text-ink">{title}</h3>
         {desc ? <p className="mt-1 flex-1 text-sm leading-snug text-ink-sub">{desc}</p> : <div className="flex-1" />}
-        <div className="mt-3 flex flex-wrap gap-2">
+        <div className="mt-3 flex gap-1.5">
           {links.map((l, i) => (
             <a key={l.href} href={l.href} download={l.filename ?? true}
-              className={buttonClass(i === 0 ? "primary" : "outline", "sm", "min-w-[4.25rem] flex-1 gap-1 !px-2")}>
-              <DownloadIcon />{l.label}<span className="sr-only"> 받기 ({title})</span>
+              className={buttonClass(i === 0 ? "primary" : "outline", "sm", "min-w-0 flex-1 basis-0 whitespace-nowrap !px-1")}>
+              {l.label}<span className="sr-only"> 받기 ({title})</span>
             </a>
           ))}
         </div>

@@ -21,7 +21,7 @@ const find = async (params: Props["params"]) => {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const c = await find(params);
   if (!c) return {};
-  return funMetadata({ title: `${searchTitles[`${EXCEL_PACK}/${c.item.key}`] ?? c.item.title} ${c.count}종`, description: c.item.short, path: collectionPath(c), ogKey: `${EXCEL_PACK}-${c.item.key}` });
+  return funMetadata({ title: `${searchTitles[`${EXCEL_PACK}/${c.item.key}`] ?? c.item.title}`, description: c.item.short, path: collectionPath(c), ogKey: `${EXCEL_PACK}-${c.item.key}` });
 }
 
 // 테마 모음 페이지(예: /fun/sheets/life/ledger) — 디자인 50가지 전체. 화면은 SheetCollectionView 가 그립니다.

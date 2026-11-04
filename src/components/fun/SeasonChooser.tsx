@@ -19,7 +19,7 @@ export function SeasonChooser({ items }: { items: SeasonChoice[] }) {
                 </div>
               ))}
             </div>
-            <span className="mt-4 text-xl font-bold text-ink">{s.label} <span className="text-sm font-semibold text-brand-deep">{s.count}종</span></span>
+            <span className="mt-4 text-xl font-bold text-ink">{s.label}</span>
             <span className="mt-1 flex-1 text-sm leading-relaxed text-ink-sub">{s.lead}</span>
             <CardCta className="mt-3">{s.label} 보기</CardCta>
           </Link>

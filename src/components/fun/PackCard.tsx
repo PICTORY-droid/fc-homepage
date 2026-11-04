@@ -1,7 +1,6 @@
 import { ZoomThumb } from "./ZoomThumb";
 import { packDownloadName, packFile, packLarge, packThumb, type PackEntry, type PackItem } from "@/config/pack";
 import { buttonClass, cardClass } from "@/components/ui/styles";
-import { DownloadIcon } from "@/components/ui/DownloadIcon";
 
 const BUTTON: Record<PackItem["ext"], string> = { xlsx: "엑셀", pptx: "PPT", docx: "Word", svg: "SVG" };
 
@@ -30,8 +29,8 @@ export function PackCard({ item, entry }: { item: PackItem; entry: PackEntry }) 
           : thumb && <p className="mt-0.5 text-xs font-semibold text-ink-sub">{entry.flavor}</p>}
         {entry.tag ? <p className="mt-1 flex-1 text-sm leading-snug text-ink-sub">{entry.tag}</p> : <span className="flex-1" />}
         <a href={packFile(item, entry)} download={packDownloadName(item, entry)}
-          className={buttonClass("primary", "sm", "mt-3 gap-1 !px-2")}>
-          <DownloadIcon />{BUTTON[item.ext]}<span className="sr-only"> 받기 ({item.title} {entry.name})</span>
+          className={buttonClass("primary", "sm", "mt-3 whitespace-nowrap !px-2")}>
+          {BUTTON[item.ext]}<span className="sr-only"> 받기 ({item.title} {entry.name})</span>
         </a>
       </div>
     </li>

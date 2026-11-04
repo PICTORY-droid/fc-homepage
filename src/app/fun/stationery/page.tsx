@@ -6,24 +6,22 @@ import { HubDirectory } from "@/components/fun/hub/HubDirectory";
 import { FunPageExtras } from "@/components/fun/FunPageExtras";
 import { FunCtaBox } from "@/components/fun/FunCtaBox";
 import { stationeryCta } from "@/config/funCta";
-import { stationery } from "@/config/stationery";
 import { stationeryHub } from "@/config/funHubs";
 import { textLink } from "@/components/ui/styles";
 
 export const metadata: Metadata = funMetadata({
-  title: "편지지 무료 다운로드 — 감성 편지지 980장 (Word·PNG)",
-  description: "빛깔 편지지 80장과 동물·장소·하늘·커피·창가·정원 주제 편지지 900장(전통문화 500장 포함), 서로 다른 그림의 감성 편지지를 Word 파일로 무료로 내려받아 컴퓨터에서 바로 쓰세요.",
+  title: "편지지 무료 다운로드 — 감성 편지지 (Word·PNG)",
+  description: "꽃빛·초록빛·노을빛·포근빛 계절 편지지와 전통문화·동물·장소·하늘·커피·창가·정원 주제 편지지, 서로 다른 그림의 감성 편지지를 Word 파일로 무료로 내려받아 컴퓨터에서 바로 쓰세요.",
   path: "/fun/stationery", ogKey: "stationery",
 });
 
 // 편지지 입구 — 빛깔 또는 주제를 고르면 그 모음의 상세페이지로 이동합니다.
 export default function StationeryPage() {
   const sections = stationeryHub();
-  const total = stationery.length;
   return (
     <>
-      <Section as="h1" title="감성 편지지" lead="계절 편지지 80장과 한국 전통문화·장소·정원·동물·하늘·커피·창가 주제 편지지 900장이에요. 빛깔이나 주제를 눌러 펼쳐 보고, 마음에 드는 묶음으로 들어가세요.">
-        <HubDirectory sections={sections} totalLabel={`편지지 ${total.toLocaleString("ko-KR")}장`} searchLabel="편지지 검색" placeholder="검색 (예: 꽃빛, 커피, 전통)" />
+      <Section as="h1" title="감성 편지지" lead="계절 편지지와 한국 전통문화·장소·정원·동물·하늘·커피·창가 주제 편지지예요. 빛깔이나 주제를 눌러 펼쳐 보고, 마음에 드는 묶음으로 들어가세요.">
+        <HubDirectory sections={sections} searchLabel="편지지 검색" placeholder="검색 (예: 꽃빛, 커피, 전통)" />
       </Section>
       <Section><FunCtaBox cta={stationeryCta} from="stationery" /></Section>
       <Section>

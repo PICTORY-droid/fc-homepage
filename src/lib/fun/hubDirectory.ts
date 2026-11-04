@@ -1,10 +1,9 @@
 // 즐길거리 첫 페이지의 '분류별 토글 목록' — 데이터 모양과 검색 규칙(순수 함수). 화면은 components/fun/hub, 목록은 config/funHubs.ts
-export interface HubLink { label: string; href: string; note?: string }
+export interface HubLink { label: string; href: string }
 export interface HubThumb { src: string; alt: string }
 export interface HubEntry {
   key: string;
   title: string;
-  count?: string; // 제목 옆 작은 표시 (예: "50장")
   lead?: string;
   thumbs?: HubThumb[];
   thumbAspect?: number;

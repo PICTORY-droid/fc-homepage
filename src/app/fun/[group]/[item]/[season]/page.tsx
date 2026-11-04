@@ -31,8 +31,7 @@ const find = async (params: Props["params"]) => {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const f = await find(params);
   if (!f) return {};
-  const n = entriesBySeason(f.item, f.season).length;
-  return funMetadata({ title: `${f.season} ${searchTitles[`${f.group.slug}/${f.item.key}`] ?? f.item.title} ${n}종`, description: `${f.season}의 감성으로 만든 ${f.item.title} ${n}종. ${f.item.short}`, path: `/fun/${f.group.slug}/${f.item.key}/${seasonSlug[f.season]}`, ogKey: `${f.group.slug}-${f.item.key}-${seasonSlug[f.season]}` });
+  return funMetadata({ title: `${f.season} ${searchTitles[`${f.group.slug}/${f.item.key}`] ?? f.item.title}`, description: `${f.season}의 감성으로 만든 ${f.item.title}. ${f.item.short}`, path: `/fun/${f.group.slug}/${f.item.key}/${seasonSlug[f.season]}`, ogKey: `${f.group.slug}-${f.item.key}-${seasonSlug[f.season]}` });
 }
 
 // 계절 상세페이지 — 그 계절의 양식만 모아 보여 줍니다. 그림을 누르면 큰 미리보기가 열리고, 상담 안내·클릭 기록도 이 페이지 단위로 쌓여요.
@@ -46,7 +45,7 @@ export default async function PackSeasonPage({ params }: Props) {
   const links = packSeasons.map((s) => ({ slug: seasonSlug[s], label: s, count: entriesBySeason(item, s).length, href: `/fun/${group.slug}/${item.key}/${seasonSlug[s]}` }));
   return (
     <>
-      <Section as="h1" title={`${season} ${item.title} ${list.length}종`} lead={item.short}>
+      <Section as="h1" title={`${season} ${item.title}`} lead={item.short}>
         <SeasonLinks items={links} current={seasonSlug[season]} />
       </Section>
       <Section tone="card">

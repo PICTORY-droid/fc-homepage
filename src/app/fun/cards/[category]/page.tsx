@@ -23,7 +23,7 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const c = getCardCategory((await params).category);
   if (!c) return {};
-  return funMetadata({ title: `${c.label} 명함 템플릿 무료 다운로드 (PPT·SVG)`, description: `${c.short}. 앞뒤 디자인이 모두 다른 ${c.items.length}장을 PPT·SVG로 무료로 받으세요.`, path: `/fun/cards/${c.key}`, ogKey: `cards-${c.key}` });
+  return funMetadata({ title: `${c.label} 명함 템플릿 무료 다운로드 (PPT·SVG)`, description: `${c.short}. 앞뒤 디자인이 모두 다른 명함을 PPT·SVG로 무료로 받으세요.`, path: `/fun/cards/${c.key}`, ogKey: `cards-${c.key}` });
 }
 
 // 분류 페이지 — 명함 50장. 그림을 누르면 앞·뒤 큰 미리보기가 열리고, PPT와 SVG(앞/뒤)를 한글 이름으로 받아요.
@@ -34,7 +34,7 @@ export default async function CardCategoryPage({ params }: Props) {
   return (
     <>
       <JsonLd data={breadcrumbJsonLd([["홈", "/"], ["즐길거리", "/fun"], [`${c.label} 명함`, `/fun/cards/${c.key}`]])} />
-      <Section as="h1" title={`${c.label} 명함`} lead={`${c.short} — 앞뒤 디자인이 모두 다른 ${c.items.length}장이에요.`}>
+      <Section as="h1" title={`${c.label} 명함`} lead={`${c.short} — 앞뒤 디자인이 모두 다른 명함이에요.`}>
         <ul data-reveal="stagger" className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
           {c.items.map((e) => (
             <DownloadCard key={e.no} title={`${String(e.no).padStart(2, "0")}. ${e.title}`} desc={e.tag} thumb={cardThumb(c.key, e.no)} zoom={cardThumb(c.key, e.no)} aspect={CARD_ASPECT}

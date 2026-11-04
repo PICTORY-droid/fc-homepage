@@ -15,18 +15,18 @@ export function StationeryGrid({ items, subs }: { items: Stationery[]; subs: Sub
     return c;
   }, [items]);
   const shown = sub === "all" ? items : items.filter((it) => it.sub === sub);
-  const chip = (key: string, label: string, count: number) => (
+  const chip = (key: string, label: string) => (
     <button key={key} type="button" onClick={() => setSub(key)} aria-pressed={sub === key}
       className={pillClass(sub === key)}>
-      {label} {count}
+      {label}
     </button>
   );
   return (
     <>
       {subs.length > 0 && (
         <div role="group" aria-label="세부 주제 고르기" className="mb-5 flex flex-wrap gap-2">
-          {chip("all", "전체", items.length)}
-          {subs.filter((s) => counts[s.key]).map((s) => chip(s.key, s.label, counts[s.key]))}
+          {chip("all", "전체")}
+          {subs.filter((s) => counts[s.key]).map((s) => chip(s.key, s.label))}
         </div>
       )}
       <ul data-reveal="stagger" className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">

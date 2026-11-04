@@ -21,12 +21,12 @@ export function SheetCollectionView({ c, season }: { c: SheetCollection; season?
   const path = collectionPath(c, season);
   const cta = getFunCta(EXCEL_PACK, item.key);
   const howto = getPackGroup(EXCEL_PACK)?.howto;
-  const seasonPills = [{ key: "all", label: `전체 ${c.count}`, href: collectionPath(c) },
-    ...collectionSeasons(c).map(({ season: s, count }) => ({ key: seasonSlug[s], label: `${s} ${count}`, href: collectionPath(c, s) }))];
+  const seasonPills = [{ key: "all", label: "전체", href: collectionPath(c) },
+    ...collectionSeasons(c).map(({ season: s, count }) => ({ key: seasonSlug[s], label: s, href: collectionPath(c, s) }))];
   return (
     <>
       <JsonLd data={breadcrumbJsonLd([["홈", "/"], ["즐길거리", "/fun"], ["엑셀 서식", "/fun/sheets"], [group?.label ?? "", `/fun/sheets/${c.group}`], [item.title, path]])} />
-      <Section as="h1" title={season ? `${season} ${item.title} ${list.length}종` : `${item.title} — 디자인 ${c.count}가지`} lead={item.short}>
+      <Section as="h1" title={season ? `${season} ${item.title}` : `${item.title} 테마 모음`} lead={item.short}>
         <PillNav label="엑셀 서식 분야" current={c.group} items={sheetGroups.map((g) => ({ key: g.key, label: g.label, href: `/fun/sheets/${g.key}` }))} className="mb-3" />
         <PillNav label="계절별 디자인" current={season ? seasonSlug[season] : "all"} items={seasonPills} />
         <ul data-reveal="stagger" className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">

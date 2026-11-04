@@ -6,12 +6,12 @@ import { funMetadata } from "@/lib/seo/funMeta";
 import { Section } from "@/components/ui/Section";
 import { DownloadCard } from "@/components/fun/DownloadCard";
 import { CollectionCard } from "@/components/fun/CollectionCard";
-import { SHEET_ASPECT, featuredSheets, sheetCardDesc, sheetCollections, sheetDownloadName, sheetFile, sheetGroups, sheetLarge, sheetTemplates, sheetThumb } from "@/config/sheets";
+import { SHEET_ASPECT, featuredSheets, sheetCardDesc, sheetCollections, sheetDownloadName, sheetFile, sheetLarge, sheetThumb } from "@/config/sheets";
 import { textLink } from "@/components/ui/styles";
 
 export const metadata: Metadata = funMetadata({
   title: "엑셀 서식 무료 다운로드 — 가계부·보험 정리표·견적서·취업·소상공인",
-  description: "입사 지원 관리표, 퇴직금 계산표, 가계부, 보험 증권 정리표, 견적서, 출석부, 회비 장부까지 — 입력하면 자동으로 계산되는 엑셀 서식 100종과 디자인 50가지 테마 모음을 무료로 받으세요.",
+  description: "입사 지원 관리표, 퇴직금 계산표, 가계부, 보험 증권 정리표, 견적서, 출석부, 회비 장부까지 — 입력하면 자동으로 계산되는 엑셀 서식과 계절 감성 테마 모음을 무료로 받으세요.",
   path: "/fun/sheets", ogKey: "fun",
 });
 
@@ -19,10 +19,10 @@ export const metadata: Metadata = funMetadata({
 export default function SheetsPage() {
   return (
     <>
-      <Section as="h1" title="생활·업무 엑셀 서식" lead={`취업·업무·소상공인·가계·학습·모임까지 ${sheetGroups.length}개 분야, 서식 ${sheetTemplates.length}종과 테마 모음 ${sheetCollections.length}가지예요. 입력 칸에 적으면 합계와 요약이 자동으로 채워져요.`}>
-        <HubDirectory sections={sheetsHub()} totalLabel={`분야 ${sheetGroups.length}개 · 서식 ${sheetTemplates.length}종`} searchLabel="엑셀 서식 분야 검색" placeholder="검색 (예: 가계부, 견적서)" />
+      <Section as="h1" title="생활·업무 엑셀 서식" lead={`취업·업무·소상공인·가계·학습·모임까지 분야별 서식과 테마 모음이에요. 입력 칸에 적으면 합계와 요약이 자동으로 채워져요.`}>
+        <HubDirectory sections={sheetsHub()} searchLabel="엑셀 서식 분야 검색" placeholder="검색 (예: 가계부, 견적서)" />
       </Section>
-      <Section tone="card" title="테마 모음" lead="가계부·보험 증권 정리표·저축 플래너·경조사비 장부·용돈기입장·견적서를 계절 감성 디자인 50가지씩 만들었어요.">
+      <Section tone="card" title="테마 모음" lead="가계부·보험 증권 정리표·저축 플래너·경조사비 장부·용돈기입장·견적서를 계절 감성 디자인으로 만들었어요.">
         <ul data-reveal="stagger" className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {sheetCollections.map((c) => <CollectionCard key={c.item.key} c={c} />)}
         </ul>

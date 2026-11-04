@@ -23,7 +23,7 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const g = getSheetGroup((await params).group);
   if (!g) return {};
-  return funMetadata({ title: `${g.label} 엑셀 서식 무료 다운로드 ${g.items.length}종`, description: `${g.short} — 입력하면 자동으로 계산되는 ${g.label} 엑셀 서식 ${g.items.length}종을 무료로 받으세요.`, path: `/fun/sheets/${g.key}`, ogKey: "fun" });
+  return funMetadata({ title: `${g.label} 엑셀 서식 무료 다운로드`, description: `${g.short} — 입력하면 자동으로 계산되는 ${g.label} 엑셀 서식을 무료로 받으세요.`, path: `/fun/sheets/${g.key}`, ogKey: "fun" });
 }
 
 // 분야 페이지 — 테마 모음(디자인 50가지 묶음)이 있으면 먼저 보여 주고, 아래에 서식 카드 목록. 그림을 누르면 입력·요약 화면이 크게 열리고, 엑셀 파일을 한글 이름으로 받아요.
@@ -34,18 +34,18 @@ export default async function SheetGroupPage({ params }: Props) {
   return (
     <>
       <JsonLd data={breadcrumbJsonLd([["홈", "/"], ["즐길거리", "/fun"], ["엑셀 서식", "/fun/sheets"], [g.label, path]])} />
-      <Section as="h1" title={`${g.label} 엑셀 서식`} lead={`${g.short} — ${g.items.length}종${g.collections.length ? `과 테마 모음 ${g.collections.length}가지` : ""}이에요.`}>
+      <Section as="h1" title={`${g.label} 엑셀 서식`} lead={`${g.short}${g.collections.length ? " — 서식과 테마 모음이 함께 있어요." : ""}`}>
         <PillNav label="엑셀 서식 분야" current={g.key} items={sheetGroups.map((x) => ({ key: x.key, label: x.label, href: `/fun/sheets/${x.key}` }))} />
         {g.collections.length > 0 && (
           <div className="mb-10">
             <h2 className="text-lg font-bold text-ink">테마 모음</h2>
-            <p className="mt-1 text-sm text-ink-sub">같은 양식을 계절 감성 디자인 50가지로 만들었어요. 마음에 드는 색을 골라 받으세요.</p>
+            <p className="mt-1 text-sm text-ink-sub">같은 양식을 계절 감성 디자인으로 만들었어요. 마음에 드는 색을 골라 받으세요.</p>
             <ul data-reveal="stagger" className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {g.collections.map((c) => <CollectionCard key={c.item.key} c={c} />)}
             </ul>
           </div>
         )}
-        {g.collections.length > 0 && <h2 className="mb-4 text-lg font-bold text-ink">서식 {g.items.length}종</h2>}
+        {g.collections.length > 0 && <h2 className="mb-4 text-lg font-bold text-ink">서식</h2>}
         <ul data-reveal="stagger" className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {g.items.map((t) => (
             <DownloadCard key={t.id} title={t.title} desc={sheetCardDesc(t)} thumb={sheetThumb(t)} zoom={sheetLarge(t)} aspect={SHEET_ASPECT}

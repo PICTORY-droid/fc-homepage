@@ -5,7 +5,7 @@ import { HubDirectory } from "@/components/fun/hub/HubDirectory";
 import { packHub } from "@/config/funHubs";
 import { notFound, permanentRedirect } from "next/navigation";
 import { Section } from "@/components/ui/Section";
-import { EXCEL_PACK, getGroup, packEntries, packGroups } from "@/config/pack";
+import { EXCEL_PACK, getGroup, packGroups } from "@/config/pack";
 import { textLink } from "@/components/ui/styles";
 
 type Props = { params: Promise<{ group: string }> };
@@ -29,7 +29,7 @@ export default async function PackGroupPage({ params }: Props) {
   return (
     <>
       <Section as="h1" title={g.title} lead={g.lead}>
-        <HubDirectory sections={packHub(g)} totalLabel={`묶음 ${g.items.length}개 · ${g.items.reduce((n, it) => n + packEntries(it).length, 0)}종`} searchLabel={`${g.title} 검색`} placeholder="검색 (예: 발표, 돌잔치)" />
+        <HubDirectory sections={packHub(g)} searchLabel={`${g.title} 검색`} placeholder="검색 (예: 발표, 돌잔치)" />
       </Section>
       <Section>
         <p className="text-sm text-ink-sub">{g.howto}</p>

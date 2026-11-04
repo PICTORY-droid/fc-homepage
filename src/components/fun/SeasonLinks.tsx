@@ -17,7 +17,7 @@ export function SeasonLinks({ items, current }: { items: SeasonLink[]; current?:
             {g.list.map((s) => (
               <Link key={s.slug} href={s.href} aria-current={s.slug === current ? "page" : undefined}
                 className={pillClass(s.slug === current, "flex-col !px-2 py-1 text-center leading-tight")}>
-                {s.label}<span className="text-xs font-semibold opacity-70">{s.count}종</span>
+                {s.label}
               </Link>
             ))}
           </div>

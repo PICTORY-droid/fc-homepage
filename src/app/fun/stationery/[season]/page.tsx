@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const key = (await params).season;
   const s = seasons.find((x) => x.key === key);
   if (!s) return {};
-  return funMetadata({ title: `${s.label} 편지지 무료 다운로드 ${stationeryBySeason(s.key).length}장`, description: `${s.lead}. ${s.label} 편지지 ${stationeryBySeason(s.key).length}장을 Word·PNG로 무료로 받으세요.`, path: `/fun/stationery/${s.key}`, ogKey: `stationery-${s.key}` });
+  return funMetadata({ title: `${s.label} 편지지 무료 다운로드`, description: `${s.lead}. ${s.label} 편지지를 Word·PNG로 무료로 받으세요.`, path: `/fun/stationery/${s.key}`, ogKey: `stationery-${s.key}` });
 }
 
 // 계절 상세페이지 — 그 모음의 편지지. 그림을 누르면 큰 미리보기가 열리고, 상담 안내·클릭 기록도 이 페이지 단위로 쌓여요.
@@ -38,7 +38,7 @@ export default async function StationerySeasonPage({ params }: Props) {
   return (
     <>
       <JsonLd data={breadcrumbJsonLd([["홈", "/"], ["즐길거리", "/fun"], [`${s.label} 편지지`, `/fun/stationery/${s.key}`]])} />
-      <Section as="h1" title={`${s.label} 편지지 ${list.length}장`} lead={s.lead}>
+      <Section as="h1" title={`${s.label} 편지지`} lead={s.lead}>
         <SeasonLinks items={links} current={s.key} />
       </Section>
       <Section tone="card">
