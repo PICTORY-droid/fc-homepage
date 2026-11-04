@@ -4,7 +4,6 @@ import { Section } from "@/components/ui/Section";
 import { BulletList } from "@/components/ui/BulletList";
 import { ButtonLink } from "@/components/ui/Button";
 import { site } from "@/config/site";
-import { productsMeta } from "@/config/products";
 import { textLink } from "@/components/ui/styles";
 
 export const metadata: Metadata = {
@@ -54,14 +53,14 @@ export default function GuidePage() {
           </div>
         </div>
       </Section>
-      <Section title="상품 정보, 이렇게 안내해 드려요">
+      <Section title="상품 정보 안내">
         <BulletList className="space-y-3 text-ink" items={[
-          "우체국보험 상품요약서·사업방법서와 우정사업본부 고시를 바탕으로, 꼭 필요한 내용을 알기 쉽게 정리해 드려요. 상품마다 언제 기준으로 정리한 내용인지 날짜도 함께 적어 두었어요.",
-          `지금 판매 중인 상품만 소개해 드려요. (참고: ${productsMeta.source}, ${productsMeta.asOf} 확인)`,
-          "온라인으로만 가입하는 상품(e마크)과 판매가 끝난 상품은 이곳에서 소개하지 않아요.",
-          "보험금을 언제, 얼마나 받으시는지는 각 상품의 약관과 상품설명서에 적힌 내용이 기준이에요.",
+          "현재 판매 중인 상품 안내",
+          "상품요약서·약관 기준의 쉬운 설명",
+          "상품별 정보 기준일 표시",
+          "온라인 전용·판매 종료 상품 제외",
         ]} />
-        <p className="mt-4 text-sm text-ink-sub">보험료와 보장 내용은 나이·건강 상태 같은 가입 조건에 따라 달라질 수 있어요. 가입하시기 전에 상품설명서와 약관을 꼭 함께 확인해 주세요.</p>
+        <p className="mt-4 text-sm text-ink-sub">보험료와 보장 내용은 가입 조건에 따라 달라질 수 있어요. 가입 전 상품설명서와 약관을 꼭 확인해 주세요.</p>
       </Section>
       <Section title="공식 채널에서 확인하세요" tone="card">
         <div className="flex flex-col gap-3 sm:flex-row">
