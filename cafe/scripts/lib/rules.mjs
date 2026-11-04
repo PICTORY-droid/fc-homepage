@@ -57,6 +57,7 @@ export function checkConfig(cfg) {
   // A13 가입 안내문·가입 질문 — 광고 표현 검사, 개인정보 최소 수집(가입 질문으로 연락처·주민번호 등 묻지 않기)
   const guide = cfg.joinSettings?.joinGuide ?? "";
   if (/<[^>]+>/.test(guide)) r.push(err("A13", "가입 안내문에는 HTML 태그를 쓸 수 없음"));
+  if (L.joinGuide && len(guide) > L.joinGuide) r.push(err("A13", `가입 안내문 ${len(guide)}자 — ${L.joinGuide}자 이내(네이버 기준)`));
   for (const w of [...FORBIDDEN, ...COMPARE, ...REWARD, ...BANNED]) if (guide.includes(w)) r.push(err("A13", `가입 안내문에 "${w}"`));
   if (!guide.includes("공식 카페가 아닙니다")) r.push(err("A13", "가입 안내문에 '공식 카페가 아닙니다' 고지 필요"));
   const qs = cfg.joinSettings?.joinQuestions ?? [];
