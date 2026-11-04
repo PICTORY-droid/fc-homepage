@@ -343,8 +343,8 @@
       "file": "assets/banner-main.png",
       "source": "assets/banner-main.html",
       "size": "1440x240",
-      "url": "https://fc-homepage.vercel.app/consult?utm_source=naver_cafe&utm_medium=cafe&utm_campaign=cafe_banner",
-      "alt": "우체국보험 길잡이. 우체국보험, 공식 자료로 쉽게 정리해요. 실비 청구 서류, 암·치아·어린이 보험, 대한민국엄마보험. 1:1 상담 신청하기. 우체국보험 FC 운영, 우체국 공식 카페가 아닙니다."
+      "url": "https://fc-homepage.vercel.app/?utm_source=naver_cafe&utm_medium=cafe&utm_campaign=cafe_banner",
+      "alt": "우체국보험, 공식 자료로 쉽게 정리해요"
     }
   ]
 }
