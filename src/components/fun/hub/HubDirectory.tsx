@@ -91,11 +91,11 @@ export function HubDirectory({ sections, searchLabel, placeholder, modes, modeCt
               <li key={m.key}>
                 <button type="button" aria-pressed={on} onClick={() => pickMode(m.key)}
                   className={`group flex h-full w-full flex-col gap-3 rounded-card border bg-paper p-6 text-left transition duration-200 hover:-translate-y-0.5 hover:border-brand hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink ${on ? "border-brand-deep shadow-md" : "border-ink/10"}`}>
-                  {/* 한 줄: 아이콘 · 제목 · (오른쪽) 직무 고르기 버튼 / 아래: 설명 */}
-                  <span className="flex w-full items-center gap-3">
+                  {/* 한 줄: 아이콘 · 제목 · (오른쪽) 직무 고르기 버튼 / 아래: 설명 — 좁은 화면에서도 제목이 가려지지 않게 버튼 글자는 짧게, 모자라면 버튼만 아랫줄로 */}
+                  <span className="flex w-full flex-wrap items-center gap-2 sm:gap-3">
                     {m.icon && <span aria-hidden="true" className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl text-2xl transition duration-200 ${on ? "bg-brand" : "bg-brand-soft"}`}>{m.icon}</span>}
-                    <span className="min-w-0 flex-1 text-xl font-bold text-ink">{m.label}</span>
-                    <span className={buttonClass(on ? "primary" : "soft", "sm", "pointer-events-none shrink-0")}>{on ? `${m.label} 선택됨` : modeCta} <span aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-1">→</span></span>
+                    <span className="flex-1 whitespace-nowrap text-lg font-bold text-ink sm:text-xl">{m.label}</span>
+                    <span className={buttonClass(on ? "primary" : "soft", "sm", "pointer-events-none shrink-0")}>{modeCta} <span aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-1">→</span></span>
                   </span>
                   <span className="text-sm leading-relaxed text-ink-sub">{m.desc}</span>
                 </button>
