@@ -29,6 +29,17 @@ export function checkConfig(cfg) {
   const intro = cfg.brand.intro;
   if (len(intro) > L.intro) r.push(err("A2", `카페 소개 ${len(intro)}자 — ${L.intro}자 이내`));
   for (const k of cfg.brand.introKeywords) if (!intro.includes(k)) r.push(warn("A2", `카페 소개에 핵심 키워드 "${k}" 없음`));
+  if (/<[^>]+>/.test(intro)) r.push(err("A2", "카페 설명에는 HTML 태그를 쓸 수 없음"));
+  if (cfg.brand.mobileName && len(cfg.brand.mobileName) > L.name) r.push(err("A1", `모바일 카페 이름 ${len(cfg.brand.mobileName)}자 — ${L.name}자 이내`));
+  // A12 카페 검색어 — 네이버가 공백을 붙여 한 단어로 등록하므로 처음부터 붙여 쓰고, 카페와 관련 있는 말만
+  const sk = cfg.brand.searchKeywords ?? [];
+  if (!sk.length) r.push(err("A12", "카페 검색어가 없음"));
+  for (const k of sk) {
+    if (/\s/.test(k)) r.push(err("A12", `검색어 "${k}" 에 공백 — 붙여 써야 함`));
+    if (!/우체국|보험|실비|실손/.test(k)) r.push(warn("A12", `검색어 "${k}" 가 카페 주제(우체국보험)와 멀어 보임`));
+    for (const w of [...FORBIDDEN, ...COMPARE]) if (k.includes(w)) r.push(err("A12", `검색어 "${k}" 에 금지·비교 표현 "${w}"`));
+  }
+  if (new Set(sk).size !== sk.length) r.push(err("A12", "검색어 중복"));
   const boards = cfg.menus.flatMap((g) => g.boards.map((b) => ({ ...b, group: g.group, hidden: !!g.hiddenUntilReady })));
   for (const a of cfg.requiredAreas) if (!boards.some((b) => b.area === a && !b.hidden)) r.push(err("A3", `필수 영역(${a}) 게시판이 없음`));
   const seen = new Set();

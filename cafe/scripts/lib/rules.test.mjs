@@ -23,6 +23,14 @@ describe("카페 설정 검사(A)", () => {
     c.grades[1].perks.push("기프티콘 추첨");
     expect(codes(checkConfig(c))).toContain("A10");
   });
+  it("카페 설명 50자 초과·공백 들어간 검색어를 막는다", () => {
+    const c = structuredClone(cfg);
+    c.brand.intro = "가".repeat(51);
+    c.brand.searchKeywords = ["우체국 실비"];
+    const got = codes(checkConfig(c));
+    expect(got).toContain("A2");
+    expect(got).toContain("A12");
+  });
   it("제휴 메뉴를 바로 공개하면 막는다", () => {
     const c = structuredClone(cfg);
     c.menus.find((g) => g.group === "제휴 입점").hiddenUntilReady = false;
