@@ -3,7 +3,7 @@
 새 채팅에서 이 파일을 먼저 읽고 이어서 작업하세요. (저장소: PICTORY-droid/fc-homepage, 브랜치 feat/game → main)
 
 ## 1. 목적
-- 우체국보험 FC 홈페이지(https://fc-homepage.vercel.app)로 유입을 늘리기 위한 노션 사이트 "양식노트" 제작.
+- 우체국보험 FC 홈페이지(https://korea-bohum.vercel.app)로 유입을 늘리기 위한 노션 사이트 "양식노트" 제작.
 - 노션 글 작성은 Claude가 모두 담당, 사용자는 "웹에 게시(Publish to web)" 버튼만 직접 누름.
 - 사용자 원래 목표: 중복 없는 글 500개 이상. Claude 권고: 1차 약 40페이지 → 2주 트래픽 확인 → 확장. 유사도 검사 필수.
 
@@ -27,7 +27,7 @@ PPT 템플릿 / 엑셀 양식 / 워드·인쇄물 / 계절별 모음 / 사용법
 
 ## 5. FC 홈페이지 연결 방식
 - 글마다 FC 홈페이지 링크 1개, 글마다 다른 utm_campaign.
-- 예: https://fc-homepage.vercel.app/fun/ppt-pro?utm_source=notion&utm_medium=blog&utm_campaign=bday_ppt
+- 예: https://korea-bohum.vercel.app/fun/ppt-pro?utm_source=notion&utm_medium=blog&utm_campaign=bday_ppt
 - 사이트는 utm_source/medium/campaign을 sessionStorage로 기록(track.ts).
 - 양식 사용/상업 이용 조건은 사이트의 이용 안내를 확인한 뒤에만 글에 쓴다(미확인 상태에서 단정 금지).
 

@@ -45,4 +45,4 @@ sources: [https://www.epostlife.go.kr, https://epostlife.go.kr/IPCCFQ0001.do]
 - **보철 치료**: 보철 치료 보장이 필요하면 보철치료보장특약을 함께 살펴보세요. 보장 범위는 약관에서 확인해 주세요.
 - **밀린 보험료**: 스케일링 치료자금은 지급일에 미납 보험료가 없어야 받을 수 있어요.
 
-치아 보장을 어떻게 준비할지 고민되시면 [상담 신청](https://fc-homepage.vercel.app/consult)을 남겨 주세요.
+치아 보장을 어떻게 준비할지 고민되시면 [상담 신청](https://korea-bohum.vercel.app/consult)을 남겨 주세요.

@@ -48,4 +48,4 @@ sources: [https://www.epostlife.go.kr, https://epostlife.go.kr/IPCCFQ0001.do]
 
 우체국 실손의료비보험은 스마트보험, 홈페이지, 전화(TM) 같은 비대면으로는 가입할 수 없어요. 가까운 우체국 금융창구(평일 09:00~16:30)를 방문하거나 우체국 FC와 상담한 뒤 가입해요.
 
-나이와 지금 가입한 보험에 따라 맞는 상품이 달라요. 함께 살펴보고 싶으시면 [상담 신청](https://fc-homepage.vercel.app/consult)을 남겨 주세요. 상담 신청만으로 가입이 진행되지는 않아요.
+나이와 지금 가입한 보험에 따라 맞는 상품이 달라요. 함께 살펴보고 싶으시면 [상담 신청](https://korea-bohum.vercel.app/consult)을 남겨 주세요. 상담 신청만으로 가입이 진행되지는 않아요.

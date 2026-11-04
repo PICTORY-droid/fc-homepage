@@ -16,7 +16,7 @@ const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replac
 /** 홈페이지 링크에만 유입 표시(UTM)를 붙입니다 — 관리자 통계에서 카페 유입·상담 전환을 글별로 봅니다. */
 const withUtm = (slug) => (u) => {
   const url = new URL(u);
-  if (url.host !== "fc-homepage.vercel.app") return u;
+  if (url.host !== "korea-bohum.vercel.app") return u;
   url.searchParams.set("utm_source", cfg.links.utm.source);
   url.searchParams.set("utm_medium", cfg.links.utm.medium);
   url.searchParams.set("utm_campaign", slug);

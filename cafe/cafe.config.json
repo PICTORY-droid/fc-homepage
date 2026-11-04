@@ -53,7 +53,7 @@
             "icon": "📮",
             "text": "우체국보험 길잡이 홈페이지에서 더 자세히 보기",
             "style": "light",
-            "url": "https://fc-homepage.vercel.app/?utm_source=naver_cafe&utm_medium=cafe&utm_campaign=board_banner",
+            "url": "https://korea-bohum.vercel.app/?utm_source=naver_cafe&utm_medium=cafe&utm_campaign=board_banner",
             "file": "assets/boards/board-01.png",
             "size": "1440x240",
             "alt": "우체국보험 길잡이 홈페이지에서 더 자세히 보기"
@@ -68,7 +68,7 @@
             "icon": "🔍",
             "text": "30초 보장 점검으로 내 보험 먼저 살펴보기",
             "style": "tint",
-            "url": "https://fc-homepage.vercel.app/find?utm_source=naver_cafe&utm_medium=cafe&utm_campaign=board_banner",
+            "url": "https://korea-bohum.vercel.app/find?utm_source=naver_cafe&utm_medium=cafe&utm_campaign=board_banner",
             "file": "assets/boards/board-02.png",
             "size": "1440x240",
             "alt": "30초 보장 점검으로 내 보험 먼저 살펴보기"
@@ -83,7 +83,7 @@
             "icon": "✉️",
             "text": "새 양식, 무료 자료실에서 먼저 받아 보세요",
             "style": "light",
-            "url": "https://fc-homepage.vercel.app/fun?utm_source=naver_cafe&utm_medium=cafe&utm_campaign=board_banner",
+            "url": "https://korea-bohum.vercel.app/fun?utm_source=naver_cafe&utm_medium=cafe&utm_campaign=board_banner",
             "file": "assets/boards/board-03.png",
             "size": "1440x240",
             "alt": "새 양식, 무료 자료실에서 먼저 받아 보세요"
@@ -103,7 +103,7 @@
             "icon": "🏥",
             "text": "우체국 실비, 나에게 맞는 상품 상담하기",
             "style": "tint",
-            "url": "https://fc-homepage.vercel.app/consult?utm_source=naver_cafe&utm_medium=cafe&utm_campaign=board_banner",
+            "url": "https://korea-bohum.vercel.app/consult?utm_source=naver_cafe&utm_medium=cafe&utm_campaign=board_banner",
             "file": "assets/boards/board-04.png",
             "size": "1440x240",
             "alt": "우체국 실비, 나에게 맞는 상품 상담하기"
@@ -118,7 +118,7 @@
             "icon": "🩺",
             "text": "암·건강보험, 1:1 보장 상담 신청하기",
             "style": "tint",
-            "url": "https://fc-homepage.vercel.app/consult?utm_source=naver_cafe&utm_medium=cafe&utm_campaign=board_banner",
+            "url": "https://korea-bohum.vercel.app/consult?utm_source=naver_cafe&utm_medium=cafe&utm_campaign=board_banner",
             "file": "assets/boards/board-05.png",
             "size": "1440x240",
             "alt": "암·건강보험, 1:1 보장 상담 신청하기"
@@ -133,7 +133,7 @@
             "icon": "🤰",
             "text": "보험료 무료 대한민국엄마보험 자세히 보기",
             "style": "tint",
-            "url": "https://fc-homepage.vercel.app/products/P030?utm_source=naver_cafe&utm_medium=cafe&utm_campaign=board_banner",
+            "url": "https://korea-bohum.vercel.app/products/P030?utm_source=naver_cafe&utm_medium=cafe&utm_campaign=board_banner",
             "file": "assets/boards/board-06.png",
             "size": "1440x240",
             "alt": "보험료 무료 대한민국엄마보험 자세히 보기"
@@ -148,7 +148,7 @@
             "icon": "📘",
             "text": "판매 중인 우체국보험 상품 한눈에 보기",
             "style": "light",
-            "url": "https://fc-homepage.vercel.app/products?utm_source=naver_cafe&utm_medium=cafe&utm_campaign=board_banner",
+            "url": "https://korea-bohum.vercel.app/products?utm_source=naver_cafe&utm_medium=cafe&utm_campaign=board_banner",
             "file": "assets/boards/board-07.png",
             "size": "1440x240",
             "alt": "판매 중인 우체국보험 상품 한눈에 보기"
@@ -163,7 +163,7 @@
             "icon": "🧮",
             "text": "노후 준비, 은퇴 생활비 계산기로 먼저 그려 보기",
             "style": "light",
-            "url": "https://fc-homepage.vercel.app/tools?utm_source=naver_cafe&utm_medium=cafe&utm_campaign=board_banner#retire",
+            "url": "https://korea-bohum.vercel.app/tools?utm_source=naver_cafe&utm_medium=cafe&utm_campaign=board_banner#retire",
             "file": "assets/boards/board-08.png",
             "size": "1440x240",
             "alt": "노후 준비, 은퇴 생활비 계산기로 먼저 그려 보기"
@@ -183,7 +183,7 @@
             "icon": "🧾",
             "text": "청구 전에 가입한 보장부터 점검해 보세요",
             "style": "tint",
-            "url": "https://fc-homepage.vercel.app/find?utm_source=naver_cafe&utm_medium=cafe&utm_campaign=board_banner",
+            "url": "https://korea-bohum.vercel.app/find?utm_source=naver_cafe&utm_medium=cafe&utm_campaign=board_banner",
             "file": "assets/boards/board-09.png",
             "size": "1440x240",
             "alt": "청구 전에 가입한 보장부터 점검해 보세요"
@@ -198,7 +198,7 @@
             "icon": "📱",
             "text": "가입한 보험, 1:1 보장 점검 받기",
             "style": "light",
-            "url": "https://fc-homepage.vercel.app/consult?utm_source=naver_cafe&utm_medium=cafe&utm_campaign=board_banner",
+            "url": "https://korea-bohum.vercel.app/consult?utm_source=naver_cafe&utm_medium=cafe&utm_campaign=board_banner",
             "file": "assets/boards/board-10.png",
             "size": "1440x240",
             "alt": "가입한 보험, 1:1 보장 점검 받기"
@@ -218,7 +218,7 @@
             "icon": "💬",
             "text": "답이 더 필요하면 1:1 상담 신청하기",
             "style": "deep",
-            "url": "https://fc-homepage.vercel.app/consult?utm_source=naver_cafe&utm_medium=cafe&utm_campaign=board_banner",
+            "url": "https://korea-bohum.vercel.app/consult?utm_source=naver_cafe&utm_medium=cafe&utm_campaign=board_banner",
             "file": "assets/boards/board-11.png",
             "size": "1440x240",
             "alt": "답이 더 필요하면 1:1 상담 신청하기"
@@ -233,7 +233,7 @@
             "icon": "📝",
             "text": "무료 편지지·엑셀·이력서 양식 받기",
             "style": "light",
-            "url": "https://fc-homepage.vercel.app/fun?utm_source=naver_cafe&utm_medium=cafe&utm_campaign=board_banner",
+            "url": "https://korea-bohum.vercel.app/fun?utm_source=naver_cafe&utm_medium=cafe&utm_campaign=board_banner",
             "file": "assets/boards/board-12.png",
             "size": "1440x240",
             "alt": "무료 편지지·엑셀·이력서 양식 받기"
@@ -254,7 +254,7 @@
             "icon": "☎️",
             "text": "1:1 보험 상담 신청하기",
             "style": "deep",
-            "url": "https://fc-homepage.vercel.app/consult?utm_source=naver_cafe&utm_medium=cafe&utm_campaign=board_banner",
+            "url": "https://korea-bohum.vercel.app/consult?utm_source=naver_cafe&utm_medium=cafe&utm_campaign=board_banner",
             "file": "assets/boards/board-13.png",
             "size": "1440x240",
             "alt": "1:1 보험 상담 신청하기"
@@ -274,7 +274,7 @@
             "icon": "📮",
             "text": "더 많은 무료 양식은 홈페이지 자료실에서",
             "style": "tint",
-            "url": "https://fc-homepage.vercel.app/fun?utm_source=naver_cafe&utm_medium=cafe&utm_campaign=board_banner",
+            "url": "https://korea-bohum.vercel.app/fun?utm_source=naver_cafe&utm_medium=cafe&utm_campaign=board_banner",
             "file": "assets/boards/board-14.png",
             "size": "1440x240",
             "alt": "더 많은 무료 양식은 홈페이지 자료실에서"
@@ -297,7 +297,7 @@
             "icon": "☎️",
             "text": "1:1 보험 상담 신청하기",
             "style": "deep",
-            "url": "https://fc-homepage.vercel.app/consult?utm_source=naver_cafe&utm_medium=cafe&utm_campaign=board_banner",
+            "url": "https://korea-bohum.vercel.app/consult?utm_source=naver_cafe&utm_medium=cafe&utm_campaign=board_banner",
             "file": "assets/boards/board-15.png",
             "size": "1440x240",
             "alt": "1:1 보험 상담 신청하기"
@@ -409,12 +409,12 @@
     "service": "계약 변경·해지·민원은 우체국보험 고객센터(1599-0100)로 문의해 주세요.",
     "consult": {
       "label": "가입·보장 상담 신청하기",
-      "url": "https://fc-homepage.vercel.app/consult"
+      "url": "https://korea-bohum.vercel.app/consult"
     }
   },
   "links": {
     "allowedHosts": [
-      "fc-homepage.vercel.app",
+      "korea-bohum.vercel.app",
       "www.epostlife.go.kr",
       "epostlife.go.kr",
       "www.law.go.kr",
@@ -480,7 +480,7 @@
       "file": "assets/banner-main.png",
       "source": "assets/banner-main.html",
       "size": "1440x240",
-      "url": "https://fc-homepage.vercel.app/?utm_source=naver_cafe&utm_medium=cafe&utm_campaign=cafe_banner",
+      "url": "https://korea-bohum.vercel.app/?utm_source=naver_cafe&utm_medium=cafe&utm_campaign=cafe_banner",
       "alt": "우체국보험, 공식 자료로 쉽게 정리해요"
     }
   ]

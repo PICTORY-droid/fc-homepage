@@ -43,4 +43,4 @@ sources: [https://www.epostlife.go.kr, https://www.epostlife.go.kr/ISDMDM00AS.do
 - **보장 기간**: 아이 보장은 10년, 엄마 보장은 분만할 때까지(최대 10개월)예요. 두 기간이 다르다는 점을 기억해 두세요.
 - **다른 태아보험과 함께**: 이미 준비 중인 태아보험이 있다면 보장이 겹치는 부분과 빈 부분을 함께 비교해 보시면 좋아요.
 
-가입 조건이나 보장 범위가 헷갈리시면 [상담 신청](https://fc-homepage.vercel.app/consult)을 남겨 주세요. 함께 확인해 드려요.
+가입 조건이나 보장 범위가 헷갈리시면 [상담 신청](https://korea-bohum.vercel.app/consult)을 남겨 주세요. 함께 확인해 드려요.
