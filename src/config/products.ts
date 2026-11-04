@@ -19,6 +19,8 @@ export interface Product extends Omit<RawProduct, "group"> {
   slogan?: { tags: string[]; headline: string };
   /** public/products/<id>.webp, <id>-thumb.webp 가 있으면 true */
   image: boolean;
+  /** 우체국보험 공식 홈페이지의 바로 가입 화면 — 있으면 상세 페이지의 첫 버튼이 '바로 가입하기'가 됩니다. */
+  applyUrl?: string;
 }
 
 export const productsMeta = {
@@ -43,6 +45,9 @@ const TOPIC: Record<string, ConsultTopic> = {
 
 // 목록에 표시할 이름 (엑셀 상품명에 설명 문구가 붙은 경우만)
 const DISPLAY_NAME: Record<string, string> = { P030: "우체국대한민국엄마보험" };
+
+// 공식 홈페이지에서 바로 가입하는 상품 — 우체국보험 공식 주소(epostlife.go.kr)만 넣습니다.
+const APPLY_URL: Record<string, string> = { P030: "https://www.epostlife.go.kr/IGDRDM00AT.do?gdsCd=P600149" };
 
 // 보유 중인 상품 안내 이미지(홍보 카드)의 문구 — 이미지에 적힌 내용 그대로입니다.
 const SLOGAN: Record<string, { tags: string[]; headline: string }> = {
@@ -94,6 +99,7 @@ export const products: Product[] = (raw as RawProduct[]).map((r) => ({
   topic: TOPIC[r.id] ?? "other",
   slogan: SLOGAN[r.id],
   image: HAS_IMAGE.has(r.id),
+  applyUrl: APPLY_URL[r.id],
 }));
 
 export const TOPIC_IDS = Object.keys(TOPIC);

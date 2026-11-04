@@ -92,7 +92,9 @@ export default async function ProductPage({ params }: Props) {
                 ))}
               </dl>
               <div className="mt-5 flex flex-col gap-3 sm:flex-row">
-                <ButtonLink href="#consult">이 상품 상담하기</ButtonLink>
+                {p.applyUrl
+                  ? <ButtonLink href={p.applyUrl} external trackLabel={`apply/${p.id}`}>바로 가입하기</ButtonLink>
+                  : <ButtonLink href="#consult">이 상품 상담하기</ButtonLink>}
                 <ButtonLink href="/products" variant="outline">다른 상품 보기</ButtonLink>
               </div>
             </div>

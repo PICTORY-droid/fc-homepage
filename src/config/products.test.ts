@@ -24,4 +24,9 @@ describe("products", () => {
   it("관련 상품은 자기 자신을 포함하지 않는다", () => {
     expect(relatedProducts("P001").some((p) => p.id === "P001")).toBe(false);
   });
+  it("바로 가입 링크는 우체국보험 공식 주소(https://www.epostlife.go.kr)만 쓴다", () => {
+    const withApply = products.filter((p) => p.applyUrl);
+    expect(withApply.map((p) => p.id)).toContain("P030");
+    for (const p of withApply) expect(new URL(p.applyUrl!).origin, p.id).toBe("https://www.epostlife.go.kr");
+  });
 });
