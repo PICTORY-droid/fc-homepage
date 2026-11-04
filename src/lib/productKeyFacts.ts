@@ -8,6 +8,7 @@ const MAX_VALUE_LENGTH = 34;
 
 // 같은 의미의 항목명을 한 카드로 묶어, 상품마다 같은 순서로 보이게 합니다.
 const PRIORITY: { title: string; labels: string[] }[] = [
+  { title: "보험료", labels: ["보험료"] }, // 보험료를 내지 않는 공익보험(예: 대한민국엄마보험)에서만 쓰는 항목
   { title: "보험기간", labels: ["보험기간"] },
   { title: "가입나이", labels: ["가입나이", "가입 나이"] },
   { title: "납입", labels: ["납입기간·주기", "납입기간", "납입주기"] },
