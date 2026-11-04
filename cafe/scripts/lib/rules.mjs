@@ -49,7 +49,7 @@ export function checkConfig(cfg) {
   for (const b of boards.filter((x) => x.area === "review")) if (b.operatorWrite !== false) r.push(err("A6", `후기 게시판(${b.name})은 운영자가 쓰지 않도록 operatorWrite:false 필요`));
   for (const b of boards.filter((x) => x.area === "consult")) if (b.kind !== "link") r.push(err("A7", `상담 게시판(${b.name})은 카페 안에서 연락처를 받지 않도록 링크(kind:"link")여야 함`));
   for (const g of cfg.menus.filter((x) => /제휴/.test(x.group))) if (!g.hiddenUntilReady) r.push(err("A8", "제휴 입점 메뉴는 규정 확인 전까지 비공개(hiddenUntilReady)"));
-  const keys = ["visits", "posts", "comments", "joinDays"];
+  const keys = ["posts", "comments", "visits", "likes", "joinWeeks"];
   cfg.grades.forEach((g, i) => {
     if (i > 0) for (const k of keys) if (g[k] < cfg.grades[i - 1][k]) r.push(err("A9", `등급 ${g.name} 의 ${k} 조건이 앞 등급보다 낮음`));
     for (const p of g.perks) for (const w of [...REWARD, "할인", "무료 상담 우선"]) if (p.includes(w)) r.push(err("A10", `등급 ${g.name} 혜택 "${p}" — 금전·경품성 혜택 금지("${w}")`));

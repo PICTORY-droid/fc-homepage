@@ -211,11 +211,13 @@
   "grades": [
     {
       "name": "새싹",
+      "desc": "가입을 환영해요. 질문부터 남겨 보세요",
       "auto": true,
-      "visits": 0,
       "posts": 0,
       "comments": 0,
-      "joinDays": 0,
+      "visits": 0,
+      "likes": 0,
+      "joinWeeks": 0,
       "perks": [
         "모든 글 읽기",
         "가입 인사·보험 질문방 글쓰기",
@@ -224,11 +226,13 @@
     },
     {
       "name": "이웃",
+      "desc": "카페와 인사를 나눈 멤버",
       "auto": true,
-      "visits": 5,
       "posts": 1,
       "comments": 3,
-      "joinDays": 3,
+      "visits": 5,
+      "likes": 0,
+      "joinWeeks": 0,
       "perks": [
         "자유게시판 글쓰기",
         "이용 후기 쓰기"
@@ -236,11 +240,13 @@
     },
     {
       "name": "단골",
+      "desc": "자주 들러 함께 이야기하는 멤버",
       "auto": true,
-      "visits": 15,
       "posts": 3,
       "comments": 10,
-      "joinDays": 14,
+      "visits": 15,
+      "likes": 0,
+      "joinWeeks": 2,
       "perks": [
         "새 양식 미리 보기 투표 참여",
         "다음 정보 글 주제 제안"
@@ -248,11 +254,13 @@
     },
     {
       "name": "길잡이 멤버",
+      "desc": "카페를 함께 가꾸는 멤버",
       "auto": true,
-      "visits": 30,
       "posts": 10,
       "comments": 30,
-      "joinDays": 30,
+      "visits": 30,
+      "likes": 0,
+      "joinWeeks": 4,
       "perks": [
         "등급 표시",
         "카페 운영 의견 게시판 참여"
@@ -304,5 +312,6 @@
     "memberListPublic": "비공개",
     "gradeNotice": "숨김",
     "region": "설정 안 함"
-  }
+  },
+  "$gradesRule": "네이버 등급·권한 관리 기준: 1단계는 기본 등급(조건 없음), 조건은 게시글·댓글·방문·좋아요·가입 경과(주) 모두 만족 시 자동 등업, 쓰지 않는 조건은 0"
 }
