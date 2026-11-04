@@ -65,6 +65,14 @@ export function checkConfig(cfg) {
     if (/<[^>]+>/.test(welcome.text)) r.push(err("A13", "가입 환영글에는 HTML 태그를 쓸 수 없음"));
     for (const w of [...FORBIDDEN, ...COMPARE, ...REWARD, ...BANNED]) if (welcome.text.includes(w)) r.push(err("A13", `가입 환영글에 "${w}"`));
   }
+  // A14 게시판 하단 배너 — 한 줄(28자 이내), 광고 금지·비교·경품 표현 없음, 링크는 허용 주소만
+  for (const bd of boards) {
+    const bn = bd.bottomBanner;
+    if (!bn || typeof bn !== "object") continue;
+    if (len(bn.text) > 28) r.push(err("A14", `${bd.name} 배너 문구 ${len(bn.text)}자 — 한 줄 28자 이내`));
+    for (const w of [...FORBIDDEN, ...COMPARE, ...REWARD, ...BANNED]) if (bn.text.includes(w)) r.push(err("A14", `${bd.name} 배너 문구에 "${w}"`));
+    try { if (!cfg.links.allowedHosts.includes(new URL(bn.url).host)) r.push(err("A14", `${bd.name} 배너 링크 주소가 허용 목록에 없음`)); } catch { r.push(err("A14", `${bd.name} 배너 링크 형식 오류`)); }
+  }
   const qs = cfg.joinSettings?.joinQuestions ?? [];
   if (qs.length > 3) r.push(err("A13", "가입 질문은 최대 3개"));
   for (const q of qs) if (/연락처|전화|휴대폰|주민|주소|생년월일|증권|병력|질병|소득/.test(q)) r.push(err("A13", `가입 질문 "${q}" — 개인정보·민감정보 수집 금지`));

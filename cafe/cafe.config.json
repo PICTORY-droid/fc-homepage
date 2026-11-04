@@ -48,19 +48,40 @@
           "name": "필독 공지",
           "write": "매니저",
           "read": "전체",
-          "area": "notice"
+          "area": "notice",
+          "bottomBanner": {
+            "icon": "📮",
+            "text": "우체국보험 길잡이 홈페이지에서 더 자세히 보기",
+            "style": "light",
+            "url": "https://fc-homepage.vercel.app/?utm_source=naver_cafe&utm_medium=cafe&utm_campaign=board_banner",
+            "file": "assets/boards/board-01.png"
+          }
         },
         {
           "name": "가입 인사",
           "write": "새싹",
           "read": "전체",
-          "area": "community"
+          "area": "community",
+          "bottomBanner": {
+            "icon": "🔍",
+            "text": "30초 보장 점검으로 내 보험 먼저 살펴보기",
+            "style": "tint",
+            "url": "https://fc-homepage.vercel.app/find?utm_source=naver_cafe&utm_medium=cafe&utm_campaign=board_banner",
+            "file": "assets/boards/board-02.png"
+          }
         },
         {
           "name": "카페 소식",
           "write": "매니저",
           "read": "전체",
-          "area": "notice"
+          "area": "notice",
+          "bottomBanner": {
+            "icon": "✉️",
+            "text": "새 양식, 무료 자료실에서 먼저 받아 보세요",
+            "style": "light",
+            "url": "https://fc-homepage.vercel.app/fun?utm_source=naver_cafe&utm_medium=cafe&utm_campaign=board_banner",
+            "file": "assets/boards/board-03.png"
+          }
         }
       ]
     },
@@ -71,31 +92,66 @@
           "name": "실손의료비보험",
           "write": "매니저",
           "read": "전체",
-          "area": "product"
+          "area": "product",
+          "bottomBanner": {
+            "icon": "🏥",
+            "text": "우체국 실비, 나에게 맞는 상품 상담하기",
+            "style": "tint",
+            "url": "https://fc-homepage.vercel.app/consult?utm_source=naver_cafe&utm_medium=cafe&utm_campaign=board_banner",
+            "file": "assets/boards/board-04.png"
+          }
         },
         {
           "name": "암·건강보험",
           "write": "매니저",
           "read": "전체",
-          "area": "product"
+          "area": "product",
+          "bottomBanner": {
+            "icon": "🩺",
+            "text": "암·건강보험, 1:1 보장 상담 신청하기",
+            "style": "tint",
+            "url": "https://fc-homepage.vercel.app/consult?utm_source=naver_cafe&utm_medium=cafe&utm_campaign=board_banner",
+            "file": "assets/boards/board-05.png"
+          }
         },
         {
           "name": "어린이·엄마보험",
           "write": "매니저",
           "read": "전체",
-          "area": "product"
+          "area": "product",
+          "bottomBanner": {
+            "icon": "🤰",
+            "text": "보험료 무료 대한민국엄마보험 자세히 보기",
+            "style": "tint",
+            "url": "https://fc-homepage.vercel.app/products/P030?utm_source=naver_cafe&utm_medium=cafe&utm_campaign=board_banner",
+            "file": "assets/boards/board-06.png"
+          }
         },
         {
           "name": "치아·정기·상해보험",
           "write": "매니저",
           "read": "전체",
-          "area": "product"
+          "area": "product",
+          "bottomBanner": {
+            "icon": "📘",
+            "text": "판매 중인 우체국보험 상품 한눈에 보기",
+            "style": "light",
+            "url": "https://fc-homepage.vercel.app/products?utm_source=naver_cafe&utm_medium=cafe&utm_campaign=board_banner",
+            "file": "assets/boards/board-07.png"
+          }
         },
         {
           "name": "연금·저축보험",
           "write": "매니저",
           "read": "전체",
-          "area": "product"
+          "area": "product",
+          "bottomBanner": {
+            "icon": "🧮",
+            "text": "노후 준비, 은퇴 생활비 계산기로 먼저 그려 보기",
+            "style": "light",
+            "url": "https://fc-homepage.vercel.app/tools?utm_source=naver_cafe&utm_medium=cafe&utm_campaign=board_banner#retire",
+            "file": "assets/boards/board-08.png"
+          }
         }
       ]
     },
@@ -106,13 +162,27 @@
           "name": "청구 서류 정리",
           "write": "매니저",
           "read": "전체",
-          "area": "product"
+          "area": "product",
+          "bottomBanner": {
+            "icon": "🧾",
+            "text": "청구 전에 가입한 보장부터 점검해 보세요",
+            "style": "tint",
+            "url": "https://fc-homepage.vercel.app/find?utm_source=naver_cafe&utm_medium=cafe&utm_campaign=board_banner",
+            "file": "assets/boards/board-09.png"
+          }
         },
         {
           "name": "앱·홈페이지 청구 방법",
           "write": "매니저",
           "read": "전체",
-          "area": "product"
+          "area": "product",
+          "bottomBanner": {
+            "icon": "📱",
+            "text": "가입한 보험, 1:1 보장 점검 받기",
+            "style": "light",
+            "url": "https://fc-homepage.vercel.app/consult?utm_source=naver_cafe&utm_medium=cafe&utm_campaign=board_banner",
+            "file": "assets/boards/board-10.png"
+          }
         }
       ]
     },
@@ -123,13 +193,27 @@
           "name": "보험 질문방",
           "write": "새싹",
           "read": "전체",
-          "area": "community"
+          "area": "community",
+          "bottomBanner": {
+            "icon": "💬",
+            "text": "답이 더 필요하면 1:1 상담 신청하기",
+            "style": "deep",
+            "url": "https://fc-homepage.vercel.app/consult?utm_source=naver_cafe&utm_medium=cafe&utm_campaign=board_banner",
+            "file": "assets/boards/board-11.png"
+          }
         },
         {
           "name": "자유게시판",
           "write": "이웃",
           "read": "전체",
-          "area": "free"
+          "area": "free",
+          "bottomBanner": {
+            "icon": "📝",
+            "text": "무료 편지지·엑셀·이력서 양식 받기",
+            "style": "light",
+            "url": "https://fc-homepage.vercel.app/fun?utm_source=naver_cafe&utm_medium=cafe&utm_campaign=board_banner",
+            "file": "assets/boards/board-12.png"
+          }
         }
       ]
     },
@@ -141,7 +225,14 @@
           "write": "이웃",
           "read": "전체",
           "area": "review",
-          "operatorWrite": false
+          "operatorWrite": false,
+          "bottomBanner": {
+            "icon": "☎️",
+            "text": "1:1 보험 상담 신청하기",
+            "style": "deep",
+            "url": "https://fc-homepage.vercel.app/consult?utm_source=naver_cafe&utm_medium=cafe&utm_campaign=board_banner",
+            "file": "assets/boards/board-13.png"
+          }
         }
       ]
     },
@@ -152,7 +243,14 @@
           "name": "편지지·엑셀·이력서 양식",
           "write": "매니저",
           "read": "전체",
-          "area": "resource"
+          "area": "resource",
+          "bottomBanner": {
+            "icon": "📮",
+            "text": "더 많은 무료 양식은 홈페이지 자료실에서",
+            "style": "tint",
+            "url": "https://fc-homepage.vercel.app/fun?utm_source=naver_cafe&utm_medium=cafe&utm_campaign=board_banner",
+            "file": "assets/boards/board-14.png"
+          }
         }
       ]
     },
@@ -168,7 +266,13 @@
           "link": "https://fc-homepage.vercel.app/consult",
           "boardGuide": "상담은 글 속 링크의 상담 신청 페이지에서 받아요. 글과 댓글에 전화번호 같은 개인정보는 쓰지 말아 주세요.",
           "template": "posts/06-consult-guide.md",
-          "bottomBanner": "assets/door/btn-consult.png"
+          "bottomBanner": {
+            "icon": "☎️",
+            "text": "1:1 보험 상담 신청하기",
+            "style": "deep",
+            "url": "https://fc-homepage.vercel.app/consult?utm_source=naver_cafe&utm_medium=cafe&utm_campaign=board_banner",
+            "file": "assets/boards/board-15.png"
+          }
         }
       ]
     },
