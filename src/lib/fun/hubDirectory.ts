@@ -13,7 +13,7 @@ export interface HubEntry {
 }
 export interface HubSection { key: string; label?: string; entries: HubEntry[] }
 /** 첫 화면에서 먼저 고르는 종류(예: 이력서 / 자기소개서) — 고르면 세부 링크 끝에 #key 가 붙어 그 칸으로 바로 이동 */
-export interface HubMode { key: string; label: string; desc: string }
+export interface HubMode { key: string; label: string; desc: string; icon?: string } // icon: 즐길거리 카드와 같은 그림 문자
 
 /** 띄어쓰기·대소문자·가운뎃점 차이는 무시하고 비교합니다. */
 export const normalize = (s: string) => s.toLowerCase().replace(/[\s·・,./()\-]+/g, "");

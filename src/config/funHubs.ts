@@ -65,8 +65,8 @@ export function sheetsHub(): HubSection[] {
 }
 
 export const formModes: HubMode[] = [
-  { key: "resume", label: "이력서", desc: "직무마다 짜임이 다른 10종 — 경력·역량을 한눈에 보여 주는 Word 양식" },
-  { key: "cover", label: "자기소개서", desc: "직무마다 10종 — STAR·NCS 작성법 가이드와 예시가 붙은 Word 양식" },
+  { key: "resume", label: "이력서", icon: "📄", desc: "직무마다 짜임이 다른 10종 — 경력·역량을 한눈에 보여 주는 Word 양식" },
+  { key: "cover", label: "자기소개서", icon: "✍️", desc: "직무마다 10종 — STAR·NCS 작성법 가이드와 예시가 붙은 Word 양식" },
 ];
 
 export function formsHub(): HubSection[] {

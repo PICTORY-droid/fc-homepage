@@ -94,8 +94,10 @@ export function HubDirectory({ sections, totalLabel, searchLabel, placeholder, m
               <li key={m.key}>
                 <button type="button" aria-pressed={on} onClick={() => pickMode(m.key)}
                   className={`group flex h-full w-full flex-col items-center gap-4 rounded-card border bg-paper p-6 text-center transition duration-200 hover:-translate-y-0.5 hover:border-brand hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink ${on ? "border-brand-deep shadow-md" : "border-ink/10"}`}>
-                  <span aria-hidden="true" className={`flex h-36 w-32 items-center justify-center rounded-b-xl rounded-t-full border text-2xl font-extrabold text-brand-deep transition duration-200 ${on ? "border-brand bg-brand-soft" : "border-brand/30 bg-brand-tint"}`}>{m.label}</span>
-                  <span className="sr-only">{m.label}</span>
+                  <span className="flex items-center gap-3">
+                    {m.icon && <span aria-hidden="true" className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl text-2xl transition duration-200 ${on ? "bg-brand" : "bg-brand-soft"}`}>{m.icon}</span>}
+                    <span className="text-xl font-bold text-ink">{m.label}</span>
+                  </span>
                   <span className="text-sm leading-relaxed text-ink-sub">{m.desc}</span>
                   <span className={buttonClass(on ? "primary" : "soft", "sm", "pointer-events-none")}>{on ? `${m.label} 선택됨` : modeCta} <span aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-1">→</span></span>
                 </button>
