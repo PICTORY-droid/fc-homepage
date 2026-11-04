@@ -47,7 +47,7 @@ const TOPIC: Record<string, ConsultTopic> = {
 const DISPLAY_NAME: Record<string, string> = { P030: "우체국대한민국엄마보험" };
 
 // 공식 홈페이지에서 바로 가입하는 상품 — 우체국보험 공식 주소(epostlife.go.kr)만 넣습니다.
-const APPLY_URL: Record<string, string> = { P030: "https://www.epostlife.go.kr/IGDRDM00AT.do?gdsCd=P600149" };
+const APPLY_URL: Record<string, string> = { P030: "https://www.epostlife.go.kr/ISDMDM00AS.do" };
 
 // 보유 중인 상품 안내 이미지(홍보 카드)의 문구 — 이미지에 적힌 내용 그대로입니다.
 const SLOGAN: Record<string, { tags: string[]; headline: string }> = {
