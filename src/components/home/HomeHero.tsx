@@ -10,7 +10,7 @@ export function HomeHero() {
     return { id: s.id, product: b.product, headline: b.headline, sub: b.sub, detailPath: b.detailPath, points: b.points, art: s.art, theme: s.theme };
   });
   return (
-    <section aria-label="대표 상품 안내" className="bg-paper">
+    <section aria-label="첫 화면 안내" className="bg-paper">
       <HeroCarousel slides={slides} phone={site.contact.fcPhone} intervalMs={HERO_INTERVAL_MS} />
       <div className="mx-auto max-w-5xl px-4 py-4 sm:px-6">
         <ul className="flex flex-wrap gap-1.5" aria-label="상담 원칙">

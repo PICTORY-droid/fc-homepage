@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from "@/lib/zod";
 import { isValidKoreanPhone, onlyDigits } from "@/lib/phone";
 
 // 새 양식 알림 — 브라우저와 서버가 같은 규칙을 씁니다 (서버 검증이 최종).

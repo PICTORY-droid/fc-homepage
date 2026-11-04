@@ -5,6 +5,7 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { RevealObserver } from "@/components/motion/RevealObserver";
 import { ScrollProgress } from "@/components/motion/ScrollProgress";
+import { MotionStarter } from "@/components/motion/MotionStarter";
 import { ChatWidget } from "@/components/chatbot/ChatWidget";
 import { ClickTracker } from "@/components/analytics/ClickTracker";
 import { PageViewTracker } from "@/components/analytics/PageViewTracker";
@@ -39,6 +40,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </a>
         <ScrollProgress />
         <RevealObserver />
+        <MotionStarter />
         <ClickTracker />
         <PageViewTracker />
         <Header />

@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from "@/lib/zod";
 
 // 이용 통계 이벤트 — 개인정보 없이 '무슨 일이 있었는지'만 기록합니다. 브라우저와 서버가 같은 규칙을 씁니다.
 // preview: 자료 미리보기를 크게 연 횟수 / age_band: 자료를 받은 뒤 방문자가 고른 연령대(선택, 익명 — label 은 features/analytics/ageBand.ts 형식)

@@ -4,7 +4,8 @@ import { KakaoScene } from "@/components/kakao/KakaoScene";
 import { buttonClass } from "@/components/ui/styles";
 
 // 카카오톡 비대면 상담 안내 카드 — 주소(site.contact.kakaoUrl)가 비어 있으면 그리지 않습니다.
-export function KakaoBanner() {
+// heading: 놓이는 자리의 제목 단계에 맞춰 h2/h3 (기본 h3)
+export function KakaoBanner({ heading: H = "h3" }: { heading?: "h2" | "h3" } = {}) {
   if (!site.contact.kakaoUrl) return null;
   return (
     <aside
@@ -14,7 +15,7 @@ export function KakaoBanner() {
       <KakaoScene className="h-36 w-auto shrink-0 sm:h-40" />
       <div className="w-full text-left">
         <p className="text-sm font-bold text-brand-deep">비대면 카카오톡 상담</p>
-        <h3 className="mt-1 break-keep text-xl font-extrabold leading-snug text-ink sm:text-2xl">상담부터 계약까지 카카오톡으로!</h3>
+        <H className="mt-1 break-keep text-xl font-extrabold leading-snug text-ink sm:text-2xl">상담부터 계약까지 카카오톡으로!</H>
         <p className="mt-2 break-keep text-base text-ink-sub">집이나 직장 어디서든, 방문 없이 대화로 편하게 진행하세요.</p>
         <div className="mt-4 flex w-full items-center gap-2 sm:w-[28rem]">
           <KakaoButton className="min-w-0 flex-1" />

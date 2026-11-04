@@ -5,7 +5,7 @@ import { Section } from "@/components/ui/Section";
 import { Notice } from "@/components/ui/Notice";
 import { BulletList } from "@/components/ui/BulletList";
 import { ButtonLink } from "@/components/ui/Button";
-import { ConsultForm } from "@/components/consult/ConsultForm";
+import { DeferredConsultForm } from "@/components/consult/DeferredConsultForm";
 import { KakaoBanner } from "@/components/KakaoBanner";
 import { ProductCard } from "@/components/products/ProductCard";
 import { productCopy } from "@/config/productCopy";
@@ -183,7 +183,7 @@ export default async function ProductPage({ params }: Props) {
 
       <Section id="consult" title={`${p.displayName} 상담 신청`}>
         <div className="mb-8"><KakaoBanner /></div>
-        <ConsultForm initialTopic={p.topic} />
+        <DeferredConsultForm initialTopic={p.topic} />
       </Section>
 
       {related.length > 0 && (

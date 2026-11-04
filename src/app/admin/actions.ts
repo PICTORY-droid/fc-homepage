@@ -1,7 +1,7 @@
 "use server";
 import { revalidatePath } from "next/cache";
 import { headers } from "next/headers";
-import { z } from "zod";
+import { z } from "@/lib/zod";
 import { endAdminSession, isAdminLoggedIn, isSetupCodeValid, startAdminSession } from "@/services/adminSession";
 import { createAccount, getAccount } from "@/services/adminAccount";
 import { LEAD_STATUSES, updateLead } from "@/services/adminLeads";

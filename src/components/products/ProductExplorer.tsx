@@ -66,7 +66,7 @@ export function ProductExplorer({ products }: { products: Product[] }) {
       ) : (
         grouped.map((g) => (
           <section key={g.group} className="mt-8" aria-labelledby={`g-${g.group}`}>
-            <h3 id={`g-${g.group}`} className="text-xl font-bold text-ink">{g.group} 보험 <span className="text-base font-normal text-ink-sub">{g.items.length}</span></h3>
+            <h2 id={`g-${g.group}`} className="text-xl font-bold text-ink">{g.group} 보험 <span className="text-base font-normal text-ink-sub">{g.items.length}</span></h2>
             <ul className="mt-4 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {g.items.map((p) => (
                 <ProductCard key={p.id} product={p}

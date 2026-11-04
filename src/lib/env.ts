@@ -1,5 +1,5 @@
 import "server-only";
-import { z } from "zod";
+import { z } from "@/lib/zod";
 
 // 서버 환경변수 검증 — 값이 없으면 상담 저장은 비활성(개발 모드에서는 로그만 남김)
 const schema = z.object({

@@ -33,7 +33,7 @@ export function ConsultForm({ initialTopic = "health" }: { initialTopic?: string
     return (
       <div role="status" className="max-w-2xl rounded-card bg-brand-soft p-8">
         <div aria-hidden="true" className="fx-pop-in mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-brand text-3xl font-extrabold text-ink">✓</div>
-        <h3 ref={titleRef} tabIndex={-1} className="text-center text-2xl font-bold text-ink outline-none">상담 신청이 접수되었어요</h3>
+        <h2 ref={titleRef} tabIndex={-1} className="text-center text-2xl font-bold text-ink outline-none">상담 신청이 접수되었어요</h2>
         <ol className="mx-auto mt-6 max-w-md space-y-3 text-ink">
           <li className="flex gap-3"><span className="font-bold text-brand-deep">1</span>접수된 순서대로 내용을 확인합니다. ({site.contact.responseTime} 안에 연락드립니다)</li>
           <li className="flex gap-3"><span className="font-bold text-brand-deep">2</span>{site.contact.fcPhone} 번호로 전화드립니다. (희망 시간: {TIME_LABEL[values.time ?? "anytime"]})</li>
@@ -68,7 +68,7 @@ export function ConsultForm({ initialTopic = "health" }: { initialTopic?: string
 
       <div key={steps[step].key} className="step-enter space-y-6">
       <div>
-        <h3 ref={titleRef} tabIndex={-1} className="break-keep text-xl font-bold text-ink outline-none sm:text-2xl">{steps[step].title}</h3>
+        <h2 ref={titleRef} tabIndex={-1} className="break-keep text-xl font-bold text-ink outline-none sm:text-2xl">{steps[step].title}</h2>
         {steps[step].key === "topic" && <p className="mt-1.5 text-sm text-ink-sub">가장 가까운 분야를 하나 골라 주세요.</p>}
       </div>
 

@@ -24,7 +24,7 @@ export default function GuidePage() {
   return (
     <>
       <Section as="h1" title="이용 안내" lead="이 페이지를 이용하시기 전에 알아두시면 좋은 내용입니다.">
-        <h3 className="text-xl font-bold text-ink">상담은 이렇게 진행돼요</h3>
+        <h2 className="text-xl font-bold text-ink">상담은 이렇게 진행돼요</h2>
         <ol className="mt-4 grid gap-4 sm:grid-cols-2">
           {FLOW.map(([t, d], i) => (
             <li key={t} className="flex gap-4 rounded-card bg-paper-card p-5">

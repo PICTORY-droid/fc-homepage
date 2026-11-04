@@ -1,0 +1,143 @@
+"use client";
+import Link from "next/link";
+import { useEffect, useRef, useState, type FormEvent } from "react";
+import { chatbotCopy, type ChatLink } from "@/config/chatbot";
+import { ChatCharacter } from "./ChatCharacter";
+import { useChat, type ChatMessage } from "./useChat";
+
+// 작은 알약 버튼(짧은 선택지·링크) / 긴 질문 목록(한 상자 안에서 줄로 구분)
+const pillBase = "inline-flex h-9 items-center whitespace-nowrap rounded-full border px-3.5 text-compact font-semibold text-ink [.compact_&]:h-8 [.compact_&]:px-3 [.compact_&]:text-xs";
+const pillPlain = `${pillBase} border-ink/25 bg-paper hover:bg-brand-tint`;
+const pillPrimary = `${pillBase} border-transparent bg-brand hover:brightness-95`;
+const pillKakao = `${pillBase} border-transparent bg-kakao hover:brightness-95`;
+const pillChoice = "inline-flex h-8 items-center rounded-full border border-brand-deep/35 bg-paper px-3 text-compact font-medium text-brand-deep hover:bg-brand-soft";
+const LONG_CHOICE = 14; // 이 글자 수를 넘는 선택지는 목록 줄로 보여줍니다
+
+function LinkPill({ link, compact, onNavigate }: { link: ChatLink; compact: boolean; onNavigate: () => void }) {
+  const label = compact ? link.short ?? link.label : link.label;
+  if (link.external) {
+    return <a href={link.href} target="_blank" rel="noopener noreferrer" className={link.href.includes("open.kakao.com") ? pillKakao : pillPlain}>{label}<span className="sr-only"> (새 창으로 열림)</span></a>;
+  }
+  if (link.href.startsWith("tel:")) return <a href={link.href} className={pillPlain}>{label}</a>;
+  return <Link href={link.href} onClick={onNavigate} className={link.href.startsWith("/consult") ? pillPrimary : pillPlain}>{label}</Link>;
+}
+
+function Choices({ items, onPick }: { items: string[]; onPick: (t: string) => void }) {
+  const short = items.filter((s) => s.length <= LONG_CHOICE);
+  const long = items.filter((s) => s.length > LONG_CHOICE);
+  return (
+    <div className="mt-2 space-y-2" role="group" aria-label="추천 질문">
+      {short.length > 0 && (
+        <div className="flex flex-wrap gap-1.5">
+          {short.map((s) => <button key={s} type="button" onClick={() => onPick(s)} className={pillChoice}>{s}</button>)}
+        </div>
+      )}
+      {long.length > 0 && (
+        <ul className="divide-y divide-ink/10 overflow-hidden rounded-xl border border-ink/10 bg-paper">
+          {long.map((s) => (
+            <li key={s}>
+              <button type="button" onClick={() => onPick(s)} className="flex min-h-[40px] w-full items-center gap-2 px-3 py-2 text-left text-compact leading-snug text-ink hover:bg-brand-soft">
+                <span className="line-clamp-2 flex-1">{s}</span>
+                <span aria-hidden="true" className="text-brand-deep">›</span>
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}
+
+// 연결 버튼 — 3개 이상이면 짧은 글자로 한 줄에 모으고, 긴 상품 이름은 목록 줄로 보여줍니다.
+function Links({ links, onNavigate }: { links: ChatLink[]; onNavigate: () => void }) {
+  if (links.length === 0) return null;
+  const compact = links.length >= 3;
+  const rows = compact ? links.filter((l) => l.href.startsWith("/products/")) : [];
+  const pills = links.filter((l) => !rows.includes(l));
+  return (
+    <div className={`mt-2 space-y-2 ${compact ? "compact" : ""}`}>
+      {pills.length > 0 && <div className={pills.length === 3 ? "grid grid-cols-3 gap-1.5 [&>*]:w-full [&>*]:justify-center [&>*]:px-1.5" : "flex flex-wrap gap-1.5"}>{pills.map((l) => <LinkPill key={l.href + l.label} link={l} compact={compact} onNavigate={onNavigate} />)}</div>}
+      {rows.length > 0 && (
+        <ul className="divide-y divide-ink/10 overflow-hidden rounded-xl border border-ink/10 bg-paper" aria-label="관련 상품">
+          {rows.map((l) => (
+            <li key={l.href}>
+              <Link href={l.href} onClick={onNavigate} className="flex min-h-[40px] items-center gap-2 px-3 py-2 text-compact leading-snug text-ink hover:bg-brand-soft">
+                <span className="line-clamp-2 flex-1">{l.label}</span><span aria-hidden="true" className="text-brand-deep">›</span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}
+
+function Bubble({ m, onNavigate, onPick, isLast }: { m: ChatMessage; onNavigate: () => void; onPick: (t: string) => void; isLast: boolean }) {
+  if (m.role === "user") {
+    return <div data-msg="user" className="ml-auto max-w-[85%] break-words rounded-2xl rounded-br-md bg-brand-soft px-3 py-2 text-sm text-ink">{m.text}</div>;
+  }
+  return (
+    <div data-msg="bot" className="flex max-w-[94%] gap-2">
+      <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-brand-soft"><ChatCharacter className="h-5 w-5" /></span>
+      <div className="min-w-0">
+        <p className="whitespace-pre-line break-keep rounded-2xl rounded-tl-md bg-paper-card px-3 py-2 text-sm leading-relaxed text-ink">{m.text}</p>
+        <Links links={m.links} onNavigate={onNavigate} />
+        {isLast && m.suggestions.length > 0 && <Choices items={m.suggestions} onPick={onPick} />}
+      </div>
+    </div>
+  );
+}
+
+// 안내 도우미 대화창 — 처음 열 때 불러옵니다(답변 엔진·상품 목록이 커서 첫 화면 속도를 위해 나중에 받음).
+// 닫아도 대화 내용은 유지되도록 숨기기만 합니다.
+export default function ChatPanel({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const [text, setText] = useState("");
+  const { messages, typing, send, back, reset } = useChat();
+  const listRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  // 새 답변은 '처음 줄'이 보이게, 내가 보낸 말·입력 중 표시는 맨 아래로
+  useEffect(() => {
+    const el = listRef.current;
+    if (!open || !el) return;
+    const last = messages[messages.length - 1];
+    if (last.role === "bot" && messages.length > 1) {
+      const bots = el.querySelectorAll<HTMLElement>('[data-msg="bot"]');
+      const node = bots[bots.length - 1];
+      if (node) el.scrollTop = Math.max(0, node.offsetTop - 12);
+    } else el.scrollTop = el.scrollHeight;
+  }, [messages, typing, open]);
+
+  useEffect(() => { if (open) inputRef.current?.focus(); }, [open]);
+
+  const submit = (e: FormEvent) => { e.preventDefault(); send(text); setText(""); };
+  const close = onClose;
+  if (!open) return null;
+
+  return (
+    <section id="chat-panel" role="dialog" aria-label={chatbotCopy.title}
+          className="flex h-[min(32rem,calc(100dvh-8rem))] w-[calc(100vw-2rem)] max-w-[22rem] flex-col overflow-hidden rounded-2xl border border-ink/10 bg-paper shadow-2xl">
+          <header className="flex items-center gap-1 bg-brand-soft px-3 py-2">
+            <span className="mr-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-paper"><ChatCharacter className="h-6 w-6" /></span>
+            <h2 className="min-w-0 flex-1 whitespace-nowrap max-[359px]:sr-only text-base font-bold text-ink">{chatbotCopy.shortTitle}</h2>
+            <button type="button" onClick={back} disabled={messages.length <= 1} className="ml-auto h-9 rounded-lg px-1.5 text-compact text-ink-sub hover:text-ink disabled:opacity-40 disabled:hover:text-ink-sub">이전으로</button>
+            <button type="button" onClick={reset} disabled={messages.length <= 1} className="h-9 rounded-lg px-1.5 text-compact text-ink-sub hover:text-ink disabled:opacity-40 disabled:hover:text-ink-sub">처음으로</button>
+            <button type="button" onClick={close} aria-label="안내 도우미 닫기" className="flex h-9 w-9 items-center justify-center rounded-lg text-lg text-ink hover:bg-paper/60">✕</button>
+          </header>
+          <div ref={listRef} className="relative flex-1 space-y-2.5 overflow-y-auto px-3 py-3" aria-live="polite" aria-relevant="additions">
+            {messages.map((m, i) => <Bubble key={m.id} m={m} isLast={i === messages.length - 1} onNavigate={close} onPick={send} />)}
+            {typing && <p className="pl-9 text-compact text-ink-sub" role="status">입력 중…</p>}
+          </div>
+          <form onSubmit={submit} className="border-t border-ink/10 px-3 pb-2 pt-2.5">
+            <div className="flex gap-2">
+              <label htmlFor="chat-input" className="sr-only">{chatbotCopy.inputLabel}</label>
+              <input id="chat-input" ref={inputRef} value={text} onChange={(e) => setText(e.target.value)} maxLength={chatbotCopy.maxInputLength}
+                placeholder={chatbotCopy.inputPlaceholder} autoComplete="off"
+                className="h-10 min-w-0 flex-1 rounded-xl border border-ink/25 bg-paper px-3 text-base text-ink placeholder:text-ink-sub/70" />
+              <button type="submit" disabled={typing || !text.trim()} className="h-10 rounded-xl bg-brand px-3.5 text-sm font-bold text-ink hover:brightness-95 disabled:opacity-50">보내기</button>
+            </div>
+            <p className="mt-1.5 text-xs leading-snug text-ink-sub">{chatbotCopy.privacyNote}</p>
+          </form>
+        </section>
+  );
+}

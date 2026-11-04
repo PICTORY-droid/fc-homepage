@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { PageBanner } from "@/components/PageBanner";
 import { Section } from "@/components/ui/Section";
 import { Notice } from "@/components/ui/Notice";
-import { ConsultForm } from "@/components/consult/ConsultForm";
+import { DeferredConsultForm } from "@/components/consult/DeferredConsultForm";
 import { categories, getCategory } from "@/config/categories";
 import type { BannerKey } from "@/config/banners";
 
@@ -35,7 +35,7 @@ export default async function CategoryPage({ params }: Props) {
         {category.notice && <div className="mt-6"><Notice tone="alert">{category.notice}</Notice></div>}
       </Section>
       <Section title={`${category.title} 상담 신청`} tone="card">
-        <ConsultForm initialTopic={category.slug} />
+        <DeferredConsultForm initialTopic={category.slug} />
       </Section>
     </>
   );

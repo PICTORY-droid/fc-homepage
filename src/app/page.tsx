@@ -1,6 +1,6 @@
 import { PageBanner } from "@/components/PageBanner";
 import { Section } from "@/components/ui/Section";
-import { ConsultForm } from "@/components/consult/ConsultForm";
+import { DeferredConsultForm } from "@/components/consult/DeferredConsultForm";
 import { MonthlyPick } from "@/components/MonthlyPick";
 import { TopProducts } from "@/components/TopProducts";
 import { JsonLd } from "@/components/seo/JsonLd";
@@ -14,7 +14,7 @@ export default function HomePage() {
       <TopProducts />
       <MonthlyPick />
       <Section dense id="consult" title="간편 상담 신청">
-        <ConsultForm initialTopic="health" />
+        <DeferredConsultForm initialTopic="health" />
       </Section>
     </>
   );

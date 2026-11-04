@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from "@/lib/zod";
 import { categories } from "@/config/categories";
 import { isValidKoreanPhone, onlyDigits } from "@/lib/phone";
 import { attributionSchema } from "@/features/analytics/events";

@@ -17,7 +17,7 @@ export default async function ConsultPage({ searchParams }: Props) {
   const initial = topic && (topic === "other" || getCategory(topic)) ? topic : "health";
   return (
     <Section as="h1" title="간편 상담 신청">
-      <div className="mb-8"><KakaoBanner /></div>
+      <div className="mb-8"><KakaoBanner heading="h2" /></div>
       <ConsultForm initialTopic={initial} />
     </Section>
   );

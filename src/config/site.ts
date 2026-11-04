@@ -57,7 +57,19 @@ export const site = {
     retentionMonths: 36 as number | null, // 확정(2026-10-20): 상담 접수일부터 36개월 보관. 만료 전 담당 FC에게 이름을 메일로 알려 삭제합니다.
     /** 만료 며칠 전부터 담당 FC에게 알릴지 */
     retentionNoticeDays: 30,
-    contactEmail: "", // TODO: 개인정보 문의 이메일
+    contactEmail: "", // TODO: 개인정보 문의 이메일 (입력하면 처리방침·문의 칸에 자동 표시)
+    /** 개인정보 보호책임자 — 이 사이트를 운영하는 담당 FC 본인. 이름을 입력하면 처리방침에 함께 표시됩니다. */
+    officer: { name: "", role: "사이트 운영자(담당 FC)" },
+    /** 처리 위탁·국외 이전 — 사이트 운영에 쓰는 외부 서비스. 서비스를 바꾸면 여기만 고치세요. */
+    processors: [
+      { name: "Vercel Inc.", task: "웹사이트 호스팅·서버 운영", country: "미국 등 Vercel 서버 소재국" },
+      { name: "Supabase Inc.", task: "상담 신청·알림 신청 정보 저장(데이터베이스)", country: "Supabase 프로젝트 서버 소재국" },
+      { name: "Resend Inc.", task: "상담 신청 알림 메일을 담당 FC에게 발송(사용하는 경우)", country: "미국" },
+      { name: "Google LLC", task: "상담 신청 내용을 담당 FC의 구글 시트에 기록(사용하는 경우)", country: "미국 등 Google 서버 소재국" },
+    ],
+    /** 처리방침 시행일 — 내용을 바꿀 때마다 새 날짜와 변경 내용을 history 맨 앞에 추가하세요. */
+    effectiveDate: "2026-11-04",
+    history: [{ date: "2026-11-04", note: "처리 위탁·국외 이전, 파기 절차, 정보주체 권리, 안전성 확보조치, 보호책임자, 권익침해 구제방법 항목 추가" }],
   },
 } as const;
 

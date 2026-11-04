@@ -52,7 +52,7 @@ export default async function PackItemPage({ params }: Props) {
       <JsonLd data={breadcrumbJsonLd([["홈", "/"], ["즐길거리", "/fun"], [group.title, `/fun/${group.slug}`], [item.title, `/fun/${group.slug}/${item.key}`]])} />
       <Section as="h1" title={item.title}>
         <ul data-reveal="stagger" className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-          {packEntries(item).map((e) => <PackCard key={e.no} item={item} entry={e} />)}
+          {packEntries(item).map((e, i) => <PackCard key={e.no} item={item} entry={e} priority={i < 2} />)}
         </ul>
       </Section>
       {cta && <Section><FunCtaBox cta={cta} from={`${group.slug}/${item.key}`} /></Section>}

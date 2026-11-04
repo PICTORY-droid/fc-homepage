@@ -64,10 +64,10 @@ export function BudgetCalc() {
       <div className="mb-5 rounded-xl bg-paper-card p-4 text-sm text-ink-sub">
         <p className="font-semibold text-ink">이렇게 입력하세요</p>
         <ul className="mt-1 list-disc space-y-1 pl-5">
-          <li>금액은 <strong className="text-ink">원 단위 숫자</strong>로 입력합니다. 쉼표는 넣어도 되고 빼도 됩니다.</li>
-          <li>해당하지 않는 칸은 <strong className="text-ink">비워 두세요.</strong> 0으로 계산합니다.</li>
-          <li>변동 지출은 최근 두세 달 평균을 넣으면 정확해요. 칸 이름에 <strong className="text-ink">(연 합계)</strong>가 있으면 1년 동안 쓰는 총액을 넣습니다.</li>
-          <li>이 계산기는 입력한 내용을 저장하지 않습니다. 페이지를 닫으면 사라져요.</li>
+          <li>금액은 <strong className="text-ink">원 단위 숫자</strong>로 입력해요. 쉼표는 넣어도 되고 빼도 돼요.</li>
+          <li>해당하지 않는 칸은 <strong className="text-ink">비워 두세요.</strong> 0으로 계산해요.</li>
+          <li>변동 지출은 최근 두세 달 평균을 넣으면 정확해요. 칸 이름에 <strong className="text-ink">(연 합계)</strong>가 있으면 1년 동안 쓰는 총액을 넣어요.</li>
+          <li>이 계산기는 입력한 내용을 저장하지 않아요. 페이지를 닫으면 사라져요.</li>
         </ul>
         <button type="button" onClick={fillExample} className={buttonClass("outline", "sm", "mt-3")}>
           예시 숫자로 채워 보기

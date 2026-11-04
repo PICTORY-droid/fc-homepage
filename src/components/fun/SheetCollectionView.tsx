@@ -30,8 +30,8 @@ export function SheetCollectionView({ c, season }: { c: SheetCollection; season?
         <PillNav label="엑셀 서식 분야" current={c.group} items={sheetGroups.map((g) => ({ key: g.key, label: g.label, href: `/fun/sheets/${g.key}` }))} className="mb-3" />
         <PillNav label="계절별 디자인" current={season ? seasonSlug[season] : "all"} items={seasonPills} />
         <ul data-reveal="stagger" className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {list.map((e) => (
-            <DownloadCard key={e.no} title={`${nn(e.no)}. ${e.name}`} desc={`${e.flavor} · ${e.tag}`} thumb={collectionCardThumb(c, e.no)} zoom={packLarge(item, e.no)} aspect={SHEET_ASPECT}
+          {list.map((e, i) => (
+            <DownloadCard key={e.no} priority={i < 2} title={`${nn(e.no)}. ${e.name}`} desc={`${e.flavor} · ${e.tag}`} thumb={collectionCardThumb(c, e.no)} zoom={packLarge(item, e.no)} aspect={SHEET_ASPECT}
               thumbAlt={`${item.title} ${e.name} 테마 미리보기`} links={[{ label: "엑셀", href: packFile(item, e), filename: packDownloadName(item, e) }]} />
           ))}
         </ul>

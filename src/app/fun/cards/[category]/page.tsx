@@ -36,8 +36,8 @@ export default async function CardCategoryPage({ params }: Props) {
       <JsonLd data={breadcrumbJsonLd([["홈", "/"], ["즐길거리", "/fun"], [`${c.label} 명함`, `/fun/cards/${c.key}`]])} />
       <Section as="h1" title={`${c.label} 명함`} lead={`${c.short} — 앞뒤 디자인이 모두 다른 명함이에요.`}>
         <ul data-reveal="stagger" className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-          {c.items.map((e) => (
-            <DownloadCard key={e.no} title={`${String(e.no).padStart(2, "0")}. ${e.title}`} desc={e.tag} thumb={cardThumb(c.key, e.no)} zoom={cardThumb(c.key, e.no)} aspect={CARD_ASPECT}
+          {c.items.map((e, i) => (
+            <DownloadCard key={e.no} priority={i < 2} title={`${String(e.no).padStart(2, "0")}. ${e.title}`} desc={e.tag} thumb={cardThumb(c.key, e.no)} zoom={cardThumb(c.key, e.no)} aspect={CARD_ASPECT}
               thumbAlt={`${c.label} 명함 ${e.no}번 ${e.theme} 앞면과 뒷면 미리보기`}
               links={[
                 { label: "PPT", href: cardPptx(c.key, e), filename: cardDownloadName(e, "pptx") },

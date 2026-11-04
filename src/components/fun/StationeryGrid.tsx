@@ -30,8 +30,8 @@ export function StationeryGrid({ items, subs }: { items: Stationery[]; subs: Sub
         </div>
       )}
       <ul data-reveal="stagger" className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
-        {shown.map((it) => (
-          <DownloadCard key={it.id} title={it.name} desc="" thumb={stationeryFile(it, "jpg")} zoom={stationeryFile(it, "png")}
+        {shown.map((it, i) => (
+          <DownloadCard key={it.id} priority={i < 2} title={it.name} desc="" thumb={stationeryFile(it, "jpg")} zoom={stationeryFile(it, "png")}
             links={[
               { label: "Word", href: stationeryFile(it, "docx"), filename: stationeryDownloadName(it, "docx") },
               { label: "PNG", href: stationeryFile(it, "png"), filename: stationeryDownloadName(it, "png") },

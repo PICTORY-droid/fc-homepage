@@ -1,14 +1,14 @@
 import type { Config } from "tailwindcss";
 
 // 색상은 우체국보험 사이트 화면에서 측정한 값을 기반으로 함 (docs/HARNESS.md 참고)
-// 화면에 쓰는 색은 모두 여기 이름으로만 씁니다 — 컴포넌트에 #색상값을 직접 적지 않아요. (버튼·카드·알약 모양은 src/components/ui/styles.ts)
+// 글자 대비(WCAG AA 4.5:1)를 지키도록 brand.deep·brand.red·ink.sub 를 조정(2026-11-04). 화면에 쓰는 색은 모두 여기 이름으로만 씁니다 — 컴포넌트에 #색상값을 직접 적지 않아요. (버튼·카드·알약 모양은 src/components/ui/styles.ts)
 const config: Config = {
   content: ["./src/**/*.{ts,tsx}"],
   theme: {
     extend: {
       colors: {
-        brand: { DEFAULT: "#FF883A", soft: "#FFDAC1", deep: "#C4540A", tint: "#FFF4EC", red: "#D9432F" },
-        ink: { DEFAULT: "#333333", sub: "#666666" },
+        brand: { DEFAULT: "#FF883A", soft: "#FFDAC1", deep: "#A34506", tint: "#FFF4EC", red: "#C23A26" },
+        ink: { DEFAULT: "#333333", sub: "#5C5C5C" },
         paper: { DEFAULT: "#FFFFFF", card: "#F9F9F9", gray: "#EFEFEF" },
         alert: "#F31900",
         // 카카오톡 버튼·배너 (카카오 공식 노란색)

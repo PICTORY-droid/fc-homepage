@@ -22,7 +22,8 @@
   @keyframes shine { from { transform: translateX(-120%) skewX(-20deg); } to { transform: translateX(320%) skewX(-20deg); } }
   @keyframes pulseRing { 0% { box-shadow: 0 0 0 0 rgb(255 136 58 / .45); } 100% { box-shadow: 0 0 0 14px rgb(255 136 58 / 0); } }
 
-  .page-enter { animation: fade .45s ease-out backwards; }
+  /* 페이지를 옮길 때(첫 화면 제외) 부드럽게 나타나기 — 첫 화면은 바로 보여야 하므로 html[data-anim] 이 붙은 뒤에만 */
+  html[data-anim] .page-enter { animation: fade .3s ease-out backwards; }
 
   /* 스크롤 등장 */
   [data-reveal][data-rs="pending"]:not([data-reveal="stagger"]) { opacity: 0; transform: translateY(26px); }
@@ -155,4 +156,13 @@
     filter: drop-shadow(0 0 4px rgba(255, 136, 58, .55));
     animation: cbGlowSpin 15s ease-in-out infinite;
   }
+}
+
+/* ───────── 반복 장식 움직임 아끼기 ─────────
+   첫 화면을 그리는 동안(html 에 data-anim 이 붙기 전)과 넘겨지지 않은 배너 장에서는 반복 움직임을 잠시 멈춥니다.
+   그림은 그대로 보이고 움직임만 쉬어요. 시작 시점은 components/motion/MotionStarter.tsx 가 정합니다. */
+html:not([data-anim]) :is(.fx-float, .fx-float-slow, .art-ecg, .art-beat, .art-twinkle, .art-sway, .art-breathe, .art-bob, .art-bob2, .art-spin-y, .art-bounce, .art-drive, .art-flow, .art-wheel, .art-float, .art-float-slow, .cb-bob, .btn-pulse, .kk *, .cb-eyes),
+html:not([data-anim]) .cb-glow::before,
+[aria-hidden="true"] :is(.fx-float, .fx-float-slow, .art-ecg, .art-beat, .art-twinkle, .art-sway, .art-breathe, .art-bob, .art-bob2, .art-spin-y, .art-bounce, .art-drive, .art-flow, .art-wheel, .art-float, .art-float-slow) {
+  animation-play-state: paused !important;
 }

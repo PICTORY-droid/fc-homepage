@@ -5,7 +5,7 @@ import { buttonClass, cardClass } from "@/components/ui/styles";
 const BUTTON: Record<PackItem["ext"], string> = { xlsx: "엑셀", pptx: "PPT", docx: "Word", svg: "SVG" };
 
 // 자료 꾸러미 카드 — 미리보기 그림을 누르면 큰 미리보기 창이 열립니다. 그림이 없으면 테마 색 견본을 보여 주고 한글 파일 이름으로 내려받게 합니다.
-export function PackCard({ item, entry }: { item: PackItem; entry: PackEntry }) {
+export function PackCard({ item, entry, priority }: { item: PackItem; entry: PackEntry; priority?: boolean }) {
   const thumb = packThumb(item, entry.no);
   const no = String(entry.no).padStart(2, "0");
   // 엑셀은 "무슨 양식인지"가 먼저 보이도록 구성+양식 이름을 제목으로, 테마 이름은 작은 글씨로 보여 줍니다.
@@ -14,7 +14,7 @@ export function PackCard({ item, entry }: { item: PackItem; entry: PackEntry }) 
   return (
     <li className={`flex flex-col ${cardClass}`}>
       {thumb ? (
-        <ZoomThumb thumb={thumb} large={packLarge(item, entry.no) ?? thumb} alt={`${item.title} ${entry.name} 미리보기`} title={`${no}. ${heading}`} aspect={item.aspect} />
+        <ZoomThumb thumb={thumb} large={packLarge(item, entry.no) ?? thumb} alt={`${item.title} ${entry.name} 미리보기`} title={`${no}. ${heading}`} aspect={item.aspect} priority={priority} />
       ) : (
         <div className="relative flex aspect-[4/3] flex-col justify-between p-4" style={{ backgroundColor: entry.soft }}>
           <span className="text-xs font-bold" style={{ color: entry.dark }}>{entry.season} · {entry.flavor}</span>
@@ -23,7 +23,7 @@ export function PackCard({ item, entry }: { item: PackItem; entry: PackEntry }) 
         </div>
       )}
       <div className="flex flex-1 flex-col p-4">
-        <h3 className="text-base font-bold text-ink">{no}. {heading}</h3>
+        <h2 className="text-base font-bold text-ink">{no}. {heading}</h2>
         {byFunction
           ? <p className="mt-0.5 text-xs font-semibold text-ink-sub">{entry.name} · {entry.season}</p>
           : thumb && <p className="mt-0.5 text-xs font-semibold text-ink-sub">{entry.flavor}</p>}

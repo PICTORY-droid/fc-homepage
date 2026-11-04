@@ -47,8 +47,8 @@ export default async function SheetGroupPage({ params }: Props) {
         )}
         {g.collections.length > 0 && <h2 className="mb-4 text-lg font-bold text-ink">서식</h2>}
         <ul data-reveal="stagger" className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {g.items.map((t) => (
-            <DownloadCard key={t.id} title={t.title} desc={sheetCardDesc(t)} thumb={sheetThumb(t)} zoom={sheetLarge(t)} aspect={SHEET_ASPECT}
+          {g.items.map((t, i) => (
+            <DownloadCard key={t.id} priority={i < 2} title={t.title} desc={sheetCardDesc(t)} thumb={sheetThumb(t)} zoom={sheetLarge(t)} aspect={SHEET_ASPECT}
               thumbAlt={`${t.title} 엑셀 서식 미리보기`} links={[{ label: "엑셀", href: sheetFile(t), filename: sheetDownloadName(t) }]} />
           ))}
         </ul>

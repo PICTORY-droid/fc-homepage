@@ -7,7 +7,7 @@ const input = `mt-1 ${inputClass}`;
 // 새 양식 알림 해지 — 연락처를 입력하면 수신 거부로 처리합니다. (가입 여부는 알려 주지 않음)
 export function UnsubscribeForm() {
   const f = useNewsletterForm("unsubscribe", "/unsubscribe");
-  if (f.status === "done") return <p role="status" className="rounded-card bg-brand-soft p-5 text-ink">수신 거부가 처리됐어요. 더 이상 알림을 보내지 않습니다.</p>;
+  if (f.status === "done") return <p role="status" className="rounded-card bg-brand-soft p-5 text-ink">수신 거부가 처리됐어요. 더 이상 알림을 보내지 않아요.</p>;
   return (
     <form noValidate onSubmit={(e) => { e.preventDefault(); void f.submit(); }} className="max-w-sm space-y-3">
       <div>

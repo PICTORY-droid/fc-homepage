@@ -6,7 +6,7 @@ import { Chevron } from "@/components/ui/Chevron";
 import { buttonClass, disclosureBodyClass, disclosureClass, disclosureHeadClass, inputClass, pillClass, textLink } from "@/components/ui/styles";
 import { filterSections, withMode, type HubEntry, type HubMode, type HubSection } from "@/lib/fun/hubDirectory";
 
-// 즐길거리 첫 페이지 — (종류 고르기) → 검색 → 분류별 토글. 누르면 펼쳐지고 다시 누르면 접혀요. (표시·화면 상태만 담당, 검색 규칙은 lib/fun/hubDirectory.ts)
+// 즐길거리 첫 페이지 — (제목 순서: 분류 이름표가 있으면 h2 아래 h3, 없으면 토글 제목이 h2) (종류 고르기) → 검색 → 분류별 토글. 누르면 펼쳐지고 다시 누르면 접혀요. (표시·화면 상태만 담당, 검색 규칙은 lib/fun/hubDirectory.ts)
 interface Props {
   sections: HubSection[];
   searchLabel: string; // 예: "직무 검색"
@@ -17,11 +17,11 @@ interface Props {
 
 const chip = "inline-flex items-center rounded-full bg-brand-tint px-3 py-1 text-sm font-bold text-brand-deep";
 
-function EntryToggle({ e, open, onToggle, mode }: { e: HubEntry; open: boolean; onToggle: () => void; mode?: string }) {
+function EntryToggle({ e, open, onToggle, mode, heading: H = "h3" }: { e: HubEntry; open: boolean; onToggle: () => void; mode?: string; heading?: "h2" | "h3" }) {
   const panel = `hub-${useId().replace(/:/g, "")}`;
   return (
     <li className={disclosureClass(open)}>
-      <h3>
+      <H>
         {/* 카드 모양 토글 — 제목 오른쪽에 화살표 버튼, 아래에 설명 */}
         <button type="button" aria-expanded={open} aria-controls={panel} onClick={onToggle} className={`${disclosureHeadClass} flex-col gap-1 py-5`}>
           <span className="flex w-full items-center justify-between gap-3">
@@ -30,7 +30,7 @@ function EntryToggle({ e, open, onToggle, mode }: { e: HubEntry; open: boolean; 
           </span>
           {e.lead && <span className="block text-sm font-normal leading-relaxed text-ink-sub">{e.lead}</span>}
         </button>
-      </h3>
+      </H>
       <div id={panel} hidden={!open} className={disclosureBodyClass}>
         {e.thumbs && e.thumbs.length > 0 && (
           <div className="mb-4 grid grid-cols-3 gap-2">
@@ -135,7 +135,7 @@ export function HubDirectory({ sections, searchLabel, placeholder, modes, modeCt
             {/* 토글을 카드처럼 2~3칸으로 나란히 — 펼친 카드만 길어지고 옆 카드는 그대로(items-start) */}
             <ul className="grid items-start gap-3 sm:grid-cols-2 lg:grid-cols-3">
               {s.entries.map((e) => (
-                <EntryToggle key={e.key} e={e} mode={mode} open={searching || opened.has(e.key)} onToggle={() => toggle(e.key)} />
+                <EntryToggle key={e.key} e={e} mode={mode} heading={s.label ? "h3" : "h2"} open={searching || opened.has(e.key)} onToggle={() => toggle(e.key)} />
               ))}
             </ul>
           </section>

@@ -21,7 +21,7 @@ export function CoverageSection({ productId }: { productId: string }) {
               <span>{t.title}</span>
               <Chevron />
             </summary>
-            <div className="overflow-x-auto px-3 pb-4 sm:px-5">
+            <div className="overflow-x-auto px-3 pb-4 sm:px-5" tabIndex={0} role="region" aria-label={`${t.title} 표 (옆으로 밀어 보기)`}>
               <table className="w-full min-w-[30rem] border-collapse text-left text-sm">
                 <thead className="bg-brand-soft text-ink">
                   <tr>{t.head.map((h) => <th key={h} scope="col" className="px-3 py-2 font-semibold">{h}</th>)}</tr>

@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from "@/lib/zod";
 
 // 템플릿 요청 — 브라우저와 서버가 같은 규칙을 씁니다 (서버 검증이 최종). 연락처 등 개인정보는 받지 않습니다.
 export const TEMPLATE_REQUEST_MAX = 500;

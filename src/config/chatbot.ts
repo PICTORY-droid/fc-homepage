@@ -3,6 +3,7 @@
 // 주의: 문구를 바꾸면 광고 심의 대상이 될 수 있습니다.
 // 다이렉트 보험 관련 안내는 넣지 않습니다(사용자 지시). 공식 고객센터 번호(1599-0100)는 직접 쓴 문구에는 넣지 않습니다.
 import { site } from "./site";
+import { chatLauncherLabel } from "./chatbotLauncher";
 import type { CategorySlug } from "./categories";
 import { officialFaqCategories } from "./officialFaq";
 
@@ -29,7 +30,7 @@ export const OFFICIAL_FAQ_URL = "https://epostlife.go.kr/IPCCFQ0001.do";
 export const chatbotCopy = {
   title: "우체국보험 안내 도우미",
   shortTitle: "안내 도우미",
-  launcherLabel: "궁금한 점 물어보세요",
+  launcherLabel: chatLauncherLabel,
   inputPlaceholder: "예) 아이 보험, 암, 연금",
   inputLabel: "궁금한 내용 입력",
   privacyNote: "이름·연락처·주민번호는 입력하지 마세요.",
