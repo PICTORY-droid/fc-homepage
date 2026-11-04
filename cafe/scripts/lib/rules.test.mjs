@@ -19,7 +19,7 @@ describe("카페 설정 검사(A)", () => {
     bd.read = "전체";
     expect(codes(checkConfig(c, loadTemplate))).toContain("A7");
     bd.read = "매니저";
-    expect(codes(checkConfig(c, () => "개인정보 수집·이용 동의 민감정보 보유 기간 동의하지 않을 수 주민등록번호 상담 방법 (필수\n주민등록번호 :"))).toContain("A7");
+    expect(codes(checkConfig(c, () => "개인정보 동의 건강 정보 동의 3년 동의하지 않 에만 쓰 주민등록번호 상담 방법 (필수\n주민등록번호 :"))).toContain("A7");
   });
   it("후기 게시판을 운영자가 쓰면 막는다", () => {
     const c = structuredClone(cfg);
