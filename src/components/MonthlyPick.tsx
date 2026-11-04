@@ -13,7 +13,7 @@ export function MonthlyPick() {
       <ul className="grid gap-4 sm:grid-cols-3">
         {p.cards.map((c) => (
           <li key={c.href}>
-            {c.pool?.length ? <RandomMonthlyCard pool={c.pool} /> : <MonthlyCardLink href={c.href} title={c.title} thumb={c.thumb} />}
+            {c.pool?.length ? <RandomMonthlyCard pool={c.pool} /> : <MonthlyCardLink href={c.href} title={c.title} thumbs={c.thumb ? [c.thumb] : []} />}
           </li>
         ))}
       </ul>

@@ -3,11 +3,11 @@ import { EXCEL_PACK, getGroup, getItem, entriesBySeason, packThumb, seasonSlug, 
 import { collectionByItem, collectionPath } from "./sheets";
 import { seasons, stationeryBySeason, stationeryFile, type SeasonKey } from "./stationery";
 
-const POOL_PER_SEASON = 6; // 홈 무작위 편지지 후보: 빛깔·주제마다 몇 장씩 (홈 화면 데이터가 무거워지지 않게)
+const PAIRS_PER_SEASON = 3; // 홈 무작위 편지지 후보: 빛깔·주제마다 두 장씩 짝지은 묶음 수 (홈 화면 데이터가 무거워지지 않게)
 
 export interface MonthlyCard { href: string; title: string; desc: string; thumb?: string; aspect: number; pool?: MonthlyChoice[] }
 /** 홈에서 무작위로 바꿔 보여 줄 후보(편지지) — 첫 번째가 기본(서버 화면)이고, 방문할 때마다 그중 하나로 바뀝니다. */
-export interface MonthlyChoice { href: string; title: string; thumb: string }
+export interface MonthlyChoice { href: string; title: string; thumbs: string[] } // 편지지 두 장을 나란히
 export interface MonthlyPick { month: number; heading: string; lead: string; cards: MonthlyCard[] }
 
 const SEASON_OF_MONTH: Record<number, { key: SeasonKey; label: Season }> = {
@@ -34,8 +34,9 @@ export function monthlyPick(month: number): MonthlyPick {
   const m = ((month - 1) % 12 + 12) % 12 + 1;
   const { key, label } = SEASON_OF_MONTH[m];
   const letter = stationeryBySeason(key)[0];
-  const pool: MonthlyChoice[] = seasons.flatMap((s) => stationeryBySeason(s.key).slice(0, POOL_PER_SEASON).map((it) => ({ href: `/fun/stationery/${s.key}`, title: `${s.label} 편지지`, thumb: stationeryFile(it, "jpg") })));
-  if (letter) pool.unshift({ href: `/fun/stationery/${key}`, title: `${label} 편지지`, thumb: stationeryFile(letter, "jpg") }); // 기본은 이달의 빛깔
+  const pairsOf = (k: SeasonKey) => { const l = stationeryBySeason(k); return Array.from({ length: Math.min(PAIRS_PER_SEASON, Math.floor(l.length / 2)) }, (_, j) => [l[j * 2], l[j * 2 + 1]].map((it) => stationeryFile(it, "jpg"))); };
+  // 기본(첫 번째)은 이달의 빛깔, 나머지는 모든 빛깔·주제 — 방문할 때마다 그중 한 묶음이 보여요
+  const pool: MonthlyChoice[] = [key, ...seasons.map((s) => s.key)].flatMap((k, n) => (n === 0 ? pairsOf(k).slice(0, 1) : pairsOf(k)).map((thumbs) => ({ href: `/fun/stationery/${k}`, title: `${seasons.find((s) => s.key === k)?.label ?? ""} 편지지`, thumbs })));
   const cards: MonthlyCard[] = [
     { href: `/fun/stationery/${key}`, title: `${label} 편지지`, desc: "", thumb: letter ? stationeryFile(letter, "jpg") : undefined, aspect: 794 / 1123, pool },
     packCard("ppt-pro", "talkpro", label), packCard("excel", "ledger", label),

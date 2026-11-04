@@ -32,6 +32,6 @@ describe("이달의 양식", () => {
     const pool = p.cards[0].pool ?? [];
     expect(pool[0].href).toBe("/fun/stationery/winter");
     expect(new Set(pool.map((c) => c.href)).size).toBeGreaterThan(4);
-    for (const c of pool) { expect(c.href).toMatch(/^\/fun\/stationery\/[a-z]+$/); expect(c.thumb).toMatch(/^\/fun\/stationery\/thumbs\/.+\.jpg$/); }
+    for (const c of pool) { expect(c.href).toMatch(/^\/fun\/stationery\/[a-z]+$/); expect(c.thumbs).toHaveLength(2); expect(new Set(c.thumbs).size).toBe(2); for (const t of c.thumbs) expect(t).toMatch(/^\/fun\/stationery\/thumbs\/.+\.jpg$/); }
   });
 });

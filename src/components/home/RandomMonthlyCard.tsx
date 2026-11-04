@@ -9,5 +9,5 @@ export function RandomMonthlyCard({ pool }: { pool: MonthlyChoice[] }) {
   const [i, setI] = useState(0);
   useEffect(() => { if (pool.length > 1) setI(Math.floor(Math.random() * pool.length)); }, [pool.length]);
   const c = pool[i] ?? pool[0];
-  return c ? <MonthlyCardLink href={c.href} title={c.title} thumb={c.thumb} /> : null;
+  return c ? <MonthlyCardLink href={c.href} title={c.title} thumbs={c.thumbs} /> : null;
 }
