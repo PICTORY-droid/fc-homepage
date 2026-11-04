@@ -25,8 +25,8 @@
       "대한민국엄마보험"
     ],
     "topic": {
-      "now": "건강/다이어트 > 질병/증상",
-      "want": "경제/금융 계열의 보험 분류 (목록에 있는 가장 가까운 항목)"
+      "now": "경제/금융 > 보험",
+      "want": "경제/금융 > 보험"
     },
     "searchKeywords": [
       "우체국보험",
@@ -295,5 +295,14 @@
     "bodyMin": 600,
     "keywordsMax": 5,
     "staleDays": 180
+  },
+  "joinSettings": {
+    "$comment": "카페 관리 > 기본 정보의 가입·공개 설정 (2026-11-05 관리 화면 기준)",
+    "joinMode": "바로가입",
+    "naverLoginJoin": "허용",
+    "namePublic": "비공개",
+    "memberListPublic": "비공개",
+    "gradeNotice": "숨김",
+    "region": "설정 안 함"
   }
 }
