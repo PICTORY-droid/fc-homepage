@@ -22,16 +22,13 @@ function EntryToggle({ e, open, onToggle, mode }: { e: HubEntry; open: boolean; 
   return (
     <li className={disclosureClass(open)}>
       <h3>
-        {/* 카드 모양 토글 — 위: 제목·설명, 아래: '펼쳐 보기' + 화살표 (간편 계산기 토글과 같은 짜임) */}
-        <button type="button" aria-expanded={open} aria-controls={panel} onClick={onToggle} className={`${disclosureHeadClass} min-h-[8.5rem] flex-col gap-3 py-5`}>
-          <span className="min-w-0">
-            <span className="block text-lg font-bold leading-snug text-ink">{e.title}</span>
-            {e.lead && <span className="mt-1 block text-sm font-normal leading-relaxed text-ink-sub">{e.lead}</span>}
-          </span>
-          <span className="mt-auto flex w-full items-center justify-between">
-            <span className="text-sm font-bold text-brand-deep">{open ? "접기" : "펼쳐 보기"}</span>
+        {/* 카드 모양 토글 — 제목 오른쪽에 화살표 버튼, 아래에 설명 */}
+        <button type="button" aria-expanded={open} aria-controls={panel} onClick={onToggle} className={`${disclosureHeadClass} flex-col gap-1 py-5`}>
+          <span className="flex w-full items-center justify-between gap-3">
+            <span className="min-w-0 text-lg font-bold leading-snug text-ink">{e.title}</span>
             <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brand-tint"><Chevron open={open} /></span>
           </span>
+          {e.lead && <span className="block text-sm font-normal leading-relaxed text-ink-sub">{e.lead}</span>}
         </button>
       </h3>
       <div id={panel} hidden={!open} className={disclosureBodyClass}>
@@ -93,13 +90,14 @@ export function HubDirectory({ sections, searchLabel, placeholder, modes, modeCt
             return (
               <li key={m.key}>
                 <button type="button" aria-pressed={on} onClick={() => pickMode(m.key)}
-                  className={`group flex h-full w-full flex-col items-center gap-4 rounded-card border bg-paper p-6 text-center transition duration-200 hover:-translate-y-0.5 hover:border-brand hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink ${on ? "border-brand-deep shadow-md" : "border-ink/10"}`}>
-                  <span className="flex items-center gap-3">
+                  className={`group flex h-full w-full flex-col gap-3 rounded-card border bg-paper p-6 text-left transition duration-200 hover:-translate-y-0.5 hover:border-brand hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink ${on ? "border-brand-deep shadow-md" : "border-ink/10"}`}>
+                  {/* 한 줄: 아이콘 · 제목 · (오른쪽) 직무 고르기 버튼 / 아래: 설명 */}
+                  <span className="flex w-full items-center gap-3">
                     {m.icon && <span aria-hidden="true" className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl text-2xl transition duration-200 ${on ? "bg-brand" : "bg-brand-soft"}`}>{m.icon}</span>}
-                    <span className="text-xl font-bold text-ink">{m.label}</span>
+                    <span className="min-w-0 flex-1 text-xl font-bold text-ink">{m.label}</span>
+                    <span className={buttonClass(on ? "primary" : "soft", "sm", "pointer-events-none shrink-0")}>{on ? `${m.label} 선택됨` : modeCta} <span aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-1">→</span></span>
                   </span>
                   <span className="text-sm leading-relaxed text-ink-sub">{m.desc}</span>
-                  <span className={buttonClass(on ? "primary" : "soft", "sm", "pointer-events-none")}>{on ? `${m.label} 선택됨` : modeCta} <span aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-1">→</span></span>
                 </button>
               </li>
             );

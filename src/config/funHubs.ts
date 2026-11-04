@@ -4,7 +4,7 @@ import type { HubMode, HubSection } from "@/lib/fun/hubDirectory";
 import { seasons, stationeryBySeason, stationeryFile } from "./stationery";
 import { CARD_ASPECT, cardCategories, cardThumb } from "./cards";
 import { packEntries, packThumb, type PackGroup } from "./pack";
-import { SHEET_ASPECT, collectionPath, sheetGroups, sheetThumb } from "./sheets";
+import { SHEET_ASPECT, sheetGroups, sheetThumb } from "./sheets";
 import { jobGroups } from "./forms";
 
 const firstThree = <T,>(list: T[]) => list.slice(0, 3);
@@ -57,14 +57,13 @@ export function sheetsHub(): HubSection[] {
       key: g.key, title: g.label, lead: g.short,
       thumbAspect: SHEET_ASPECT,
       thumbs: firstThree([...g.items.filter((t) => t.featured), ...g.items.filter((t) => !t.featured)]).map((t) => ({ src: sheetThumb(t), alt: `${t.title} 미리보기` })),
-      links: g.collections.map((c) => ({ label: `${c.item.title} 테마`, href: collectionPath(c) })),
       cta: { label: `${g.label} 서식 모두 보기`, href: `/fun/sheets/${g.key}` },
     })),
   }];
 }
 
 export const formModes: HubMode[] = [
-  { key: "resume", label: "이력서", icon: "📄", desc: "직무마다 짜임이 다른 양식 — 경력·역량을 한눈에 보여 주는 Word 양식" },
+  { key: "resume", label: "이력서", icon: "📄", desc: "직무마다 짜임이 다른 양식" },
   { key: "cover", label: "자기소개서", icon: "✍️", desc: "직무마다 다른 양식 — STAR·NCS 작성법 가이드와 예시가 붙은 Word 양식" },
 ];
 
