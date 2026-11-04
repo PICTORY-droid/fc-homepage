@@ -55,11 +55,11 @@ export const packGroups: PackGroup[] = [
     lead: "항목마다 고급 색·구도 테마로 만든 프리미엄 PowerPoint 템플릿이에요. 디자인이 모두 달라서 고르는 재미가 있고, 글·색·사진 자리를 마음대로 고쳐 쓸 수 있어요.",
     howto: "PowerPoint 에서 가장 잘 보여요. 사진 칸 가운데의 그림 아이콘을 누르면 칸 모양에 맞춰 사진이 자동으로 잘려요. 색과 글꼴은 [디자인 → 변형]에서 한 번에 바꿀 수 있고, 슬라이드 전환·등장 효과와 발표자 메모가 들어 있어요. 한쇼·구글 슬라이드에서는 일부 효과가 다르게 보일 수 있어요.",
     items: [
-      { key: "talkpro", title: "발표 템플릿 프리미엄", short: "사업 제안·교육·업무 보고·모임 소개·연말 결산 5가지 구성의 9장 발표 자료", fileLabel: "발표템플릿프리미엄", ext: "pptx", thumb: "jpg", aspect: 16 / 9 },
-      { key: "familypro", title: "가족 소개 슬라이드 프리미엄", short: "부부·아이와 함께·3대 가족·1인 가구·반려동물, 구성원 소개와 가족 이야기", fileLabel: "가족소개프리미엄", ext: "pptx", thumb: "jpg", aspect: 16 / 9 },
-      { key: "birthdaypro", title: "돌잔치 슬라이드 프리미엄", short: "성장 기록·돌잡이·사진·감사 인사 중심의 돌잔치 영상용 슬라이드", fileLabel: "돌잔치프리미엄", ext: "pptx", thumb: "jpg", aspect: 16 / 9 },
-      { key: "weddingpro", title: "결혼식 슬라이드 프리미엄", short: "소개·러브스토리·식순·오시는 길·감사 인사 중심의 결혼식 상영용 슬라이드", fileLabel: "결혼식프리미엄", ext: "pptx", thumb: "jpg", aspect: 16 / 9 },
-      { key: "reviewpro", title: "보험 보장 점검 양식 프리미엄", short: "본인·부부·가족·부모님·사업장별로 가입 내용을 정리하는 빈칸 채우기형 발표 자료(정리용)", fileLabel: "보장점검양식프리미엄", ext: "pptx", thumb: "jpg", aspect: 16 / 9 },
+      { key: "talkpro", title: "발표 슬라이드", short: "사업 제안·교육·업무 보고·모임 소개·연말 결산 5가지 구성의 9장 발표 자료", fileLabel: "발표템플릿프리미엄", ext: "pptx", thumb: "jpg", aspect: 16 / 9 },
+      { key: "familypro", title: "가족 소개 슬라이드", short: "부부·아이와 함께·3대 가족·1인 가구·반려동물, 구성원 소개와 가족 이야기", fileLabel: "가족소개프리미엄", ext: "pptx", thumb: "jpg", aspect: 16 / 9 },
+      { key: "birthdaypro", title: "돌잔치 슬라이드", short: "성장 기록·돌잡이·사진·감사 인사 중심의 돌잔치 영상용 슬라이드", fileLabel: "돌잔치프리미엄", ext: "pptx", thumb: "jpg", aspect: 16 / 9 },
+      { key: "weddingpro", title: "결혼식 슬라이드", short: "소개·러브스토리·식순·오시는 길·감사 인사 중심의 결혼식 상영용 슬라이드", fileLabel: "결혼식프리미엄", ext: "pptx", thumb: "jpg", aspect: 16 / 9 },
+      { key: "reviewpro", title: "보험 보장 점검 슬라이드", short: "본인·부부·가족·부모님·사업장별로 가입 내용을 정리하는 빈칸 채우기형 발표 자료(정리용)", fileLabel: "보장점검양식프리미엄", ext: "pptx", thumb: "jpg", aspect: 16 / 9 },
     ],
   },
 ];

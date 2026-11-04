@@ -22,22 +22,24 @@ function EntryToggle({ e, open, onToggle, mode }: { e: HubEntry; open: boolean; 
   return (
     <li className={disclosureClass(open)}>
       <h3>
-        <button type="button" aria-expanded={open} aria-controls={panel} onClick={onToggle} className={`${disclosureHeadClass} items-center gap-4 py-4`}>
+        {/* 카드 모양 토글 — 위: 제목·설명, 아래: '펼쳐 보기' + 화살표 (간편 계산기 토글과 같은 짜임) */}
+        <button type="button" aria-expanded={open} aria-controls={panel} onClick={onToggle} className={`${disclosureHeadClass} min-h-[8.5rem] flex-col gap-3 py-5`}>
           <span className="min-w-0">
-            <span className="flex flex-wrap items-center gap-2">
-              <span className="text-lg font-bold text-ink">{e.title}</span>
-            </span>
+            <span className="block text-lg font-bold leading-snug text-ink">{e.title}</span>
             {e.lead && <span className="mt-1 block text-sm font-normal leading-relaxed text-ink-sub">{e.lead}</span>}
           </span>
-          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brand-tint"><Chevron open={open} /></span>
+          <span className="mt-auto flex w-full items-center justify-between">
+            <span className="text-sm font-bold text-brand-deep">{open ? "접기" : "펼쳐 보기"}</span>
+            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brand-tint"><Chevron open={open} /></span>
+          </span>
         </button>
       </h3>
       <div id={panel} hidden={!open} className={disclosureBodyClass}>
         {e.thumbs && e.thumbs.length > 0 && (
-          <div className="mb-4 grid max-w-xl grid-cols-3 gap-2">
+          <div className="mb-4 grid grid-cols-3 gap-2">
             {e.thumbs.map((t) => (
               <div key={t.src} className="relative w-full overflow-hidden rounded-lg border border-ink/10 bg-paper-gray" style={{ aspectRatio: e.thumbAspect ?? 794 / 1123 }}>
-                <Image src={t.src} alt={t.alt} fill sizes="(min-width:640px) 12rem, 30vw" className="object-cover" />
+                <Image src={t.src} alt={t.alt} fill sizes="(min-width:1024px) 8rem, (min-width:640px) 14vw, 30vw" className="object-cover" />
               </div>
             ))}
           </div>
@@ -132,7 +134,8 @@ export function HubDirectory({ sections, searchLabel, placeholder, modes, modeCt
         shown.map((s) => (
           <section key={s.key} aria-label={s.label}>
             {s.label && <h2 className="mb-3"><span className={chip}>{s.label}</span></h2>}
-            <ul className="space-y-3">
+            {/* 토글을 카드처럼 2~3칸으로 나란히 — 펼친 카드만 길어지고 옆 카드는 그대로(items-start) */}
+            <ul className="grid items-start gap-3 sm:grid-cols-2 lg:grid-cols-3">
               {s.entries.map((e) => (
                 <EntryToggle key={e.key} e={e} mode={mode} open={searching || opened.has(e.key)} onToggle={() => toggle(e.key)} />
               ))}
