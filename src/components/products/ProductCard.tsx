@@ -12,7 +12,7 @@ export function ProductCard({ product, compare }: { product: Product; compare?: 
       <div className="flex flex-1 flex-col p-5">
         <p className="text-xs font-semibold text-brand-deep">{product.group}</p>
         <h3 className="mt-1 text-lg font-bold leading-snug text-ink sm:min-h-[3.5rem]">{product.displayName}</h3>
-        <p className="mt-2 text-sm text-ink-sub sm:min-h-[2.5rem]">{product.slogan?.headline}</p>
+        <p className="mt-2 whitespace-pre-line text-sm text-ink-sub sm:min-h-[2.5rem]">{product.slogan?.headline}</p>
         <div className="mt-auto pt-5">
         {compare && (
           <label className="mb-3 flex min-h-[44px] cursor-pointer items-center gap-3 text-sm font-semibold text-ink">

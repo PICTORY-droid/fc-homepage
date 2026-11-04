@@ -12,7 +12,7 @@ export function ArtCard({ name, headline, tags, children }: { name: string; head
       {tags && tags.length > 0 && (
         <p className="text-xs font-bold text-brand-deep">{tags.join(" · ")}</p>
       )}
-      {headline && <p className="mt-2 text-lg font-extrabold leading-snug text-brand-red">{headline}</p>}
+      {headline && <p className="mt-2 whitespace-pre-line text-lg font-extrabold leading-snug text-brand-red">{headline}</p>}
       <p className="mt-1 text-xs text-ink-sub">{name}</p>
       <div className="my-3 min-h-0 flex-1">{children}</div>
       <p className="rounded-xl border-2 border-brand-red/70 bg-paper px-3 py-3 text-sm font-bold text-ink">

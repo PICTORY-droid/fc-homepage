@@ -74,7 +74,7 @@ const SLOGAN: Record<string, { tags: string[]; headline: string }> = {
   P026: { tags: ["당뇨", "합병증"], headline: "당뇨가 있어도 안심할 수 있게" },
   P027: { tags: ["맞춤 설계"], headline: "내게 필요한 보장만 골라 담아요" },
   P028: { tags: ["단체", "재해"], headline: "직원도 회사도 함께 win-win" },
-  P030: { tags: ["무료", "엄마", "아이"], headline: "보험료 무료, 엄마와 아이를 함께 지켜요" },
+  P030: { tags: ["무료", "엄마", "아이"], headline: "보험료 무료\n엄마와 아이를 함께 지켜요" }, // \n 은 화면에서 줄바꿈
   P031: { tags: ["청소년", "저축"], headline: "아이의 꿈을 위해 차곡차곡 모아요" },
   P034: { tags: ["저축"], headline: "차곡차곡 모으고 보너스로 키워요" },
   P035: { tags: ["적립", "저축"], headline: "꾸준히 쌓아서 목돈을 만들어요" },

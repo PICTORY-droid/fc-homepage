@@ -32,7 +32,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const p = getProduct((await params).id);
   if (!p) return {};
   const title = p.displayName;
-  const description = `${p.slogan?.headline ?? `${p.displayName} — ${p.group} 보험 상품 안내`} ${p.displayName}의 보장 내용과 가입 조건, 유의사항을 상품요약서 기준으로 정리했습니다.`;
+  const description = `${p.slogan?.headline.replace(/\n/g, " ") ?? `${p.displayName} — ${p.group} 보험 상품 안내`} ${p.displayName}의 보장 내용과 가입 조건, 유의사항을 상품요약서 기준으로 정리했습니다.`;
   return {
     title,
     description,
@@ -76,7 +76,7 @@ export default async function ProductPage({ params }: Props) {
                 {p.slogan?.tags.map((t) => <li key={t} className="rounded-full bg-paper-gray px-3 py-1 text-sm text-ink-sub">{t}</li>)}
               </ul>
               <h1 className="mt-4 text-3xl font-extrabold leading-tight text-ink sm:text-4xl">{p.displayName}</h1>
-              {p.slogan && <p className="mt-3 text-lg text-ink-sub">{p.slogan.headline}</p>}
+              {p.slogan && <p className="mt-3 whitespace-pre-line text-lg text-ink-sub">{p.slogan.headline}</p>}
               <p className="mt-3 inline-flex flex-wrap items-center gap-x-2 rounded-full bg-paper-gray px-4 py-1.5 text-sm text-ink-sub">
                 <span className="font-semibold text-ink">공시 기준</span>
                 {detail ? `${detail.docType} · ` : ""}고시 시행일 {p.effectiveDate} · {productsMeta.asOf} 확인
