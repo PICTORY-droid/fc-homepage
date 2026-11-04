@@ -44,3 +44,7 @@ db/          Supabase SQL
 - 화면 코드는 DB/fetch 를 직접 부르지 않습니다.
 - 응답 형식은 `src/lib/api.ts` 한 가지로 통일합니다.
 - 상품명은 `banners.ts` 에만 존재합니다 (다른 곳에 복사하지 않음).
+
+## 네이버 카페 원고
+- 카페 원고·설정은 `cafe/` 에 있고, `npm run cafe:check` 가 검사합니다(푸시 전 검사에 포함). 항목은 `cafe/HARNESS.md`
+- 금지·주의 표현 목록은 `scripts/lib/adRules.mjs` 한 곳에서 홈페이지와 카페가 함께 씁니다.

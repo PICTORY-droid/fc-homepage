@@ -10,9 +10,11 @@
     "typecheck": "tsc --noEmit",
     "qr": "node scripts/make-qr.mjs",
     "test": "vitest run",
-    "verify:fast": "node scripts/check-content.mjs && tsc --noEmit && vitest run",
+    "verify:fast": "node scripts/check-content.mjs && node cafe/scripts/check-cafe.mjs && tsc --noEmit && vitest run",
     "verify": "npm run verify:fast && next build",
-    "hooks": "git config core.hooksPath .githooks"
+    "hooks": "git config core.hooksPath .githooks",
+    "cafe:check": "node cafe/scripts/check-cafe.mjs",
+    "cafe:build": "node cafe/scripts/build-cafe.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.118.0",

@@ -1,0 +1,71 @@
+{
+  "$comment": "네이버 카페(cafe.naver.com/304050modu) 설정 단일 원본 — 카페 관리 화면에 옮겨 적을 값입니다. 바꾼 뒤 npm run cafe:check 로 검사하세요.",
+  "cafeUrl": "https://cafe.naver.com/304050modu",
+  "brand": {
+    "nameCandidates": [
+      { "name": "우체국보험 길잡이 | 실비·암·어린이", "why": "홈페이지 이름과 같고, 검색이 많은 실비·암·어린이를 함께 담음", "recommended": true },
+      { "name": "304050 우체국보험 길잡이", "why": "카페 주소(304050)와 3040·50대 상담층을 그대로 연결" },
+      { "name": "우체국보험 길잡이 정보 카페", "why": "가장 단정하고 공식 카페로 오해받을 여지가 적음" }
+    ],
+    "intro": "우체국보험 FC가 운영하는 정보 카페예요. 우체국 실비(실손의료비) 보험 청구 서류, 암·치아·어린이 보험 기본 정보, 보험료가 무료인 대한민국엄마보험까지 우체국보험 공식 자료를 기준으로 쉽게 정리해요. 궁금한 점은 질문방에 남겨 주세요. 무료 편지지·엑셀·이력서 양식도 함께 나눠요.",
+    "introKeywords": ["우체국 실비", "실손의료비", "우체국보험", "청구 서류"]
+  },
+  "menus": [
+    { "group": "카페 안내", "boards": [
+      { "name": "필독 공지", "write": "매니저", "read": "전체", "area": "notice" },
+      { "name": "가입 인사", "write": "새싹", "read": "전체", "area": "community" },
+      { "name": "카페 소식", "write": "매니저", "read": "전체", "area": "notice" }
+    ]},
+    { "group": "우체국보험 상품 정보", "boards": [
+      { "name": "실손의료비보험", "write": "매니저", "read": "전체", "area": "product" },
+      { "name": "암·건강보험", "write": "매니저", "read": "전체", "area": "product" },
+      { "name": "어린이·엄마보험", "write": "매니저", "read": "전체", "area": "product" },
+      { "name": "치아·정기·상해보험", "write": "매니저", "read": "전체", "area": "product" },
+      { "name": "연금·저축보험", "write": "매니저", "read": "전체", "area": "product" }
+    ]},
+    { "group": "보험금 청구 가이드", "boards": [
+      { "name": "청구 서류 정리", "write": "매니저", "read": "전체", "area": "product" },
+      { "name": "앱·홈페이지 청구 방법", "write": "매니저", "read": "전체", "area": "product" }
+    ]},
+    { "group": "묻고 답하기", "boards": [
+      { "name": "보험 질문방", "write": "새싹", "read": "전체", "area": "community" },
+      { "name": "자유게시판", "write": "이웃", "read": "전체", "area": "free" }
+    ]},
+    { "group": "이용 후기", "boards": [
+      { "name": "상담·카페 이용 후기", "write": "이웃", "read": "전체", "area": "review", "operatorWrite": false }
+    ]},
+    { "group": "무료 양식 자료실", "boards": [
+      { "name": "편지지·엑셀·이력서 양식", "write": "매니저", "read": "전체", "area": "resource" }
+    ]},
+    { "group": "상담 안내", "boards": [
+      { "name": "1:1 상담 신청 안내", "write": "매니저", "read": "전체", "area": "consult", "kind": "link", "link": "https://fc-homepage.vercel.app/consult" }
+    ]},
+    { "group": "제휴 입점", "hiddenUntilReady": true, "boards": [
+      { "name": "제휴 문의", "write": "매니저", "read": "매니저", "area": "partner" },
+      { "name": "입점 업체 소개", "write": "매니저", "read": "매니저", "area": "partner" }
+    ]},
+    { "group": "보관함", "hiddenUntilReady": true, "boards": [
+      { "name": "이전 글 보관(국비 정보)", "write": "매니저", "read": "매니저", "area": "archive" }
+    ]}
+  ],
+  "requiredAreas": ["notice", "product", "community", "free", "review", "consult"],
+  "grades": [
+    { "name": "새싹", "auto": true, "visits": 0, "posts": 0, "comments": 0, "joinDays": 0, "perks": ["모든 글 읽기", "가입 인사·보험 질문방 글쓰기", "댓글 쓰기"] },
+    { "name": "이웃", "auto": true, "visits": 5, "posts": 1, "comments": 3, "joinDays": 3, "perks": ["자유게시판 글쓰기", "이용 후기 쓰기"] },
+    { "name": "단골", "auto": true, "visits": 15, "posts": 3, "comments": 10, "joinDays": 14, "perks": ["새 양식 미리 보기 투표 참여", "다음 정보 글 주제 제안"] },
+    { "name": "길잡이 멤버", "auto": true, "visits": 30, "posts": 10, "comments": 30, "joinDays": 30, "perks": ["등급 표시", "카페 운영 의견 게시판 참여"] }
+  ],
+  "footer": {
+    "operator": "운영자는 우체국보험 FC입니다.",
+    "notOfficial": "이 카페는 우체국보험 FC가 운영하며, 우정사업본부·우체국의 공식 카페가 아닙니다. 공식 정보는 우체국보험 홈페이지(www.epostlife.go.kr)에서 확인해 주세요.",
+    "premium": "보험료와 보장 내용은 나이·건강 상태 같은 가입 조건에 따라 달라질 수 있어요. 가입하시기 전에 상품설명서와 약관을 꼭 함께 확인해 주세요.",
+    "service": "계약 변경·해지·민원은 우체국보험 고객센터(1599-0100)로 문의해 주세요.",
+    "consult": { "label": "가입·보장 상담 신청하기", "url": "https://fc-homepage.vercel.app/consult" }
+  },
+  "links": {
+    "allowedHosts": ["fc-homepage.vercel.app", "www.epostlife.go.kr", "epostlife.go.kr", "www.law.go.kr"],
+    "utm": { "source": "naver_cafe", "medium": "cafe" }
+  },
+  "phones": { "allowed": ["1599-0100", "010-2192-1599"], "fcPhone": "010-2192-1599" },
+  "limits": { "name": 20, "intro": 200, "title": 40, "bodyMin": 600, "keywordsMax": 5, "staleDays": 180 }
+}

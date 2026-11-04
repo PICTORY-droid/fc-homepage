@@ -3,10 +3,9 @@
 //  2) REQUIRE_REVIEW=1 일 때 추가 검사: 심의번호/프로필/e마크 확인/개인정보 항목 확정
 import { readFileSync, readdirSync, statSync } from "node:fs";
 import { join } from "node:path";
+import { FORBIDDEN, SOFT } from "./lib/adRules.mjs"; // 금지·주의 표현 목록은 카페 검사와 함께 쓰는 단일 원본
 
 const ROOT = new URL("..", import.meta.url).pathname;
-const FORBIDDEN = ["최고", "1위", "전액", "100%", "무조건", "확정수익", "원금보장", "원금 보장", "수익률", "업계 최", "국가가 보장"];
-const SOFT = ["보장합니다", "확실히", "반드시 받", "사은품", "경품", "특별 혜택", "절대"]; // 경고만 (빌드는 통과)
 const errors = [];
 const warns = [];
 
