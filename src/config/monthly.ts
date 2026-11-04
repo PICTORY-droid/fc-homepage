@@ -33,7 +33,7 @@ export function monthlyPick(month: number): MonthlyPick {
   const letter = stationeryBySeason(key)[0];
   const cards: MonthlyCard[] = [
     { href: `/fun/stationery/${key}`, title: `${label} 편지지`, desc: season?.lead ?? "", thumb: letter ? stationeryFile(letter, "jpg") : undefined, aspect: 794 / 1123 },
-    packCard("ppt-pro", "newspro", label), packCard("excel", "ledger", label),
+    packCard("ppt-pro", "talkpro", label), packCard("excel", "ledger", label),
   ].filter((c): c is MonthlyCard => Boolean(c));
   return { month: m, heading: `${m}월의 양식`, lead: LEAD[m], cards };
 }

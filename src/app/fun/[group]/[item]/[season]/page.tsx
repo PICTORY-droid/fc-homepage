@@ -8,7 +8,7 @@ import { FunPageExtras } from "@/components/fun/FunPageExtras";
 import { FunCtaBox } from "@/components/fun/FunCtaBox";
 import { SeasonLinks } from "@/components/fun/SeasonLinks";
 import { getFunCta } from "@/config/funCta";
-import { EXCEL_PACK, entriesBySeason, getGroup, getItem, packGroups, packSeasons, retiredPackPath, seasonFromSlug, seasonSlug } from "@/config/pack";
+import { EXCEL_PACK, entriesBySeason, getGroup, getItem, packGroups, packSeasons, retiredItemPath, retiredPackPath, RETIRED_ITEMS, seasonFromSlug, seasonSlug } from "@/config/pack";
 import { collectionByItem, collectionPath } from "@/config/sheets";
 import { textLink } from "@/components/ui/styles";
 
@@ -17,7 +17,8 @@ type Props = { params: Promise<{ group: string; item: string; season: string }> 
 export const dynamicParams = false;
 
 export function generateStaticParams() {
-  return packGroups.flatMap((g) => g.items.flatMap((i) => packSeasons.map((s) => ({ group: g.slug, item: i.key, season: seasonSlug[s] }))));
+  const retired = Object.keys(RETIRED_ITEMS).flatMap((k) => { const [group, item] = k.split("/"); return packSeasons.map((s) => ({ group, item, season: seasonSlug[s] })); }); // 내린 항목의 예전 주소도 만들어 두고 옮겨 보냄
+  return [...packGroups.flatMap((g) => g.items.flatMap((i) => packSeasons.map((s) => ({ group: g.slug, item: i.key, season: seasonSlug[s] })))), ...retired];
 }
 
 const find = async (params: Props["params"]) => {
@@ -36,6 +37,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 // 계절 상세페이지 — 그 계절의 양식만 모아 보여 줍니다. 그림을 누르면 큰 미리보기가 열리고, 상담 안내·클릭 기록도 이 페이지 단위로 쌓여요.
 export default async function PackSeasonPage({ params }: Props) {
+  const raw = await params;
+  const gone = retiredItemPath(raw.group, raw.item);
+  if (gone) permanentRedirect(gone); // 내린 항목(카드뉴스)
   const f = await find(params);
   if (!f) notFound();
   const { group, item, season } = f;

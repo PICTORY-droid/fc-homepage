@@ -7,7 +7,7 @@ import { SeasonChooser } from "@/components/fun/SeasonChooser";
 import { FunPageExtras } from "@/components/fun/FunPageExtras";
 import { FunCtaBox } from "@/components/fun/FunCtaBox";
 import { getFunCta } from "@/config/funCta";
-import { EXCEL_PACK, entriesBySeason, getGroup, getItem, packGroups, packSeasons, packThumb, retiredPackPath, seasonSlug } from "@/config/pack";
+import { EXCEL_PACK, entriesBySeason, getGroup, getItem, packGroups, packSeasons, packThumb, retiredItemPath, retiredPackPath, RETIRED_ITEMS, seasonSlug } from "@/config/pack";
 import { collectionByItem, collectionPath } from "@/config/sheets";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { breadcrumbJsonLd } from "@/lib/seo/jsonLd";
@@ -18,7 +18,8 @@ type Props = { params: Promise<{ group: string; item: string }> };
 export const dynamicParams = false;
 
 export function generateStaticParams() {
-  return packGroups.flatMap((g) => g.items.map((i) => ({ group: g.slug, item: i.key })));
+  const retired = Object.keys(RETIRED_ITEMS).map((k) => { const [group, item] = k.split("/"); return { group, item }; }); // 내린 항목의 예전 주소도 만들어 두고 옮겨 보냄
+  return [...packGroups.flatMap((g) => g.items.map((i) => ({ group: g.slug, item: i.key }))), ...retired];
 }
 
 const find = async (params: Props["params"]) => {
@@ -36,6 +37,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 // 항목 페이지 — 빛깔 중 하나를 고르는 입구. 실제 양식은 빛깔별 상세페이지에 있어요.
 export default async function PackItemPage({ params }: Props) {
+  const raw = await params;
+  const gone = retiredItemPath(raw.group, raw.item);
+  if (gone) permanentRedirect(gone); // 내린 항목(카드뉴스)
   const f = await find(params);
   if (!f) notFound();
   const { group, item } = f;

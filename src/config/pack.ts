@@ -38,7 +38,7 @@ export const packGroups: PackGroup[] = [
   },
   {
     slug: "ppt", title: "PPT 템플릿", icon: "🎞️",
-    short: "발표·가족 소개·돌잔치·결혼식·보험 점검 양식·카드뉴스. 글과 사진 자리를 바로 고쳐 쓸 수 있는 PowerPoint 파일이에요.",
+    short: "발표·가족 소개·돌잔치·결혼식·보험 점검 양식. 글과 사진 자리를 바로 고쳐 쓸 수 있는 PowerPoint 파일이에요.",
     lead: "항목마다 한국 감성 테마로 만든 PowerPoint 템플릿이에요. 글·색·사진 자리를 마음대로 고쳐서 발표, 초대, 소개 자료로 쓰세요.",
     howto: "PowerPoint·한컴오피스 한쇼·구글 슬라이드에서 열 수 있어요. 사진을 넣으려면 점선 칸을 누르고 ‘도형 채우기 → 그림’을 고르세요. 글꼴은 맑은 고딕이에요.",
     items: [
@@ -47,12 +47,11 @@ export const packGroups: PackGroup[] = [
       { key: "birthday", title: "돌잔치 슬라이드", short: "성장 기록·돌잡이·사진·감사 인사·첫 번째 이야기 중심의 돌잔치 영상용 슬라이드", fileLabel: "돌잔치", ext: "pptx", thumb: "jpg", aspect: 16 / 9 },
       { key: "wedding", title: "결혼식 슬라이드", short: "소개·러브스토리·식순·오시는 길·감사 인사 중심의 결혼식 상영용 슬라이드", fileLabel: "결혼식", ext: "pptx", thumb: "jpg", aspect: 16 / 9 },
       { key: "review", title: "보험 보장 점검 양식", short: "본인·부부·가족·부모님·사업장별로 가입 내용을 정리하는 빈칸 채우기형 발표 자료(정리용)", fileLabel: "보장점검양식", ext: "pptx", thumb: "jpg", aspect: 16 / 9 },
-      { key: "news", title: "카드뉴스", short: "알뜰 팁·건강 습관·계절 안부·감사·오늘의 한마디, 정사각 7장 카드뉴스", fileLabel: "카드뉴스", ext: "pptx", thumb: "jpg", aspect: 1 },
     ],
   },
   {
     slug: "ppt-pro", title: "PPT 템플릿", icon: "✨",
-    short: "발표·가족 소개·돌잔치·결혼식·보험 점검 양식·카드뉴스. 아이보리·샴페인·오닉스·에메랄드 등 고급 색 조합과 기하·미니멀·사이버 같은 서로 다른 구도, 사진 틀·애니메이션을 갖춘 프리미엄 디자인 PowerPoint 파일이에요.",
+    short: "발표·가족 소개·돌잔치·결혼식·보험 점검 양식. 아이보리·샴페인·오닉스·에메랄드 등 고급 색 조합과 기하·미니멀·사이버 같은 서로 다른 구도, 사진 틀·애니메이션을 갖춘 프리미엄 디자인 PowerPoint 파일이에요.",
     lead: "항목마다 고급 색·구도 테마로 만든 프리미엄 PowerPoint 템플릿이에요. 디자인이 모두 달라서 고르는 재미가 있고, 글·색·사진 자리를 마음대로 고쳐 쓸 수 있어요.",
     howto: "PowerPoint 에서 가장 잘 보여요. 사진 칸 가운데의 그림 아이콘을 누르면 칸 모양에 맞춰 사진이 자동으로 잘려요. 색과 글꼴은 [디자인 → 변형]에서 한 번에 바꿀 수 있고, 슬라이드 전환·등장 효과와 발표자 메모가 들어 있어요. 한쇼·구글 슬라이드에서는 일부 효과가 다르게 보일 수 있어요.",
     items: [
@@ -61,7 +60,6 @@ export const packGroups: PackGroup[] = [
       { key: "birthdaypro", title: "돌잔치 슬라이드 프리미엄", short: "성장 기록·돌잡이·사진·감사 인사 중심의 돌잔치 영상용 슬라이드", fileLabel: "돌잔치프리미엄", ext: "pptx", thumb: "jpg", aspect: 16 / 9 },
       { key: "weddingpro", title: "결혼식 슬라이드 프리미엄", short: "소개·러브스토리·식순·오시는 길·감사 인사 중심의 결혼식 상영용 슬라이드", fileLabel: "결혼식프리미엄", ext: "pptx", thumb: "jpg", aspect: 16 / 9 },
       { key: "reviewpro", title: "보험 보장 점검 양식 프리미엄", short: "본인·부부·가족·부모님·사업장별로 가입 내용을 정리하는 빈칸 채우기형 발표 자료(정리용)", fileLabel: "보장점검양식프리미엄", ext: "pptx", thumb: "jpg", aspect: 16 / 9 },
-      { key: "newspro", title: "카드뉴스 프리미엄", short: "알뜰 팁·건강 습관·계절 안부·감사·오늘의 한마디, 정사각 카드뉴스", fileLabel: "카드뉴스프리미엄", ext: "pptx", thumb: "jpg", aspect: 1 },
     ],
   },
 ];
@@ -72,6 +70,9 @@ const all = data as unknown as Record<string, PackEntry[]>;
 export const EXCEL_PACK = "excel";
 /** 홈페이지에서 내린 묶음 — 예전 주소는 옮겨 간 묶음의 같은 항목으로 보냅니다. (기존 PPT 템플릿 → 프리미엄 디자인, 항목 키 뒤에 "pro") */
 export const RETIRED_PACKS: Record<string, { to: string; itemSuffix: string }> = { ppt: { to: "ppt-pro", itemSuffix: "pro" } };
+/** 홈페이지에서 내린 항목(카드뉴스) — 예전 주소는 그 묶음 첫 페이지로 보냅니다. 키: "<묶음>/<항목>" */
+export const RETIRED_ITEMS: Record<string, string> = { "ppt/news": "/fun/ppt-pro", "ppt-pro/newspro": "/fun/ppt-pro" };
+export const retiredItemPath = (group: string, item: string): string | undefined => RETIRED_ITEMS[`${group}/${item}`];
 /** 내린 묶음의 예전 주소 → 새 주소 (내린 묶음이 아니면 undefined) */
 export function retiredPackPath(slug: string, itemKey?: string, seasonPart?: string): string | undefined {
   const r = RETIRED_PACKS[slug];
