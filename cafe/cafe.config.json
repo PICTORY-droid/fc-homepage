@@ -331,5 +331,11 @@
     "share": "사용",
     "copySave": "사용 안 함",
     "autoSource": "사용"
+  },
+  "writeAndChat": {
+    "$comment": "카페 관리 > 글쓰기 조건·채팅방 개설 권한",
+    "writeCondition": "사용 안 함 (스팸이 생기면 켬)",
+    "groupChat": "카페 스탭",
+    "directChat": "이웃"
   }
 }
