@@ -54,7 +54,7 @@ export function checkConfig(cfg, ctxTemplate = () => null) {
     if (b.read !== "매니저") r.push(err("A7", `상담 양식 게시판(${b.name})은 읽기 권한이 매니저여야 함(개인정보)`));
     const tpl = ctxTemplate(b.template);
     if (!tpl) { r.push(err("A7", `상담 양식 파일(${b.template})이 없음`)); continue; }
-    for (const need of ["개인정보 수집·이용 동의", "민감정보", "보유 기간", "동의하지 않을 수", "주민등록번호"]) if (!tpl.includes(need)) r.push(err("A7", `상담 양식에 "${need}" 안내 필요`));
+    for (const need of ["개인정보 수집·이용 동의", "민감정보", "보유 기간", "동의하지 않을 수", "주민등록번호", "상담 방법 (필수"]) if (!tpl.includes(need)) r.push(err("A7", `상담 양식에 "${need}" 안내 필요`));
     for (const ask of [/주민등록번호\s*:/, /주소\s*:/, /계좌번호\s*:/, /카드번호\s*:/]) if (ask.test(tpl)) r.push(err("A7", `상담 양식이 ${ask.source.replace(/\\s\*:/, "")} 를 묻고 있음 — 수집 금지`));
   }
   for (const g of cfg.menus.filter((x) => /제휴/.test(x.group))) if (!g.hiddenUntilReady) r.push(err("A8", "제휴 입점 메뉴는 규정 확인 전까지 비공개(hiddenUntilReady)"));
