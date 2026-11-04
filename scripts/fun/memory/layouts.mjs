@@ -169,10 +169,11 @@ export const draw = (d, heroFn) => {
   const bareRun = run(true);            // 글자를 뺀 배경 + 제목 위치(Word 에서 제목 편집용)
   const full = run(false);
   const a = full.area;
+  // 받는 사람·날짜·보내는 사람 글씨는 그림(PNG·미리보기)에 넣지 않습니다. 자리 정보(area)는 Word 입력칸용으로 그대로 둡니다. (withLabels=true 로 예전 모양을 그릴 수 있음)
   const lab = [
     txt(a.fields[0], a.fields[1] + 28, "받는 사람 :", { size: 17, weight: 700, fill: p.ink, serif: false }),
     d.dateLine === false ? "" : txt(a.fields[0] + a.fields[2], a.fields[1] + 28, "날짜 :        년     월     일", { size: 17, weight: 700, fill: p.ink, anchor: "end", serif: false }),
     a.from ? txt(a.from[3] === "right" ? a.from[0] + a.from[2] : a.from[0], a.from[1] + 28, "보내는 사람 :", { size: 17, weight: 700, fill: p.ink, anchor: a.from[3] === "right" ? "end" : "start", serif: false }) : "",
   ].join("");
-  return { cover: () => coverSvg(d, heroFn, p), svg: (bare) => (bare ? wrapSvg(d.id, bareRun.defs, bareRun.body, d.n ?? 3) : wrapSvg(d.id, full.defs, full.body + lab, d.n ?? 3)), area: { ...a, date: d.dateLine !== false, title: d.editTitle ? bareRun.titleArea ?? null : null } };
+  return { cover: () => coverSvg(d, heroFn, p), svg: (bare, withLabels = false) => (bare ? wrapSvg(d.id, bareRun.defs, bareRun.body, d.n ?? 3) : wrapSvg(d.id, full.defs, full.body + (withLabels ? lab : ""), d.n ?? 3)), area: { ...a, date: d.dateLine !== false, title: d.editTitle ? bareRun.titleArea ?? null : null } };
 };

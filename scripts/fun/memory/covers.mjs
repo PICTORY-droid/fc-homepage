@@ -105,7 +105,7 @@ export const cover = (d, i) => {
   const art = ART[d.style](hero, p, d);
   const place = d.wide ? `translate(${w - BOX.w * 1.18 - 70} ${(h - BOX.h * 1.18) / 2}) scale(1.18)` : `translate(${(w - BOX.w * 0.66) / 2 - 30} ${h - BOX.h * 0.66 - 50}) scale(.66)`;
   const label = d.wide
-    ? txt(112, 100, d.label, { size: 22, weight: 700, fill: p.d, spacing: 8, opacity: 0.7, serif: false }) + rect(112, 120, 64, 3, p.a) + txt(112, d.season === "여름" ? h - 150 : h - 70, "반딧불이의 곳간", { size: 17, fill: p.d, spacing: 3, opacity: 0.5, serif: false })
+    ? txt(112, 100, d.label, { size: 22, weight: 700, fill: p.d, spacing: 8, opacity: 0.7, serif: false }) + rect(112, 120, 64, 3, p.a)
     : txt(100, 90, d.label, { size: 22, weight: 700, fill: p.d, spacing: 8, opacity: 0.7, serif: false }) + rect(100, 110, 64, 3, p.a);
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}">${bgSvg(w, h, p, i)}
     ${{ 봄: springBg, 여름: summerBg, 가을: autumnBg, 겨울: winterBg }[d.season](w, h, p, i)}${label}<g transform="${place}">${art}</g>

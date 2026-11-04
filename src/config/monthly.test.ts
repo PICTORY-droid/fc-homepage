@@ -26,4 +26,12 @@ describe("이달의 양식", () => {
     expect(p.cards.map((c) => c.title)).toEqual(["포근빛 편지지", "포근빛 발표 템플릿 프리미엄", "포근빛 가계부"]);
     expect(p.cards[2].href).toBe("/fun/sheets/life/ledger/winter"); // 가계부는 엑셀 서식의 테마 모음으로 바로 연결
   });
+  it("카드에는 설명 문장 없이 제목만, 편지지 카드는 여러 빛깔·주제 후보 중 무작위", () => {
+    const p = monthlyPick(12);
+    for (const c of p.cards) expect(c.desc).toBe("");
+    const pool = p.cards[0].pool ?? [];
+    expect(pool[0].href).toBe("/fun/stationery/winter");
+    expect(new Set(pool.map((c) => c.href)).size).toBeGreaterThan(4);
+    for (const c of pool) { expect(c.href).toMatch(/^\/fun\/stationery\/[a-z]+$/); expect(c.thumb).toMatch(/^\/fun\/stationery\/thumbs\/.+\.jpg$/); }
+  });
 });

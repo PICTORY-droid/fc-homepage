@@ -3,7 +3,11 @@ import { EXCEL_PACK, getGroup, getItem, entriesBySeason, packThumb, seasonSlug, 
 import { collectionByItem, collectionPath } from "./sheets";
 import { seasons, stationeryBySeason, stationeryFile, type SeasonKey } from "./stationery";
 
-export interface MonthlyCard { href: string; title: string; desc: string; thumb?: string; aspect: number }
+const POOL_PER_SEASON = 6; // 홈 무작위 편지지 후보: 빛깔·주제마다 몇 장씩 (홈 화면 데이터가 무거워지지 않게)
+
+export interface MonthlyCard { href: string; title: string; desc: string; thumb?: string; aspect: number; pool?: MonthlyChoice[] }
+/** 홈에서 무작위로 바꿔 보여 줄 후보(편지지) — 첫 번째가 기본(서버 화면)이고, 방문할 때마다 그중 하나로 바뀝니다. */
+export interface MonthlyChoice { href: string; title: string; thumb: string }
 export interface MonthlyPick { month: number; heading: string; lead: string; cards: MonthlyCard[] }
 
 const SEASON_OF_MONTH: Record<number, { key: SeasonKey; label: Season }> = {
@@ -29,10 +33,11 @@ const packCard = (groupSlug: string, itemKey: string, season: Season): MonthlyCa
 export function monthlyPick(month: number): MonthlyPick {
   const m = ((month - 1) % 12 + 12) % 12 + 1;
   const { key, label } = SEASON_OF_MONTH[m];
-  const season = seasons.find((s) => s.key === key);
   const letter = stationeryBySeason(key)[0];
+  const pool: MonthlyChoice[] = seasons.flatMap((s) => stationeryBySeason(s.key).slice(0, POOL_PER_SEASON).map((it) => ({ href: `/fun/stationery/${s.key}`, title: `${s.label} 편지지`, thumb: stationeryFile(it, "jpg") })));
+  if (letter) pool.unshift({ href: `/fun/stationery/${key}`, title: `${label} 편지지`, thumb: stationeryFile(letter, "jpg") }); // 기본은 이달의 빛깔
   const cards: MonthlyCard[] = [
-    { href: `/fun/stationery/${key}`, title: `${label} 편지지`, desc: season?.lead ?? "", thumb: letter ? stationeryFile(letter, "jpg") : undefined, aspect: 794 / 1123 },
+    { href: `/fun/stationery/${key}`, title: `${label} 편지지`, desc: "", thumb: letter ? stationeryFile(letter, "jpg") : undefined, aspect: 794 / 1123, pool },
     packCard("ppt-pro", "talkpro", label), packCard("excel", "ledger", label),
   ].filter((c): c is MonthlyCard => Boolean(c));
   return { month: m, heading: `${m}월의 양식`, lead: LEAD[m], cards };
