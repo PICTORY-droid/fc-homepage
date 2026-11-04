@@ -439,7 +439,8 @@
     "bodyMin": 600,
     "keywordsMax": 5,
     "staleDays": 180,
-    "joinGuide": 70
+    "joinGuide": 70,
+    "template": 800
   },
   "joinSettings": {
     "$comment": "카페 관리 > 기본 정보의 가입·공개 설정 (2026-11-05 관리 화면 기준)",
