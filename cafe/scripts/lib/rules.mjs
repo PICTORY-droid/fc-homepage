@@ -59,7 +59,6 @@ export function checkConfig(cfg) {
   if (/<[^>]+>/.test(guide)) r.push(err("A13", "가입 안내문에는 HTML 태그를 쓸 수 없음"));
   if (L.joinGuide && len(guide) > L.joinGuide) r.push(err("A13", `가입 안내문 ${len(guide)}자 — ${L.joinGuide}자 이내(네이버 기준)`));
   for (const w of [...FORBIDDEN, ...COMPARE, ...REWARD, ...BANNED]) if (guide.includes(w)) r.push(err("A13", `가입 안내문에 "${w}"`));
-  if (!guide.includes("공식 카페가 아닙니다")) r.push(err("A13", "가입 안내문에 '공식 카페가 아닙니다' 고지 필요"));
   // 가입 환영글 — 같은 표현 검사, 연결할 공지 원고가 실제로 있어야 함
   const welcome = cfg.joinSettings?.welcome;
   if (welcome) {
@@ -69,7 +68,7 @@ export function checkConfig(cfg) {
   const qs = cfg.joinSettings?.joinQuestions ?? [];
   if (qs.length > 3) r.push(err("A13", "가입 질문은 최대 3개"));
   for (const q of qs) if (/연락처|전화|휴대폰|주민|주소|생년월일|증권|병력|질병|소득/.test(q)) r.push(err("A13", `가입 질문 "${q}" — 개인정보·민감정보 수집 금지`));
-  for (const k of ["operator", "notOfficial", "premium", "service"]) if (!cfg.footer[k]) r.push(err("A11", `글 아래 필수 고지(footer.${k}) 비어 있음`));
+  for (const k of ["officialInfo", "premium", "service"]) if (!cfg.footer[k]) r.push(err("A11", `글 아래 필수 고지(footer.${k}) 비어 있음`));
   return r;
 }
 

@@ -268,8 +268,7 @@
     }
   ],
   "footer": {
-    "operator": "운영자는 우체국보험 FC입니다.",
-    "notOfficial": "이 카페는 우체국보험 FC가 운영하며, 우정사업본부·우체국의 공식 카페가 아닙니다. 공식 정보는 우체국보험 홈페이지(www.epostlife.go.kr)에서 확인해 주세요.",
+    "officialInfo": "공식 정보는 우체국보험 홈페이지(www.epostlife.go.kr)에서 확인해 주세요.",
     "premium": "보험료와 보장 내용은 나이·건강 상태 같은 가입 조건에 따라 달라질 수 있어요. 가입하시기 전에 상품설명서와 약관을 꼭 함께 확인해 주세요.",
     "service": "계약 변경·해지·민원은 우체국보험 고객센터(1599-0100)로 문의해 주세요.",
     "consult": {
@@ -313,7 +312,7 @@
     "memberListPublic": "비공개",
     "gradeNotice": "숨김",
     "region": "설정 안 함",
-    "joinGuide": "우체국보험 FC가 운영하며 공식 카페가 아닙니다. 질문은 보험 질문방에, 개인정보는 글에 쓰지 말아 주세요.",
+    "joinGuide": "질문은 보험 질문방에, 개인정보는 글에 쓰지 말아 주세요.",
     "joinQuestions": [],
     "acceptApplications": "받음",
     "gender": "모든 성별",

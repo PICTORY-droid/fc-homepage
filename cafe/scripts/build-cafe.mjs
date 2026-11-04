@@ -36,16 +36,15 @@ const list = [];
 for (const { meta, body } of posts) {
   const f = cfg.footer;
   const link = withUtm(meta.slug);
-  const top = meta.kind === "공지" ? "" : `<p class="meta">${esc(f.operator)}</p>`;
   const foot = `<div class="foot">
 <p>기준일 ${esc(meta.asOf)} · 출처: ${meta.sources.map((s) => `<a href="${esc(s)}">${esc(new URL(s).host)}</a>`).join(", ")}</p>
 ${meta.kind === "상품" ? `<p>${esc(f.premium)}</p>` : ""}
 <p>${esc(f.service)}</p>
 <p><a href="${esc(link(f.consult.url))}">${esc(f.consult.label)}</a></p>
-<p>${esc(f.notOfficial)}</p>
+<p>${esc(f.officialInfo)}</p>
 ${meta.reviewNo ? `<p>심의필 ${esc(meta.reviewNo)}</p>` : ""}</div>`;
   const name = `${meta.status === "초안" ? "초안_" : ""}${meta.slug}.html`;
-  writeFileSync(join(OUT, name), page(meta.title, `${top}\n${toHtml(body, link)}\n${foot}`));
+  writeFileSync(join(OUT, name), page(meta.title, `${toHtml(body, link)}\n${foot}`));
   list.push(`<li>${meta.status === "초안" ? '<span class="draft">초안</span> ' : ""}<a href="${name}">${esc(meta.title)}</a> <span class="meta">→ ${esc(meta.menu)} · 태그: ${meta.keywords.map(esc).join(", ")}</span></li>`);
 }
 writeFileSync(join(OUT, "index.html"), page("카페 원고 목록", `<h1>카페 원고 목록</h1><p class="meta">제목은 카페 글쓰기의 제목 칸에, 태그는 태그 칸에 그대로 넣으세요.</p><ol>${list.join("")}</ol>`));
