@@ -6,6 +6,9 @@ import { parseFrontmatter } from "./frontmatter.mjs";
 export const CAFE = new URL("../../", import.meta.url).pathname;
 const ROOT = join(CAFE, "..");
 
+/** 카페 폴더 안의 양식 파일 읽기 (없으면 null) */
+export const loadTemplate = (rel) => { try { return rel ? readFileSync(join(CAFE, rel), "utf8") : null; } catch { return null; } };
+
 export const loadConfig = () => JSON.parse(readFileSync(join(CAFE, "cafe.config.json"), "utf8"));
 
 /** 판매 중 상품 (홈페이지 src/config/products.data.json — 판매중지·온라인 전용 상품은 이미 빠져 있음) */

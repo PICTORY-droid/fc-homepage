@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { checkConfig, checkPost } from "./rules.mjs";
 import { parseFrontmatter } from "./frontmatter.mjs";
 import { toHtml } from "./markdown.mjs";
-import { loadConfig, loadProducts } from "./load.mjs";
+import { loadConfig, loadProducts, loadTemplate } from "./load.mjs";
 
 const cfg = loadConfig();
 const products = loadProducts();
@@ -12,7 +12,15 @@ const run = (meta, b = body) => checkPost("x.md", { ...base, ...meta }, b, { cfg
 const codes = (r) => r.filter((i) => i.level === "error").map((i) => i.code);
 
 describe("카페 설정 검사(A)", () => {
-  it("현재 설정은 오류 없음", () => expect(codes(checkConfig(cfg))).toEqual([]));
+  it("현재 설정은 오류 없음", () => expect(codes(checkConfig(cfg, loadTemplate))).toEqual([]));
+  it("상담 양식 게시판을 매니저 외에 공개하거나 주민등록번호를 물으면 막는다", () => {
+    const c = structuredClone(cfg);
+    const bd = c.menus.flatMap((g) => g.boards).find((b) => b.area === "consult");
+    bd.read = "전체";
+    expect(codes(checkConfig(c, loadTemplate))).toContain("A7");
+    bd.read = "매니저";
+    expect(codes(checkConfig(c, () => "개인정보 수집·이용 동의 민감정보 보유 기간 동의하지 않을 수 주민등록번호\n주민등록번호 :"))).toContain("A7");
+  });
   it("후기 게시판을 운영자가 쓰면 막는다", () => {
     const c = structuredClone(cfg);
     c.menus.find((g) => g.group === "이용 후기").boards[0].operatorWrite = true;

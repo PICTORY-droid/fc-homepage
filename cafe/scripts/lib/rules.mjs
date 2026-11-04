@@ -19,7 +19,7 @@ const PRODUCT_NAME = /우체국[가-힣A-Za-z]*보험/g;
 const DATE = /^\d{4}-\d{2}-\d{2}$/;
 
 /** A. 카페 설정 */
-export function checkConfig(cfg) {
+export function checkConfig(cfg, ctxTemplate = () => null) {
   const r = [];
   const L = cfg.limits;
   const names = cfg.brand.nameCandidates;
@@ -47,7 +47,16 @@ export function checkConfig(cfg) {
   const gradeNames = new Set(["매니저", "전체", ...cfg.grades.map((g) => g.name)]);
   for (const b of boards) for (const k of ["write", "read"]) if (!gradeNames.has(b[k])) r.push(err("A5", `${b.name} 의 ${k} 권한 "${b[k]}" 는 없는 등급`));
   for (const b of boards.filter((x) => x.area === "review")) if (b.operatorWrite !== false) r.push(err("A6", `후기 게시판(${b.name})은 운영자가 쓰지 않도록 operatorWrite:false 필요`));
-  for (const b of boards.filter((x) => x.area === "consult")) if (b.kind !== "link") r.push(err("A7", `상담 게시판(${b.name})은 카페 안에서 연락처를 받지 않도록 링크(kind:"link")여야 함`));
+  // A7 상담 게시판 — 링크형이거나, 카페 안에서 받는 양식형(form)이면 매니저만 읽기 + 동의 문구가 있는 양식 필수
+  for (const b of boards.filter((x) => x.area === "consult")) {
+    if (b.kind === "link") continue;
+    if (b.kind !== "form") { r.push(err("A7", `상담 게시판(${b.name})은 kind "link" 또는 "form" 이어야 함`)); continue; }
+    if (b.read !== "매니저") r.push(err("A7", `상담 양식 게시판(${b.name})은 읽기 권한이 매니저여야 함(개인정보)`));
+    const tpl = ctxTemplate(b.template);
+    if (!tpl) { r.push(err("A7", `상담 양식 파일(${b.template})이 없음`)); continue; }
+    for (const need of ["개인정보 수집·이용 동의", "민감정보", "보유 기간", "동의하지 않을 수", "주민등록번호"]) if (!tpl.includes(need)) r.push(err("A7", `상담 양식에 "${need}" 안내 필요`));
+    for (const ask of [/주민등록번호\s*:/, /주소\s*:/, /계좌번호\s*:/, /카드번호\s*:/]) if (ask.test(tpl)) r.push(err("A7", `상담 양식이 ${ask.source.replace(/\\s\*:/, "")} 를 묻고 있음 — 수집 금지`));
+  }
   for (const g of cfg.menus.filter((x) => /제휴/.test(x.group))) if (!g.hiddenUntilReady) r.push(err("A8", "제휴 입점 메뉴는 규정 확인 전까지 비공개(hiddenUntilReady)"));
   const keys = ["posts", "comments", "visits", "likes", "joinWeeks"];
   cfg.grades.forEach((g, i) => {
