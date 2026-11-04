@@ -165,7 +165,10 @@
           "read": "전체",
           "area": "consult",
           "kind": "link",
-          "link": "https://fc-homepage.vercel.app/consult"
+          "link": "https://fc-homepage.vercel.app/consult",
+          "boardGuide": "상담은 글 속 링크의 상담 신청 페이지에서 받아요. 글과 댓글에 전화번호 같은 개인정보는 쓰지 말아 주세요.",
+          "template": "posts/06-consult-guide.md",
+          "bottomBanner": "assets/door/btn-consult.png"
         }
       ]
     },
@@ -281,7 +284,8 @@
       "fc-homepage.vercel.app",
       "www.epostlife.go.kr",
       "epostlife.go.kr",
-      "www.law.go.kr"
+      "www.law.go.kr",
+      "open.kakao.com"
     ],
     "utm": {
       "source": "naver_cafe",
