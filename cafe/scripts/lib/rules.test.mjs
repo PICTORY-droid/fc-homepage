@@ -31,6 +31,12 @@ describe("카페 설정 검사(A)", () => {
     expect(got).toContain("A2");
     expect(got).toContain("A12");
   });
+  it("가입 질문으로 연락처를 묻거나 안내문에 공식 아님 고지가 없으면 막는다", () => {
+    const c = structuredClone(cfg);
+    c.joinSettings.joinQuestions = ["휴대폰 번호를 알려 주세요"];
+    c.joinSettings.joinGuide = "환영해요";
+    expect(codes(checkConfig(c)).filter((x) => x === "A13").length).toBe(2);
+  });
   it("제휴 메뉴를 바로 공개하면 막는다", () => {
     const c = structuredClone(cfg);
     c.menus.find((g) => g.group === "제휴 입점").hiddenUntilReady = false;

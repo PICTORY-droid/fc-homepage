@@ -54,6 +54,14 @@ export function checkConfig(cfg) {
     if (i > 0) for (const k of keys) if (g[k] < cfg.grades[i - 1][k]) r.push(err("A9", `등급 ${g.name} 의 ${k} 조건이 앞 등급보다 낮음`));
     for (const p of g.perks) for (const w of [...REWARD, "할인", "무료 상담 우선"]) if (p.includes(w)) r.push(err("A10", `등급 ${g.name} 혜택 "${p}" — 금전·경품성 혜택 금지("${w}")`));
   });
+  // A13 가입 안내문·가입 질문 — 광고 표현 검사, 개인정보 최소 수집(가입 질문으로 연락처·주민번호 등 묻지 않기)
+  const guide = cfg.joinSettings?.joinGuide ?? "";
+  if (/<[^>]+>/.test(guide)) r.push(err("A13", "가입 안내문에는 HTML 태그를 쓸 수 없음"));
+  for (const w of [...FORBIDDEN, ...COMPARE, ...REWARD, ...BANNED]) if (guide.includes(w)) r.push(err("A13", `가입 안내문에 "${w}"`));
+  if (!guide.includes("공식 카페가 아닙니다")) r.push(err("A13", "가입 안내문에 '공식 카페가 아닙니다' 고지 필요"));
+  const qs = cfg.joinSettings?.joinQuestions ?? [];
+  if (qs.length > 3) r.push(err("A13", "가입 질문은 최대 3개"));
+  for (const q of qs) if (/연락처|전화|휴대폰|주민|주소|생년월일|증권|병력|질병|소득/.test(q)) r.push(err("A13", `가입 질문 "${q}" — 개인정보·민감정보 수집 금지`));
   for (const k of ["operator", "notOfficial", "premium", "service"]) if (!cfg.footer[k]) r.push(err("A11", `글 아래 필수 고지(footer.${k}) 비어 있음`));
   return r;
 }
