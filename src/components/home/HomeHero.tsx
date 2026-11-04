@@ -7,7 +7,7 @@ import { HeroCarousel, type HeroSlideView } from "./HeroCarousel";
 export function HomeHero() {
   const slides: HeroSlideView[] = heroSlides.map((s) => {
     const b = getBanner(s.bannerKey);
-    return { id: s.id, product: b.product, headline: b.headline, sub: b.sub, detailPath: b.detailPath, art: s.art, theme: s.theme };
+    return { id: s.id, product: b.product, headline: b.headline, sub: b.sub, detailPath: b.detailPath, points: b.points, art: s.art, theme: s.theme };
   });
   return (
     <section aria-label="대표 상품 안내" className="bg-paper">

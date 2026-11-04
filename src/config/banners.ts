@@ -12,6 +12,7 @@ export interface Banner {
   cta: string;
   ctaHref?: string; // 없으면 상담 신청(/consult?topic=…)으로 연결
   detailPath: string; // 이 사이트의 상품 상세 페이지 (/products/<id>)
+  points?: string[]; // 홈 배너에 작은 표시로 보여 줄 핵심 사실(상품요약서 기준, 3개 이내)
 }
 
 export const banners: Record<BannerKey, Banner> = {
@@ -38,8 +39,10 @@ export const banners: Record<BannerKey, Banner> = {
   },
   mom: {
     product: "무배당 우체국대한민국엄마보험 2504", nameVerified: true, eMarkChecked: false,
-    headline: "임신부터 출산까지, 필요한 준비를 살펴보세요", sub: "산모와 신생아 보장을 함께 안내합니다.",
+    headline: "아가를 위해, 엄마를 위해\n우체국이 설계한\n무료 공익보험", sub: "보험료는 체신관서가 지원해 내는 돈이 없어요. 면책·감액기간 없이 가입하면 바로 보장이 시작돼요.",
     cta: "산모 보장 상담하기", detailPath: "/products/P030",
+    // 상품요약서(2504) 기준: 체신관서 보험료 지원(가입자 부담 0원) · 주계약 10년 희귀질환 진단 · 임신 22주 이내 산모 임신질환진단특약(선택)
+    points: ["내는 보험료 0원", "자녀 희귀질환 10년 보장", "임신 22주 이내 산모 임신질환 추가 보장"],
   },
   saving: {
     product: "무배당 파워적립보험 2504", nameVerified: true, eMarkChecked: false,

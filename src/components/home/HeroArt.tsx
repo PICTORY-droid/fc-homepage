@@ -1,4 +1,4 @@
-// 배너 그림 5종 — 모두 직접 그린 장식용 SVG (스크린리더에서는 숨김). 색은 테마에서 받습니다.
+// 배너 그림 6종 — 모두 직접 그린 장식용 SVG (스크린리더에서는 숨김). 색은 테마에서 받습니다.
 import type { HeroArtKey, HeroTheme } from "@/config/heroSlides";
 
 const Frame = ({ t, children }: { t: HeroTheme; children: React.ReactNode }) => (
@@ -58,6 +58,41 @@ const art: Record<HeroArtKey, (t: HeroTheme) => React.ReactNode> = {
       <path className="fx-float-slow" d="M318 210c-12-8-18-14-18-22 0-6 4-10 10-10 4 0 6 2 8 5 2-3 4-5 8-5 6 0 10 4 10 10 0 8-6 14-18 22Z" fill="#fff" stroke={t.accent} strokeWidth="3" />
     </>
   ),
+  // 아기를 안은 엄마 + 꽃 — 대한민국엄마보험(직접 그린 선 그림)
+  mom: (t) => {
+    const flower = (x: number, y: number, r: number, cls: string) => (
+      <g className={cls} transform={`translate(${x} ${y})`}>
+        {Array.from({ length: 5 }, (_, i) => <ellipse key={i} cx="0" cy={-r} rx={r * 0.55} ry={r * 0.9} fill="#fff" stroke={t.accent} strokeWidth="2.5" transform={`rotate(${i * 72})`} />)}
+        <circle r={r * 0.55} fill="#FFB547" />
+      </g>
+    );
+    return (
+      <>
+        <path d="M70 262c10-60 40-96 70-112" fill="none" stroke="#8CCB6B" strokeWidth="5" strokeLinecap="round" />
+        <path d="M96 196c-22-6-34 4-40 16 18 6 32 0 40-16Z" fill="#B8E39B" />
+        <path d="M300 250c-6-46-22-74-40-90" fill="none" stroke="#8CCB6B" strokeWidth="4" strokeLinecap="round" />
+        <g className="fx-pop">
+          {/* 엄마 */}
+          <path d="M150 74c4-26 24-40 44-40s40 14 44 40c4 30-6 54-16 66" fill={t.deep} opacity=".9" />
+          <circle cx="194" cy="86" r="30" fill="#FFE7D6" stroke={t.deep} strokeWidth="4" />
+          <path d="M168 78c10-14 30-20 52-8" fill="none" stroke={t.deep} strokeWidth="4" strokeLinecap="round" />
+          <path d="M184 92q4 4 8 0M204 92q4 4 8 0" fill="none" stroke={t.deep} strokeWidth="3" strokeLinecap="round" />
+          <path d="M190 104q8 6 16 0" fill="none" stroke={t.accent} strokeWidth="3" strokeLinecap="round" />
+          <path d="M134 262c0-70 22-120 60-120s60 50 60 120Z" fill="#fff" stroke={t.deep} strokeWidth="4" strokeLinejoin="round" />
+          {/* 품에 안긴 아기 */}
+          <ellipse cx="186" cy="196" rx="52" ry="26" fill={t.soft} stroke={t.deep} strokeWidth="4" transform="rotate(-12 186 196)" />
+          <circle cx="152" cy="188" r="20" fill="#FFE7D6" stroke={t.deep} strokeWidth="4" />
+          <path d="M144 190q3 3 6 0M156 186q3 3 6 0" fill="none" stroke={t.deep} strokeWidth="2.5" strokeLinecap="round" />
+          <path d="M150 198q4 3 8 0" fill="none" stroke={t.accent} strokeWidth="2.5" strokeLinecap="round" />
+          <path d="M168 214c20 6 46 4 66-10" fill="none" stroke={t.deep} strokeWidth="4" strokeLinecap="round" />
+        </g>
+        {flower(78, 118, 12, "fx-float")}
+        {flower(300, 150, 10, "fx-float-slow")}
+        {flower(70, 252, 9, "fx-float-slow")}
+        <path className="art-beat" d="M282 92c-10-7-15-12-15-18 0-5 4-8 8-8 3 0 5 2 7 4 2-2 4-4 7-4 4 0 8 3 8 8 0 6-5 11-15 18Z" fill={t.accent} />
+      </>
+    );
+  },
   // 해돋이 — 노후 준비
   sunrise: (t) => (
     <>

@@ -12,6 +12,7 @@ export interface HeroSlideView {
   headline: string;
   sub: string;
   detailPath: string;
+  points?: string[];
   art: HeroArtKey;
   theme: HeroTheme;
 }
@@ -65,6 +66,13 @@ export function HeroCarousel({ slides, intervalMs }: { slides: HeroSlideView[]; 
                 </p>
                 <H className="mt-3 whitespace-pre-line break-keep text-2xl font-extrabold leading-snug text-ink sm:text-4xl md:leading-tight">{s.headline}</H>
                 <p className="mt-2 max-w-xl break-keep text-sm text-ink-sub sm:text-base md:mt-3">{s.sub}</p>
+                {s.points && s.points.length > 0 && (
+                  <ul className="mt-3 hidden flex-wrap gap-1.5 sm:flex" aria-label="핵심 내용">
+                    {s.points.map((p) => (
+                      <li key={p} className="rounded-full bg-paper px-3 py-1 text-xs font-bold shadow-sm ring-1 ring-ink/10" style={{ color: s.theme.deep }}>✓ {p}</li>
+                    ))}
+                  </ul>
+                )}
                 <div className="mt-4 grid grid-cols-2 gap-2 md:mt-5 md:max-w-xs">
                   <Link href="/find" className={`${btn} text-paper`} style={{ background: s.theme.deep }}>30초 보장 점검</Link>
                   <Link href={s.detailPath} className={`${btn} bg-paper`} style={{ color: s.theme.deep, boxShadow: `inset 0 0 0 1.5px ${s.theme.accent}` }}>상품 보기</Link>
