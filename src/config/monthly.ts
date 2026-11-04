@@ -1,13 +1,12 @@
 // 이달의 양식 — 달력 기준으로 지금 계절에 맞는 자료 3가지를 골라 홈에 올립니다. 문구는 달마다 한 줄만 바꾸면 됩니다.
 import { EXCEL_PACK, getGroup, getItem, entriesBySeason, packThumb, seasonSlug, type Season } from "./pack";
 import { collectionByItem, collectionPath } from "./sheets";
-import { seasons, stationeryBySeason, stationeryFile, type SeasonKey } from "./stationery";
-
-const PAIRS_PER_SEASON = 3; // 홈 무작위 편지지 후보: 빛깔·주제마다 두 장씩 짝지은 묶음 수 (홈 화면 데이터가 무거워지지 않게)
+import { type SeasonKey } from "./stationery";
+import { allPositions, formFile } from "./forms";
 
 export interface MonthlyCard { href: string; title: string; desc: string; thumb?: string; aspect: number; pool?: MonthlyChoice[] }
-/** 홈에서 무작위로 바꿔 보여 줄 후보(편지지) — 첫 번째가 기본(서버 화면)이고, 방문할 때마다 그중 하나로 바뀝니다. */
-export interface MonthlyChoice { href: string; title: string; thumbs: string[] } // 편지지 두 장을 나란히
+/** 홈에서 무작위로 바꿔 보여 줄 후보(이력서·자기소개서) — 첫 번째가 기본(서버 화면)이고, 방문할 때마다 그중 하나로 바뀝니다. */
+export interface MonthlyChoice { href: string; title: string; thumbs: string[] } // 이력서·자기소개서 두 장을 나란히
 export interface MonthlyPick { month: number; heading: string; lead: string; cards: MonthlyCard[] }
 
 const SEASON_OF_MONTH: Record<number, { key: SeasonKey; label: Season }> = {
@@ -32,13 +31,11 @@ const packCard = (groupSlug: string, itemKey: string, season: Season): MonthlyCa
 
 export function monthlyPick(month: number): MonthlyPick {
   const m = ((month - 1) % 12 + 12) % 12 + 1;
-  const { key, label } = SEASON_OF_MONTH[m];
-  const letter = stationeryBySeason(key)[0];
-  const pairsOf = (k: SeasonKey) => { const l = stationeryBySeason(k); return Array.from({ length: Math.min(PAIRS_PER_SEASON, Math.floor(l.length / 2)) }, (_, j) => [l[j * 2], l[j * 2 + 1]].map((it) => stationeryFile(it, "jpg"))); };
-  // 기본(첫 번째)은 이달의 빛깔, 나머지는 모든 빛깔·주제 — 방문할 때마다 그중 한 묶음이 보여요
-  const pool: MonthlyChoice[] = [key, ...seasons.map((s) => s.key)].flatMap((k, n) => (n === 0 ? pairsOf(k).slice(0, 1) : pairsOf(k)).map((thumbs) => ({ href: `/fun/stationery/${k}`, title: `${seasons.find((s) => s.key === k)?.label ?? ""} 편지지`, thumbs })));
+  const { label } = SEASON_OF_MONTH[m];
+  // 이력서·자기소개서 카드 — 직무마다 이력서·자기소개서 첫 양식을 나란히, 방문할 때마다 직무가 무작위로 바뀌어요
+  const pool: MonthlyChoice[] = allPositions.map((p) => ({ href: `/fun/forms/${p.id}`, title: `${p.name} 이력서·자기소개서`, thumbs: [formFile(p.id, "resume", 1, "jpg"), formFile(p.id, "cover", 1, "jpg")] }));
   const cards: MonthlyCard[] = [
-    { href: `/fun/stationery/${key}`, title: `${label} 편지지`, desc: "", thumb: letter ? stationeryFile(letter, "jpg") : undefined, aspect: 794 / 1123, pool },
+    { href: pool[0]?.href ?? "/fun/forms", title: pool[0]?.title ?? "이력서·자기소개서", desc: "", aspect: 794 / 1123, pool },
     packCard("ppt-pro", "talkpro", label), packCard("excel", "ledger", label),
   ].filter((c): c is MonthlyCard => Boolean(c));
   return { month: m, heading: `${m}월의 양식`, lead: LEAD[m], cards };
