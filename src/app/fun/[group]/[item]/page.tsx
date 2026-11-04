@@ -3,11 +3,11 @@ import { funMetadata, searchTitles } from "@/lib/seo/funMeta";
 import Link from "next/link";
 import { notFound, permanentRedirect } from "next/navigation";
 import { Section } from "@/components/ui/Section";
-import { SeasonChooser } from "@/components/fun/SeasonChooser";
+import { PackCard } from "@/components/fun/PackCard";
 import { FunPageExtras } from "@/components/fun/FunPageExtras";
 import { FunCtaBox } from "@/components/fun/FunCtaBox";
 import { getFunCta } from "@/config/funCta";
-import { EXCEL_PACK, entriesBySeason, getGroup, getItem, packGroups, packSeasons, packThumb, retiredItemPath, retiredPackPath, RETIRED_ITEMS, seasonSlug } from "@/config/pack";
+import { EXCEL_PACK, getGroup, getItem, packEntries, packGroups, retiredItemPath, retiredPackPath, RETIRED_ITEMS } from "@/config/pack";
 import { collectionByItem, collectionPath } from "@/config/sheets";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { breadcrumbJsonLd } from "@/lib/seo/jsonLd";
@@ -35,7 +35,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return funMetadata({ title: `${searchTitles[`${f.group.slug}/${f.item.key}`] ?? f.item.title}`, description: f.item.short, path: `/fun/${f.group.slug}/${f.item.key}`, ogKey: `${f.group.slug}-${f.item.key}` });
 }
 
-// 항목 페이지 — 빛깔 중 하나를 고르는 입구. 실제 양식은 빛깔별 상세페이지에 있어요.
+// 항목 페이지 — 이 항목의 템플릿을 한 화면에 모두 보여 줍니다(빛깔로 나누지 않음). 그림을 누르면 큰 미리보기가 열려요.
 export default async function PackItemPage({ params }: Props) {
   const raw = await params;
   const gone = retiredItemPath(raw.group, raw.item);
@@ -47,16 +47,13 @@ export default async function PackItemPage({ params }: Props) {
   const moved = retiredPackPath(group.slug, item.key);
   if (moved) permanentRedirect(moved); // 내린 묶음(예전 PPT 템플릿)
   const cta = getFunCta(group.slug, item.key);
-  const choices = packSeasons.map((s) => {
-    const list = entriesBySeason(item, s);
-    return { slug: seasonSlug[s], label: s, count: list.length, href: `/fun/${group.slug}/${item.key}/${seasonSlug[s]}`,
-      thumbs: list.slice(0, 3).map((e) => packThumb(item, e.no)).filter((t): t is string => !!t), aspect: item.aspect };
-  });
   return (
     <>
       <JsonLd data={breadcrumbJsonLd([["홈", "/"], ["즐길거리", "/fun"], [group.title, `/fun/${group.slug}`], [item.title, `/fun/${group.slug}/${item.key}`]])} />
       <Section as="h1" title={item.title}>
-        <SeasonChooser items={choices} />
+        <ul data-reveal="stagger" className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+          {packEntries(item).map((e) => <PackCard key={e.no} item={item} entry={e} />)}
+        </ul>
       </Section>
       {cta && <Section><FunCtaBox cta={cta} from={`${group.slug}/${item.key}`} /></Section>}
       <Section>

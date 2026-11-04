@@ -25,7 +25,7 @@ describe("이달의 양식", () => {
     expect(homeMonth(new Date("2026-10-20T00:00:00Z"))).toBe(12);
     const p = monthlyPick(homeMonth());
     expect(p.heading).toBe("12월의 양식");
-    expect(p.cards.map((c) => c.title).slice(1)).toEqual(["포근빛 발표 템플릿 프리미엄", "포근빛 가계부"]);
+    expect(p.cards.map((c) => c.title).slice(1)).toEqual(["발표 템플릿 프리미엄", "포근빛 가계부"]);
     expect(p.cards[0].title).toMatch(/이력서·자기소개서$/); // 편지지 대신 이력서·자기소개서
     expect(p.cards[2].href).toBe("/fun/sheets/life/ledger/winter"); // 가계부는 엑셀 서식의 테마 모음으로 바로 연결
   });

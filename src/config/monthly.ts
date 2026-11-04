@@ -1,5 +1,5 @@
 // 이달의 양식 — 달력 기준으로 지금 계절에 맞는 자료 3가지를 골라 홈에 올립니다. 문구는 달마다 한 줄만 바꾸면 됩니다.
-import { EXCEL_PACK, getGroup, getItem, entriesBySeason, packThumb, seasonSlug, type Season } from "./pack";
+import { EXCEL_PACK, getGroup, getItem, entriesBySeason, packThumb, type Season } from "./pack";
 import { collectionByItem, collectionPath } from "./sheets";
 import { type SeasonKey } from "./stationery";
 import { allPositions, formFile } from "./forms";
@@ -25,8 +25,9 @@ const packCard = (groupSlug: string, itemKey: string, season: Season): MonthlyCa
   const g = getGroup(groupSlug); const it = g && getItem(g, itemKey);
   if (!g || !it) return undefined;
   const first = entriesBySeason(it, season)[0];
-  const moved = g.slug === EXCEL_PACK ? collectionByItem(it.key) : undefined; // 엑셀 양식은 엑셀 서식의 테마 모음 주소로
-  return { href: moved ? collectionPath(moved, season) : `/fun/${g.slug}/${it.key}/${seasonSlug[season]}`, title: `${season} ${it.title}`, desc: "", thumb: first ? packThumb(it, first.no) : undefined, aspect: it.aspect ?? 1 };
+  const moved = g.slug === EXCEL_PACK ? collectionByItem(it.key) : undefined; // 엑셀 양식은 엑셀 서식의 테마 모음 주소로(빛깔별)
+  // PPT 템플릿은 빛깔로 나누지 않아 항목 페이지·빛깔 없는 제목으로
+  return { href: moved ? collectionPath(moved, season) : `/fun/${g.slug}/${it.key}`, title: moved ? `${season} ${it.title}` : it.title, desc: "", thumb: first ? packThumb(it, first.no) : undefined, aspect: it.aspect ?? 1 };
 };
 
 export function monthlyPick(month: number): MonthlyPick {
