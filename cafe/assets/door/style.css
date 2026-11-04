@@ -1,0 +1,13 @@
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Noto Sans CJK KR',sans-serif;overflow:hidden}
+.stripe{position:absolute;left:0;right:0;bottom:0;height:10px;background:repeating-linear-gradient(135deg,#C23A26 0 22px,#fff 22px 34px,#FF883A 34px 56px,#fff 56px 68px)}
+.btn{position:relative;width:1080px;height:100px;display:flex;align-items:center;gap:24px;padding:0 40px;border-radius:0}
+.btn .ic{width:64px;height:64px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:36px;flex:none}
+.btn .t{flex:1;font-size:40px;font-weight:900;letter-spacing:-.02em;white-space:nowrap}
+.btn .go{font-size:40px;font-weight:800}
+.main{position:relative;width:1280px;height:720px;background:linear-gradient(160deg,#FFFFFF 0%,#FFF4EC 60%,#FFDAC1 100%);padding:64px 72px}
+.main .top{display:flex;align-items:center;gap:28px}.main .char{width:150px;height:135px}
+.main h1{font-size:60px;font-weight:900;color:#333;letter-spacing:-.02em;white-space:nowrap}.main h1 b{color:#C23A26}
+.grid{margin-top:56px;display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+.tile{background:#fff;border:2px solid #FFDAC1;border-radius:24px;height:300px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;box-shadow:0 8px 0 #FFDAC1}
+.tile .e{width:110px;height:110px;border-radius:28px;background:#FFF4EC;display:flex;align-items:center;justify-content:center;font-size:60px}
+.tile p{font-size:36px;font-weight:800;color:#333;white-space:nowrap}
