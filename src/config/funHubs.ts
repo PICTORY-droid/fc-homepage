@@ -43,7 +43,7 @@ export function packHub(g: PackGroup): HubSection[] {
       const all = packEntries(it);
       const thumbs = firstThree(all).flatMap((e) => { const src = packThumb(it, e.no); return src ? [{ src, alt: `${it.title} ${e.name} 미리보기` }] : []; });
       return {
-        key: it.key, title: it.title, lead: it.short, thumbs, thumbAspect: it.aspect,
+        key: it.key, title: it.title, thumbs, thumbAspect: it.aspect,
         links: packSeasons.filter((s) => entriesBySeason(it, s).length > 0).map((s) => ({ label: s, href: `/fun/${g.slug}/${it.key}/${seasonSlug[s]}` })),
         cta: { label: `${it.title} 모두 보기`, href: `/fun/${g.slug}/${it.key}` },
       };

@@ -5,7 +5,7 @@ import { HubDirectory } from "@/components/fun/hub/HubDirectory";
 import { packHub } from "@/config/funHubs";
 import { notFound, permanentRedirect } from "next/navigation";
 import { Section } from "@/components/ui/Section";
-import { EXCEL_PACK, getGroup, packGroups } from "@/config/pack";
+import { EXCEL_PACK, getGroup, packGroups, retiredPackPath } from "@/config/pack";
 import { textLink } from "@/components/ui/styles";
 
 type Props = { params: Promise<{ group: string }> };
@@ -26,6 +26,8 @@ export default async function PackGroupPage({ params }: Props) {
   const g = getGroup((await params).group);
   if (!g) notFound();
   if (g.slug === EXCEL_PACK) permanentRedirect("/fun/sheets"); // 엑셀 양식은 생활·업무 엑셀 서식으로 옮겨 감
+  const moved = retiredPackPath(g.slug);
+  if (moved) permanentRedirect(moved); // 내린 묶음(예전 PPT 템플릿)
   return (
     <>
       <Section as="h1" title={g.title} lead={g.lead}>

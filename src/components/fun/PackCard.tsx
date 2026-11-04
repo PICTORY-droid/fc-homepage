@@ -27,7 +27,7 @@ export function PackCard({ item, entry }: { item: PackItem; entry: PackEntry }) 
         {byFunction
           ? <p className="mt-0.5 text-xs font-semibold text-ink-sub">{entry.name} · {entry.season}</p>
           : thumb && <p className="mt-0.5 text-xs font-semibold text-ink-sub">{entry.flavor}</p>}
-        {entry.tag ? <p className="mt-1 flex-1 text-sm leading-snug text-ink-sub">{entry.tag}</p> : <span className="flex-1" />}
+        <span className="flex-1" />
         <a href={packFile(item, entry)} download={packDownloadName(item, entry)}
           className={buttonClass("primary", "sm", "mt-3 whitespace-nowrap !px-2")}>
           {BUTTON[item.ext]}<span className="sr-only"> 받기 ({item.title} {entry.name})</span>

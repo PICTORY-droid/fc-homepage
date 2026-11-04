@@ -51,7 +51,7 @@ export const packGroups: PackGroup[] = [
     ],
   },
   {
-    slug: "ppt-pro", title: "PPT 프리미엄 템플릿", icon: "✨",
+    slug: "ppt-pro", title: "PPT 템플릿", icon: "✨",
     short: "발표·가족 소개·돌잔치·결혼식·보험 점검 양식·카드뉴스. 아이보리·샴페인·오닉스·에메랄드 등 고급 색 조합과 기하·미니멀·사이버 같은 서로 다른 구도, 사진 틀·애니메이션을 갖춘 프리미엄 디자인 PowerPoint 파일이에요.",
     lead: "항목마다 고급 색·구도 테마로 만든 프리미엄 PowerPoint 템플릿이에요. 디자인이 모두 달라서 고르는 재미가 있고, 글·색·사진 자리를 마음대로 고쳐 쓸 수 있어요.",
     howto: "PowerPoint 에서 가장 잘 보여요. 사진 칸 가운데의 그림 아이콘을 누르면 칸 모양에 맞춰 사진이 자동으로 잘려요. 색과 글꼴은 [디자인 → 변형]에서 한 번에 바꿀 수 있고, 슬라이드 전환·등장 효과와 발표자 메모가 들어 있어요. 한쇼·구글 슬라이드에서는 일부 효과가 다르게 보일 수 있어요.",
@@ -70,8 +70,16 @@ const all = data as unknown as Record<string, PackEntry[]>;
 
 /** 엑셀 양식 묶음은 따로 메뉴를 두지 않고 '생활·업무 엑셀 서식'의 테마 모음(config/sheets.ts)으로 보여 줍니다. 예전 /fun/excel 주소는 그쪽으로 옮겨 갑니다. */
 export const EXCEL_PACK = "excel";
-/** 즐길거리 메뉴와 /fun/<묶음> 페이지에 그대로 보이는 묶음 (PPT·PPT 프리미엄) */
-export const listedPackGroups: PackGroup[] = packGroups.filter((g) => g.slug !== EXCEL_PACK);
+/** 홈페이지에서 내린 묶음 — 예전 주소는 옮겨 간 묶음의 같은 항목으로 보냅니다. (기존 PPT 템플릿 → 프리미엄 디자인, 항목 키 뒤에 "pro") */
+export const RETIRED_PACKS: Record<string, { to: string; itemSuffix: string }> = { ppt: { to: "ppt-pro", itemSuffix: "pro" } };
+/** 내린 묶음의 예전 주소 → 새 주소 (내린 묶음이 아니면 undefined) */
+export function retiredPackPath(slug: string, itemKey?: string, seasonPart?: string): string | undefined {
+  const r = RETIRED_PACKS[slug];
+  if (!r) return undefined;
+  return [`/fun/${r.to}`, itemKey && `${itemKey}${r.itemSuffix}`, itemKey && seasonPart].filter(Boolean).join("/");
+}
+/** 즐길거리 메뉴와 /fun/<묶음> 페이지에 그대로 보이는 묶음 (PPT 템플릿) */
+export const listedPackGroups: PackGroup[] = packGroups.filter((g) => g.slug !== EXCEL_PACK && !RETIRED_PACKS[g.slug]);
 
 export const getGroup = (slug: string) => packGroups.find((g) => g.slug === slug);
 export const getItem = (group: PackGroup, key: string) => group.items.find((i) => i.key === key);

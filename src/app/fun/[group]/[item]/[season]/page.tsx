@@ -8,7 +8,7 @@ import { FunPageExtras } from "@/components/fun/FunPageExtras";
 import { FunCtaBox } from "@/components/fun/FunCtaBox";
 import { SeasonLinks } from "@/components/fun/SeasonLinks";
 import { getFunCta } from "@/config/funCta";
-import { EXCEL_PACK, entriesBySeason, getGroup, getItem, packGroups, packSeasons, seasonFromSlug, seasonSlug } from "@/config/pack";
+import { EXCEL_PACK, entriesBySeason, getGroup, getItem, packGroups, packSeasons, retiredPackPath, seasonFromSlug, seasonSlug } from "@/config/pack";
 import { collectionByItem, collectionPath } from "@/config/sheets";
 import { textLink } from "@/components/ui/styles";
 
@@ -40,12 +40,14 @@ export default async function PackSeasonPage({ params }: Props) {
   if (!f) notFound();
   const { group, item, season } = f;
   if (group.slug === EXCEL_PACK) { const c = collectionByItem(item.key); permanentRedirect(c ? collectionPath(c, season) : "/fun/sheets"); } // 테마 모음으로 옮겨 감
+  const moved = retiredPackPath(group.slug, item.key, seasonSlug[season]);
+  if (moved) permanentRedirect(moved); // 내린 묶음(예전 PPT 템플릿)
   const list = entriesBySeason(item, season);
   const cta = getFunCta(group.slug, item.key);
   const links = packSeasons.map((s) => ({ slug: seasonSlug[s], label: s, count: entriesBySeason(item, s).length, href: `/fun/${group.slug}/${item.key}/${seasonSlug[s]}` }));
   return (
     <>
-      <Section as="h1" title={`${season} ${item.title}`} lead={item.short}>
+      <Section as="h1" title={`${season} ${item.title}`}>
         <SeasonLinks items={links} current={seasonSlug[season]} />
       </Section>
       <Section tone="card">

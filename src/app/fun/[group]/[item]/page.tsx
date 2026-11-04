@@ -7,7 +7,7 @@ import { SeasonChooser } from "@/components/fun/SeasonChooser";
 import { FunPageExtras } from "@/components/fun/FunPageExtras";
 import { FunCtaBox } from "@/components/fun/FunCtaBox";
 import { getFunCta } from "@/config/funCta";
-import { EXCEL_PACK, entriesBySeason, getGroup, getItem, packGroups, packSeasons, packThumb, seasonSlug } from "@/config/pack";
+import { EXCEL_PACK, entriesBySeason, getGroup, getItem, packGroups, packSeasons, packThumb, retiredPackPath, seasonSlug } from "@/config/pack";
 import { collectionByItem, collectionPath } from "@/config/sheets";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { breadcrumbJsonLd } from "@/lib/seo/jsonLd";
@@ -40,16 +40,18 @@ export default async function PackItemPage({ params }: Props) {
   if (!f) notFound();
   const { group, item } = f;
   if (group.slug === EXCEL_PACK) { const c = collectionByItem(item.key); permanentRedirect(c ? collectionPath(c) : "/fun/sheets"); } // 테마 모음으로 옮겨 감
+  const moved = retiredPackPath(group.slug, item.key);
+  if (moved) permanentRedirect(moved); // 내린 묶음(예전 PPT 템플릿)
   const cta = getFunCta(group.slug, item.key);
   const choices = packSeasons.map((s) => {
     const list = entriesBySeason(item, s);
-    return { slug: seasonSlug[s], label: s, count: list.length, href: `/fun/${group.slug}/${item.key}/${seasonSlug[s]}`, lead: `${s}의 감성으로 만든 ${item.title}. ${list.slice(0, 3).map((e) => e.name).join(" · ")} 등`,
+    return { slug: seasonSlug[s], label: s, count: list.length, href: `/fun/${group.slug}/${item.key}/${seasonSlug[s]}`,
       thumbs: list.slice(0, 3).map((e) => packThumb(item, e.no)).filter((t): t is string => !!t), aspect: item.aspect };
   });
   return (
     <>
       <JsonLd data={breadcrumbJsonLd([["홈", "/"], ["즐길거리", "/fun"], [group.title, `/fun/${group.slug}`], [item.title, `/fun/${group.slug}/${item.key}`]])} />
-      <Section as="h1" title={item.title} lead={`${item.short} — 계절을 골라 들어가 보세요.`}>
+      <Section as="h1" title={item.title}>
         <SeasonChooser items={choices} />
       </Section>
       {cta && <Section><FunCtaBox cta={cta} from={`${group.slug}/${item.key}`} /></Section>}

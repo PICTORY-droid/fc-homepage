@@ -1,12 +1,12 @@
 import { existsSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
-import { entriesBySeason, packDownloadName, packEntries, packFile, packGroups, packLarge, packSeasons, packThumb } from "./pack";
+import { RETIRED_PACKS, entriesBySeason, getGroup, getItem, packDownloadName, packEntries, packFile, packGroups, packLarge, packSeasons, packThumb, retiredPackPath } from "./pack";
 
 const pub = (p: string) => join(process.cwd(), "public", p);
 
 describe("자료 꾸러미: 항목마다 50종", () => {
-  for (const g of packGroups) {
+  for (const g of packGroups.filter((x) => !RETIRED_PACKS[x.slug])) {
     for (const item of g.items) {
       describe(`${g.slug}/${item.key}`, () => {
         const list = packEntries(item);
@@ -37,4 +37,19 @@ describe("자료 꾸러미: 항목마다 50종", () => {
       });
     }
   }
+});
+
+describe("내린 묶음(예전 PPT 템플릿)", () => {
+  it("예전 주소는 옮겨 간 묶음의 같은 항목으로 이어진다", () => {
+    for (const [slug, r] of Object.entries(RETIRED_PACKS)) {
+      const to = getGroup(r.to);
+      expect(to, r.to).toBeTruthy();
+      expect(retiredPackPath(slug)).toBe(`/fun/${r.to}`);
+      for (const item of getGroup(slug)?.items ?? []) {
+        expect(getItem(to!, `${item.key}${r.itemSuffix}`), item.key).toBeTruthy();
+        expect(retiredPackPath(slug, item.key, "spring")).toBe(`/fun/${r.to}/${item.key}${r.itemSuffix}/spring`);
+      }
+    }
+  });
+  it("내린 묶음이 아니면 옮기지 않는다", () => expect(retiredPackPath("ppt-pro", "talkpro")).toBeUndefined());
 });

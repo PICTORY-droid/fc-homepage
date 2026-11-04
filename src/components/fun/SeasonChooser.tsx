@@ -3,7 +3,7 @@ import Link from "next/link";
 import { CardCta } from "@/components/ui/CardCta";
 import { cardLinkClass } from "@/components/ui/styles";
 
-export interface SeasonChoice { slug: string; label: string; count: number; href: string; lead: string; thumbs: string[]; aspect?: number }
+export interface SeasonChoice { slug: string; label: string; count: number; href: string; lead?: string; thumbs: string[]; aspect?: number }
 
 // 빛깔 고르기 — 카드 네 장. 카드마다 미리보기 세 장을 보여 주고, 누르면 그 모음 상세페이지로 이동합니다.
 export function SeasonChooser({ items }: { items: SeasonChoice[] }) {
@@ -20,7 +20,7 @@ export function SeasonChooser({ items }: { items: SeasonChoice[] }) {
               ))}
             </div>
             <span className="mt-4 text-xl font-bold text-ink">{s.label}</span>
-            <span className="mt-1 flex-1 text-sm leading-relaxed text-ink-sub">{s.lead}</span>
+            {s.lead ? <span className="mt-1 flex-1 text-sm leading-relaxed text-ink-sub">{s.lead}</span> : <span className="flex-1" />}
             <CardCta className="mt-3">{s.label} 보기</CardCta>
           </Link>
         </li>
