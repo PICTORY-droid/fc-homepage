@@ -11,6 +11,8 @@ export function HomeHero() {
   });
   return (
     <section aria-label="첫 화면 안내" className="bg-paper">
+      {/* 페이지 제목(h1)은 배너가 넘어가도 항상 남도록 고정 — 배너 장 제목은 h2 */}
+      <h1 className="sr-only">{site.brandName}</h1>
       <HeroCarousel slides={slides} phone={site.contact.fcPhone} intervalMs={HERO_INTERVAL_MS} />
       <div className="mx-auto max-w-5xl px-4 py-4 sm:px-6">
         <ul className="flex flex-wrap gap-1.5" aria-label="상담 원칙">

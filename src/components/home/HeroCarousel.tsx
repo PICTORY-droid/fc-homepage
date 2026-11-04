@@ -46,7 +46,7 @@ export function HeroCarousel({ slides, intervalMs }: { slides: HeroSlideView[]; 
         {track.map((s, k) => {
           const real = k >= 1 && k <= slides.length; // 앞뒤 복제 장은 이어붙이기용(화면 읽기·탭 이동 제외)
           const i = k - 1;
-          const H = real && i === 0 ? "h1" : real ? "h2" : "p"; // 페이지 제목(h1)은 첫 장 하나만
+          const H = real ? "h2" : "p"; // 페이지 제목(h1)은 HomeHero 에 고정, 앞뒤 복제 장은 제목에서 제외
           const active = real && i === c.index;
           return (
           <div
