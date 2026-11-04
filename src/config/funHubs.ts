@@ -1,0 +1,82 @@
+// 즐길거리 각 첫 페이지의 '분류별 토글 목록' 데이터 — 자료 설정(편지지·명함·PPT·엑셀·이력서)에서 자동으로 만듭니다.
+// 자료가 늘어나면 토글도 저절로 늘어나요. 화면은 components/fun/hub/HubDirectory.tsx
+import type { HubMode, HubSection } from "@/lib/fun/hubDirectory";
+import { seasons, stationeryBySeason, stationeryFile } from "./stationery";
+import { CARD_ASPECT, cardCategories, cardThumb } from "./cards";
+import { entriesBySeason, packEntries, packSeasons, packThumb, seasonSlug, type PackGroup } from "./pack";
+import { SHEET_ASPECT, collectionPath, sheetGroups, sheetThumb } from "./sheets";
+import { allPositions, jobGroups } from "./forms";
+
+const firstThree = <T,>(list: T[]) => list.slice(0, 3);
+
+export function stationeryHub(): HubSection[] {
+  const build = (group: "season" | "theme", label: string): HubSection => ({
+    key: group, label,
+    entries: seasons.filter((s) => s.group === group).map((s) => {
+      const list = stationeryBySeason(s.key);
+      const href = `/fun/stationery/${s.key}`;
+      return {
+        key: s.key, title: `${s.label} 편지지`, count: `${list.length}장`, lead: s.lead,
+        thumbs: firstThree(list).map((it) => ({ src: stationeryFile(it, "jpg"), alt: `${it.name} 편지지 미리보기` })),
+        cta: { label: `${s.label} 편지지 ${list.length}장 모두 보기`, href },
+      };
+    }),
+  });
+  return [build("season", "계절 편지지"), build("theme", "주제 편지지")];
+}
+
+export function cardsHub(): HubSection[] {
+  return [{
+    key: "cards",
+    entries: cardCategories.map((c) => ({
+      key: c.key, title: c.label, count: `${c.items.length}장`, lead: c.short, thumbAspect: CARD_ASPECT,
+      thumbs: [1, 2, 3].map((n) => ({ src: cardThumb(c.key, n), alt: `${c.label} 명함 ${n} 미리보기` })),
+      cta: { label: `명함 ${c.items.length}장 모두 보기`, href: `/fun/cards/${c.key}` },
+    })),
+  }];
+}
+
+export function packHub(g: PackGroup): HubSection[] {
+  return [{
+    key: g.slug,
+    entries: g.items.map((it) => {
+      const all = packEntries(it);
+      const thumbs = firstThree(all).flatMap((e) => { const src = packThumb(it, e.no); return src ? [{ src, alt: `${it.title} ${e.name} 미리보기` }] : []; });
+      return {
+        key: it.key, title: it.title, count: `${all.length}종`, lead: it.short, thumbs, thumbAspect: it.aspect,
+        links: packSeasons.map((s) => ({ label: s, note: `${entriesBySeason(it, s).length}`, href: `/fun/${g.slug}/${it.key}/${seasonSlug[s]}` })).filter((l) => l.note !== "0"),
+        cta: { label: `${it.title} ${all.length}종 모두 보기`, href: `/fun/${g.slug}/${it.key}` },
+      };
+    }),
+  }];
+}
+
+export function sheetsHub(): HubSection[] {
+  return [{
+    key: "sheets",
+    entries: sheetGroups.map((g) => ({
+      key: g.key, title: g.label, count: `서식 ${g.items.length}종${g.collections.length ? ` · 테마 ${g.collections.length}` : ""}`, lead: g.short,
+      thumbAspect: SHEET_ASPECT,
+      thumbs: firstThree([...g.items.filter((t) => t.featured), ...g.items.filter((t) => !t.featured)]).map((t) => ({ src: sheetThumb(t), alt: `${t.title} 미리보기` })),
+      links: g.collections.map((c) => ({ label: `${c.item.title} 테마`, note: `${c.count}`, href: collectionPath(c) })),
+      cta: { label: `${g.label} 서식 ${g.items.length}종 모두 보기`, href: `/fun/sheets/${g.key}` },
+    })),
+  }];
+}
+
+export const formModes: HubMode[] = [
+  { key: "resume", label: "이력서", desc: "직무마다 짜임이 다른 10종 — 경력·역량을 한눈에 보여 주는 Word 양식" },
+  { key: "cover", label: "자기소개서", desc: "직무마다 10종 — STAR·NCS 작성법 가이드와 예시가 붙은 Word 양식" },
+];
+
+export function formsHub(): HubSection[] {
+  return [{
+    key: "forms",
+    entries: jobGroups.map((g) => ({
+      key: g.key, title: g.label, count: `${g.positions.length}개 직무`,
+      links: g.positions.map((p) => ({ label: p.name, href: `/fun/forms/${p.id}` })),
+    })),
+  }];
+}
+
+export const formsTotal = allPositions.length;

@@ -2,41 +2,15 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
-import type { NavGroup, NavLink } from "@/config/nav";
+import type { NavGroup } from "@/config/nav";
 import { Chevron } from "@/components/ui/Chevron";
 import { focusRing } from "@/components/ui/styles";
 
 // 상단 삼선(햄버거) 메뉴 — 누르면 항목 묶음이 나오고, 묶음 제목을 누르면 그 안의 메뉴가 펼쳐집니다.
-// 하위 목록(children)이 있는 메뉴(즐길거리의 각 자료)는 한 번 더 펼쳤다 접었다 하는 토글입니다.
 // 닫히는 경우: 삼선 다시 누르기 · 바깥 누르기 · Esc · 링크 선택 · 페이지 이동 · Tab 으로 메뉴 밖으로 나가기
 const rowBase = `flex w-full items-center justify-between gap-2 rounded-xl px-3 text-left text-ink transition duration-200 hover:bg-brand-tint ${focusRing}`;
 const linkCls = (current: boolean) =>
   `block rounded-lg px-3 py-2.5 text-base transition duration-200 hover:bg-brand-tint ${focusRing} ${current ? "font-bold text-brand-deep" : "text-ink"}`;
-
-function SubMenu({ item, pathname, onNavigate }: { item: NavLink; pathname: string; onNavigate: () => void }) {
-  const children = item.children ?? [];
-  const inside = children.some((c) => pathname === c.href.split("#")[0]);
-  const [open, setOpen] = useState(inside); // 지금 보고 있는 화면이 들어 있으면 펼친 채로 시작
-  const id = `nav-sub-${item.href.replace(/\W+/g, "-")}`;
-  return (
-    <li>
-      <button type="button" aria-expanded={open} aria-controls={id} onClick={() => setOpen((o) => !o)}
-        className={`${rowBase} min-h-[44px] py-2 text-base font-semibold ${open ? "bg-brand-tint" : ""}`}>
-        {item.label}
-        <Chevron open={open} className="h-4 w-4" />
-      </button>
-      {open && (
-        <ul id={id} className="mb-1 ml-3 mt-0.5 space-y-0.5 border-l-2 border-brand-soft pl-2">
-          {children.map((c) => (
-            <li key={c.href}>
-              <Link href={c.href} onClick={onNavigate} aria-current={pathname === c.href ? "page" : undefined} className={linkCls(pathname === c.href)}>{c.label}</Link>
-            </li>
-          ))}
-        </ul>
-      )}
-    </li>
-  );
-}
 
 export function NavMenu({ groups }: { groups: NavGroup[] }) {
   const [open, setOpen] = useState(false);
@@ -87,9 +61,7 @@ export function NavMenu({ groups }: { groups: NavGroup[] }) {
                   </button>
                   {expanded && (
                     <ul id={`nav-${g.id}`} className="mb-1 mt-1 space-y-0.5 pl-2">
-                      {g.items.map((it) => it.children?.length ? (
-                        <SubMenu key={it.href} item={it} pathname={pathname} onNavigate={() => close()} />
-                      ) : (
+                      {g.items.map((it) => (
                         <li key={it.href}>
                           <Link href={it.href} onClick={() => close()} aria-current={pathname === it.href ? "page" : undefined} className={linkCls(pathname === it.href)}>
                             {it.label}

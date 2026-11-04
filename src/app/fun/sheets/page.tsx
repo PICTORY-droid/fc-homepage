@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
-import { CardCta } from "@/components/ui/CardCta";
+import { HubDirectory } from "@/components/fun/hub/HubDirectory";
+import { sheetsHub } from "@/config/funHubs";
 import { funMetadata } from "@/lib/seo/funMeta";
 import { Section } from "@/components/ui/Section";
 import { DownloadCard } from "@/components/fun/DownloadCard";
 import { CollectionCard } from "@/components/fun/CollectionCard";
 import { SHEET_ASPECT, featuredSheets, sheetCardDesc, sheetCollections, sheetDownloadName, sheetFile, sheetGroups, sheetLarge, sheetTemplates, sheetThumb } from "@/config/sheets";
-import { cardLinkClass, textLink } from "@/components/ui/styles";
+import { textLink } from "@/components/ui/styles";
 
 export const metadata: Metadata = funMetadata({
   title: "엑셀 서식 무료 다운로드 — 가계부·보험 정리표·견적서·취업·소상공인",
@@ -20,25 +20,7 @@ export default function SheetsPage() {
   return (
     <>
       <Section as="h1" title="생활·업무 엑셀 서식" lead={`취업·업무·소상공인·가계·학습·모임까지 ${sheetGroups.length}개 분야, 서식 ${sheetTemplates.length}종과 테마 모음 ${sheetCollections.length}가지예요. 입력 칸에 적으면 합계와 요약이 자동으로 채워져요.`}>
-        <ul data-reveal="stagger" className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {sheetGroups.map((g) => {
-            const cover = g.items.find((t) => t.featured) ?? g.items[0];
-            return (
-              <li key={g.key} className={cardLinkClass}>
-                <Link href={`/fun/sheets/${g.key}`} className="flex h-full flex-col outline-none">
-                  <div className="relative w-full bg-paper-gray" style={{ aspectRatio: SHEET_ASPECT }}>
-                    <Image src={sheetThumb(cover)} alt={`${g.label} 엑셀 서식 미리보기`} fill sizes="(min-width:1024px) 30vw, (min-width:640px) 45vw, 92vw" className="object-cover" />
-                  </div>
-                  <div className="p-4">
-                    <h3 className="text-base font-bold text-ink">{g.label}</h3>
-                    <p className="mt-1 text-sm leading-snug text-ink-sub">{g.short}</p>
-                    <CardCta>서식 {g.items.length}종{g.collections.length ? ` · 테마 모음 ${g.collections.length}가지` : ""} 보기</CardCta>
-                  </div>
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
+        <HubDirectory sections={sheetsHub()} totalLabel={`분야 ${sheetGroups.length}개 · 서식 ${sheetTemplates.length}종`} searchLabel="엑셀 서식 분야 검색" placeholder="검색 (예: 가계부, 견적서)" />
       </Section>
       <Section tone="card" title="테마 모음" lead="가계부·보험 증권 정리표·저축 플래너·경조사비 장부·용돈기입장·견적서를 계절 감성 디자인 50가지씩 만들었어요.">
         <ul data-reveal="stagger" className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">

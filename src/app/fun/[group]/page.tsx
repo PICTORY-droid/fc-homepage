@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import { funMetadata } from "@/lib/seo/funMeta";
 import Link from "next/link";
-import { CardCta } from "@/components/ui/CardCta";
+import { HubDirectory } from "@/components/fun/hub/HubDirectory";
+import { packHub } from "@/config/funHubs";
 import { notFound, permanentRedirect } from "next/navigation";
 import { Section } from "@/components/ui/Section";
 import { EXCEL_PACK, getGroup, packEntries, packGroups } from "@/config/pack";
-import { cardLinkClass, textLink } from "@/components/ui/styles";
+import { textLink } from "@/components/ui/styles";
 
 type Props = { params: Promise<{ group: string }> };
 
@@ -28,17 +29,7 @@ export default async function PackGroupPage({ params }: Props) {
   return (
     <>
       <Section as="h1" title={g.title} lead={g.lead}>
-        <ul data-reveal="stagger" className="grid gap-4 sm:grid-cols-2">
-          {g.items.map((it) => (
-            <li key={it.key}>
-              <Link href={`/fun/${g.slug}/${it.key}`} className={`flex h-full flex-col p-5 outline-none ${cardLinkClass}`}>
-                <span className="text-lg font-bold text-ink">{it.title}</span>
-                <span className="mt-1 text-sm leading-relaxed text-ink-sub">{it.short}</span>
-                <CardCta className="mt-3">{packEntries(it).length}종 보기</CardCta>
-              </Link>
-            </li>
-          ))}
-        </ul>
+        <HubDirectory sections={packHub(g)} totalLabel={`묶음 ${g.items.length}개 · ${g.items.reduce((n, it) => n + packEntries(it).length, 0)}종`} searchLabel={`${g.title} 검색`} placeholder="검색 (예: 발표, 돌잔치)" />
       </Section>
       <Section>
         <p className="text-sm text-ink-sub">{g.howto}</p>

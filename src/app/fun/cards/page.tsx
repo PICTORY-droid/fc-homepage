@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import { funMetadata } from "@/lib/seo/funMeta";
-import Image from "next/image";
 import Link from "next/link";
-import { CardCta } from "@/components/ui/CardCta";
+import { HubDirectory } from "@/components/fun/hub/HubDirectory";
 import { Section } from "@/components/ui/Section";
-import { CARD_ASPECT, cardCategories, cardThumb } from "@/config/cards";
-import { cardLinkClass, textLink } from "@/components/ui/styles";
+import { cardCategories } from "@/config/cards";
+import { cardsHub } from "@/config/funHubs";
+import { textLink } from "@/components/ui/styles";
 
 export const metadata: Metadata = funMetadata({
   title: "명함 템플릿 무료 다운로드 — 직종별 PPT·SVG",
@@ -17,22 +17,7 @@ export default function CardsPage() {
   return (
     <>
       <Section as="h1" title="명함 템플릿" lead="직종마다 50장씩, 앞면·뒷면이 서로 다른 명함 디자인이에요. 마음에 드는 장을 PPT나 SVG로 받아 이름과 연락처만 바꾸면 바로 인쇄할 수 있어요.">
-        <ul data-reveal="stagger" className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {cardCategories.map((c) => (
-            <li key={c.key} className={cardLinkClass}>
-              <Link href={`/fun/cards/${c.key}`} className="flex h-full flex-col outline-none">
-                <div className="relative w-full bg-paper-gray" style={{ aspectRatio: CARD_ASPECT }}>
-                  <Image src={cardThumb(c.key, 1)} alt={`${c.label} 명함 미리보기`} fill sizes="(min-width:1024px) 30vw, (min-width:640px) 45vw, 92vw" className="object-cover" />
-                </div>
-                <div className="p-4">
-                  <h3 className="text-base font-bold text-ink">{c.label}</h3>
-                  <p className="mt-1 text-sm leading-snug text-ink-sub">{c.short}</p>
-                  <CardCta>명함 {c.items.length}장 보기</CardCta>
-                </div>
-              </Link>
-            </li>
-          ))}
-        </ul>
+        <HubDirectory sections={cardsHub()} totalLabel={`분류 ${cardCategories.length}개 · 명함 ${cardCategories.reduce((n, c) => n + c.items.length, 0)}장`} searchLabel="명함 분류 검색" placeholder="검색 (예: 카페, 선생님)" />
       </Section>
       <Section>
         <p className="text-sm text-ink-sub">명함 크기는 가로 90mm × 세로 50mm예요. PPT는 파워포인트·한컴 한쇼에서 글을 고치고, SVG는 피그마·캔바·일러스트레이터 같은 디자인 도구에서 열 수 있어요. 인쇄소에는 PDF로 저장해서 보내세요.</p>

@@ -2,11 +2,12 @@ import type { Metadata } from "next";
 import { funMetadata } from "@/lib/seo/funMeta";
 import Link from "next/link";
 import { Section } from "@/components/ui/Section";
-import { SeasonChooser } from "@/components/fun/SeasonChooser";
+import { HubDirectory } from "@/components/fun/hub/HubDirectory";
 import { FunPageExtras } from "@/components/fun/FunPageExtras";
 import { FunCtaBox } from "@/components/fun/FunCtaBox";
 import { stationeryCta } from "@/config/funCta";
-import { seasons, stationeryBySeason, stationeryFile } from "@/config/stationery";
+import { stationery } from "@/config/stationery";
+import { stationeryHub } from "@/config/funHubs";
 import { textLink } from "@/components/ui/styles";
 
 export const metadata: Metadata = funMetadata({
@@ -17,17 +18,12 @@ export const metadata: Metadata = funMetadata({
 
 // 편지지 입구 — 빛깔 또는 주제를 고르면 그 모음의 상세페이지로 이동합니다.
 export default function StationeryPage() {
-  const toChoices = (group: "season" | "theme") => seasons.filter((s) => s.group === group).map((s) => {
-    const list = stationeryBySeason(s.key);
-    return { slug: s.key, label: s.label, count: list.length, href: `/fun/stationery/${s.key}`, lead: s.lead, thumbs: list.slice(0, 3).map((it) => stationeryFile(it, "jpg")) };
-  });
+  const sections = stationeryHub();
+  const total = stationery.length;
   return (
     <>
-      <Section as="h1" title="빛깔 편지지 80장" lead="꽃빛·초록빛·노을빛·포근빛 각 20장. 손편지를 쓰던 그 시절의 따뜻한 분위기로 만들었어요. 마음에 드는 빛깔을 골라 들어가 보세요.">
-        <SeasonChooser items={toChoices("season")} />
-      </Section>
-      <Section title="주제 편지지 900장" lead="언제든 쓰는 감성 편지지. 한국 전통문화 500 · 장소 100 · 정원과 꽃 100 · 동물 50 · 하늘 50 · 커피 50 · 창가 50장이에요. 제목은 Word에서 원하는 글로 고칠 수 있어요.">
-        <SeasonChooser items={toChoices("theme")} />
+      <Section as="h1" title="감성 편지지" lead="계절 편지지 80장과 한국 전통문화·장소·정원·동물·하늘·커피·창가 주제 편지지 900장이에요. 빛깔이나 주제를 눌러 펼쳐 보고, 마음에 드는 묶음으로 들어가세요.">
+        <HubDirectory sections={sections} totalLabel={`편지지 ${total.toLocaleString("ko-KR")}장`} searchLabel="편지지 검색" placeholder="검색 (예: 꽃빛, 커피, 전통)" />
       </Section>
       <Section><FunCtaBox cta={stationeryCta} from="stationery" /></Section>
       <Section>
