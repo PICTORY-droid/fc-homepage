@@ -6,6 +6,7 @@ kind: 상품
 status: 초안
 products: [P007]
 keywords: [우체국암케어보험, 우체국 암보험, 어린이 암보험, 암보험 비갱신형]
+written: 2026-11-06
 asOf: 2026-10-18
 sources: [https://www.epostlife.go.kr, https://epostlife.go.kr/IPCCFQ0001.do]
 thumb: [우체국암케어보험, 한눈에 보기]

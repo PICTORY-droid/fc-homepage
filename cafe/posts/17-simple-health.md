@@ -6,6 +6,7 @@ kind: 상품
 status: 초안
 products: [P021, P022]
 keywords: [우체국간편건강보험, 우체국더간편건강보험, 간편가입 건강보험, 유병자 보험]
+written: 2026-11-06
 asOf: 2026-10-18
 sources: [https://www.epostlife.go.kr]
 thumb: [병력이 있어도, 간편가입 건강보험]

@@ -409,7 +409,7 @@
     "service": "계약 변경·해지·민원은 우체국보험 고객센터(1599-0100)로 문의해 주세요.",
     "consult": {
       "label": "가입·보장 상담 신청하기",
-      "url": "https://korea-bohum.vercel.app/consult"
+      "url": "https://cafe.naver.com/f-e/cafes/31270965/menus/3"
     }
   },
   "links": {
@@ -419,7 +419,8 @@
       "epostlife.go.kr",
       "www.law.go.kr",
       "open.kakao.com",
-      "eiec.kdi.re.kr"
+      "eiec.kdi.re.kr",
+      "cafe.naver.com"
     ],
     "utm": {
       "source": "naver_cafe",
@@ -496,5 +497,8 @@
     "보험정보카페",
     "우체국보험청구",
     "우체국보험상담"
-  ]
+  ],
+  "postFormat": {
+    "$comment": "카페 글 본문 배치(2026-11-06 확정): 사진1(대표)+설명 → 인사 문단(한 문장 한 줄) → 사진2(메모 카드)+설명 → 【소제목】 문단들(한 문장 한 줄) → ※ 다음 글 예고 → 상담 링크 → 공식 정보 → 민원 창구 → 작성일·출처"
+  }
 }

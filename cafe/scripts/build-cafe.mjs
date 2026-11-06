@@ -52,14 +52,21 @@ const sep = "\n\n==================================================\n\n";
 const plain = posts.map(({ meta, body }, i) => {
   const f = cfg.footer;
   const link = withUtm(meta.slug);
-  const foot = [`기준일 ${meta.asOf} · 출처: ${meta.sources.map((s) => new URL(s).host).join(", ")}`, meta.kind === "상품" ? f.premium : "", f.service, `${f.consult.label}: ${link(f.consult.url)}`, f.officialInfo].filter(Boolean).join("\n");
+  const host = (u) => new URL(u).host.replace(/^www\./, "");
+  const written = meta.written ?? meta.asOf;
+  const dateLine = `작성일 ${written}${meta.asOf !== written ? ` · 상품 정보 기준 ${meta.asOf}` : ""} · 출처: ${[...new Set(meta.sources.map(host))].join(", ")}`;
+  // 꼬리말 순서(확정 양식): 상담 링크 → (상품 글) 보험료 안내 → 공식 정보 → 민원 창구 → 작성일·출처
+  const foot = [`${f.consult.label}: ${f.consult.url}`, meta.kind === "상품" ? f.premium : "", f.officialInfo, f.service, dateLine].filter(Boolean).join("\n");
   // 태그 10개: 글 키워드 먼저, 모자라면 카페 공통 태그로 채움(중복 제거) — 네이버 카페 태그 최대 10개
   const tags = [...new Set([...(meta.tags ?? []), ...meta.keywords, ...cfg.commonTags].map((k) => k.replace(/\s/g, "")))].slice(0, cfg.limits.tags).map((k) => `#${k}`).join(" ");
   const hand = Boolean(meta.icon); // 손그림 이미지(대표 + 메모 카드)가 있는 글
   const img1 = hand ? `hand/${meta.slug}-1.png` : `thumbs/${meta.slug}.png`;
+  // 본문 배치(확정 양식): 사진1+설명 → 인사 문단 → 사진2(메모 카드)+설명 → 【소제목】들
   let text = toPlain(body, link);
-  if (hand) { const k = text.indexOf("\n【"); const mark = `\n\n[사진 넣기: hand/${meta.slug}-2.png / 대체 텍스트: ${meta.cardTitle}]\n`; text = k > 0 ? text.slice(0, k) + mark + text.slice(k) : text + mark; }
-  return [`[${i + 1}] 게시판: ${meta.menu}${meta.status === "초안" && meta.kind === "상품" ? "   ※ 광고 심의 후 게시" : ""}`, `제목: ${meta.title}`, `대표 이미지(본문 맨 위): ${img1}`, `대체 텍스트: ${(meta.thumb ?? []).join(" ")}`, `태그: ${tags}`, "----- 본문 -----", text, "", foot].join("\n");
+  const photo = (file, cap) => `[사진: ${file}]\n${cap}`;
+  if (hand) { const k = text.indexOf("\n【"); const mark = `\n${photo(`hand/${meta.slug}-2.png`, meta.cardTitle)}\n`; text = k > 0 ? text.slice(0, k) + mark + text.slice(k) : text + mark; }
+  text = `${photo(img1, (meta.thumb ?? []).join(" "))}\n${text}`;
+  return [`[${i + 1}] 게시판: ${meta.menu}${meta.status === "초안" && meta.kind === "상품" ? "   ※ 광고 심의 후 게시" : ""}`, `제목: ${meta.title}`, `태그: ${tags}`, "----- 본문 -----", text, "", foot].join("\n");
 }).join(sep);
 writeFileSync(join(OUT, "붙여넣기용_전체원고.txt"), plain);
 // 게시판별 묶음도 따로 — 한 게시판씩 올릴 때 편하게

@@ -5,6 +5,7 @@ menu: 암·건강보험
 kind: 정보
 status: 초안
 keywords: [암보험금 거절, 암 진단확정일, 고지의무 위반, 보험 민원 사례]
+written: 2026-11-06
 asOf: 2026-11-06
 sources: [https://eiec.kdi.re.kr/policy/materialView.do?num=245867, https://epostlife.go.kr/IPCCFQ0001.do]
 thumb: [암보험금, 이럴 때 못 받아요]

@@ -51,6 +51,8 @@ export function toPlain(md, linkFn = (u) => u) {
       if (!head) { head = cells; continue; }
       l = `· ${cells[0]} — ${cells.slice(1).join(" / ")}`;
     } else head = null;
+    const plainPara = !/^(#|-\s|\d+\.\s|>|\|)/.test(raw) && raw.trim() !== "";
+    if (plainPara) l = l.replace(/([.!?])\s+(?=\S)/g, "$1\n"); // 보통 문단은 한 문장에 한 줄
     l = l.replace(/^###?\s+(.*)$/, "【$1】").replace(/^-\s+/, "· ").replace(/^>\s?/, "※ ")
       .replace(/\*\*(.+?)\*\*/g, "$1").replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, (_, t, u) => `${t}(${linkFn(u)})`);
     out.push(l);

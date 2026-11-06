@@ -6,6 +6,7 @@ kind: 정보
 status: 초안
 products: [P007]
 keywords: [우체국 암보험, 암보험 고르는 법, 암 진단확정일, 고지의무]
+written: 2026-11-06
 asOf: 2026-11-06
 sources: [https://epostlife.go.kr/IPCCFQ0001.do, https://eiec.kdi.re.kr/policy/materialView.do?num=245867]
 thumb: [암보험 보기 전, 꼭 알아 둘 5가지]

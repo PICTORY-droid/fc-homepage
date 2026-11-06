@@ -6,6 +6,7 @@ kind: 상품
 status: 초안
 products: [P003]
 keywords: [우체국뇌심케어보험, 뇌심장 보험, 우체국 건강보험, 보장성보험 세액공제]
+written: 2026-11-06
 asOf: 2026-10-18
 sources: [https://www.epostlife.go.kr]
 thumb: [우체국뇌심케어보험, 뇌·심장 쉽게 보기]
