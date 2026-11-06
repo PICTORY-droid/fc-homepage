@@ -124,6 +124,12 @@ export function checkPost(file, meta, body, ctx) {
   if (!meta.sub) r.push(warn("B8", at("대표 이미지 한 줄 설명(sub) 없음")));
   for (const w of [...FORBIDDEN, ...COMPARE, ...REWARD]) if ([...th, meta.sub ?? ""].join(" ").includes(w)) r.push(err("B8", at(`대표 이미지 문구에 "${w}"`)));
 
+  // B9 태그(선택) — 네이버 카페 태그 10개 이내, 공백 없이, 중복·금지 표현 없음
+  const tg = Array.isArray(meta.tags) ? meta.tags : [];
+  if (tg.length > (L.tags ?? 10)) r.push(err("B9", at(`태그 ${tg.length}개 — ${L.tags ?? 10}개 이내`)));
+  if (new Set(tg).size !== tg.length) r.push(err("B9", at("태그 중복")));
+  for (const t of tg) { if (/\s|#/.test(t)) r.push(err("B9", at(`태그 "${t}" — 공백·# 없이`))); for (const w of [...FORBIDDEN, ...COMPARE, ...REWARD, ...BANNED]) if (t.includes(w)) r.push(err("B9", at(`태그 "${t}" 에 "${w}"`))); }
+
   // C. 사실·출처
   for (const id of meta.products ?? []) if (!ctx.products.has(id)) r.push(err("C1", at(`상품 ${id} 는 판매 중 상품 데이터에 없음 (판매중지·e마크 여부 확인)`)));
   const known = [...ctx.products.values()].map((n) => n.replace(/\(.*$/, ""));
