@@ -38,3 +38,22 @@ export function toHtml(md, linkFn) {
 
 /** 글자 수(공백 제외) — 정보성 글 분량 확인용 */
 export const textLength = (md) => md.replace(/[#>*|\-\s]/g, "").replace(/\[([^\]]+)\]\([^)]+\)/g, "$1").length;
+
+/** 원고 마크다운 → 스마트에디터에 그대로 붙일 '보통 글'(꾸밈 기호 없음). 소제목은 【 】, 표는 한 줄씩 · 로 풉니다. */
+export function toPlain(md, linkFn = (u) => u) {
+  const out = [];
+  let head = null;
+  for (const raw of md.replace(/\r/g, "").split("\n")) {
+    let l = raw;
+    if (/^\|\s*:?-{2,}/.test(l)) continue;
+    if (/^\|/.test(l)) {
+      const cells = l.replace(/^\||\|$/g, "").split("|").map((c) => c.trim());
+      if (!head) { head = cells; continue; }
+      l = `· ${cells[0]} — ${cells.slice(1).join(" / ")}`;
+    } else head = null;
+    l = l.replace(/^###?\s+(.*)$/, "【$1】").replace(/^-\s+/, "· ").replace(/^>\s?/, "※ ")
+      .replace(/\*\*(.+?)\*\*/g, "$1").replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, (_, t, u) => `${t}(${linkFn(u)})`);
+    out.push(l);
+  }
+  return out.join("\n").replace(/\n{3,}/g, "\n\n").trim();
+}

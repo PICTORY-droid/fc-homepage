@@ -116,6 +116,13 @@ export function checkPost(file, meta, body, ctx) {
   if (meta.kind !== "공지" && textLength(body) < L.bodyMin) r.push(warn("B6", at(`본문 ${textLength(body)}자 — 정보성 글은 ${L.bodyMin}자 이상 권장`)));
   if (meta.kind !== "공지" && (body.match(/^##\s/gm) ?? []).length < 2) r.push(warn("B7", at("소제목(##)이 2개 미만 — 읽기 흐름·검색 요약에 불리")));
 
+  // B8 대표 이미지 문구 — 두 줄(각 14자 이내)·한 줄 설명, 네이버 검색 썸네일에서 읽히게
+  const th = Array.isArray(meta.thumb) ? meta.thumb : [];
+  if (th.length !== 2) r.push(err("B8", at("thumb 는 [첫 줄, 둘째 줄] 두 줄")));
+  for (const t of th) if (len(t) > 14) r.push(warn("B8", at(`대표 이미지 문구 "${t}" ${len(t)}자 — 14자 이내 권장(작은 썸네일 가독성)`)));
+  if (!meta.sub) r.push(warn("B8", at("대표 이미지 한 줄 설명(sub) 없음")));
+  for (const w of [...FORBIDDEN, ...COMPARE, ...REWARD]) if ([...th, meta.sub ?? ""].join(" ").includes(w)) r.push(err("B8", at(`대표 이미지 문구에 "${w}"`)));
+
   // C. 사실·출처
   for (const id of meta.products ?? []) if (!ctx.products.has(id)) r.push(err("C1", at(`상품 ${id} 는 판매 중 상품 데이터에 없음 (판매중지·e마크 여부 확인)`)));
   const known = [...ctx.products.values()].map((n) => n.replace(/\(.*$/, ""));

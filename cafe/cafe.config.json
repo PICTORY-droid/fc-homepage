@@ -440,7 +440,8 @@
     "keywordsMax": 5,
     "staleDays": 180,
     "joinGuide": 70,
-    "template": 800
+    "template": 800,
+    "tags": 10
   },
   "joinSettings": {
     "$comment": "카페 관리 > 기본 정보의 가입·공개 설정 (2026-11-05 관리 화면 기준)",
@@ -483,5 +484,15 @@
       "url": "https://korea-bohum.vercel.app/?utm_source=naver_cafe&utm_medium=cafe&utm_campaign=cafe_banner",
       "alt": "우체국보험, 공식 자료로 쉽게 정리해요"
     }
+  ],
+  "commonTags": [
+    "우체국보험",
+    "우체국보험길잡이",
+    "우체국보험카페",
+    "우체국실비",
+    "보장분석",
+    "보험정보카페",
+    "우체국보험청구",
+    "우체국보험상담"
   ]
 }

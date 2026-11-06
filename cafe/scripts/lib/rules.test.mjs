@@ -6,7 +6,7 @@ import { loadConfig, loadProducts, loadTemplate } from "./load.mjs";
 
 const cfg = loadConfig();
 const products = loadProducts();
-const base = { slug: "t", title: "우체국 실비 청구 테스트", menu: "청구 서류 정리", kind: "정보", status: "초안", keywords: ["우체국 실비"], asOf: "2026-10-18", sources: ["https://www.epostlife.go.kr"] };
+const base = { slug: "t", title: "우체국 실비 청구 테스트", menu: "청구 서류 정리", kind: "정보", status: "초안", keywords: ["우체국 실비"], thumb: ["우체국 실비", "청구 정리"], sub: "테스트", asOf: "2026-10-18", sources: ["https://www.epostlife.go.kr"] };
 const body = "## 하나\n본문\n## 둘\n본문";
 const run = (meta, b = body) => checkPost("x.md", { ...base, ...meta }, b, { cfg, products, slugs: new Set(), today: new Date("2026-11-05") });
 const codes = (r) => r.filter((i) => i.level === "error").map((i) => i.code);

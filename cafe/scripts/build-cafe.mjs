@@ -3,7 +3,7 @@
 import { mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { execFileSync } from "node:child_process";
-import { toHtml } from "./lib/markdown.mjs";
+import { toHtml, toPlain } from "./lib/markdown.mjs";
 import { CAFE, loadConfig, loadPosts } from "./lib/load.mjs";
 
 execFileSync(process.execPath, [join(CAFE, "scripts/check-cafe.mjs")], { stdio: "inherit" });
@@ -45,7 +45,18 @@ ${meta.kind === "상품" ? `<p>${esc(f.premium)}</p>` : ""}
 ${meta.reviewNo ? `<p>심의필 ${esc(meta.reviewNo)}</p>` : ""}</div>`;
   const name = `${meta.status === "초안" ? "초안_" : ""}${meta.slug}.html`;
   writeFileSync(join(OUT, name), page(meta.title, `${toHtml(body, link)}\n${foot}`));
-  list.push(`<li>${meta.status === "초안" ? '<span class="draft">초안</span> ' : ""}<a href="${name}">${esc(meta.title)}</a> <span class="meta">→ ${esc(meta.menu)} · 태그: ${meta.keywords.map(esc).join(", ")}</span></li>`);
+  list.push(`<li>${meta.status === "초안" ? '<span class="draft">초안</span> ' : ""}<a href="${name}">${esc(meta.title)}</a> <span class="meta">→ ${esc(meta.menu)} · 대표 이미지: thumbs/${esc(meta.slug)}.png</span></li>`);
 }
+// 붙여넣기용 보통 글 묶음 — 게시판·제목·태그·대표 이미지·대체 텍스트·본문을 글마다 차례로
+const sep = "\n\n==================================================\n\n";
+const plain = posts.map(({ meta, body }, i) => {
+  const f = cfg.footer;
+  const link = withUtm(meta.slug);
+  const foot = [`기준일 ${meta.asOf} · 출처: ${meta.sources.map((s) => new URL(s).host).join(", ")}`, meta.kind === "상품" ? f.premium : "", f.service, `${f.consult.label}: ${link(f.consult.url)}`, f.officialInfo].filter(Boolean).join("\n");
+  // 태그 10개: 글 키워드 먼저, 모자라면 카페 공통 태그로 채움(중복 제거) — 네이버 카페 태그 최대 10개
+  const tags = [...new Set([...meta.keywords, ...cfg.commonTags].map((k) => k.replace(/\s/g, "")))].slice(0, cfg.limits.tags).map((k) => `#${k}`).join(" ");
+  return [`[${i + 1}] 게시판: ${meta.menu}${meta.status === "초안" && meta.kind === "상품" ? "   ※ 광고 심의 후 게시" : ""}`, `제목: ${meta.title}`, `대표 이미지: thumbs/${meta.slug}.png`, `대체 텍스트: ${(meta.thumb ?? []).join(" ")}`, `태그: ${tags}`, "----- 본문 -----", toPlain(body, link), "", foot].join("\n");
+}).join(sep);
+writeFileSync(join(OUT, "붙여넣기용_전체원고.txt"), plain);
 writeFileSync(join(OUT, "index.html"), page("카페 원고 목록", `<h1>카페 원고 목록</h1><p class="meta">제목은 카페 글쓰기의 제목 칸에, 태그는 태그 칸에 그대로 넣으세요.</p><ol>${list.join("")}</ol>`));
 console.log(`✔ 붙여넣기용 원고 ${posts.length}편 → cafe/out/index.html`);

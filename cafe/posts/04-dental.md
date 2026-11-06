@@ -8,6 +8,8 @@ products: [P023]
 keywords: [우체국치아보험, 우체국 치아보험 스케일링, 치아보험 가입나이, 보철치료]
 asOf: 2026-10-18
 sources: [https://www.epostlife.go.kr, https://epostlife.go.kr/IPCCFQ0001.do]
+thumb: [우체국치아보험, 가입 나이·스케일링]
+sub: 가입금액 · 치료자금 받는 법
 ---
 우체국치아보험은 10년 단위로 갱신하는 치아 보장 보험이에요. 가입 나이와 가입금액, 그리고 해마다 받는 스케일링 치료자금 신청 방법을 정리했어요.
 

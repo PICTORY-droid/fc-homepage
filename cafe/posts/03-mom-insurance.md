@@ -8,6 +8,8 @@ products: [P030]
 keywords: [우체국대한민국엄마보험, 우체국 엄마보험, 태아보험 무료, 임신질환]
 asOf: 2026-10-18
 sources: [https://www.epostlife.go.kr, https://www.epostlife.go.kr/ISDMDM00AS.do]
+thumb: [대한민국엄마보험, 보험료 무료]
+sub: 엄마와 아이를 함께
 ---
 임신 중이라면 꼭 알아 두시면 좋은 상품이 있어요. 우체국대한민국엄마보험은 체신관서가 보험료를 지원해서, 가입하시는 분이 내는 보험료가 없어요.
 
