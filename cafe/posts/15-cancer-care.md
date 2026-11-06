@@ -11,7 +11,7 @@ asOf: 2026-11-06
 sources: [https://epostlife.go.kr/IPCCFQ0001.do]
 thumb: [암보험 갱신형·비갱신형, 나이별로 고르는 법]
 sub: 암·건강 노트 2편
-icon: ribbon
+icon: graph
 cardTitle: 길잡이 메모 · 갱신형 vs 비갱신형
 card: 갱신형은 갱신 때 보험료가 바뀔 수 있어요 | 비갱신형은 정한 기간 같은 보험료 | 어릴수록 고를 수 있는 기간이 길어요 | 병력이 있으면 간편가입도 살펴봐요 | 보장 금액은 약관에서 꼭 확인
 ---
