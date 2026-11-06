@@ -72,8 +72,8 @@ const ICONS = {
     add(rc.path(`M${x + 30} ${y + 205} H${x + 120} V${y + 160} H${x + 210} V${y + 110} H${x + 300} V${y + 60} H${x + 330}`, { stroke: P.red, strokeWidth: 7, roughness: 1.1 }));
     add(rc.line(x + 30, y + 150, x + 330, y + 150, { stroke: "#2FA37F", strokeWidth: 7, roughness: 1.1 }));
     const lab = (s, lx, ly, color) => { const d = text("li", s, lx, ly); d.style.fontSize = "38px"; d.style.color = color; };
-    lab("갱신형", x + 238, y + 4, P.red);
-    lab("비갱신형", x + 150, y + 160, "#2FA37F");
+    lab("갱신형", x + 175, y + 40, P.red);
+    lab("비갱신형", x + 40, y + 98, "#2FA37F");
     lab("나이", x + 270, y + 258, P.ink);
   },
   heart(x, y) {
@@ -112,7 +112,7 @@ function thumb(d) {
   const s = text("sub", d.sub, 96, 500); fitAll([s], 880);
   ICONS[d.icon](600, 640);
   character(120, 720, 1.6);
-  sparkle(520, 680, 20, P.yellow); sparkle(960, 620, 16, P.orange); sparkle(90, 640, 14, P.pink);
+  sparkle(520, 680, 20, P.yellow); sparkle(1010, 560, 16, P.orange); sparkle(90, 640, 14, P.pink);
   text("brand", "우체국보험 길잡이 카페", 990, 950, "end");
 }
 
