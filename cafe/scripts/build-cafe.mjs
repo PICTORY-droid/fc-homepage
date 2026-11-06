@@ -65,7 +65,8 @@ const plain = posts.map(({ meta, body }, i) => {
   let text = toPlain(body, link);
   // 사진 아래 설명 줄 + 대체 텍스트(사진 속 글을 그대로 읽어 주는 문장 — 네이버 이미지 검색·음성 안내용)
   const ICON = { checklist: "체크리스트", ribbon: "리본", heart: "하트", clipboard: "진료 기록판", magnifier: "돋보기와 서류" };
-  const alt1 = `${(meta.thumb ?? []).join(" ")}. ${meta.sub ?? ""}. 편지봉투 길잡이 캐릭터와 ${ICON[meta.icon] ?? "안내"} 손그림`;
+  const end = (t) => (/[.?!]$/.test(t) ? t : `${t}.`); // 문장 끝 부호가 겹치지 않게
+  const alt1 = `${end((meta.thumb ?? []).join(" "))} ${end(meta.sub ?? "")} 편지봉투 길잡이 캐릭터와 ${ICON[meta.icon] ?? "안내"} 손그림`;
   const cardLines = (meta.card ?? "").split("|").map((x) => x.trim()).filter(Boolean);
   const alt2 = `${meta.cardTitle}. ${cardLines.join(", ")}`;
   const photo = (file, cap, alt) => `[사진: ${file}]\n(대체 텍스트: ${alt})\n${cap}`;
