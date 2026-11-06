@@ -1,7 +1,7 @@
 // 네이버 카페 하네스 규칙 — 모두 순수 함수입니다. 결과: { level: "error" | "warn", code, msg }
 // 검사 목록과 이유는 cafe/HARNESS.md 와 같은 번호를 씁니다. 규칙을 바꾸면 그 문서도 함께 고치세요.
 import { FORBIDDEN, SOFT } from "../../../scripts/lib/adRules.mjs";
-import { linksOf, textLength } from "./markdown.mjs";
+import { linksOf, textLength, toPlain } from "./markdown.mjs";
 
 const err = (code, msg) => ({ level: "error", code, msg });
 const warn = (code, msg) => ({ level: "warn", code, msg });
@@ -114,6 +114,7 @@ export function checkPost(file, meta, body, ctx) {
   if (kw[0] && meta.title && !meta.title.replace(/\s/g, "").includes(kw[0].replace(/\s/g, ""))) r.push(warn("B5", at(`첫 키워드 "${kw[0]}" 가 제목에 없음 (검색 노출)`)));
   if (!["공지", "정보", "상품"].includes(meta.kind)) r.push(err("B1", at(`kind 는 공지·정보·상품 중 하나 (지금: ${meta.kind})`)));
   if (meta.kind !== "공지" && textLength(body) < L.bodyMin) r.push(warn("B6", at(`본문 ${textLength(body)}자 — 정보성 글은 ${L.bodyMin}자 이상 권장`)));
+  if (L.bodyMax && len(toPlain(body)) > L.bodyMax) r.push(err("B6", at(`본문 ${len(toPlain(body))}자(공백 포함) — ${L.bodyMax}자 이내`)));
   if (meta.kind !== "공지" && (body.match(/^##\s/gm) ?? []).length < 2) r.push(warn("B7", at("소제목(##)이 2개 미만 — 읽기 흐름·검색 요약에 불리")));
 
   // B8 대표 이미지 문구 — 두 줄(각 14자 이내)·한 줄 설명, 네이버 검색 썸네일에서 읽히게

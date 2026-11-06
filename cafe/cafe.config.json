@@ -418,7 +418,8 @@
       "www.epostlife.go.kr",
       "epostlife.go.kr",
       "www.law.go.kr",
-      "open.kakao.com"
+      "open.kakao.com",
+      "eiec.kdi.re.kr"
     ],
     "utm": {
       "source": "naver_cafe",
@@ -441,7 +442,8 @@
     "staleDays": 180,
     "joinGuide": 70,
     "template": 800,
-    "tags": 10
+    "tags": 10,
+    "bodyMax": 2000
   },
   "joinSettings": {
     "$comment": "카페 관리 > 기본 정보의 가입·공개 설정 (2026-11-05 관리 화면 기준)",
