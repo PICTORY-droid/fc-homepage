@@ -77,7 +77,7 @@ const plain = posts.map(({ meta, body }, i) => {
   const alt1 = `${end((meta.thumb ?? []).join(" "))} ${meta.sub ?? ""}`.trim();
   const cardLines = (meta.card ?? "").split("|").map((x) => x.trim()).filter(Boolean);
   const alt2 = `${meta.cardTitle}. ${cardLines.join(", ")}`;
-  const photo = (file, cap, alt) => `[사진: ${file}]\n(대체 텍스트: ${alt})\n${cap}`;
+  const photo = (file, cap, alt) => `[사진: ${file}]\n[↑ 사진의 대체텍스트 칸에만 넣기 — 본문에 쓰지 않음] ${alt}\n${cap}`;
   if (hand) { const k = text.indexOf("\n【"); const mark = `\n${photo(`hand/${meta.slug}-2.png`, meta.cardTitle, alt2)}\n`; text = k > 0 ? text.slice(0, k) + mark + text.slice(k) : text + mark; }
   text = `${photo(img1, (meta.thumb ?? []).join(" "), hand ? alt1 : (meta.thumb ?? []).join(" "))}\n${text}`;
   return [`[${i + 1}] 게시판: ${meta.menu}${meta.status === "초안" && meta.kind === "상품" ? "   ※ 광고 심의 후 게시" : ""}`, `제목: ${meta.title}`, `태그: ${tags}`, "----- 본문 -----", text, "", foot].join("\n");
