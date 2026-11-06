@@ -56,17 +56,25 @@ const plain = posts.map(({ meta, body }, i) => {
   const written = meta.written ?? meta.asOf;
   const dateLine = `작성일 ${written}${meta.asOf !== written ? ` · 상품 정보 기준 ${meta.asOf}` : ""} · 출처: ${[...new Set(meta.sources.map(host))].join(", ")}`;
   // 꼬리말 순서(확정 양식): 상담 링크 → (상품 글) 보험료 안내 → 공식 정보 → 민원 창구 → 작성일·출처
-  const foot = [`${f.consult.label}: ${f.consult.url}`, meta.kind === "상품" ? f.premium : "", f.officialInfo, f.service, dateLine].filter(Boolean).join("\n");
+  const foot = [`${f.consult.label}:\n${f.consult.url}`, meta.kind === "상품" ? f.premium : "", f.officialInfo, f.service, dateLine].filter(Boolean).join("\n");
   // 태그 10개: 글 키워드 먼저, 모자라면 카페 공통 태그로 채움(중복 제거) — 네이버 카페 태그 최대 10개
   const tags = [...new Set([...(meta.tags ?? []), ...meta.keywords, ...cfg.commonTags].map((k) => k.replace(/\s/g, "")))].slice(0, cfg.limits.tags).map((k) => `#${k}`).join(" ");
   const hand = Boolean(meta.icon); // 손그림 이미지(대표 + 메모 카드)가 있는 글
   const img1 = hand ? `hand/${meta.slug}-1.png` : `thumbs/${meta.slug}.png`;
   // 본문 배치(확정 양식): 사진1+설명 → 인사 문단 → 사진2(메모 카드)+설명 → 【소제목】들
-  let text = toPlain(body, link);
+  let text = toPlain(body, link)
+    .replace(/(【[^】\n]+】)\n\n/g, "$1\n"); // 【소제목】 바로 아래에 본문
+  {
+    // 첫 소제목 앞 인사 문단: 이모지 뒤·'~면,' 같은 긴 절 뒤에서 줄바꿈 (확정 양식)
+    const k = text.indexOf("【");
+    const intro = (k > 0 ? text.slice(0, k) : text)
+      .replace(/([\u{1F300}-\u{1FAFF}\u2600-\u27BF])\s+(?=\S)/gu, "$1\n")
+      .split("\n").map((l) => (l.length > 40 ? l.replace(/(면|고|지만|는데),\s+/, "$1,\n") : l)).join("\n");
+    text = intro + (k > 0 ? text.slice(k) : "");
+  }
   // 사진 아래 설명 줄 + 대체 텍스트(사진 속 글을 그대로 읽어 주는 문장 — 네이버 이미지 검색·음성 안내용)
-  const ICON = { checklist: "체크리스트", ribbon: "리본", heart: "하트", clipboard: "진료 기록판", magnifier: "돋보기와 서류" };
   const end = (t) => (/[.?!]$/.test(t) ? t : `${t}.`); // 문장 끝 부호가 겹치지 않게
-  const alt1 = `${end((meta.thumb ?? []).join(" "))} ${end(meta.sub ?? "")} 편지봉투 길잡이 캐릭터와 ${ICON[meta.icon] ?? "안내"} 손그림`;
+  const alt1 = `${end((meta.thumb ?? []).join(" "))} ${meta.sub ?? ""}`.trim();
   const cardLines = (meta.card ?? "").split("|").map((x) => x.trim()).filter(Boolean);
   const alt2 = `${meta.cardTitle}. ${cardLines.join(", ")}`;
   const photo = (file, cap, alt) => `[사진: ${file}]\n(대체 텍스트: ${alt})\n${cap}`;
