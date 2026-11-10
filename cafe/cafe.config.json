@@ -420,7 +420,16 @@
       "www.law.go.kr",
       "open.kakao.com",
       "eiec.kdi.re.kr",
-      "cafe.naver.com"
+      "cafe.naver.com",
+      "www.easylaw.go.kr",
+      "m.easylaw.go.kr",
+      "www.cancer.go.kr",
+      "www.nhis.or.kr",
+      "www.korea.kr",
+      "kssc.kostat.go.kr",
+      "www.nts.go.kr",
+      "www.credit4u.or.kr",
+      "cont.insure.or.kr"
     ],
     "utm": {
       "source": "naver_cafe",
@@ -430,7 +439,8 @@
   "phones": {
     "allowed": [
       "1599-0100",
-      "010-2192-1599"
+      "010-2192-1599",
+      "1577-1000"
     ],
     "fcPhone": "010-2192-1599"
   },
