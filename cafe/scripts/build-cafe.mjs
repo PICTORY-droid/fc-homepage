@@ -86,6 +86,7 @@ writeFileSync(join(OUT, "붙여넣기용_전체원고.txt"), plain);
 // 게시판별 묶음도 따로 — 한 게시판씩 올릴 때 편하게
 const byMenu = new Map();
 plain.split(sep).forEach((chunk, i) => { const m = posts[i].meta.menu; byMenu.set(m, [...(byMenu.get(m) ?? []), chunk]); });
-for (const [m, chunks] of byMenu) writeFileSync(join(OUT, `게시판_${m.replace(/[\\/:*?"<>|]/g, "")}.txt`), chunks.join(sep));
+// 게시판 묶음의 [번호]는 그 게시판 안의 순서(1부터) — 전체 원고 번호가 아니라 연재 편 번호와 맞게
+for (const [m, chunks] of byMenu) writeFileSync(join(OUT, `게시판_${m.replace(/[\\/:*?"<>|]/g, "")}.txt`), chunks.map((c, k) => c.replace(/^\[\d+\]/, `[${k + 1}]`)).join(sep));
 writeFileSync(join(OUT, "index.html"), page("카페 원고 목록", `<h1>카페 원고 목록</h1><p class="meta">제목은 카페 글쓰기의 제목 칸에, 태그는 태그 칸에 그대로 넣으세요.</p><ol>${list.join("")}</ol>`));
 console.log(`✔ 붙여넣기용 원고 ${posts.length}편 → cafe/out/index.html`);
