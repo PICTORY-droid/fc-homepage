@@ -80,9 +80,7 @@ const plain = posts.map(({ meta, body }, i) => {
   const photo = (file, cap, alt) => `[사진: ${file}]\n[↑ 사진의 대체텍스트 칸에만 넣기 — 본문에 쓰지 않음] ${alt}\n${cap}`;
   if (hand) { const k = text.indexOf("\n【"); const mark = `\n${photo(`hand/${meta.slug}-2.png`, meta.cardTitle, alt2)}\n`; text = k > 0 ? text.slice(0, k) + mark + text.slice(k) : text + mark; }
   text = `${photo(img1, (meta.thumb ?? []).join(" "), hand ? alt1 : (meta.thumb ?? []).join(" "))}\n${text}`;
-  // 네이버 에디터는 주소 뒤에 붙은 ')'·'에서' 같은 글자까지 링크로 묶으므로, 주소 바로 뒤에 한 칸 띄움 — 괄호·글자는 검정, 주소만 링크
-  const unglue = (t) => t.replace(/((?:https?:\/\/)?(?:www\.)?[a-z0-9-]+(?:\.[a-z0-9-]+)*\.(?:go\.kr|or\.kr|co\.kr|re\.kr|com|net|app)(?:\/[^\s)\]]*)?)(?=[)\]가-힣])/g, "$1 ");
-  return unglue([`[${i + 1}] 게시판: ${meta.menu}${meta.status === "초안" && meta.kind === "상품" ? "   ※ 광고 심의 후 게시" : ""}`, `제목: ${meta.title}`, `태그: ${tags}`, "----- 본문 -----", text, "", foot].join("\n"));
+  return [`[${i + 1}] 게시판: ${meta.menu}${meta.status === "초안" && meta.kind === "상품" ? "   ※ 광고 심의 후 게시" : ""}`, `제목: ${meta.title}`, `태그: ${tags}`, "----- 본문 -----", text, "", foot].join("\n");
 }).join(sep);
 writeFileSync(join(OUT, "붙여넣기용_전체원고.txt"), plain);
 // 게시판별 묶음도 따로 — 한 게시판씩 올릴 때 편하게

@@ -54,8 +54,11 @@ export function toPlain(md, linkFn = (u) => u) {
     const plainPara = !/^(#|-\s|\d+\.\s|>|\|)/.test(raw) && raw.trim() !== "";
     if (plainPara) l = l.replace(/([.!?])\s+(?=\S)/g, "$1\n"); // 보통 문단은 한 문장에 한 줄
     l = l.replace(/^###?\s+(.*)$/, "【$1】").replace(/^-\s+/, "· ").replace(/^>\s?/, "※ ")
-      .replace(/\*\*(.+?)\*\*/g, "$1").replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, (_, t, u) => `${t}(${linkFn(u)})`);
-    out.push(l);
+      .replace(/\*\*(.+?)\*\*/g, "$1");
+    // 링크: 문장에는 글자만, 주소는 그 줄 아래 '글자: 주소'로 줄 끝에 — 네이버 에디터가 주소 뒤 글자까지 링크로 묶지 않게
+    const urls = [];
+    l = l.replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, (_, t, u) => (urls.push(`${t}: ${linkFn(u)}`), t));
+    out.push(urls.length ? [l, ...urls].join("\n") : l);
   }
   return out.join("\n").replace(/\n{3,}/g, "\n\n").trim();
 }
