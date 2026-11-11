@@ -27,6 +27,7 @@ const add = (n) => (svg.appendChild(n), n);
 const THEMES = {
   default: { bg: "#FFFBF4", frame: P.peach, stripe: [P.red, P.orange], chipFill: P.cream, chipLine: P.orange, chipText: "#A34506", t2: "#D9480F", under: P.yellow, brand: "#A34506", tape: P.yellow, rule: P.peach, dots: [P.orange, P.mint, P.pink, P.sky, P.yellow], spark: [P.yellow, P.orange, P.pink] },
   "실손의료비보험": { bg: "#F0F7FD", frame: "#A9D3F2", stripe: ["#2C7BC0", "#9FD3F5"], chipFill: "#E2F0FB", chipLine: "#3A8FD6", chipText: "#1F5F99", t2: "#2273BD", under: "#FFD66B", brand: "#1F5F99", tape: "#C5E3F7", rule: "#D3E8F7", dots: ["#3A8FD6", "#FFD66B", "#7FD1B9", "#F7A8B8", "#9FD3F5"], spark: ["#FFD66B", "#3A8FD6", "#F7A8B8"] },
+  "치아·정기·상해보험": { bg: "#F5F2FD", frame: "#CFC3F2", stripe: ["#6A4FC4", "#B9A6F0"], chipFill: "#ECE6FB", chipLine: "#7B61D1", chipText: "#4E3A9C", t2: "#6247BF", under: "#FFD66B", brand: "#4E3A9C", tape: "#DCD2F7", rule: "#E2DAF6", dots: ["#7B61D1", "#FFD66B", "#9FD3F5", "#7FD1B9", "#F7A8B8"], spark: ["#FFD66B", "#7B61D1", "#9FD3F5"] },
   "어린이·엄마보험": { bg: "#FFF4F7", frame: "#F5C2D3", stripe: ["#D9577F", "#F7B6CB"], chipFill: "#FDE6EE", chipLine: "#E0709A", chipText: "#A63A62", t2: "#CC4A74", under: "#FFD66B", brand: "#A63A62", tape: "#F9D3E0", rule: "#F6DCE5", dots: ["#E0709A", "#FFD66B", "#9FD3F5", "#B9A6F0", "#7FD1B9"], spark: ["#FFD66B", "#E0709A", "#B9A6F0"] },
   "연금·저축보험": { bg: "#F0FAF4", frame: "#A8DCC4", stripe: ["#1E8C68", "#7FD1B9"], chipFill: "#E3F6EC", chipLine: "#2FA37F", chipText: "#17694F", t2: "#1E8C68", under: "#FFD66B", brand: "#17694F", tape: "#BDE8D3", rule: "#CDEBDD", dots: ["#2FA37F", "#FFD66B", "#9FD3F5", "#7FD1B9", "#F7A8B8"], spark: ["#FFD66B", "#2FA37F", "#9FD3F5"] },
 };
@@ -189,6 +190,27 @@ const ICONS = {
     for (let i = 0; i < 4; i++) add(rc.line(x + 25, y + 75 + i * 40, x + 145, y + 75 + i * 40, { stroke: P.peach, strokeWidth: 8 }));
     add(rc.circle(x + 160, y + 170, 130, { fill: P.sky, fillStyle: "hachure", hachureGap: 12, stroke: P.ink, strokeWidth: 5 }));
     add(rc.line(x + 205, y + 215, x + 260, y + 275, { stroke: P.ink, strokeWidth: 14 }));
+  },
+  // 치아·정기·상해보험 게시판용
+  tooth(x, y) {
+    add(rc.path(`M${x + 70} ${y + 70} Q${x + 70} ${y + 10} ${x + 120} ${y + 20} Q${x + 150} ${y + 30} ${x + 180} ${y + 20} Q${x + 230} ${y + 10} ${x + 230} ${y + 70} Q${x + 232} ${y + 140} ${x + 205} ${y + 200} Q${x + 195} ${y + 280} ${x + 178} ${y + 280} Q${x + 162} ${y + 280} ${x + 158} ${y + 210} Q${x + 150} ${y + 185} ${x + 142} ${y + 210} Q${x + 138} ${y + 280} ${x + 122} ${y + 280} Q${x + 105} ${y + 280} ${x + 95} ${y + 200} Q${x + 68} ${y + 140} ${x + 70} ${y + 70} Z`, { fill: "#fff", fillStyle: "solid", stroke: P.ink, strokeWidth: 5 }));
+    add(rc.path(`M${x + 100} ${y + 60} Q${x + 110} ${y + 40} ${x + 130} ${y + 45}`, { stroke: "#9FD3F5", strokeWidth: 6, roughness: 0.5 }));
+    add(rc.circle(x + 125, y + 110, 12, { fill: P.ink, fillStyle: "solid", stroke: P.ink })); add(rc.circle(x + 175, y + 110, 12, { fill: P.ink, fillStyle: "solid", stroke: P.ink }));
+    add(rc.path(`M${x + 135} ${y + 135} Q${x + 150} ${y + 150} ${x + 165} ${y + 135}`, { stroke: P.ink, strokeWidth: 4, roughness: 0.5 }));
+    add(rc.circle(x + 105, y + 135, 18, { fill: "#F7A8B8", fillStyle: "solid", stroke: "none" })); add(rc.circle(x + 195, y + 135, 18, { fill: "#F7A8B8", fillStyle: "solid", stroke: "none" }));
+  },
+  car(x, y) {
+    add(rc.path(`M${x + 70} ${y + 130} L${x + 100} ${y + 70} L${x + 210} ${y + 70} L${x + 240} ${y + 130} Z`, { fill: "#C5E3F7", fillStyle: "solid", stroke: P.ink, strokeWidth: 4 }));
+    add(rc.line(x + 155, y + 70, x + 155, y + 130, { stroke: P.ink, strokeWidth: 4 }));
+    add(rc.rectangle(x + 30, y + 130, 250, 80, { fill: "#B9A6F0", fillStyle: "hachure", hachureGap: 9, stroke: P.ink, strokeWidth: 4 }));
+    add(rc.circle(x + 90, y + 215, 64, { fill: "#fff", fillStyle: "solid", stroke: P.ink, strokeWidth: 5 })); add(rc.circle(x + 220, y + 215, 64, { fill: "#fff", fillStyle: "solid", stroke: P.ink, strokeWidth: 5 }));
+    add(rc.circle(x + 50, y + 160, 22, { fill: "#FFD66B", fillStyle: "solid", stroke: P.ink, strokeWidth: 2 }));
+  },
+  umbrella(x, y) {
+    add(rc.path(`M${x + 20} ${y + 150} Q${x + 150} ${y - 10} ${x + 280} ${y + 150} Q${x + 237} ${y + 125} ${x + 193} ${y + 150} Q${x + 150} ${y + 125} ${x + 107} ${y + 150} Q${x + 63} ${y + 125} ${x + 20} ${y + 150} Z`, { fill: "#B9A6F0", fillStyle: "hachure", hachureGap: 8, stroke: P.ink, strokeWidth: 4 }));
+    add(rc.line(x + 150, y + 40, x + 150, y + 255, { stroke: P.ink, strokeWidth: 6 }));
+    add(rc.path(`M${x + 150} ${y + 255} Q${x + 150} ${y + 285} ${x + 125} ${y + 280}`, { stroke: P.ink, strokeWidth: 6 }));
+    [[60, 200], [235, 210], [95, 240]].forEach(([dx, dy]) => add(rc.path(`M${x + dx} ${y + dy - 18} Q${x + dx + 10} ${y + dy} ${x + dx} ${y + dy + 4} Q${x + dx - 10} ${y + dy} ${x + dx} ${y + dy - 18} Z`, { fill: "#9FD3F5", fillStyle: "solid", stroke: "#3A8FD6", strokeWidth: 2 })));
   },
   // 어린이·엄마보험 게시판용
   bottle(x, y) {
