@@ -26,6 +26,7 @@ const add = (n) => (svg.appendChild(n), n);
 // 게시판별 색 테마 — 게시판마다 한눈에 구분되게(기본: 우체국 주황). 이름이 없는 게시판은 기본 테마
 const THEMES = {
   default: { bg: "#FFFBF4", frame: P.peach, stripe: [P.red, P.orange], chipFill: P.cream, chipLine: P.orange, chipText: "#A34506", t2: "#D9480F", under: P.yellow, brand: "#A34506", tape: P.yellow, rule: P.peach, dots: [P.orange, P.mint, P.pink, P.sky, P.yellow], spark: [P.yellow, P.orange, P.pink] },
+  "실손의료비보험": { bg: "#F0F7FD", frame: "#A9D3F2", stripe: ["#2C7BC0", "#9FD3F5"], chipFill: "#E2F0FB", chipLine: "#3A8FD6", chipText: "#1F5F99", t2: "#2273BD", under: "#FFD66B", brand: "#1F5F99", tape: "#C5E3F7", rule: "#D3E8F7", dots: ["#3A8FD6", "#FFD66B", "#7FD1B9", "#F7A8B8", "#9FD3F5"], spark: ["#FFD66B", "#3A8FD6", "#F7A8B8"] },
   "연금·저축보험": { bg: "#F0FAF4", frame: "#A8DCC4", stripe: ["#1E8C68", "#7FD1B9"], chipFill: "#E3F6EC", chipLine: "#2FA37F", chipText: "#17694F", t2: "#1E8C68", under: "#FFD66B", brand: "#17694F", tape: "#BDE8D3", rule: "#CDEBDD", dots: ["#2FA37F", "#FFD66B", "#9FD3F5", "#7FD1B9", "#F7A8B8"], spark: ["#FFD66B", "#2FA37F", "#9FD3F5"] },
 };
 let TH = THEMES.default;
@@ -119,6 +120,28 @@ const ICONS = {
     add(rc.rectangle(x + 90, y + 130, 120, 50, { fill: P.peach, fillStyle: "solid", stroke: P.ink, strokeWidth: 2 }));
     add(rc.rectangle(x + 62, y + 200, 120, 50, { fill: P.mint, fillStyle: "solid", stroke: P.ink, strokeWidth: 2 }));
     add(rc.circle(x + 135, y + 278, 20, { stroke: P.ink, strokeWidth: 3 }));
+  },
+  pill(x, y) {
+    add(rc.rectangle(x + 20, y + 20, 200, 270, { fill: "#fff", fillStyle: "solid", stroke: P.ink, strokeWidth: 4, roughness: 1.3 }));
+    add(rc.rectangle(x + 20, y + 20, 200, 60, { fill: "#9FD3F5", fillStyle: "hachure", hachureGap: 8, stroke: P.ink, strokeWidth: 3 }));
+    add(rc.line(x + 120, y + 120, x + 120, y + 200, { stroke: P.red, strokeWidth: 12 })); add(rc.line(x + 80, y + 160, x + 160, y + 160, { stroke: P.red, strokeWidth: 12 }));
+    add(rc.path(`M${x + 230} ${y + 190} l70 -70 a35 35 0 0 1 50 50 l-70 70 a35 35 0 0 1 -50 -50 Z`, { fill: "#F7A8B8", fillStyle: "solid", stroke: P.ink, strokeWidth: 3 }));
+    add(rc.line(x + 265, y + 155, x + 315, y + 205, { stroke: P.ink, strokeWidth: 3 }));
+    add(rc.circle(x + 260, y + 280, 50, { fill: P.yellow, fillStyle: "solid", stroke: P.ink, strokeWidth: 3 }));
+  },
+  bandage(x, y) {
+    const g = (n) => { n.setAttribute("transform", `rotate(-30 ${x + 160} ${y + 150})`); return add(n); };
+    g(rc.rectangle(x + 10, y + 100, 300, 100, { fill: "#F5D0A9", fillStyle: "solid", stroke: P.ink, strokeWidth: 4, roughness: 1.2 }));
+    g(rc.rectangle(x + 110, y + 100, 100, 100, { fill: "#fff", fillStyle: "solid", stroke: P.ink, strokeWidth: 3 }));
+    for (const [dx, dy] of [[130, 125], [165, 125], [130, 165], [165, 165], [148, 145]]) g(rc.circle(x + dx + 8, y + dy + 6, 8, { fill: "#C9A27E", fillStyle: "solid", stroke: "none" }));
+    add(rc.path(`M${x + 230} ${y + 20} c-8 -14 -30 -4 -18 12 l18 18 l18 -18 c12 -16 -10 -26 -18 -12z`, { fill: "#F48FA6", fillStyle: "solid", stroke: "none" }));
+  },
+  receipt(x, y) {
+    add(rc.path(`M${x + 40} ${y} L${x + 260} ${y} L${x + 260} ${y + 290} l-22 -14 l-22 14 l-22 -14 l-22 14 l-22 -14 l-22 14 l-22 -14 l-22 14 l-22 -14 l-22 14 Z`, { fill: "#fff", fillStyle: "solid", stroke: P.ink, strokeWidth: 4 }));
+    for (let i = 0; i < 5; i++) add(rc.line(x + 70, y + 50 + i * 38, x + (i % 2 ? 190 : 230), y + 50 + i * 38, { stroke: "#9FD3F5", strokeWidth: 7 }));
+    add(rc.line(x + 70, y + 250, x + 230, y + 250, { stroke: P.red, strokeWidth: 6 }));
+    add(rc.circle(x + 290, y + 60, 70, { fill: P.yellow, fillStyle: "solid", stroke: P.ink, strokeWidth: 3 }));
+    const w = text("li", "₩", x + 290, y + 30, "middle"); w.style.fontSize = "44px"; w.style.color = P.red;
   },
   piggy(x, y) {
     add(rc.ellipse(x + 150, y + 170, 280, 200, { fill: "#F7A8B8", fillStyle: "hachure", hachureGap: 9, stroke: P.ink, strokeWidth: 4 }));
