@@ -27,6 +27,7 @@ const add = (n) => (svg.appendChild(n), n);
 const THEMES = {
   default: { bg: "#FFFBF4", frame: P.peach, stripe: [P.red, P.orange], chipFill: P.cream, chipLine: P.orange, chipText: "#A34506", t2: "#D9480F", under: P.yellow, brand: "#A34506", tape: P.yellow, rule: P.peach, dots: [P.orange, P.mint, P.pink, P.sky, P.yellow], spark: [P.yellow, P.orange, P.pink] },
   "실손의료비보험": { bg: "#F0F7FD", frame: "#A9D3F2", stripe: ["#2C7BC0", "#9FD3F5"], chipFill: "#E2F0FB", chipLine: "#3A8FD6", chipText: "#1F5F99", t2: "#2273BD", under: "#FFD66B", brand: "#1F5F99", tape: "#C5E3F7", rule: "#D3E8F7", dots: ["#3A8FD6", "#FFD66B", "#7FD1B9", "#F7A8B8", "#9FD3F5"], spark: ["#FFD66B", "#3A8FD6", "#F7A8B8"] },
+  "어린이·엄마보험": { bg: "#FFF4F7", frame: "#F5C2D3", stripe: ["#D9577F", "#F7B6CB"], chipFill: "#FDE6EE", chipLine: "#E0709A", chipText: "#A63A62", t2: "#CC4A74", under: "#FFD66B", brand: "#A63A62", tape: "#F9D3E0", rule: "#F6DCE5", dots: ["#E0709A", "#FFD66B", "#9FD3F5", "#B9A6F0", "#7FD1B9"], spark: ["#FFD66B", "#E0709A", "#B9A6F0"] },
   "연금·저축보험": { bg: "#F0FAF4", frame: "#A8DCC4", stripe: ["#1E8C68", "#7FD1B9"], chipFill: "#E3F6EC", chipLine: "#2FA37F", chipText: "#17694F", t2: "#1E8C68", under: "#FFD66B", brand: "#17694F", tape: "#BDE8D3", rule: "#CDEBDD", dots: ["#2FA37F", "#FFD66B", "#9FD3F5", "#7FD1B9", "#F7A8B8"], spark: ["#FFD66B", "#2FA37F", "#9FD3F5"] },
 };
 let TH = THEMES.default;
@@ -188,6 +189,40 @@ const ICONS = {
     for (let i = 0; i < 4; i++) add(rc.line(x + 25, y + 75 + i * 40, x + 145, y + 75 + i * 40, { stroke: P.peach, strokeWidth: 8 }));
     add(rc.circle(x + 160, y + 170, 130, { fill: P.sky, fillStyle: "hachure", hachureGap: 12, stroke: P.ink, strokeWidth: 5 }));
     add(rc.line(x + 205, y + 215, x + 260, y + 275, { stroke: P.ink, strokeWidth: 14 }));
+  },
+  // 어린이·엄마보험 게시판용
+  bottle(x, y) {
+    add(rc.path(`M${x + 130} ${y + 10} Q${x + 150} ${y - 5} ${x + 170} ${y + 10} L${x + 180} ${y + 50} L${x + 120} ${y + 50} Z`, { fill: "#FFD66B", fillStyle: "solid", stroke: P.ink, strokeWidth: 3 }));
+    add(rc.rectangle(x + 100, y + 50, 100, 34, { fill: "#E0709A", fillStyle: "solid", stroke: P.ink, strokeWidth: 3 }));
+    add(rc.rectangle(x + 95, y + 84, 110, 200, { fill: "#fff", fillStyle: "solid", stroke: P.ink, strokeWidth: 4 }));
+    add(rc.rectangle(x + 100, y + 180, 100, 100, { fill: "#FDE6EE", fillStyle: "solid", stroke: "none" }));
+    for (let i = 0; i < 3; i++) add(rc.line(x + 95, y + 120 + i * 45, x + 130, y + 120 + i * 45, { stroke: "#E0709A", strokeWidth: 4 }));
+  },
+  stroller(x, y) {
+    add(rc.path(`M${x + 40} ${y + 140} A110 110 0 0 1 ${x + 150} ${y + 30} L${x + 150} ${y + 140} Z`, { fill: "#B9A6F0", fillStyle: "hachure", hachureGap: 9, stroke: P.ink, strokeWidth: 4 }));
+    add(rc.rectangle(x + 40, y + 140, 220, 70, { fill: "#F7B6CB", fillStyle: "solid", stroke: P.ink, strokeWidth: 4 }));
+    add(rc.line(x + 260, y + 140, x + 300, y + 70, { stroke: P.ink, strokeWidth: 6 }));
+    add(rc.circle(x + 85, y + 255, 70, { fill: "#fff", fillStyle: "solid", stroke: P.ink, strokeWidth: 5 }));
+    add(rc.circle(x + 220, y + 255, 70, { fill: "#fff", fillStyle: "solid", stroke: P.ink, strokeWidth: 5 }));
+  },
+  bag(x, y) {
+    add(rc.path(`M${x + 105} ${y + 60} Q${x + 150} ${y} ${x + 195} ${y + 60}`, { stroke: P.ink, strokeWidth: 7 }));
+    add(rc.rectangle(x + 60, y + 60, 180, 220, { fill: "#9FD3F5", fillStyle: "solid", stroke: P.ink, strokeWidth: 4 }));
+    add(rc.path(`M${x + 60} ${y + 60} Q${x + 150} ${y + 150} ${x + 240} ${y + 60}`, { fill: "#3A8FD6", fillStyle: "hachure", hachureGap: 8, stroke: P.ink, strokeWidth: 3 }));
+    add(rc.rectangle(x + 95, y + 170, 110, 80, { fill: "#FFD66B", fillStyle: "solid", stroke: P.ink, strokeWidth: 3 }));
+    add(rc.circle(x + 150, y + 120, 22, { fill: "#E0709A", fillStyle: "solid", stroke: P.ink, strokeWidth: 2 }));
+  },
+  star(x, y) {
+    const pts = []; for (let i = 0; i < 10; i++) { const r = i % 2 ? 60 : 140, a = -Math.PI / 2 + i * Math.PI / 5; pts.push([x + 150 + r * Math.cos(a), y + 150 + r * Math.sin(a)]); }
+    add(rc.polygon(pts, { fill: "#FFD66B", fillStyle: "hachure", hachureGap: 8, stroke: "#E0A800", strokeWidth: 4 }));
+    add(rc.circle(x + 120, y + 145, 14, { fill: P.ink, fillStyle: "solid", stroke: P.ink })); add(rc.circle(x + 180, y + 145, 14, { fill: P.ink, fillStyle: "solid", stroke: P.ink }));
+    add(rc.path(`M${x + 130} ${y + 175} Q${x + 150} ${y + 192} ${x + 170} ${y + 175}`, { stroke: P.ink, strokeWidth: 4, roughness: 0.6 }));
+  },
+  balloon(x, y) {
+    [[95, 110, "#F7A8B8"], [205, 90, "#B9A6F0"], [150, 40, "#FFD66B"]].forEach(([dx, dy, c]) => {
+      add(rc.path(`M${x + dx} ${y + dy + 75} Q${x + 150} ${y + 230} ${x + 150} ${y + 290}`, { stroke: P.ink, strokeWidth: 2 }));
+      add(rc.ellipse(x + dx, y + dy, 110, 140, { fill: c, fillStyle: "solid", stroke: P.ink, strokeWidth: 3 }));
+    });
   },
 };
 
