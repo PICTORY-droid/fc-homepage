@@ -80,7 +80,8 @@ const plain = posts.map(({ meta, body }, i) => {
   const photo = (file, cap, alt) => `[사진: ${file}]\n[↑ 사진의 대체텍스트 칸에만 넣기 — 본문에 쓰지 않음] ${alt}\n${cap}`;
   if (hand) { const k = text.indexOf("\n【"); const mark = `\n${photo(`hand/${meta.slug}-2.png`, meta.cardTitle, alt2)}\n`; text = k > 0 ? text.slice(0, k) + mark + text.slice(k) : text + mark; }
   text = `${photo(img1, (meta.thumb ?? []).join(" "), hand ? alt1 : (meta.thumb ?? []).join(" "))}\n${text}`;
-  return [`[${i + 1}] 게시판: ${meta.menu}${meta.status === "초안" && meta.kind === "상품" ? "   ※ 광고 심의 후 게시" : ""}`, `제목: ${meta.title}`, `태그: ${tags}`, "----- 본문 -----", text, "", foot].join("\n");
+  // 태그는 글 맨 끝(작성일 줄 바로 아래, 글 구분선 바로 위) — 본문을 다 붙여 넣은 뒤 태그 칸에 옮기기 편하게
+  return [`[${i + 1}] 게시판: ${meta.menu}${meta.status === "초안" && meta.kind === "상품" ? "   ※ 광고 심의 후 게시" : ""}`, `제목: ${meta.title}`, "----- 본문 -----", text, "", foot, `태그: ${tags}`].join("\n");
 }).join(sep);
 writeFileSync(join(OUT, "붙여넣기용_전체원고.txt"), plain);
 // 게시판별 묶음도 따로 — 한 게시판씩 올릴 때 편하게
