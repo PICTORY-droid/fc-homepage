@@ -87,6 +87,8 @@ writeFileSync(join(OUT, "붙여넣기용_전체원고.txt"), plain);
 const byMenu = new Map();
 plain.split(sep).forEach((chunk, i) => { const m = posts[i].meta.menu; byMenu.set(m, [...(byMenu.get(m) ?? []), chunk]); });
 // 게시판 묶음의 [번호]는 그 게시판 안의 순서(1부터) — 전체 원고 번호가 아니라 연재 편 번호와 맞게
-for (const [m, chunks] of byMenu) writeFileSync(join(OUT, `게시판_${m.replace(/[\\/:*?"<>|]/g, "")}.txt`), chunks.map((c, k) => c.replace(/^\[\d+\]/, `[${k + 1}]`)).join(sep));
+// 연재 글(제목 끝 "… 노트 N편)")은 편 순서대로 먼저, 그 밖의 글은 뒤에 — 그래서 [번호] = 연재 편 번호
+const epi = (c) => Number((c.match(/^제목: .*노트 (\d+)편\)$/m) ?? [])[1] ?? Infinity);
+for (const [m, chunks] of byMenu) writeFileSync(join(OUT, `게시판_${m.replace(/[\\/:*?"<>|]/g, "")}.txt`), [...chunks].sort((a, b) => epi(a) - epi(b)).map((c, k) => c.replace(/^\[\d+\]/, `[${k + 1}]`)).join(sep));
 writeFileSync(join(OUT, "index.html"), page("카페 원고 목록", `<h1>카페 원고 목록</h1><p class="meta">제목은 카페 글쓰기의 제목 칸에, 태그는 태그 칸에 그대로 넣으세요.</p><ol>${list.join("")}</ol>`));
 console.log(`✔ 붙여넣기용 원고 ${posts.length}편 → cafe/out/index.html`);

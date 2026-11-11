@@ -23,6 +23,19 @@ const svg = document.getElementById("c");
 const rc = rough.svg(svg);
 const P = { ink: "#4A3F3A", orange: "#FF883A", red: "#D9480F", peach: "#FFDAC1", cream: "#FFF4EC", pink: "#F7A8B8", mint: "#7FD1B9", sky: "#9FD3F5", yellow: "#FFD66B" };
 const add = (n) => (svg.appendChild(n), n);
+// 게시판별 색 테마 — 게시판마다 한눈에 구분되게(기본: 우체국 주황). 이름이 없는 게시판은 기본 테마
+const THEMES = {
+  default: { bg: "#FFFBF4", frame: P.peach, stripe: [P.red, P.orange], chipFill: P.cream, chipLine: P.orange, chipText: "#A34506", t2: "#D9480F", under: P.yellow, brand: "#A34506", tape: P.yellow, rule: P.peach, dots: [P.orange, P.mint, P.pink, P.sky, P.yellow], spark: [P.yellow, P.orange, P.pink] },
+  "연금·저축보험": { bg: "#F0FAF4", frame: "#A8DCC4", stripe: ["#1E8C68", "#7FD1B9"], chipFill: "#E3F6EC", chipLine: "#2FA37F", chipText: "#17694F", t2: "#1E8C68", under: "#FFD66B", brand: "#17694F", tape: "#BDE8D3", rule: "#CDEBDD", dots: ["#2FA37F", "#FFD66B", "#9FD3F5", "#7FD1B9", "#F7A8B8"], spark: ["#FFD66B", "#2FA37F", "#9FD3F5"] },
+};
+let TH = THEMES.default;
+const applyTheme = (menu) => {
+  TH = THEMES[menu] ?? THEMES.default;
+  document.body.style.background = TH.bg;
+  const css = document.createElement("style");
+  css.textContent = `.chip{color:${TH.chipText}}.t2{color:${TH.t2}}.brand{color:${TH.brand}}`;
+  document.head.appendChild(css);
+};
 const text = (cls, s, x, y, anchor = "start") => {
   const d = document.createElement("div"); d.className = "txt " + cls; d.textContent = s; document.body.appendChild(d);
   const w = d.getBoundingClientRect().width;
@@ -107,6 +120,36 @@ const ICONS = {
     add(rc.rectangle(x + 62, y + 200, 120, 50, { fill: P.mint, fillStyle: "solid", stroke: P.ink, strokeWidth: 2 }));
     add(rc.circle(x + 135, y + 278, 20, { stroke: P.ink, strokeWidth: 3 }));
   },
+  piggy(x, y) {
+    add(rc.ellipse(x + 150, y + 170, 280, 200, { fill: "#F7A8B8", fillStyle: "hachure", hachureGap: 9, stroke: P.ink, strokeWidth: 4 }));
+    add(rc.ellipse(x + 285, y + 170, 46, 60, { fill: "#F48FA6", fillStyle: "solid", stroke: P.ink, strokeWidth: 3 }));
+    add(rc.circle(x + 279, y + 160, 7, { fill: P.ink, fillStyle: "solid", stroke: P.ink })); add(rc.circle(x + 292, y + 180, 7, { fill: P.ink, fillStyle: "solid", stroke: P.ink }));
+    add(rc.path(`M${x + 200} ${y + 80} l20 -40 l14 46`, { fill: "#F48FA6", fillStyle: "solid", stroke: P.ink, strokeWidth: 3 }));
+    add(rc.circle(x + 225, y + 135, 12, { fill: P.ink, fillStyle: "solid", stroke: P.ink }));
+    add(rc.line(x + 110, y + 76, x + 170, y + 76, { stroke: P.ink, strokeWidth: 7 }));
+    [70, 210].forEach((dx) => add(rc.rectangle(x + dx, y + 250, 34, 44, { fill: "#F48FA6", fillStyle: "solid", stroke: P.ink, strokeWidth: 3 })));
+    add(rc.circle(x + 140, y + 10, 64, { fill: P.yellow, fillStyle: "solid", stroke: P.ink, strokeWidth: 3 }));
+  },
+  hourglass(x, y) {
+    add(rc.line(x + 40, y + 10, x + 260, y + 10, { stroke: P.ink, strokeWidth: 10 })); add(rc.line(x + 40, y + 290, x + 260, y + 290, { stroke: P.ink, strokeWidth: 10 }));
+    add(rc.path(`M${x + 70} ${y + 20} L${x + 230} ${y + 20} L${x + 160} ${y + 150} L${x + 230} ${y + 280} L${x + 70} ${y + 280} L${x + 140} ${y + 150} Z`, { fill: "#fff", fillStyle: "solid", stroke: P.ink, strokeWidth: 4 }));
+    add(rc.path(`M${x + 100} ${y + 60} L${x + 200} ${y + 60} L${x + 150} ${y + 140} Z`, { fill: P.yellow, fillStyle: "solid", stroke: "none" }));
+    add(rc.path(`M${x + 95} ${y + 270} L${x + 205} ${y + 270} L${x + 150} ${y + 210} Z`, { fill: P.yellow, fillStyle: "solid", stroke: "none" }));
+    add(rc.line(x + 150, y + 150, x + 150, y + 210, { stroke: "#E0A800", strokeWidth: 4 }));
+  },
+  sprout(x, y) {
+    add(rc.path(`M${x + 60} ${y + 170} L${x + 240} ${y + 170} L${x + 210} ${y + 290} L${x + 90} ${y + 290} Z`, { fill: "#E8A27A", fillStyle: "hachure", hachureGap: 9, stroke: P.ink, strokeWidth: 4 }));
+    add(rc.line(x + 150, y + 170, x + 150, y + 70, { stroke: "#2FA37F", strokeWidth: 7 }));
+    add(rc.ellipse(x + 100, y + 70, 110, 56, { fill: "#7FD1B9", fillStyle: "solid", stroke: "#1E8C68", strokeWidth: 3 }));
+    add(rc.ellipse(x + 205, y + 40, 120, 60, { fill: "#7FD1B9", fillStyle: "solid", stroke: "#1E8C68", strokeWidth: 3 }));
+    [[60, 20], [250, 110]].forEach(([dx, dy]) => add(rc.circle(x + dx, y + dy, 34, { fill: P.yellow, fillStyle: "solid", stroke: P.ink, strokeWidth: 2 })));
+  },
+  jar(x, y) {
+    add(rc.rectangle(x + 70, y, 160, 36, { fill: "#2FA37F", fillStyle: "solid", stroke: P.ink, strokeWidth: 3 }));
+    add(rc.path(`M${x + 60} ${y + 40} L${x + 240} ${y + 40} C${x + 270} ${y + 70} ${x + 270} ${y + 270} ${x + 230} ${y + 290} L${x + 70} ${y + 290} C${x + 30} ${y + 270} ${x + 30} ${y + 70} ${x + 60} ${y + 40} Z`, { fill: "#fff", fillStyle: "solid", stroke: P.ink, strokeWidth: 4 }));
+    for (let i = 0; i < 4; i++) add(rc.ellipse(x + 150 + (i % 2 ? 20 : -20), y + 262 - i * 34, 150, 40, { fill: P.yellow, fillStyle: "solid", stroke: "#C99700", strokeWidth: 3 }));
+    add(rc.line(x + 80, y + 70, x + 80, y + 150, { stroke: "#CDEBDD", strokeWidth: 8 }));
+  },
   heart(x, y) {
     add(rc.path(`M${x + 115} ${y + 270} C${x - 40} ${y + 160} ${x + 20} ${y + 20} ${x + 115} ${y + 90} C${x + 210} ${y + 20} ${x + 270} ${y + 160} ${x + 115} ${y + 270} Z`, { fill: "#F59A9A", fillStyle: "hachure", hachureGap: 9, stroke: "#E05555", strokeWidth: 4 }));
     add(rc.path(`M${x + 20} ${y + 160} L${x + 75} ${y + 160} L${x + 95} ${y + 120} L${x + 125} ${y + 200} L${x + 145} ${y + 160} L${x + 215} ${y + 160}`, { stroke: "#fff", strokeWidth: 7, roughness: 0.6 }));
@@ -126,41 +169,41 @@ const ICONS = {
 };
 
 function frame() {
-  add(rc.rectangle(28, 28, 1024, 1024, { stroke: P.peach, strokeWidth: 6, roughness: 2 }));
-  for (let i = 0; i < 12; i++) { const x = 60 + i * 84; add(rc.line(x, 1040, x + 40, 1000, { stroke: i % 2 ? P.orange : P.red, strokeWidth: 10, roughness: 0.8 })); }
+  add(rc.rectangle(28, 28, 1024, 1024, { stroke: TH.frame, strokeWidth: 6, roughness: 2 }));
+  for (let i = 0; i < 12; i++) { const x = 60 + i * 84; add(rc.line(x, 1040, x + 40, 1000, { stroke: TH.stripe[i % 2], strokeWidth: 10, roughness: 0.8 })); }
 }
 
 function thumb(d) {
   frame();
   const chip = text("chip", d.menu, 92, 92);
   const w = chip.getBoundingClientRect().width;
-  add(rc.rectangle(70, 80, w + 44, 72, { fill: P.cream, fillStyle: "solid", stroke: P.orange, strokeWidth: 3 }));
+  add(rc.rectangle(70, 80, w + 44, 72, { fill: TH.chipFill, fillStyle: "solid", stroke: TH.chipLine, strokeWidth: 3 }));
   svg.appendChild(svg.firstChild); // 틀을 뒤로
   const a = text("t1", d.thumb[0], 92, 210), b = text("t2", d.thumb[1], 92, 330);
   fitAll([a, b], 900);
   const bw = b.getBoundingClientRect().width;
-  add(rc.path(`M92 462 Q${92 + bw / 2} 448 ${92 + bw} 466`, { stroke: P.yellow, strokeWidth: 14, roughness: 1.5 }));
+  add(rc.path(`M92 462 Q${92 + bw / 2} 448 ${92 + bw} 466`, { stroke: TH.under, strokeWidth: 14, roughness: 1.5 }));
   const s = text("sub", d.sub, 96, 500); fitAll([s], 880);
   ICONS[d.icon](600, 640);
   character(120, 720, 1.6);
-  sparkle(520, 680, 20, P.yellow); sparkle(1010, 560, 16, P.orange); sparkle(90, 640, 14, P.pink);
+  sparkle(520, 680, 20, TH.spark[0]); sparkle(1010, 560, 16, TH.spark[1]); sparkle(90, 640, 14, TH.spark[2]);
   text("brand", "우체국보험 길잡이 카페", 990, 950, "end");
 }
 
 function card(d) {
   frame();
   add(rc.rectangle(90, 110, 900, 820, { fill: "#fff", fillStyle: "solid", stroke: P.ink, strokeWidth: 3, roughness: 1.2 }));
-  for (let i = 0; i < 6; i++) add(rc.line(130, 330 + i * 110, 950, 330 + i * 110, { stroke: P.peach, strokeWidth: 2, roughness: 0.5 }));
-  add(rc.rectangle(420, 86, 240, 50, { fill: P.yellow, fillStyle: "solid", stroke: "none" })); // 마스킹테이프
+  for (let i = 0; i < 6; i++) add(rc.line(130, 330 + i * 110, 950, 330 + i * 110, { stroke: TH.rule, strokeWidth: 2, roughness: 0.5 }));
+  add(rc.rectangle(420, 86, 240, 50, { fill: TH.tape, fillStyle: "solid", stroke: "none" })); // 마스킹테이프
   const t = text("ct", d.cardTitle, 540, 170, "middle"); fitAll([t], 820);
   d.card.slice(0, 5).forEach((line, i) => {
     const y = 262 + i * 110;
-    add(rc.circle(160, y + 32, 34, { fill: [P.orange, P.mint, P.pink, P.sky, P.yellow][i], fillStyle: "solid", stroke: P.ink, strokeWidth: 2 }));
+    add(rc.circle(160, y + 32, 34, { fill: TH.dots[i], fillStyle: "solid", stroke: P.ink, strokeWidth: 2 }));
     const l = text("li", line, 200, y); fitAll([l], 760);
   });
   character(800, 820, 1.05);
-  sparkle(150, 880, 16, P.orange);
+  sparkle(150, 880, 16, TH.spark[1]);
 }
 
-window.render = (d) => (d.kind === "card" ? card(d) : thumb(d), true);
+window.render = (d) => (applyTheme(d.menu), d.kind === "card" ? card(d) : thumb(d), true);
 </script></body></html>
