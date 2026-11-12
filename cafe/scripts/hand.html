@@ -35,6 +35,7 @@ const THEMES = {
   "연금·저축보험": { bg: "#F0FAF4", frame: "#A8DCC4", stripe: ["#1E8C68", "#7FD1B9"], chipFill: "#E3F6EC", chipLine: "#2FA37F", chipText: "#17694F", t2: "#1E8C68", under: "#FFD66B", brand: "#17694F", tape: "#BDE8D3", rule: "#CDEBDD", dots: ["#2FA37F", "#FFD66B", "#9FD3F5", "#7FD1B9", "#F7A8B8"], spark: ["#FFD66B", "#2FA37F", "#9FD3F5"] },
 };
 let TH = THEMES.default;
+let NOFACE = false; // true 면 이·별 그림의 얼굴을 그리지 않음(무료 양식 이미지: 캐릭터 없이 손그림 질감만)
 const applyTheme = (menu) => {
   TH = THEMES[menu] ?? THEMES.default;
   document.body.style.background = TH.bg;
@@ -198,9 +199,11 @@ const ICONS = {
   tooth(x, y) {
     add(rc.path(`M${x + 70} ${y + 70} Q${x + 70} ${y + 10} ${x + 120} ${y + 20} Q${x + 150} ${y + 30} ${x + 180} ${y + 20} Q${x + 230} ${y + 10} ${x + 230} ${y + 70} Q${x + 232} ${y + 140} ${x + 205} ${y + 200} Q${x + 195} ${y + 280} ${x + 178} ${y + 280} Q${x + 162} ${y + 280} ${x + 158} ${y + 210} Q${x + 150} ${y + 185} ${x + 142} ${y + 210} Q${x + 138} ${y + 280} ${x + 122} ${y + 280} Q${x + 105} ${y + 280} ${x + 95} ${y + 200} Q${x + 68} ${y + 140} ${x + 70} ${y + 70} Z`, { fill: "#fff", fillStyle: "solid", stroke: P.ink, strokeWidth: 5 }));
     add(rc.path(`M${x + 100} ${y + 60} Q${x + 110} ${y + 40} ${x + 130} ${y + 45}`, { stroke: "#9FD3F5", strokeWidth: 6, roughness: 0.5 }));
+    if (!NOFACE) {
     add(rc.circle(x + 125, y + 110, 12, { fill: P.ink, fillStyle: "solid", stroke: P.ink })); add(rc.circle(x + 175, y + 110, 12, { fill: P.ink, fillStyle: "solid", stroke: P.ink }));
     add(rc.path(`M${x + 135} ${y + 135} Q${x + 150} ${y + 150} ${x + 165} ${y + 135}`, { stroke: P.ink, strokeWidth: 4, roughness: 0.5 }));
     add(rc.circle(x + 105, y + 135, 18, { fill: "#F7A8B8", fillStyle: "solid", stroke: "none" })); add(rc.circle(x + 195, y + 135, 18, { fill: "#F7A8B8", fillStyle: "solid", stroke: "none" }));
+    }
   },
   car(x, y) {
     add(rc.path(`M${x + 70} ${y + 130} L${x + 100} ${y + 70} L${x + 210} ${y + 70} L${x + 240} ${y + 130} Z`, { fill: "#C5E3F7", fillStyle: "solid", stroke: P.ink, strokeWidth: 4 }));
@@ -388,8 +391,10 @@ const ICONS = {
   star(x, y) {
     const pts = []; for (let i = 0; i < 10; i++) { const r = i % 2 ? 60 : 140, a = -Math.PI / 2 + i * Math.PI / 5; pts.push([x + 150 + r * Math.cos(a), y + 150 + r * Math.sin(a)]); }
     add(rc.polygon(pts, { fill: "#FFD66B", fillStyle: "hachure", hachureGap: 8, stroke: "#E0A800", strokeWidth: 4 }));
+    if (!NOFACE) {
     add(rc.circle(x + 120, y + 145, 14, { fill: P.ink, fillStyle: "solid", stroke: P.ink })); add(rc.circle(x + 180, y + 145, 14, { fill: P.ink, fillStyle: "solid", stroke: P.ink }));
     add(rc.path(`M${x + 130} ${y + 175} Q${x + 150} ${y + 192} ${x + 170} ${y + 175}`, { stroke: P.ink, strokeWidth: 4, roughness: 0.6 }));
+    }
   },
   balloon(x, y) {
     [[95, 110, "#F7A8B8"], [205, 90, "#B9A6F0"], [150, 40, "#FFD66B"]].forEach(([dx, dy, c]) => {
@@ -436,5 +441,90 @@ function card(d) {
   sparkle(150, 880, 16, TH.spark[1]);
 }
 
-window.render = (d) => (applyTheme(d.menu), d.kind === "card" ? card(d) : thumb(d), true);
+// 무료 양식 소개 정사각형(1080) — 대표 문구 + 그 양식의 실제 칸·예시로 그린 손그림 미니 시트(편지지는 손그림 편지지) + 주제 그림
+// d: { n, thumb[2], title, sheet, icon, ac:{main,soft,deep,tint}, cols[], rows[][], letter?:{style,to,body[],from} }
+// 귀여움은 캐릭터·하트 대신 손그림 선·빗금 질감·파스텔 색감으로만 표현합니다.
+function formCard(d) {
+  NOFACE = true;
+  const A = d.ac;
+  document.body.style.background = A.tint;
+  const css = document.createElement("style");
+  css.textContent = `.chip{color:${A.deep}}.t2{color:${A.main}}.brand{color:${A.deep}}.cell{font-family:Gaegu;font-size:34px;color:#3A3A3A}.head{font-family:Jua;font-size:32px;color:${A.deep}}.tiny{font-family:Gaegu;font-size:30px;color:#8A7D75}`;
+  document.head.appendChild(css);
+  add(rc.rectangle(28, 28, 1024, 1024, { stroke: A.main, strokeWidth: 6, roughness: 2 }));
+  for (let i = 0; i < 12; i++) { const x = 60 + i * 84; add(rc.line(x, 1040, x + 40, 1000, { stroke: i % 2 ? A.soft : A.main, strokeWidth: 10, roughness: 0.8 })); }
+  const chip = text("chip", `무료 양식 노트 ${d.n}편`, 92, 92);
+  add(rc.rectangle(70, 80, chip.getBoundingClientRect().width + 44, 72, { fill: A.soft, fillStyle: "solid", stroke: A.main, strokeWidth: 3 }));
+  const tag = text("chip", d.letter ? "편지지" : "엑셀 양식", 990, 92, "end");
+  const tw = tag.getBoundingClientRect().width;
+  add(rc.rectangle(990 - tw - 22, 80, tw + 44, 72, { fill: "#fff", fillStyle: "solid", stroke: A.main, strokeWidth: 3, roughness: 1.6 }));
+  const a = text("t1", d.thumb[0], 92, 190), b = text("t2", d.thumb[1], 92, 305);
+  fitAll([a, b], 900);
+  const bw = b.getBoundingClientRect().width;
+  add(rc.path(`M92 432 Q${92 + bw / 2} 418 ${92 + bw} 436`, { stroke: P.yellow, strokeWidth: 14, roughness: 1.5 }));
+  const s = text("sub", d.title, 96, 462); fitAll([s], 880);
+  if (d.letter) letterPaper(d, A); else miniSheet(d, A);
+  ICONS[d.icon](730, 575);
+  sparkle(1010, 545, 16, P.yellow); sparkle(712, 560, 12, A.main);
+  text("brand", "우체국보험 FC가 드리는 무료 양식", 1000, 890, "end");
+  text("tiny", "※ 우체국 공식 배포 양식이 아니에요", 1000, 940, "end");
+}
+
+// 손그림 미니 시트: 열 머리(A·B·C) + 그 양식의 실제 칸 이름 + 예시 줄 + 시트 탭
+function miniSheet(d, A) {
+  const X = 70, Y = 560, W = 630, RH = 58, LH = 38, NW = 48;
+  const lens = d.cols.map((c, i) => Math.max(c.length, ...d.rows.map((r) => (r[i] ?? "").length), 2));
+  const tot = lens.reduce((p, q) => p + q, 0);
+  const ws = lens.map((l) => ((W - NW) * l) / tot);
+  const H = LH + RH * (1 + d.rows.length);
+  add(rc.rectangle(X, Y, W, H, { fill: "#fff", fillStyle: "solid", stroke: P.ink, strokeWidth: 3, roughness: 1.2 }));
+  add(rc.rectangle(X, Y, W, LH, { fill: "#F1ECE6", fillStyle: "solid", stroke: P.ink, strokeWidth: 2, roughness: 0.8 }));
+  add(rc.rectangle(X + NW, Y + LH, W - NW, RH, { fill: A.soft, fillStyle: "hachure", hachureGap: 7, stroke: P.ink, strokeWidth: 2, roughness: 0.9 }));
+  let cx = X + NW;
+  ws.forEach((w, i) => {
+    text("tiny", "ABCDEFG"[i], cx + w / 2, Y + 2, "middle");
+    const h = text("head", d.cols[i], cx + w / 2, Y + LH + 10, "middle"); fitAll([h], w - 12);
+    d.rows.forEach((r, k) => { const c = text("cell", r[i] ?? "", cx + w / 2, Y + LH + RH * (k + 1) + 8, "middle"); fitAll([c], w - 12); });
+    cx += w;
+    if (i < ws.length - 1) add(rc.line(cx, Y, cx, Y + H, { stroke: "#CFC6BD", strokeWidth: 2, roughness: 0.7 }));
+  });
+  add(rc.line(X + NW, Y, X + NW, Y + H, { stroke: "#CFC6BD", strokeWidth: 2, roughness: 0.7 }));
+  for (let k = 0; k <= d.rows.length; k++) {
+    const yy = Y + LH + RH * k;
+    if (k) add(rc.line(X, yy, X + W, yy, { stroke: "#CFC6BD", strokeWidth: 2, roughness: 0.7 }));
+    text("tiny", String(k + 1), X + NW / 2, yy + 12, "middle");
+  }
+  const tab = text("head", d.sheet, X + 40, Y + H + 14); // 시트 탭(실제 시트 이름)
+  const tw = tab.getBoundingClientRect().width;
+  add(rc.rectangle(X + 22, Y + H + 4, tw + 36, 56, { fill: "#fff", fillStyle: "solid", stroke: A.main, strokeWidth: 3, roughness: 1.3 }));
+  add(rc.line(X + 30, Y + H + 58, X + 50 + tw, Y + H + 58, { stroke: A.main, strokeWidth: 6, roughness: 0.8 }));
+}
+
+// 손그림 편지지: 양식의 줄 모양(가로줄·점선·넓은 줄·모눈·항공우편) + 예시 첫 줄·끝 줄 손글씨
+function letterPaper(d, A) {
+  const X = 80, Y = 540, W = 610, H = 330, L = d.letter;
+  add(rc.rectangle(X + 12, Y + 12, W, H, { fill: A.soft, fillStyle: "solid", stroke: "none" }));
+  add(rc.rectangle(X, Y, W, H, { fill: "#fff", fillStyle: "solid", stroke: P.ink, strokeWidth: 3, roughness: 1.3 }));
+  add(rc.rectangle(X + W / 2 - 70, Y - 18, 140, 40, { fill: P.yellow, fillStyle: "solid", stroke: "none" })); // 마스킹테이프
+  if (L.style === "airmail") for (let i = 0; i < 14; i++) { const x = X + 10 + i * 42; add(rc.line(x, Y + 16, x + 22, Y + 4, { stroke: i % 2 ? "#2F86C9" : P.red, strokeWidth: 8, roughness: 0.6 })); }
+  const gap = L.style === "wide" ? 70 : 50;
+  if (L.style === "grid") {
+    for (let x = X + 30; x < X + W - 20; x += 36) add(rc.line(x, Y + 30, x, Y + H - 24, { stroke: "#D7E6F4", strokeWidth: 2, roughness: 0.4 }));
+    for (let y = Y + 30; y < Y + H - 20; y += 36) add(rc.line(X + 30, y, X + W - 30, y, { stroke: "#D7E6F4", strokeWidth: 2, roughness: 0.4 }));
+  } else {
+    const dash = L.style === "dotted" || L.style === "airmail" ? [6, 10] : undefined;
+    for (let y = Y + 96; y < Y + H - 20; y += gap) add(rc.line(X + 30, y, X + W - 30, y, { stroke: "#F3C9AE", strokeWidth: 3, roughness: 0.6, strokeLineDash: dash }));
+  }
+  const li = (s, y, anchor = "start", x = X + 36) => {
+    const t = text("cell", s, x, y, anchor); let f = 36; t.style.fontSize = f + "px";
+    while (t.getBoundingClientRect().width > W - 72 && f > 22) { f -= 1; t.style.fontSize = f + "px"; }
+    if (anchor === "end") t.style.left = x - t.getBoundingClientRect().width + "px";
+    return t;
+  };
+  li(L.to, Y + 46);
+  L.body.slice(0, L.style === "wide" ? 2 : 3).forEach((s, i) => li(s, Y + 46 + gap * (i + 1)));
+  const f = li(L.from, Y + H - 62, "end", X + W - 36); f.style.color = A.deep;
+}
+
+window.render = (d) => (d.kind === "form" ? formCard(d) : (applyTheme(d.menu), d.kind === "card" ? card(d) : thumb(d)), true);
 </script></body></html>
