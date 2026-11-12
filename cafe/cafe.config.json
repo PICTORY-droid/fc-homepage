@@ -203,6 +203,21 @@
             "size": "1440x240",
             "alt": "가입한 보험, 1:1 보장 점검 받기"
           }
+        },
+        {
+          "name": "내 보험 관리하기",
+          "write": "매니저",
+          "read": "전체",
+          "area": "product",
+          "bottomBanner": {
+            "icon": "🗂️",
+            "text": "내 계약 그대로 괜찮을까요? 1:1 점검 받기",
+            "style": "tint",
+            "url": "https://korea-bohum.vercel.app/consult?utm_source=naver_cafe&utm_medium=cafe&utm_campaign=board_banner",
+            "file": "assets/boards/board-16.png",
+            "size": "1440x240",
+            "alt": "내 계약 그대로 괜찮을까요? 1:1 점검 받기"
+          }
         }
       ]
     },
@@ -441,7 +456,9 @@
     "allowed": [
       "1599-0100",
       "010-2192-1599",
-      "1577-1000"
+      "1577-1000",
+      "042-336-6898",
+      "042-714-2800"
     ],
     "fcPhone": "010-2192-1599"
   },

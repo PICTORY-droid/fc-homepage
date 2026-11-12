@@ -31,6 +31,7 @@ const THEMES = {
   "어린이·엄마보험": { bg: "#FFF4F7", frame: "#F5C2D3", stripe: ["#D9577F", "#F7B6CB"], chipFill: "#FDE6EE", chipLine: "#E0709A", chipText: "#A63A62", t2: "#CC4A74", under: "#FFD66B", brand: "#A63A62", tape: "#F9D3E0", rule: "#F6DCE5", dots: ["#E0709A", "#FFD66B", "#9FD3F5", "#B9A6F0", "#7FD1B9"], spark: ["#FFD66B", "#E0709A", "#B9A6F0"] },
   "청구 서류 정리": { bg: "#EEF9F8", frame: "#9FD8D3", stripe: ["#14877F", "#7FD1C9"], chipFill: "#DDF3F1", chipLine: "#1FA097", chipText: "#0F625C", t2: "#13807A", under: "#FFD66B", brand: "#0F625C", tape: "#BFE8E4", rule: "#CFECE9", dots: ["#1FA097", "#FFD66B", "#9FD3F5", "#F7A8B8", "#B9A6F0"], spark: ["#FFD66B", "#1FA097", "#F7A8B8"] },
   "앱·홈페이지 청구 방법": { bg: "#FFF9E3", frame: "#EFD27A", stripe: ["#B07D00", "#F2C94C"], chipFill: "#FCEFC4", chipLine: "#C99700", chipText: "#7A5600", t2: "#A27300", under: "#9FD3F5", brand: "#7A5600", tape: "#F6E3A3", rule: "#F3E6BC", dots: ["#C99700", "#9FD3F5", "#7FD1B9", "#F7A8B8", "#B9A6F0"], spark: ["#9FD3F5", "#C99700", "#F7A8B8"] },
+  "내 보험 관리하기": { bg: "#EFF2F8", frame: "#AFBBDD", stripe: ["#34477F", "#8C9BD1"], chipFill: "#E1E6F4", chipLine: "#4A5E9C", chipText: "#28396B", t2: "#34477F", under: "#FFD66B", brand: "#28396B", tape: "#CBD3EC", rule: "#D8DEEF", dots: ["#4A5E9C", "#FFD66B", "#7FD1B9", "#F7A8B8", "#9FD3F5"], spark: ["#FFD66B", "#4A5E9C", "#F7A8B8"] },
   "연금·저축보험": { bg: "#F0FAF4", frame: "#A8DCC4", stripe: ["#1E8C68", "#7FD1B9"], chipFill: "#E3F6EC", chipLine: "#2FA37F", chipText: "#17694F", t2: "#1E8C68", under: "#FFD66B", brand: "#17694F", tape: "#BDE8D3", rule: "#CDEBDD", dots: ["#2FA37F", "#FFD66B", "#9FD3F5", "#7FD1B9", "#F7A8B8"], spark: ["#FFD66B", "#2FA37F", "#9FD3F5"] },
 };
 let TH = THEMES.default;
@@ -332,6 +333,35 @@ const ICONS = {
     [45, 110, 175, 240].forEach((dx) => add(rc.rectangle(x + dx, y + 115, 34, 140, { fill: "#fff", fillStyle: "solid", stroke: P.ink, strokeWidth: 3 })));
     add(rc.rectangle(x + 10, y + 255, 300, 32, { fill: "#B9A6F0", fillStyle: "solid", stroke: P.ink, strokeWidth: 4 }));
     const w = text("li", "₩", x + 160, y + 30, "middle"); w.style.fontSize = "48px"; w.style.color = P.red;
+  },
+  // 종(알림)
+  bell(x, y) {
+    add(rc.path(`M${x + 160} ${y + 30} C${x + 80} ${y + 30} ${x + 70} ${y + 110} ${x + 70} ${y + 170} L${x + 40} ${y + 225} L${x + 280} ${y + 225} L${x + 250} ${y + 170} C${x + 250} ${y + 110} ${x + 240} ${y + 30} ${x + 160} ${y + 30} Z`, { fill: P.yellow, fillStyle: "hachure", hachureGap: 9, stroke: P.ink, strokeWidth: 5 }));
+    add(rc.circle(x + 160, y + 24, 26, { fill: P.yellow, fillStyle: "solid", stroke: P.ink, strokeWidth: 3 }));
+    add(rc.circle(x + 160, y + 250, 50, { fill: "#F59A9A", fillStyle: "solid", stroke: P.ink, strokeWidth: 3 }));
+    add(rc.path(`M${x + 20} ${y + 80} q-15 40 0 80 M${x + 300} ${y + 80} q15 40 0 80`, { stroke: P.red, strokeWidth: 5 }));
+  },
+  // 편지봉투(우편 안내장)
+  envelope(x, y) {
+    add(rc.rectangle(x + 20, y + 70, 290, 190, { fill: "#fff", fillStyle: "solid", stroke: P.ink, strokeWidth: 5 }));
+    add(rc.path(`M${x + 20} ${y + 70} L${x + 165} ${y + 180} L${x + 310} ${y + 70}`, { stroke: P.ink, strokeWidth: 5 }));
+    add(rc.rectangle(x + 230, y + 90, 56, 44, { fill: "#F7A8B8", fillStyle: "solid", stroke: P.ink, strokeWidth: 2 }));
+    add(rc.line(x + 50, y + 225, x + 150, y + 225, { stroke: "#9FD3F5", strokeWidth: 7 }));
+  },
+  // 가위(감액·해지)
+  scissors(x, y) {
+    add(rc.line(x + 70, y + 40, x + 230, y + 200, { stroke: "#8C9BD1", strokeWidth: 18 }));
+    add(rc.line(x + 250, y + 40, x + 90, y + 200, { stroke: "#8C9BD1", strokeWidth: 18 }));
+    add(rc.circle(x + 165, y + 120, 14, { fill: P.ink, fillStyle: "solid", stroke: P.ink }));
+    add(rc.circle(x + 70, y + 235, 80, { fill: P.red, fillStyle: "hachure", hachureGap: 8, stroke: P.ink, strokeWidth: 5 }));
+    add(rc.circle(x + 250, y + 235, 80, { fill: P.red, fillStyle: "hachure", hachureGap: 8, stroke: P.ink, strokeWidth: 5 }));
+    for (let i = 0; i < 6; i++) add(rc.line(x + 10 + i * 52, y + 300, x + 40 + i * 52, y + 300, { stroke: P.ink, strokeWidth: 5 }));
+  },
+  // 전화기(고객센터·ARS)
+  telephone(x, y) {
+    add(rc.path(`M${x + 40} ${y + 150} L${x + 80} ${y + 110} L${x + 240} ${y + 110} L${x + 280} ${y + 150} L${x + 290} ${y + 280} L${x + 30} ${y + 280} Z`, { fill: "#8C9BD1", fillStyle: "hachure", hachureGap: 9, stroke: P.ink, strokeWidth: 5 }));
+    add(rc.path(`M${x + 20} ${y + 90} Q${x + 20} ${y + 30} ${x + 160} ${y + 30} Q${x + 300} ${y + 30} ${x + 300} ${y + 90} L${x + 250} ${y + 100} L${x + 240} ${y + 70} Q${x + 160} ${y + 55} ${x + 80} ${y + 70} L${x + 70} ${y + 100} Z`, { fill: P.red, fillStyle: "solid", stroke: P.ink, strokeWidth: 4 }));
+    for (let r = 0; r < 3; r++) for (let c = 0; c < 3; c++) add(rc.rectangle(x + 105 + c * 40, y + 150 + r * 38, 28, 26, { fill: "#fff", fillStyle: "solid", stroke: P.ink, strokeWidth: 2, roughness: 0.6 }));
   },
   // 어린이·엄마보험 게시판용
   bottle(x, y) {
