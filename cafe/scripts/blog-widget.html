@@ -1,118 +1,58 @@
 <!doctype html>
 <html lang="ko"><head><meta charset="utf-8">
 <!-- 네이버 블로그 사이드바 위젯 — 무료 엑셀 양식(가로 170px 표시 · 2배 크기 340px로 그림). make-blog-widget.py 가 render() 를 부릅니다.
-     우체국 감성은 우표 톱니·소인·항공우편 줄무늬로 은은하게, 귀여움은 캐릭터·하트 대신 손그림 선·빗금·한지 결·톤 다운 파스텔로만.
-     선은 rough.js(MIT), 글씨는 Jua·Gaegu(OFL). 우체국 로고·상징은 쓰지 않습니다. -->
+     블로그(템블리) 프로필 위젯과 같은 결: 흰 둥근 카드 + 옅은 라벤더 테두리 + 파스텔 알약 버튼 + 남색 단추 + 고딕체.
+     우체국 감성은 아치 안 엑셀 시트 옆의 작은 우표(톱니) 한 장으로만 은은하게. 캐릭터·하트는 쓰지 않습니다. -->
 <style>
-@font-face{font-family:Jua;src:url(../assets/fonts/jua-korean-400-normal.woff2)}
-@font-face{font-family:Gaegu;src:url(../assets/fonts/gaegu-korean-700-normal.woff2)}
 *{margin:0;padding:0;box-sizing:border-box}
-body{width:340px;overflow:hidden;background:#FBF6EE}
-#c{position:absolute;left:0;top:0}
-.t{position:absolute;white-space:nowrap;transform:translateX(-50%)}
-.chip{font-family:Jua;font-size:23px;color:#B8653F}
-.h1{font-family:Jua;font-size:50px;color:#5A4A42;letter-spacing:-1px;line-height:1}
-.h2{font-family:Jua;font-size:52px;color:#D9734A;letter-spacing:-1px;line-height:1}
-.g{font-family:Gaegu;font-size:27px;color:#7A6A61}
-.btn{font-family:Jua;font-size:28px;color:#B8653F}
-.tiny{font-family:Gaegu;font-size:21px;color:#9A8B82}
-.lab{font-family:Jua;font-size:18px;color:#fff}
-.pm{font-family:Jua;font-size:17px;color:#B07F95;letter-spacing:1px}
+html,body{width:340px;background:#fff}
+body{font-family:'Noto Sans CJK KR','Noto Sans KR',sans-serif;padding:4px}
+.card{width:332px;border:2px solid #DCE0F0;border-radius:32px;background:#fff;padding:30px 26px 26px;text-align:center}
+.emb{display:block;margin:0 auto 14px}
+h1{font-size:35px;font-weight:700;color:#22263A;letter-spacing:-1px;line-height:1.2}
+h1 b{color:#2E3A8C}
+.sub{margin-top:8px;font-size:21px;white-space:nowrap;color:#6E7385;letter-spacing:-.5px}
+.pills{margin-top:22px;display:flex;flex-direction:column;gap:12px}
+.pill{height:54px;border-radius:27px;display:flex;align-items:center;justify-content:center;font-size:25px;font-weight:700;letter-spacing:-.5px}
+.btn{margin-top:16px;height:60px;border-radius:30px;background:#2E3A8C;color:#fff;display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:700;letter-spacing:-.5px}
+.foot{margin-top:16px;font-size:19px;color:#9A9EAD;letter-spacing:-.5px;line-height:1.4}
 </style></head>
-<body><svg id="c" width="340" height="620" xmlns="http://www.w3.org/2000/svg"></svg>
-<script src="../assets/vendor/rough.js"></script>
+<body><div class="card" id="card">
+<svg class="emb" width="128" height="150" viewBox="0 0 128 150" xmlns="http://www.w3.org/2000/svg">
+  <!-- 아치 -->
+  <path d="M8 146V64a56 56 0 0 1 112 0v82z" fill="#DCEBFA" stroke="#C49A5E" stroke-width="5"/>
+  <!-- 엑셀 시트 -->
+  <rect x="26" y="56" width="66" height="74" rx="6" fill="#fff" stroke="#2E3A8C" stroke-width="3.5"/>
+  <rect x="26" y="56" width="66" height="17" rx="6" fill="#2E3A8C"/>
+  <rect x="26" y="66" width="66" height="7" fill="#2E3A8C"/>
+  <g stroke="#C9D2EA" stroke-width="2.5"><path d="M30 88h58M30 102h58M30 116h58M50 73v53"/></g>
+  <rect x="32" y="79" width="14" height="6" rx="2" fill="#F6C9D0"/>
+  <rect x="32" y="93" width="14" height="6" rx="2" fill="#CFE0F7"/>
+  <rect x="32" y="107" width="14" height="6" rx="2" fill="#F8E6B4"/>
+  <!-- 작은 우표(톱니) -->
+  <g transform="rotate(8 98 104)">
+    <rect x="78" y="84" width="40" height="44" fill="#FBE9EC" stroke="#E7B7BF" stroke-width="2"/>
+    <g fill="#DCEBFA" id="perf"></g>
+    <text x="98" y="112" font-size="14" font-weight="700" fill="#B23A48" text-anchor="middle" font-family="Noto Sans CJK KR">무료</text>
+  </g>
+</svg>
+<h1>무료 <b>엑셀 양식</b></h1>
+<div class="sub">60종 · 미리보고 골라 받기</div>
+<div class="pills">
+  <div class="pill" style="background:#E9F0FB;color:#2A3C8F">보험 정리표</div>
+  <div class="pill" style="background:#FBEAEE;color:#B23A48">가계부 · 살림</div>
+  <div class="pill" style="background:#F0EBF8;color:#5B3FA8">생활 · 일정</div>
+  <div class="pill" style="background:#F5EFE6;color:#7A5A3A">업무 양식</div>
+  <div class="pill" style="background:#FBF3DC;color:#8A6A1A">편지지</div>
+</div>
+<div class="btn">양식 받으러 가기 ›</div>
+<div class="foot">우체국보험 길잡이 카페<br>우체국보험 FC가 무료로 나눠요</div>
+</div>
 <script>
-const svg = document.getElementById("c"), rc = rough.svg(svg);
-// 톤 다운 우체국 주황 + 한지 크림 + 연한 파스텔
-const C = { ink: "#5A4A42", line: "#D8CDC2", apricot: "#EBA27A", orange: "#D9734A", deep: "#B8653F", sage: "#8DBF9F", sky: "#8DB3D6", plum: "#C9A3B6", paper: "#FBF6EE", cream: "#FFF9F1", butter: "#F6D98B" };
-const add = (n) => (svg.appendChild(n), n);
-const T = (cls, s, x, y) => { const d = document.createElement("div"); d.className = "t " + cls; d.textContent = s; d.style.left = x + "px"; d.style.top = y + "px"; document.body.appendChild(d); return d; };
-const fit = (el, max) => { let f = parseFloat(getComputedStyle(el).fontSize); while (el.getBoundingClientRect().width > max && f > 12) { f -= 1; el.style.fontSize = f + "px"; } };
-const sparkle = (x, y, r, c) => { add(rc.line(x - r, y, x + r, y, { stroke: c, strokeWidth: 3.5, roughness: 0.6 })); add(rc.line(x, y - r, x, y + r, { stroke: c, strokeWidth: 3.5, roughness: 0.6 })); };
-
-// 한지 결: 아주 옅은 짧은 섬유 선
-function hanji(H) {
-  let s = 7;
-  const rnd = () => ((s = (s * 9301 + 49297) % 233280) / 233280);
-  for (let i = 0; i < 26; i++) {
-    const x = 18 + rnd() * 304, y = 18 + rnd() * (H - 36), a = rnd() * Math.PI, l = 8 + rnd() * 14;
-    add(rc.line(x, y, x + Math.cos(a) * l, y + Math.sin(a) * l, { stroke: "#F1E8DC", strokeWidth: 1.4, roughness: 1.2 }));
-  }
-}
-
-// 우표: 톱니 가장자리(반원 홈) + 안쪽 양식 카드
-function stamp(x, y, w, h, rot) {
-  const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
-  g.setAttribute("transform", `rotate(${rot} ${x + w / 2} ${y + h / 2})`);
-  const put = (n) => g.appendChild(n);
-  put(rc.rectangle(x, y, w, h, { fill: "#fff", fillStyle: "solid", stroke: C.line, strokeWidth: 2, roughness: 0.8 }));
-  svg.appendChild(g);
-  // 톱니(바탕색 작은 원)
-  const holes = document.createElementNS("http://www.w3.org/2000/svg", "g");
-  holes.setAttribute("transform", g.getAttribute("transform"));
-  const hole = (cx, cy) => { const c = document.createElementNS("http://www.w3.org/2000/svg", "circle"); c.setAttribute("cx", cx); c.setAttribute("cy", cy); c.setAttribute("r", 4.2); c.setAttribute("fill", C.paper); holes.appendChild(c); };
-  for (let i = 8; i < w; i += 14) { hole(x + i, y); hole(x + i, y + h); }
-  for (let i = 8; i < h; i += 14) { hole(x, y + i); hole(x + w, y + i); }
-  svg.appendChild(holes);
-  return g;
-}
-
-// 우표 안의 손그림 엑셀 카드(색 띠 + 줄 + 이름표)
-function sheetIn(g, x, y, w, h, color) {
-  const put = (n) => g.appendChild(n);
-  put(rc.rectangle(x, y, w, h, { fill: "#fff", fillStyle: "solid", stroke: C.ink, strokeWidth: 2, roughness: 1.1 }));
-  put(rc.rectangle(x, y, w, 24, { fill: color, fillStyle: "solid", stroke: C.ink, strokeWidth: 1.8, roughness: 0.8 }));
-  for (let k = 1; k <= 3; k++) put(rc.line(x + 6, y + 24 + k * 20, x + w - 6, y + 24 + k * 20, { stroke: C.line, strokeWidth: 1.8, roughness: 0.6 }));
-  put(rc.line(x + w * 0.42, y + 24, x + w * 0.42, y + h - 5, { stroke: C.line, strokeWidth: 1.8, roughness: 0.6 }));
-  put(rc.rectangle(x + 8, y + 31, w * 0.42 - 14, 11, { fill: color, fillStyle: "hachure", hachureGap: 4, stroke: "none" }));
-}
-function label(s, cx, y, rot) { const l = T("lab", s, cx, y); l.style.transform = `translateX(-50%) rotate(${rot}deg)`; }
-
-// 소인: 두 겹 원 + 물결선(우체국 소인 느낌, 글자는 '무료 나눔')
-function postmark(cx, cy) {
-  add(rc.circle(cx, cy, 78, { fill: "rgba(251,246,238,0.92)", fillStyle: "solid", stroke: C.plum, strokeWidth: 2.5, roughness: 1.1 }));
-  add(rc.circle(cx, cy, 62, { stroke: C.plum, strokeWidth: 1.8, roughness: 1.1 }));
-  for (let k = 0; k < 3; k++) {
-    const y = cy - 12 + k * 12;
-    add(rc.path(`M${cx + 40} ${y} q10 -6 20 0 t20 0`, { stroke: C.plum, strokeWidth: 2.2, roughness: 0.7 }));
-  }
-  T("pm", "무료", cx, cy - 20); T("pm", "나눔", cx, cy + 2);
-}
-
-function render() {
-  const H = 620;
-  svg.setAttribute("height", H); document.body.style.height = H + "px";
-  hanji(H);
-  add(rc.rectangle(9, 9, 322, H - 18, { stroke: C.apricot, strokeWidth: 3, roughness: 1.6 }));
-  // 항공우편 줄무늬(은은하게) — 위·아래
-  for (let i = 0; i < 9; i++) {
-    const x = 18 + i * 36, col = i % 2 ? C.sky : C.apricot;
-    add(rc.line(x, 30, x + 18, 18, { stroke: col, strokeWidth: 6, roughness: 0.6 }));
-    add(rc.line(x, H - 18, x + 18, H - 30, { stroke: col, strokeWidth: 6, roughness: 0.6 }));
-  }
-  // 칩
-  const ch = T("chip", "무료 양식 자료실", 170, 52); const cw = ch.getBoundingClientRect().width;
-  add(rc.rectangle(170 - cw / 2 - 14, 46, cw + 28, 40, { fill: C.cream, fillStyle: "solid", stroke: C.apricot, strokeWidth: 2 }));
-  svg.appendChild(svg.lastChild);
-  // 우표 두 장 + 소인
-  const s1 = stamp(40, 108, 116, 128, -6); sheetIn(s1, 52, 122, 92, 98, C.sage);
-  const s2 = stamp(150, 104, 116, 128, 5); sheetIn(s2, 162, 118, 92, 98, C.apricot);
-  label("가계부", 98, 124, -6); label("보험 정리", 208, 120, 5);
-  postmark(246, 214);
-  sparkle(30, 108, 8, C.butter); sparkle(312, 104, 7, C.sky);
-  // 제목
-  T("h1", "엑셀 양식", 170, 262);
-  const b = T("h2", "60종 무료", 170, 318);
-  const bw = b.getBoundingClientRect().width + 14;
-  add(rc.path(`M${170 - bw / 2} 378 Q170 370 ${170 + bw / 2} 380`, { stroke: C.butter, strokeWidth: 10, roughness: 1.3 }));
-  const g1 = T("g", "가계부 · 보험 정리표 · 편지지", 170, 392); fit(g1, 296);
-  T("g", "미리보기 보고 골라 받기", 170, 428);
-  // 단추(크림 바탕 + 살구 테두리)
-  add(rc.rectangle(36, 478, 268, 60, { fill: C.cream, fillStyle: "solid", stroke: C.orange, strokeWidth: 2.6, roughness: 1.3 }));
-  add(rc.line(46, 532, 294, 532, { stroke: C.apricot, strokeWidth: 3, roughness: 0.8 }));
-  T("btn", "양식 받으러 가기 ›", 170, 492);
-  const t = T("tiny", "우체국보험 길잡이 카페 · 우체국보험 FC 운영", 170, 552); fit(t, 292);
-  return true;
-}
-window.render = render;
+// 우표 톱니: 가장자리에 바탕색 반원 홈
+const perf = document.getElementById("perf");
+const dot = (x, y) => { const c = document.createElementNS("http://www.w3.org/2000/svg", "circle"); c.setAttribute("cx", x); c.setAttribute("cy", y); c.setAttribute("r", 2.6); perf.appendChild(c); };
+for (let i = 84; i <= 118; i += 8) { dot(i, 84); dot(i, 128); }
+for (let i = 90; i <= 124; i += 8) { dot(78, i); dot(118, i); }
+window.render = () => true;
 </script></body></html>
