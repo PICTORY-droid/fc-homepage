@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<!-- 양식 머리 배너(손그림체) — banner.py 가 render(DATA) 를 부릅니다. 선: rough.js(MIT), 글씨: Jua·Gaegu(OFL) -->
+<style>
+@font-face{font-family:Jua;src:url(../../assets/fonts/jua-korean-400-normal.woff2)}
+@font-face{font-family:Gaegu;src:url(../../assets/fonts/gaegu-korean-700-normal.woff2)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:transparent;overflow:hidden}
+#wrap{position:relative}
+svg{position:absolute;inset:0}
+.t{position:absolute;font-family:Jua;color:#4A3F3A;white-space:nowrap;letter-spacing:-0.5px}
+.s{position:absolute;font-family:Gaegu;color:#7A6D66;white-space:nowrap;letter-spacing:-1.2px}
+.b{position:absolute;font-family:Gaegu;white-space:nowrap;text-align:right}
+</style></head>
+<body><div id="wrap"><svg id="c" xmlns="http://www.w3.org/2000/svg"></svg></div>
+<script src="../../assets/vendor/rough.js"></script>
+<script>
+const INK = "#4A3F3A";
+function render(D) {
+  const W = D.w, H = D.h, A = D.accent;
+  const wrap = document.getElementById("wrap"); wrap.style.width = W + "px"; wrap.style.height = H + "px";
+  const svg = document.getElementById("c"); svg.setAttribute("width", W); svg.setAttribute("height", H);
+  const rc = rough.svg(svg); const add = (n) => (svg.appendChild(n), n);
+  // 종이 바탕 + 손으로 그은 테두리
+  add(rc.rectangle(3, 3, W - 6, H - 6, { fill: "#FFFBF4", fillStyle: "solid", stroke: A.line, strokeWidth: 1.6, roughness: 1.3 }));
+  // 위쪽 항공우편 줄무늬(크레용 질감)
+  const sw = 26;
+  for (let x = 8, i = 0; x < W - 8; x += sw, i++) {
+    const c = i % 2 ? A.stripe2 : A.main;
+    add(rc.polygon([[x, 6], [x + sw * 0.55, 6], [x + sw * 0.55 - 7, 15], [x - 7, 15]], { fill: c, fillStyle: "hachure", hachureGap: 2.6, hachureAngle: 60, stroke: "none", roughness: 1.1 }));
+  }
+  // 왼쪽 손그림 소품
+  const ix = 18, iy = 24, s = H - 40;
+  (MOTIF[D.motif] || MOTIF.stamp)(rc, add, ix, iy, s, A);
+  // 제목 밑 형광펜 줄
+  const tx = ix + s + 22;
+  const room = W - tx - 300; // 오른쪽 소인 자리 비우기
+  const tEl = document.createElement("div"); tEl.className = "t"; tEl.textContent = D.title;
+  tEl.style.left = tx + "px"; tEl.style.top = (H * 0.20) + "px"; wrap.appendChild(tEl);
+  while (true) { tEl.style.fontSize = D.tsize + "px"; if (tEl.getBoundingClientRect().width <= room || D.tsize <= 22) break; D.tsize -= 1; }
+  const tw = tEl.getBoundingClientRect().width;
+  add(rc.line(tx - 2, H * 0.20 + D.tsize * 1.02, tx + tw + 4, H * 0.20 + D.tsize * 1.02, { stroke: A.hl, strokeWidth: D.tsize * 0.32, roughness: 1.6, bowing: 1.2 }));
+  wrap.appendChild(tEl); // 형광펜 위로 글씨 올리기
+  const sEl = document.createElement("div"); sEl.className = "s"; sEl.textContent = D.sub;
+  sEl.style.left = (tx + 2) + "px"; sEl.style.top = (H * 0.20 + D.tsize * 1.28) + "px"; wrap.appendChild(sEl);
+  while (true) { sEl.style.fontSize = D.ssize + "px"; if (sEl.getBoundingClientRect().width <= room || D.ssize <= 14) break; D.ssize -= 1; }
+  const subw = sEl.getBoundingClientRect().width;
+  // 오른쪽 아래 카페 표시(우체국 소인처럼 점선 원)
+  const bx = W - 26;
+  add(rc.circle(bx - 34, H - 40, 52, { stroke: A.main, strokeWidth: 1.4, roughness: 1.6, strokeLineDash: [4, 3] }));
+  add(rc.line(bx - 64, H - 44, bx - 4, H - 44, { stroke: A.main, strokeWidth: 1.2, roughness: 1.4 }));
+  add(rc.line(bx - 64, H - 36, bx - 4, H - 36, { stroke: A.main, strokeWidth: 1.2, roughness: 1.4 }));
+  const bEl = document.createElement("div"); bEl.className = "b"; bEl.innerHTML = D.brand;
+  bEl.style.right = "100px"; bEl.style.bottom = "12px"; bEl.style.fontSize = "17px"; bEl.style.color = A.deep; bEl.style.lineHeight = "1.05";
+  wrap.appendChild(bEl);
+  return { w: W, h: H, overflow: Math.max(tw, subw) > room + 2 };
+}
+const MOTIF = {
+  stamp(rc, add, x, y, s, A) { // 톱니 우표
+    add(rc.rectangle(x, y, s * 0.82, s, { fill: "#fff", fillStyle: "solid", stroke: A.main, strokeWidth: 1.6, roughness: 1.2, strokeLineDash: [3, 2.5] }));
+    add(rc.rectangle(x + s * 0.12, y + s * 0.12, s * 0.58, s * 0.62, { fill: A.soft, fillStyle: "hachure", hachureGap: 3, stroke: A.main, strokeWidth: 1.2, roughness: 1.3 }));
+    add(rc.line(x + s * 0.12, y + s * 0.88, x + s * 0.7, y + s * 0.88, { stroke: INK, strokeWidth: 1.2, roughness: 1.2 }));
+  },
+  shield(rc, add, x, y, s, A) { // 보장(방패)
+    add(rc.path(`M${x + s * 0.45} ${y} L${x + s * 0.9} ${y + s * 0.18} L${x + s * 0.84} ${y + s * 0.62} Q${x + s * 0.45} ${y + s * 1.02} ${x + s * 0.06} ${y + s * 0.62} L${x} ${y + s * 0.18} Z`, { fill: A.soft, fillStyle: "hachure", hachureGap: 3, stroke: A.main, strokeWidth: 1.8, roughness: 1.3 }));
+    add(rc.path(`M${x + s * 0.26} ${y + s * 0.48} l${s * 0.14} ${s * 0.14} l${s * 0.26} -${s * 0.28}`, { stroke: A.deep, strokeWidth: 2.4, roughness: 1 }));
+  },
+  receipt(rc, add, x, y, s, A) { // 영수증
+    add(rc.path(`M${x + s * 0.1} ${y} L${x + s * 0.8} ${y} L${x + s * 0.8} ${y + s} l-${s * 0.12} -${s * 0.07} l-${s * 0.12} ${s * 0.07} l-${s * 0.12} -${s * 0.07} l-${s * 0.12} ${s * 0.07} l-${s * 0.12} -${s * 0.07} l-${s * 0.1} ${s * 0.07} Z`, { fill: "#fff", fillStyle: "solid", stroke: A.main, strokeWidth: 1.6, roughness: 1.2 }));
+    for (let i = 0; i < 4; i++) add(rc.line(x + s * 0.24, y + s * (0.2 + i * 0.17), x + s * (i === 3 ? 0.5 : 0.66), y + s * (0.2 + i * 0.17), { stroke: i === 3 ? A.deep : A.line, strokeWidth: 1.8, roughness: 1.1 }));
+  },
+  calendar(rc, add, x, y, s, A) {
+    add(rc.rectangle(x, y + s * 0.1, s * 0.92, s * 0.86, { fill: "#fff", fillStyle: "solid", stroke: A.main, strokeWidth: 1.6, roughness: 1.2 }));
+    add(rc.rectangle(x, y + s * 0.1, s * 0.92, s * 0.22, { fill: A.main, fillStyle: "hachure", hachureGap: 2.6, stroke: A.main, strokeWidth: 1.2, roughness: 1.2 }));
+    for (let r = 0; r < 3; r++) for (let c = 0; c < 4; c++) add(rc.rectangle(x + s * (0.08 + c * 0.21), y + s * (0.42 + r * 0.17), s * 0.12, s * 0.1, { fill: r === 1 && c === 2 ? A.hl : A.soft, fillStyle: "solid", stroke: "none", roughness: 1 }));
+    add(rc.line(x + s * 0.24, y, x + s * 0.24, y + s * 0.2, { stroke: INK, strokeWidth: 2.2 })); add(rc.line(x + s * 0.68, y, x + s * 0.68, y + s * 0.2, { stroke: INK, strokeWidth: 2.2 }));
+  },
+  coin(rc, add, x, y, s, A) {
+    for (let i = 0; i < 3; i++) add(rc.ellipse(x + s * 0.42, y + s * (0.86 - i * 0.18), s * 0.8, s * 0.26, { fill: A.hl, fillStyle: "hachure", hachureGap: 2.8, stroke: A.deep, strokeWidth: 1.4, roughness: 1.2 }));
+    add(rc.circle(x + s * 0.72, y + s * 0.26, s * 0.46, { fill: A.soft, fillStyle: "solid", stroke: A.main, strokeWidth: 1.6, roughness: 1.2 }));
+  },
+  piggy(rc, add, x, y, s, A) {
+    add(rc.ellipse(x + s * 0.48, y + s * 0.58, s * 0.9, s * 0.68, { fill: A.soft, fillStyle: "hachure", hachureGap: 3, stroke: A.main, strokeWidth: 1.6, roughness: 1.3 }));
+    add(rc.rectangle(x + s * 0.36, y + s * 0.22, s * 0.24, s * 0.06, { fill: INK, fillStyle: "solid", stroke: INK, roughness: 0.8 }));
+    add(rc.circle(x + s * 0.48, y + s * 0.08, s * 0.18, { fill: A.hl, fillStyle: "solid", stroke: A.deep, strokeWidth: 1.2 }));
+    add(rc.line(x + s * 0.24, y + s * 0.86, x + s * 0.24, y + s, { stroke: A.main, strokeWidth: 3 })); add(rc.line(x + s * 0.7, y + s * 0.86, x + s * 0.7, y + s, { stroke: A.main, strokeWidth: 3 }));
+  },
+  house(rc, add, x, y, s, A) {
+    add(rc.polygon([[x, y + s * 0.42], [x + s * 0.46, y], [x + s * 0.92, y + s * 0.42]], { fill: A.main, fillStyle: "hachure", hachureGap: 2.8, stroke: A.deep, strokeWidth: 1.6, roughness: 1.2 }));
+    add(rc.rectangle(x + s * 0.1, y + s * 0.42, s * 0.72, s * 0.56, { fill: "#fff", fillStyle: "solid", stroke: A.deep, strokeWidth: 1.6, roughness: 1.2 }));
+    add(rc.rectangle(x + s * 0.36, y + s * 0.62, s * 0.2, s * 0.36, { fill: A.soft, fillStyle: "solid", stroke: A.deep, strokeWidth: 1.2 }));
+  },
+  letter(rc, add, x, y, s, A) {
+    add(rc.rectangle(x, y + s * 0.16, s, s * 0.7, { fill: "#fff", fillStyle: "solid", stroke: A.main, strokeWidth: 1.6, roughness: 1.2 }));
+    add(rc.path(`M${x} ${y + s * 0.16} L${x + s * 0.5} ${y + s * 0.56} L${x + s} ${y + s * 0.16}`, { stroke: A.main, strokeWidth: 1.6, roughness: 1.2 }));
+    add(rc.rectangle(x + s * 0.7, y + s * 0.24, s * 0.2, s * 0.16, { fill: A.hl, fillStyle: "hachure", hachureGap: 2.4, stroke: A.deep, strokeWidth: 1 }));
+  },
+  pencil(rc, add, x, y, s, A) {
+    add(rc.polygon([[x + s * 0.12, y + s * 0.78], [x + s * 0.72, y + s * 0.08], [x + s * 0.9, y + s * 0.24], [x + s * 0.3, y + s * 0.94]], { fill: A.hl, fillStyle: "hachure", hachureGap: 2.6, stroke: A.deep, strokeWidth: 1.6, roughness: 1.2 }));
+    add(rc.polygon([[x + s * 0.12, y + s * 0.78], [x + s * 0.3, y + s * 0.94], [x + s * 0.02, y + s]], { fill: "#F5D0A9", fillStyle: "solid", stroke: A.deep, strokeWidth: 1.2 }));
+    add(rc.line(x + s * 0.1, y + s, x + s, y + s, { stroke: A.main, strokeWidth: 1.4, roughness: 1.6 }));
+  },
+  clipboard(rc, add, x, y, s, A) {
+    add(rc.rectangle(x + s * 0.06, y + s * 0.08, s * 0.8, s * 0.92, { fill: A.soft, fillStyle: "solid", stroke: A.main, strokeWidth: 1.6, roughness: 1.2 }));
+    add(rc.rectangle(x + s * 0.28, y, s * 0.36, s * 0.16, { fill: A.main, fillStyle: "solid", stroke: A.deep, strokeWidth: 1.2 }));
+    for (let i = 0; i < 3; i++) { add(rc.rectangle(x + s * 0.18, y + s * (0.3 + i * 0.2), s * 0.1, s * 0.1, { fill: "#fff", fillStyle: "solid", stroke: A.deep, strokeWidth: 1.2 })); add(rc.line(x + s * 0.36, y + s * (0.35 + i * 0.2), x + s * 0.74, y + s * (0.35 + i * 0.2), { stroke: A.deep, strokeWidth: 1.6, roughness: 1.2 })); }
+    add(rc.path(`M${x + s * 0.17} ${y + s * 0.34} l${s * 0.05} ${s * 0.06} l${s * 0.09} -${s * 0.12}`, { stroke: "#D9480F", strokeWidth: 2 }));
+  },
+  leaf(rc, add, x, y, s, A) {
+    add(rc.path(`M${x + s * 0.1} ${y + s * 0.95} Q${x + s * 0.1} ${y + s * 0.1} ${x + s * 0.9} ${y + s * 0.05} Q${x + s * 0.85} ${y + s * 0.85} ${x + s * 0.1} ${y + s * 0.95} Z`, { fill: A.soft, fillStyle: "hachure", hachureGap: 3, stroke: A.main, strokeWidth: 1.6, roughness: 1.3 }));
+    add(rc.line(x + s * 0.12, y + s * 0.93, x + s * 0.7, y + s * 0.25, { stroke: A.deep, strokeWidth: 1.6, roughness: 1.2 }));
+  },
+  clock(rc, add, x, y, s, A) {
+    add(rc.circle(x + s * 0.48, y + s * 0.52, s * 0.94, { fill: "#fff", fillStyle: "solid", stroke: A.main, strokeWidth: 1.8, roughness: 1.2 }));
+    add(rc.circle(x + s * 0.48, y + s * 0.52, s * 0.76, { fill: A.soft, fillStyle: "hachure", hachureGap: 3.4, stroke: "none" }));
+    add(rc.line(x + s * 0.48, y + s * 0.52, x + s * 0.48, y + s * 0.22, { stroke: INK, strokeWidth: 2.4 })); add(rc.line(x + s * 0.48, y + s * 0.52, x + s * 0.7, y + s * 0.62, { stroke: A.deep, strokeWidth: 2.2 }));
+  },
+  cart(rc, add, x, y, s, A) {
+    add(rc.path(`M${x} ${y + s * 0.12} L${x + s * 0.16} ${y + s * 0.12} L${x + s * 0.3} ${y + s * 0.7} L${x + s * 0.86} ${y + s * 0.7} L${x + s * 0.96} ${y + s * 0.28} L${x + s * 0.2} ${y + s * 0.28}`, { fill: A.soft, fillStyle: "hachure", hachureGap: 3, stroke: A.main, strokeWidth: 1.8, roughness: 1.2 }));
+    add(rc.circle(x + s * 0.36, y + s * 0.86, s * 0.16, { fill: A.deep, fillStyle: "solid", stroke: A.deep })); add(rc.circle(x + s * 0.78, y + s * 0.86, s * 0.16, { fill: A.deep, fillStyle: "solid", stroke: A.deep }));
+  },
+  car(rc, add, x, y, s, A) {
+    add(rc.path(`M${x} ${y + s * 0.7} L${x} ${y + s * 0.48} L${x + s * 0.2} ${y + s * 0.44} L${x + s * 0.34} ${y + s * 0.2} L${x + s * 0.7} ${y + s * 0.2} L${x + s * 0.84} ${y + s * 0.44} L${x + s} ${y + s * 0.5} L${x + s} ${y + s * 0.7} Z`, { fill: A.soft, fillStyle: "hachure", hachureGap: 3, stroke: A.main, strokeWidth: 1.8, roughness: 1.2 }));
+    add(rc.circle(x + s * 0.24, y + s * 0.74, s * 0.22, { fill: INK, fillStyle: "solid", stroke: INK })); add(rc.circle(x + s * 0.76, y + s * 0.74, s * 0.22, { fill: INK, fillStyle: "solid", stroke: INK }));
+  },
+  book(rc, add, x, y, s, A) {
+    add(rc.path(`M${x + s * 0.5} ${y + s * 0.18} Q${x + s * 0.25} ${y + s * 0.04} ${x} ${y + s * 0.12} L${x} ${y + s * 0.92} Q${x + s * 0.25} ${y + s * 0.84} ${x + s * 0.5} ${y + s * 0.96} Z`, { fill: A.soft, fillStyle: "hachure", hachureGap: 3, stroke: A.main, strokeWidth: 1.6, roughness: 1.2 }));
+    add(rc.path(`M${x + s * 0.5} ${y + s * 0.18} Q${x + s * 0.75} ${y + s * 0.04} ${x + s} ${y + s * 0.12} L${x + s} ${y + s * 0.92} Q${x + s * 0.75} ${y + s * 0.84} ${x + s * 0.5} ${y + s * 0.96} Z`, { fill: "#fff", fillStyle: "solid", stroke: A.main, strokeWidth: 1.6, roughness: 1.2 }));
+  },
+  gift(rc, add, x, y, s, A) {
+    add(rc.rectangle(x + s * 0.06, y + s * 0.36, s * 0.84, s * 0.62, { fill: A.soft, fillStyle: "hachure", hachureGap: 3, stroke: A.main, strokeWidth: 1.6, roughness: 1.2 }));
+    add(rc.rectangle(x, y + s * 0.22, s * 0.96, s * 0.16, { fill: A.main, fillStyle: "solid", stroke: A.deep, strokeWidth: 1.2 }));
+    add(rc.line(x + s * 0.48, y + s * 0.22, x + s * 0.48, y + s * 0.98, { stroke: A.hl, strokeWidth: 4 }));
+    add(rc.ellipse(x + s * 0.34, y + s * 0.12, s * 0.3, s * 0.18, { stroke: A.deep, strokeWidth: 1.6 })); add(rc.ellipse(x + s * 0.62, y + s * 0.12, s * 0.3, s * 0.18, { stroke: A.deep, strokeWidth: 1.6 }));
+  },
+  pill(rc, add, x, y, s, A) {
+    add(rc.rectangle(x + s * 0.1, y + s * 0.2, s * 0.6, s * 0.78, { fill: "#fff", fillStyle: "solid", stroke: A.main, strokeWidth: 1.6, roughness: 1.2 }));
+    add(rc.rectangle(x + s * 0.06, y + s * 0.04, s * 0.68, s * 0.18, { fill: A.main, fillStyle: "hachure", hachureGap: 2.6, stroke: A.deep, strokeWidth: 1.2 }));
+    add(rc.rectangle(x + s * 0.2, y + s * 0.44, s * 0.4, s * 0.26, { fill: A.soft, fillStyle: "solid", stroke: A.deep, strokeWidth: 1 }));
+    add(rc.ellipse(x + s * 0.84, y + s * 0.78, s * 0.3, s * 0.16, { fill: A.hl, fillStyle: "solid", stroke: A.deep, strokeWidth: 1.2 }));
+  },
+};
+</script></body></html>
