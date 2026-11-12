@@ -40,7 +40,7 @@ for (const { meta, body } of posts) {
 <p>기준일 ${esc(meta.asOf)} · 출처: ${meta.sources.map((s) => `<a href="${esc(s)}">${esc(new URL(s).host)}</a>`).join(", ")}</p>
 ${meta.kind === "상품" ? `<p>${esc(f.premium)}</p>` : ""}
 <p>${esc(f.service)}</p>
-<p><a href="${esc(link(f.consult.url))}">${esc(f.consult.label)}</a></p>
+<p>${esc(f.consult.label)}${f.consult.hint ? `<br>${esc(f.consult.hint)}` : ""}<br><a href="${esc(link(f.consult.url))}">${esc(f.consult.url)}</a></p>
 <p>${esc(f.officialInfo)}</p>
 ${meta.reviewNo ? `<p>심의필 ${esc(meta.reviewNo)}</p>` : ""}</div>`;
   const name = `${meta.status === "초안" ? "초안_" : ""}${meta.slug}.html`;
@@ -56,7 +56,7 @@ const plain = posts.map(({ meta, body }, i) => {
   const written = meta.written ?? meta.asOf;
   const dateLine = `작성일 ${written}${meta.asOf !== written ? ` · 상품 정보 기준 ${meta.asOf}` : ""} · 출처: ${[...new Set(meta.sources.map(host))].join(", ")}`;
   // 꼬리말 순서(확정 양식): 상담 링크 → (상품 글) 보험료 안내 → 공식 정보 → 민원 창구 → 작성일·출처
-  const foot = [`${f.consult.label}:\n${f.consult.url}`, meta.kind === "상품" ? f.premium : "", f.officialInfo, f.service, dateLine].filter(Boolean).join("\n");
+  const foot = [[f.consult.label, f.consult.hint, f.consult.url].filter(Boolean).join("\n"), meta.kind === "상품" ? f.premium : "", f.officialInfo, f.service, dateLine].filter(Boolean).join("\n");
   // 태그 10개: 글 키워드 먼저, 모자라면 카페 공통 태그로 채움(중복 제거) — 네이버 카페 태그 최대 10개
   const tags = [...new Set([...(meta.tags ?? []), ...meta.keywords, ...cfg.commonTags].map((k) => k.replace(/\s/g, "")))].slice(0, cfg.limits.tags).map((k) => `#${k}`).join(" ");
   const hand = Boolean(meta.icon); // 손그림 이미지(대표 + 메모 카드)가 있는 글
