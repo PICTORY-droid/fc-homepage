@@ -201,7 +201,7 @@ FORMS = [
          {"type": "table", "name": "보장표", "cap": 30,
           "legend": "✎ 머리글의 ‘보험①’ 칸에 내 보험 이름을 적고, 보험증권에 나온 보장 금액을 옮겨 적어 주세요 · 합계는 자동이에요",
           "cols": [{"key": "item", "h": "보장 항목", "w": 18}]
-                  + [{"key": f"p{i}", "h": f"보험{'①②③④⑤'[i - 1]}", "w": 12, "kind": "money"} for i in range(1, 6)]
+                  + [{"key": f"p{i}", "h": f"보험{'①②③④⑤'[i - 1]}", "w": 14, "kind": "money"} for i in range(1, 6)]
                   + [{"key": "total", "h": "합계", "w": 13, "kind": "money", "g": "item", "f": "SUM({p1}:{p5})"},
                      {"key": "memo", "h": "메모", "w": 18}],
           "rows": [{"item": it, **{f"p{i}": v for i, v in enumerate(vals, 1) if v}} for it, vals in [
