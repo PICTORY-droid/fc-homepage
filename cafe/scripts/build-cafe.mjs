@@ -36,16 +36,19 @@ const list = [];
 for (const { meta, body } of posts) {
   const f = cfg.footer;
   const link = withUtm(meta.slug);
+  // 머리말 consult: false → 상담 안내 빼기, official: false → 공식 정보·민원 창구 빼기 (무료 양식 소개 글)
+  const noConsult = meta.consult === "false";
+  const noOfficial = meta.official === "false";
   const foot = `<div class="foot">
-<p>기준일 ${esc(meta.asOf)} · 출처: ${meta.sources.map((s) => `<a href="${esc(s)}">${esc(new URL(s).host)}</a>`).join(", ")}</p>
+<p>기준일 ${esc(meta.asOf)} · ${meta.credit ? esc(meta.credit) : `출처: ${meta.sources.map((s) => `<a href="${esc(s)}">${esc(new URL(s).host)}</a>`).join(", ")}`}</p>
 ${meta.kind === "상품" ? `<p>${esc(f.premium)}</p>` : ""}
-<p>${esc(f.service)}</p>
-<p>${esc(f.consult.label)}${f.consult.hint ? `<br>${esc(f.consult.hint)}` : ""}<br><a href="${esc(link(f.consult.url))}">${esc(f.consult.url)}</a></p>
-<p>${esc(f.officialInfo)}</p>
+${noOfficial ? "" : `<p>${esc(f.service)}</p>`}
+${noConsult ? "" : `<p>${esc(f.consult.label)}${f.consult.hint ? `<br>${esc(f.consult.hint)}` : ""}<br><a href="${esc(link(f.consult.url))}">${esc(f.consult.url)}</a></p>`}
+${noOfficial ? "" : `<p>${esc(f.officialInfo)}</p>`}
 ${meta.reviewNo ? `<p>심의필 ${esc(meta.reviewNo)}</p>` : ""}</div>`;
   const name = `${meta.status === "초안" ? "초안_" : ""}${meta.slug}.html`;
   writeFileSync(join(OUT, name), page(meta.title, `${toHtml(body, link)}\n${foot}`));
-  list.push(`<li>${meta.status === "초안" ? '<span class="draft">초안</span> ' : ""}<a href="${name}">${esc(meta.title)}</a> <span class="meta">→ ${esc(meta.menu)} · 대표 이미지: thumbs/${esc(meta.slug)}.png</span></li>`);
+  list.push(`<li>${meta.status === "초안" ? '<span class="draft">초안</span> ' : ""}<a href="${name}">${esc(meta.title)}</a> <span class="meta">→ ${esc(meta.menu)} · 대표 이미지: ${esc(meta.pv1 ?? `thumbs/${meta.slug}.png`)}</span></li>`);
 }
 // 붙여넣기용 보통 글 묶음 — 게시판·제목·태그·대표 이미지·대체 텍스트·본문을 글마다 차례로
 const sep = "\n\n==================================================\n\n";
@@ -54,9 +57,12 @@ const plain = posts.map(({ meta, body }, i) => {
   const link = withUtm(meta.slug);
   const host = (u) => new URL(u).host.replace(/^www\./, "");
   const written = meta.written ?? meta.asOf;
-  const dateLine = `작성일 ${written}${meta.asOf !== written ? ` · 상품 정보 기준 ${meta.asOf}` : ""} · 출처: ${[...new Set(meta.sources.map(host))].join(", ")}`;
+  const dateLine = `작성일 ${written}${meta.asOf !== written ? ` · 상품 정보 기준 ${meta.asOf}` : ""} · ${meta.credit ?? `출처: ${[...new Set(meta.sources.map(host))].join(", ")}`}`;
   // 꼬리말 순서(확정 양식): 상담 링크 → (상품 글) 보험료 안내 → 공식 정보 → 민원 창구 → 작성일·출처
-  const foot = [[f.consult.label, f.consult.hint, f.consult.url].filter(Boolean).join("\n"), meta.kind === "상품" ? f.premium : "", f.officialInfo, f.service, dateLine].filter(Boolean).join("\n");
+  // 머리말 consult: false → 상담 링크 빼기, official: false → 공식 정보·민원 창구 빼기 (무료 양식 소개 글)
+  const noConsult = meta.consult === "false";
+  const noOfficial = meta.official === "false";
+  const foot = [noConsult ? "" : [f.consult.label, f.consult.hint, f.consult.url].filter(Boolean).join("\n"), meta.kind === "상품" ? f.premium : "", noOfficial ? "" : f.officialInfo, noOfficial ? "" : f.service, dateLine].filter(Boolean).join("\n");
   // 태그 10개: 글 키워드 먼저, 모자라면 카페 공통 태그로 채움(중복 제거) — 네이버 카페 태그 최대 10개
   const tags = [...new Set([...(meta.tags ?? []), ...meta.keywords, ...cfg.commonTags].map((k) => k.replace(/\s/g, "")))].slice(0, cfg.limits.tags).map((k) => `#${k}`).join(" ");
   const hand = Boolean(meta.icon); // 손그림 이미지(대표 + 메모 카드)가 있는 글
@@ -78,8 +84,12 @@ const plain = posts.map(({ meta, body }, i) => {
   const cardLines = (meta.card ?? "").split("|").map((x) => x.trim()).filter(Boolean);
   const alt2 = `${meta.cardTitle}. ${cardLines.join(", ")}`;
   const photo = (file, cap, alt) => `[사진: ${file}]\n[↑ 사진의 대체텍스트 칸에만 넣기 — 본문에 쓰지 않음] ${alt}\n${cap}`;
-  if (hand) { const k = text.indexOf("\n【"); const mark = `\n${photo(`hand/${meta.slug}-2.png`, meta.cardTitle, alt2)}\n`; text = k > 0 ? text.slice(0, k) + mark + text.slice(k) : text + mark; }
-  text = `${photo(img1, (meta.thumb ?? []).join(" "), hand ? alt1 : (meta.thumb ?? []).join(" "))}\n${text}`;
+  // 머리말 pv1·pv2(+pvCap·pvAlt) → 손그림 대신 그 사진 두 장(무료 양식 미리보기), attach → 첨부할 파일 안내 줄
+  const pv = Boolean(meta.pv1 && meta.pv2);
+  if (pv) { const k = text.indexOf("\n【"); const mark = `\n${photo(meta.pv2, meta.pvCap2, meta.pvAlt2)}\n`; text = k > 0 ? text.slice(0, k) + mark + text.slice(k) : text + mark; }
+  else if (hand) { const k = text.indexOf("\n【"); const mark = `\n${photo(`hand/${meta.slug}-2.png`, meta.cardTitle, alt2)}\n`; text = k > 0 ? text.slice(0, k) + mark + text.slice(k) : text + mark; }
+  text = pv ? `${photo(meta.pv1, meta.pvCap1, meta.pvAlt1)}\n${text}` : `${photo(img1, (meta.thumb ?? []).join(" "), hand ? alt1 : (meta.thumb ?? []).join(" "))}\n${text}`;
+  if (meta.attach) text += `\n\n[파일 첨부: ${meta.attach}]\n[↑ 카페 글쓰기의 '파일' 버튼으로 이 엑셀 파일을 첨부 — 본문에 쓰지 않음]`;
   // 태그는 글 맨 끝(작성일 줄 바로 아래, 글 구분선 바로 위) — 본문을 다 붙여 넣은 뒤 태그 칸에 옮기기 편하게
   return [`[${i + 1}] 게시판: ${meta.menu}${meta.status === "초안" && meta.kind === "상품" ? "   ※ 광고 심의 후 게시" : ""}`, `제목: ${meta.title}`, "----- 본문 -----", text, "", foot, `태그: ${tags}`].join("\n");
 }).join(sep);
