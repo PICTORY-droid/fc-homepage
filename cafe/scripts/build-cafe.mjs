@@ -89,7 +89,11 @@ const plain = posts.map(({ meta, body }, i) => {
   if (pv) { const k = text.indexOf("\n【"); const mark = `\n${photo(meta.pv2, meta.pvCap2, meta.pvAlt2)}\n`; text = k > 0 ? text.slice(0, k) + mark + text.slice(k) : text + mark; }
   else if (hand) { const k = text.indexOf("\n【"); const mark = `\n${photo(`hand/${meta.slug}-2.png`, meta.cardTitle, alt2)}\n`; text = k > 0 ? text.slice(0, k) + mark + text.slice(k) : text + mark; }
   text = pv ? `${photo(meta.pv1, meta.pvCap1, meta.pvAlt1)}\n${text}` : `${photo(img1, (meta.thumb ?? []).join(" "), hand ? alt1 : (meta.thumb ?? []).join(" "))}\n${text}`;
-  if (meta.attach) text += `\n\n[파일 첨부: ${meta.attach}]\n[↑ 카페 글쓰기의 '파일' 버튼으로 이 엑셀 파일을 첨부 — 본문에 쓰지 않음]`;
+  // 본문에 [파일 첨부] 줄이 있으면 그 자리에, 없으면 글 끝에 첨부 안내를 둡니다
+  if (meta.attach) {
+    const att = `[파일 첨부: ${meta.attach}]\n[↑ 카페 글쓰기의 '파일' 버튼으로 이 자리에 이 엑셀 파일을 첨부 — 이 두 줄은 본문에 쓰지 않음]`;
+    text = text.includes("[파일 첨부]") ? text.replace("[파일 첨부]", att) : `${text}\n\n${att}`;
+  }
   // 태그는 글 맨 끝(작성일 줄 바로 아래, 글 구분선 바로 위) — 본문을 다 붙여 넣은 뒤 태그 칸에 옮기기 편하게
   return [`[${i + 1}] 게시판: ${meta.menu}${meta.status === "초안" && meta.kind === "상품" ? "   ※ 광고 심의 후 게시" : ""}`, `제목: ${meta.title}`, "----- 본문 -----", text, "", foot, `태그: ${tags}`].join("\n");
 }).join(sep);
