@@ -225,8 +225,8 @@
       "group": "묻고 답하기",
       "boards": [
         {
-          "name": "보험 질문방",
-          "write": "새싹",
+          "name": "자주 묻는 보험 Q&A",
+          "write": "매니저",
           "read": "전체",
           "area": "community",
           "bottomBanner": {
@@ -252,27 +252,6 @@
             "file": "assets/boards/board-12.png",
             "size": "1440x240",
             "alt": "무료 편지지·엑셀·이력서 양식 받기"
-          }
-        }
-      ]
-    },
-    {
-      "group": "이용 후기",
-      "boards": [
-        {
-          "name": "상담·카페 이용 후기",
-          "write": "이웃",
-          "read": "전체",
-          "area": "review",
-          "operatorWrite": false,
-          "bottomBanner": {
-            "icon": "☎️",
-            "text": "1:1 보험 상담 신청하기",
-            "style": "deep",
-            "url": "https://korea-bohum.vercel.app/consult?utm_source=naver_cafe&utm_medium=cafe&utm_campaign=board_banner",
-            "file": "assets/boards/board-13.png",
-            "size": "1440x240",
-            "alt": "1:1 보험 상담 신청하기"
           }
         }
       ]
@@ -356,7 +335,6 @@
     "product",
     "community",
     "free",
-    "review",
     "consult"
   ],
   "grades": [
@@ -371,7 +349,7 @@
       "joinWeeks": 0,
       "perks": [
         "모든 글 읽기",
-        "가입 인사·보험 질문방 글쓰기",
+        "가입 인사 글쓰기·1:1 상담 신청",
         "댓글 쓰기"
       ]
     },
@@ -385,8 +363,7 @@
       "likes": 0,
       "joinWeeks": 0,
       "perks": [
-        "자유게시판 글쓰기",
-        "이용 후기 쓰기"
+        "자유게시판 글쓰기"
       ]
     },
     {
@@ -482,7 +459,7 @@
     "memberListPublic": "비공개",
     "gradeNotice": "숨김",
     "region": "설정 안 함",
-    "joinGuide": "질문은 보험 질문방에, 개인정보는 글에 쓰지 말아 주세요.",
+    "joinGuide": "궁금한 점은 1:1 상담 게시판에, 개인정보는 일반 글에 쓰지 말아 주세요.",
     "joinQuestions": [],
     "acceptApplications": "받음",
     "gender": "모든 성별",
@@ -490,7 +467,7 @@
     "realNameOnly": "사용 안 함",
     "welcome": {
       "use": "사용",
-      "text": "가입을 환영해요! 처음이라면 필독 공지의 이용 안내를 먼저 읽어 주세요. 궁금한 보험 이야기는 보험 질문방에 편하게 남겨 주시면 답해 드릴게요. 무료 편지지·엑셀·이력서 양식도 자료실에서 바로 받아 가세요.",
+      "text": "가입을 환영해요! 처음이라면 필독 공지의 이용 안내를 먼저 읽어 주세요. 많이 묻는 질문은 '자주 묻는 보험 Q&A'에 정리해 두었고, 내 보험이 궁금하면 '1:1 상담 신청 안내' 게시판에 편하게 남겨 주세요. 무료 편지지·엑셀·이력서 양식도 자료실에서 바로 받아 가세요.",
       "notice": "welcome"
     }
   },

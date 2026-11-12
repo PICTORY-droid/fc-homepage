@@ -23,7 +23,8 @@ describe("카페 설정 검사(A)", () => {
   });
   it("후기 게시판을 운영자가 쓰면 막는다", () => {
     const c = structuredClone(cfg);
-    c.menus.find((g) => g.group === "이용 후기").boards[0].operatorWrite = true;
+    // 후기 게시판은 지금 카페에 없음(2026-11-12 'Q&A'로 바뀜) — 규칙(A6)은 나중에 다시 생길 때를 위해 가상 게시판으로 검사
+    c.menus.push({ group: "이용 후기", boards: [{ name: "이용 후기", write: "이웃", read: "전체", area: "review", operatorWrite: true }] });
     expect(codes(checkConfig(c))).toContain("A6");
   });
   it("등급 혜택에 경품을 넣으면 막는다", () => {
