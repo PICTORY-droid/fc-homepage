@@ -11,7 +11,7 @@ from playwright.sync_api import sync_playwright
 ROOT = Path(__file__).resolve().parents[2]
 TEMPLATE = (ROOT / "cafe/scripts/blog-widget.html").as_uri()
 SITE = "https://korea-bohum.vercel.app"
-CAFE = "https://cafe.naver.com/304050modu"
+CAFE = "https://cafe.naver.com/f-e/cafes/31270965/menus/14?viewType=I"  # 「편지지·엑셀·이력서 양식」 게시판(사진형 목록)
 WIDGETS = [
     ("forms", "cafe-forms.png", 620, "무료 엑셀 양식 60종", "우체국보험 길잡이 카페 무료 엑셀 양식 60종 - 가계부, 보험 정리표, 편지지"),
 ]
