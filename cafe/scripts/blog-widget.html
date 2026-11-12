@@ -1,58 +1,44 @@
 <!doctype html>
 <html lang="ko"><head><meta charset="utf-8">
-<!-- 네이버 블로그 사이드바 위젯 — 무료 엑셀 양식(가로 170px 표시 · 2배 크기 340px로 그림). make-blog-widget.py 가 render() 를 부릅니다.
-     블로그(템블리) 프로필 위젯과 같은 결: 흰 둥근 카드 + 옅은 라벤더 테두리 + 파스텔 알약 버튼 + 남색 단추 + 고딕체.
-     우체국 감성은 아치 안 엑셀 시트 옆의 작은 우표(톱니) 한 장으로만 은은하게. 캐릭터·하트는 쓰지 않습니다. -->
+<!-- 네이버 블로그 사이드바 위젯 — 우체국보험 길잡이 카페의 무료 엑셀 양식(가로 170px 표시 · 2배 크기 340px로 그림).
+     make-blog-widget.py 가 카페 대문(door-main.html)의 편지봉투 캐릭터 SVG를 넘겨 render(charSvg) 를 부릅니다.
+     카페 분위기: 빨강·주황 사선 띠, 크림·살구 바탕, 살구 테두리 + 아래 그림자 흰 타일, 굵은 고딕, 주황 단추.
+     블로그 결: 흰 둥근 카드 + 세로 알약 목록 + 단추 하나. 알약은 실제 엑셀 양식 제목만 씁니다. -->
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{width:340px;background:#fff}
-body{font-family:'Noto Sans CJK KR','Noto Sans KR',sans-serif;padding:4px}
-.card{width:332px;border:2px solid #DCE0F0;border-radius:32px;background:#fff;padding:30px 26px 26px;text-align:center}
-.emb{display:block;margin:0 auto 14px}
-h1{font-size:35px;font-weight:700;color:#22263A;letter-spacing:-1px;line-height:1.2}
-h1 b{color:#2E3A8C}
-.sub{margin-top:8px;font-size:21px;white-space:nowrap;color:#6E7385;letter-spacing:-.5px}
-.pills{margin-top:22px;display:flex;flex-direction:column;gap:12px}
-.pill{height:54px;border-radius:27px;display:flex;align-items:center;justify-content:center;font-size:25px;font-weight:700;letter-spacing:-.5px}
-.btn{margin-top:16px;height:60px;border-radius:30px;background:#2E3A8C;color:#fff;display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:700;letter-spacing:-.5px}
-.foot{margin-top:16px;font-size:19px;color:#9A9EAD;letter-spacing:-.5px;line-height:1.4}
+body{font-family:'Noto Sans CJK KR','Noto Sans KR',sans-serif;padding:4px 4px 12px}
+.card{position:relative;width:332px;border:2px solid #FFDAC1;border-radius:30px;background:linear-gradient(180deg,#FFFFFF 0%,#FFF8F2 70%,#FFF1E6 100%);box-shadow:0 8px 0 #FFDAC1;overflow:hidden;text-align:center;padding:40px 24px 40px}
+.stripe{position:absolute;left:0;right:0;height:14px;background:repeating-linear-gradient(135deg,#C23A26 0 22px,#fff 22px 34px,#FF883A 34px 56px,#fff 56px 68px)}
+.stripe.top{top:0}.stripe.bot{bottom:0}
+.char{width:118px;height:106px;display:block;margin:4px auto 6px}
+.chip{display:inline-block;padding:5px 16px;border:2px solid #FF883A;border-radius:20px;background:#fff;color:#C23A26;font-size:19px;font-weight:800;letter-spacing:-.5px}
+h1{margin-top:12px;font-size:36px;font-weight:900;color:#333;letter-spacing:-1.5px;line-height:1.15;white-space:nowrap}
+h1 b{color:#C23A26}
+.sub{margin-top:8px;font-size:20px;font-weight:500;color:#7A6A61;letter-spacing:-.5px;white-space:nowrap}
+.pills{margin-top:20px;display:flex;flex-direction:column;gap:10px}
+.pill{height:50px;border-radius:25px;background:#fff;border:2px solid #FFDAC1;color:#A34506;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:800;letter-spacing:-.7px;white-space:nowrap}
+.pill:nth-child(even){background:#FFF4EC}
+.btn{margin-top:16px;height:60px;border-radius:30px;background:#F36B0E;box-shadow:0 5px 0 #C4540A;color:#fff;display:flex;align-items:center;justify-content:center;font-size:25px;font-weight:900;letter-spacing:-.7px}
+.foot{margin-top:18px;font-size:18px;font-weight:500;color:#9A8B82;letter-spacing:-.5px}
 </style></head>
 <body><div class="card" id="card">
-<svg class="emb" width="128" height="150" viewBox="0 0 128 150" xmlns="http://www.w3.org/2000/svg">
-  <!-- 아치 -->
-  <path d="M8 146V64a56 56 0 0 1 112 0v82z" fill="#DCEBFA" stroke="#C49A5E" stroke-width="5"/>
-  <!-- 엑셀 시트 -->
-  <rect x="26" y="56" width="66" height="74" rx="6" fill="#fff" stroke="#2E3A8C" stroke-width="3.5"/>
-  <rect x="26" y="56" width="66" height="17" rx="6" fill="#2E3A8C"/>
-  <rect x="26" y="66" width="66" height="7" fill="#2E3A8C"/>
-  <g stroke="#C9D2EA" stroke-width="2.5"><path d="M30 88h58M30 102h58M30 116h58M50 73v53"/></g>
-  <rect x="32" y="79" width="14" height="6" rx="2" fill="#F6C9D0"/>
-  <rect x="32" y="93" width="14" height="6" rx="2" fill="#CFE0F7"/>
-  <rect x="32" y="107" width="14" height="6" rx="2" fill="#F8E6B4"/>
-  <!-- 작은 우표(톱니) -->
-  <g transform="rotate(8 98 104)">
-    <rect x="78" y="84" width="40" height="44" fill="#FBE9EC" stroke="#E7B7BF" stroke-width="2"/>
-    <g fill="#DCEBFA" id="perf"></g>
-    <text x="98" y="112" font-size="14" font-weight="700" fill="#B23A48" text-anchor="middle" font-family="Noto Sans CJK KR">무료</text>
-  </g>
-</svg>
+<div class="stripe top"></div>
+<div id="char"></div>
+<span class="chip">우체국보험 길잡이 카페</span>
 <h1>무료 <b>엑셀 양식</b></h1>
 <div class="sub">60종 · 미리보고 골라 받기</div>
-<div class="pills">
-  <div class="pill" style="background:#E9F0FB;color:#2A3C8F">보험 정리표</div>
-  <div class="pill" style="background:#FBEAEE;color:#B23A48">가계부 · 살림</div>
-  <div class="pill" style="background:#F0EBF8;color:#5B3FA8">생활 · 일정</div>
-  <div class="pill" style="background:#F5EFE6;color:#7A5A3A">업무 양식</div>
-  <div class="pill" style="background:#FBF3DC;color:#8A6A1A">편지지</div>
+<div class="pills"><!-- 실제 엑셀 양식 제목 그대로(없는 것은 쓰지 않음) -->
+  <div class="pill">보험 만기·갱신 달력</div>
+  <div class="pill">한 달 가계부</div>
+  <div class="pill">생활비 예산표</div>
+  <div class="pill">월간 일정 달력</div>
+  <div class="pill">주간 업무 계획표</div>
 </div>
 <div class="btn">양식 받으러 가기 ›</div>
-<div class="foot">우체국보험 길잡이 카페<br>우체국보험 FC가 무료로 나눠요</div>
+<div class="foot">우체국보험 FC가 무료로 나눠요</div>
+<div class="stripe bot"></div>
 </div>
 <script>
-// 우표 톱니: 가장자리에 바탕색 반원 홈
-const perf = document.getElementById("perf");
-const dot = (x, y) => { const c = document.createElementNS("http://www.w3.org/2000/svg", "circle"); c.setAttribute("cx", x); c.setAttribute("cy", y); c.setAttribute("r", 2.6); perf.appendChild(c); };
-for (let i = 84; i <= 118; i += 8) { dot(i, 84); dot(i, 128); }
-for (let i = 90; i <= 124; i += 8) { dot(78, i); dot(118, i); }
-window.render = () => true;
+window.render = (charSvg) => { document.getElementById("char").innerHTML = charSvg; return true; };
 </script></body></html>
