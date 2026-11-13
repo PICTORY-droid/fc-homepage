@@ -12,6 +12,8 @@ const cfg = loadConfig();
 const OUT = join(CAFE, "out");
 mkdirSync(OUT, { recursive: true });
 const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+// 꼬리말의 공식 정보·출처 주소는 카페 에디터가 링크로 바꾸지 않게, 보이지 않는 폭 없는 공백(U+200B)을 '://'와 '.' 뒤에 넣어 글자로만 둡니다.
+const noLink = (s) => String(s).replace(/https?:\/\/[^\s]+/g, (u) => u.replace("://", ":\u200B//").replace(/\./g, ".\u200B"));
 
 /** 홈페이지 링크에만 유입 표시(UTM)를 붙입니다 — 관리자 통계에서 카페 유입·상담 전환을 글별로 봅니다. */
 const withUtm = (slug) => (u) => {
@@ -40,11 +42,11 @@ for (const { meta, body } of posts) {
   const noConsult = meta.consult === "false";
   const noOfficial = meta.official === "false";
   const foot = `<div class="foot">
-<p>기준일 ${esc(meta.asOf)} · ${esc(meta.credit ?? `출처: ${[...new Set(meta.sources.map((s) => new URL(s).host.replace(/^www\./, "")))].join(", ")}`)}</p>
+<p>기준일 ${esc(meta.asOf)} · ${esc(noLink(meta.credit ?? `출처: ${[...new Set(meta.sources.map((s) => new URL(s).host.replace(/^www\./, "")))].join(", ")}`))}</p>
 ${meta.kind === "상품" ? `<p>${esc(f.premium)}</p>` : ""}
 ${noOfficial ? "" : `<p>${esc(f.service)}</p>`}
 ${noConsult ? "" : `<p>${esc(f.consult.label)}${f.consult.hint ? `<br>${esc(f.consult.hint)}` : ""}<br><a href="${esc(link(f.consult.url))}">${esc(f.consult.url)}</a></p>`}
-${noOfficial ? "" : `<p>${esc(f.officialInfo).replace(/\n/g, "<br>")}</p>`}
+${noOfficial ? "" : `<p>${esc(noLink(f.officialInfo)).replace(/\n/g, "<br>")}</p>`}
 ${meta.reviewNo ? `<p>심의필 ${esc(meta.reviewNo)}</p>` : ""}</div>`;
   const name = `${meta.status === "초안" ? "초안_" : ""}${meta.slug}.html`;
   writeFileSync(join(OUT, name), page(meta.title, `${toHtml(body, link)}\n${foot}`));
@@ -52,19 +54,19 @@ ${meta.reviewNo ? `<p>심의필 ${esc(meta.reviewNo)}</p>` : ""}</div>`;
 }
 // 붙여넣기용 보통 글 묶음 — 게시판·제목·태그·대표 이미지·대체 텍스트·본문을 글마다 차례로
 const sep = "\n\n==================================================\n\n";
-// 사진 파일 이름은 한글로 — 저장소 원본(cafe/assets/hand·thumbs·qa, 영문 slug)은 그대로 두고,
-// cafe/out/사진/<게시판>/<글 제목>_<n>.png 로 복사해 원고의 [사진: …] 경로도 그 이름으로 씁니다.
-// (무료 양식 미리보기 '미리보기/…' 는 이미 한글 이름이라 그대로)
+// 사진 파일 이름은 한글 글 제목 그대로 — 저장소 원본(영문 slug)은 그대로 두고 사진/<게시판>/<글 제목>.png 로 복사합니다.
+// 두 번째 사진은 '<글 제목> (2).png'. 원고에는 [사진: <글 제목>] 처럼 파일 이름만 적습니다(경로·번호·확장자 없음).
 const PHOTO_OUT = join(OUT, "사진");
 rmSync(PHOTO_OUT, { recursive: true, force: true });
-const safeName = (s) => String(s).replace(/[\\/:*?"<>|,]/g, "").replace(/\s+/g, "_").replace(/_+/g, "_").replace(/^_|_$/g, "");
+const safeName = (s) => String(s).replace(/[\\/:*?"<>|,]/g, "").replace(/\s+/g, " ").trim().replace(/\.+$/, "");
+const photoSource = (src) => (/^미리보기\//.test(src) ? join(join(CAFE, "forms", "out"), src) : join(join(CAFE, "assets"), src));
 const koPhoto = (meta, src, n) => {
-  const from = join(CAFE, "assets", src);
-  if (!/^(hand|thumbs|qa)\//.test(src) || !existsSync(from)) return src;
-  const rel = `사진/${safeName(meta.menu)}/${safeName(meta.title)}_${n}.png`;
-  mkdirSync(join(OUT, "사진", safeName(meta.menu)), { recursive: true });
-  copyFileSync(from, join(OUT, rel));
-  return rel;
+  const from = photoSource(src);
+  if (!existsSync(from)) return src;
+  const name = `${safeName(meta.title)}${n > 1 ? ` (${n})` : ""}`;
+  mkdirSync(join(PHOTO_OUT, safeName(meta.menu)), { recursive: true });
+  copyFileSync(from, join(PHOTO_OUT, safeName(meta.menu), `${name}.png`));
+  return name;
 };
 const plain = posts.map(({ meta, body }, i) => {
   const f = cfg.footer;
@@ -77,7 +79,7 @@ const plain = posts.map(({ meta, body }, i) => {
   // 머리말 consult: false → 상담 링크 빼기, official: false → 공식 정보·민원 창구 빼기 (무료 양식 소개 글)
   const noConsult = meta.consult === "false";
   const noOfficial = meta.official === "false";
-  const foot = [noConsult ? "" : [f.consult.label, f.consult.hint, f.consult.url].filter(Boolean).join("\n"), meta.kind === "상품" ? f.premium : "", noOfficial ? "" : `${f.officialInfo}\n`, noOfficial ? "" : f.service, dateLine].filter(Boolean).join("\n");
+  const foot = [noConsult ? "" : [f.consult.label, f.consult.hint, f.consult.url].filter(Boolean).join("\n"), meta.kind === "상품" ? f.premium : "", noOfficial ? "" : `${noLink(f.officialInfo)}\n`, noOfficial ? "" : f.service, noLink(dateLine)].filter(Boolean).join("\n");
   // 태그 10개: 글 키워드 먼저, 모자라면 카페 공통 태그로 채움(중복 제거) — 네이버 카페 태그 최대 10개
   const tags = [...new Set([...(meta.tags ?? []), ...meta.keywords, ...cfg.commonTags].map((k) => k.replace(/\s/g, "")))].slice(0, cfg.limits.tags).map((k) => `#${k}`).join(" ");
   const hand = Boolean(meta.icon); // 손그림 이미지(대표 + 메모 카드)가 있는 글
@@ -98,7 +100,7 @@ const plain = posts.map(({ meta, body }, i) => {
   const alt1 = `${end((meta.thumb ?? []).join(" "))} ${meta.sub ?? ""}`.trim();
   const cardLines = (meta.card ?? "").split("|").map((x) => x.trim()).filter(Boolean);
   const alt2 = `${meta.cardTitle}. ${cardLines.join(", ")}`;
-  const photo = (file, cap, alt, n = 1) => `[사진: ${koPhoto(meta, file, n)}]\n[↑ 사진의 대체텍스트 칸에만 넣기 — 본문에 쓰지 않음] ${alt}\n${cap}`;
+  const photo = (file, cap, alt, n = 1) => `[사진: ${koPhoto(meta, file, n)}]\n${cap}`;
   // 머리말 pv1·pv2(+pvCap·pvAlt) → 손그림 대신 그 사진 두 장(무료 양식 미리보기), attach → 첨부할 파일 안내 줄
   const pv = Boolean(meta.pv1); // pv1 만 있으면 사진 한 장(Q&A 카드뉴스), pv2 까지 있으면 두 장
   if (pv && meta.pv2) { const k = text.indexOf("\n【"); const mark = `\n${photo(meta.pv2, meta.pvCap2, meta.pvAlt2, 2)}\n`; text = k > 0 ? text.slice(0, k) + mark + text.slice(k) : text + mark; }
