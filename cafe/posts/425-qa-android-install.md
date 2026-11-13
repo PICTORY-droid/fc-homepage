@@ -8,7 +8,8 @@ keywords: [우체국보험 앱, 안드로이드 설치 오류, 앱 설치 오류
 tags: [앱설치오류, 안드로이드, Play스토어, 캐시삭제, 우체국보험앱설치, 스마트보험, 우체국보험앱, 우체국보험, 우체국보험길잡이, 보험QnA]
 written: 2026-11-13
 asOf: 2026-11-13
-sources: [https://www.epostlife.go.kr/IPCCFQ0001.do]
+sources: [https://epostlife.go.kr/]
+credit: 출처: https://epostlife.go.kr/
 thumb: [앱 설치가, 안 돼요(안드로이드)]
 sub: 자주 묻는 보험 Q&A · 앱 이용
 pv1: qa/qa-android-install.png

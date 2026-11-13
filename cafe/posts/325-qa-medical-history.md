@@ -8,7 +8,8 @@ keywords: [병력이 있어도 우체국보험 가입, 우체국보험 병력 �
 tags: [병력보험가입, 유병자보험, 우체국보험가입, 고지의무, 보험가입상담, 우체국창구, 건강상태, 우체국보험, 우체국보험길잡이, 보험QnA]
 written: 2026-11-13
 asOf: 2026-11-13
-sources: [https://www.epostlife.go.kr/IPCCFQ0001.do]
+sources: [https://epostlife.go.kr/]
+credit: 출처: https://epostlife.go.kr/
 thumb: [예전에 병력이 있는데, 가입할 수 있나요?]
 sub: 자주 묻는 보험 Q&A · 보험 가입
 pv1: qa/qa-medical-history.png

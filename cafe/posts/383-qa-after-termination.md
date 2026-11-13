@@ -8,7 +8,8 @@ keywords: [입원급부금, 해지 후 입원급부금, 해지 후 보험금 청
 tags: [입원급부금, 해지후보험금, 보험해지, 재해입원, 보험금청구, 사고보험금, 우체국보험, 우체국보험길잡이, 보험QnA]
 written: 2026-11-13
 asOf: 2026-11-13
-sources: [https://www.epostlife.go.kr/IPCCFQ0001.do]
+sources: [https://epostlife.go.kr/]
+credit: 출처: https://epostlife.go.kr/
 thumb: [입원 중에 해지됐어요, 청구할 수 있나요?]
 sub: 자주 묻는 보험 Q&A · 사고보험금
 pv1: qa/qa-after-termination.png

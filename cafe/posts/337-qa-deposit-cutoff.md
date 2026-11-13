@@ -8,7 +8,8 @@ keywords: [우체국계좌, 보험료 출금 시간, 보험 실효 입금]
 tags: [보험실효, 보험료출금시간, 우체국계좌, 보험료미납, 자동이체, 실효예방, 우체국보험료, 우체국보험, 우체국보험길잡이, 보험QnA]
 written: 2026-11-13
 asOf: 2026-11-13
-sources: [https://www.epostlife.go.kr/IPCCFQ0001.do]
+sources: [https://epostlife.go.kr/]
+credit: 출처: https://epostlife.go.kr/
 thumb: [말일 저녁에 입금했는데, 왜 실효됐나요?]
 sub: 자주 묻는 보험 Q&A · 납입·자동이체
 pv1: qa/qa-deposit-cutoff.png

@@ -8,7 +8,8 @@ keywords: [연금 받는 주기, 연금지급주기 변경, 연금 주기]
 tags: [연금지급주기, 연금주기변경, 연금개시, 연금보험, 우체국연금보험, 연금수령, 우체국보험, 우체국보험길잡이, 보험QnA]
 written: 2026-11-13
 asOf: 2026-11-13
-sources: [https://www.epostlife.go.kr/IPCCFQ0001.do]
+sources: [https://epostlife.go.kr/]
+credit: 출처: https://epostlife.go.kr/
 thumb: [연금 받는 주기, 바꿀 수 있나요?]
 sub: 자주 묻는 보험 Q&A · 생존보험금
 pv1: qa/qa-annuity-cycle.png

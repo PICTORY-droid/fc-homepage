@@ -6,7 +6,8 @@ kind: 공지
 status: 초안
 keywords: [자주 묻는 보험 Q&A, 우체국보험 질문, 우체국보험 상담]
 asOf: 2026-11-12
-sources: [https://korea-bohum.vercel.app]
+sources: [https://epostlife.go.kr/]
+credit: 출처: https://epostlife.go.kr/
 thumb: [자주 묻는 보험 Q&A, 이렇게 활용하세요]
 sub: 많이 묻는 질문을 공식 자료로 정리해요
 pv1: qa/qna-guide.png

@@ -8,7 +8,8 @@ keywords: [우체국보험 환급금대출 이율, 환급금대출이율, 약관
 tags: [환급금대출이율, 약관대출금리, 보험대출이자, 공시실, 변동금리, 우체국보험대출, 적용이율, 우체국보험, 우체국보험길잡이, 보험QnA]
 written: 2026-11-13
 asOf: 2026-11-13
-sources: [https://www.epostlife.go.kr/IPCCFQ0001.do]
+sources: [https://epostlife.go.kr/]
+credit: 출처: https://epostlife.go.kr/
 thumb: [환급금대출 이율, 어디서 확인하나요?]
 sub: 자주 묻는 보험 Q&A · 환급금대출
 pv1: qa/qa-loan-rate.png

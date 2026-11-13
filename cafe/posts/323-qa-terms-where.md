@@ -8,7 +8,8 @@ keywords: [우체국보험 약관 보는 곳, 우체국보험 약관, 판매중�
 tags: [우체국보험약관, 보험약관, 약관보기, 상품공시, 공시실, 스마트보험, 판매중지약관, 우체국보험, 우체국보험길잡이, 보험QnA]
 written: 2026-11-13
 asOf: 2026-11-13
-sources: [https://www.epostlife.go.kr/IPCCFQ0001.do]
+sources: [https://epostlife.go.kr/]
+credit: 출처: https://epostlife.go.kr/
 thumb: [보험약관은, 어디서 볼 수 있나요?]
 sub: 자주 묻는 보험 Q&A · 보험 가입
 pv1: qa/qa-terms-where.png

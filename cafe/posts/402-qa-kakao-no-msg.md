@@ -8,7 +8,8 @@ keywords: [카카오페이 인증 메시지, 카카오페이 인증 안 옴, 카
 tags: [카카오페이인증, 카카오페이알림, 인증메시지, 카카오페이채널, 우체국보험앱, 로그인오류, 스마트보험, 우체국보험, 우체국보험길잡이, 보험QnA]
 written: 2026-11-13
 asOf: 2026-11-13
-sources: [https://www.epostlife.go.kr/IPCCFQ0001.do]
+sources: [https://epostlife.go.kr/]
+credit: 출처: https://epostlife.go.kr/
 thumb: [카카오페이 인증, 메시지가 안 와요]
 sub: 자주 묻는 보험 Q&A · 로그인·인증
 pv1: qa/qa-kakao-no-msg.png

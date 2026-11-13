@@ -8,7 +8,8 @@ keywords: [다른 은행 공동인증서, 타행 공동인증서, 공동인증�
 tags: [타행인증서, 공동인증서, 공동인증서가져오기, 인증서등록, 우체국보험앱, 스마트보험, 우체국보험홈페이지, 우체국보험, 우체국보험길잡이, 보험QnA]
 written: 2026-11-13
 asOf: 2026-11-13
-sources: [https://www.epostlife.go.kr/IPCCFQ0001.do]
+sources: [https://epostlife.go.kr/]
+credit: 출처: https://epostlife.go.kr/
 thumb: [다른 은행 공동인증서, 쓸 수 있나요?]
 sub: 자주 묻는 보험 Q&A · 로그인·인증
 pv1: qa/qa-other-bank-cert.png

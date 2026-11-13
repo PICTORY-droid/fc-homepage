@@ -8,7 +8,8 @@ keywords: [우체국보험 계약자 변경, 계약자 변경 서류, 보험 명
 tags: [계약자변경, 보험명의변경, 계약자변경서류, 위임장, 인감증명서, 본인서명사실확인서, 우체국보험, 우체국보험길잡이, 보험QnA]
 written: 2026-11-13
 asOf: 2026-11-13
-sources: [https://www.epostlife.go.kr/IPCCFQ0001.do]
+sources: [https://epostlife.go.kr/]
+credit: 출처: https://epostlife.go.kr/
 thumb: [계약자 변경, 어떻게 하나요?]
 sub: 자주 묻는 보험 Q&A · 계약 관리
 pv1: qa/qa-owner-change.png

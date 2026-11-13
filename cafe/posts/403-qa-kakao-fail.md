@@ -8,7 +8,8 @@ keywords: [카카오페이 인증, 스마트보험 가입 인증 오류, 카카�
 tags: [카카오페이인증, 인증오류, 휴대폰번호변경, 스마트보험가입, 우체국보험다이렉트, 우체국보험앱, 본인인증, 우체국보험, 우체국보험길잡이, 보험QnA]
 written: 2026-11-13
 asOf: 2026-11-13
-sources: [https://www.epostlife.go.kr/IPCCFQ0001.do]
+sources: [https://epostlife.go.kr/]
+credit: 출처: https://epostlife.go.kr/
 thumb: [가입 마지막 단계, 카카오페이 인증이 안 돼요]
 sub: 자주 묻는 보험 Q&A · 로그인·인증
 pv1: qa/qa-kakao-fail.png

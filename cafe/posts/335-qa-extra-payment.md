@@ -8,7 +8,8 @@ keywords: [우체국보험 추가납입, 보험료 추가납입, 스마트보험
 tags: [추가납입, 보험료추가납입, 우체국연금저축, 파워적립보험, 스마트보험, 우체국보험앱, 저축보험, 우체국보험, 우체국보험길잡이, 보험QnA]
 written: 2026-11-13
 asOf: 2026-11-13
-sources: [https://www.epostlife.go.kr/IPCCFQ0001.do]
+sources: [https://epostlife.go.kr/]
+credit: 출처: https://epostlife.go.kr/
 thumb: [보험료를 더 내고 싶어요, 추가납입 되나요?]
 sub: 자주 묻는 보험 Q&A · 납입·자동이체
 pv1: qa/qa-extra-payment.png

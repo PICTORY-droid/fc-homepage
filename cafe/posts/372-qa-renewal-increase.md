@@ -8,7 +8,8 @@ keywords: [갱신형 보험, 갱신 보험료 인상, 실손 갱신 보험료]
 tags: [갱신형보험, 갱신보험료, 보험료인상, 실손갱신, 갱신거절, 우체국실손보험, 우체국보험, 우체국보험길잡이, 보험QnA]
 written: 2026-11-13
 asOf: 2026-11-13
-sources: [https://www.epostlife.go.kr/IPCCFQ0001.do]
+sources: [https://epostlife.go.kr/]
+credit: 출처: https://epostlife.go.kr/
 thumb: [갱신형 보험, 보험료가 많이 오르나요?]
 sub: 자주 묻는 보험 Q&A · 계약 관리
 pv1: qa/qa-renewal-increase.png

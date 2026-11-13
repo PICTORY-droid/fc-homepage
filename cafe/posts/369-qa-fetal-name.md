@@ -8,7 +8,8 @@ keywords: [태아보험 아기 이름 등록, 태아보험 출생 후, 태아보
 tags: [태아보험, 태아보험출생, 자녀이름등록, 출생신고후보험, 어린이보험, 친권자, 우체국보험, 우체국보험길잡이, 보험QnA]
 written: 2026-11-13
 asOf: 2026-11-13
-sources: [https://www.epostlife.go.kr/IPCCFQ0001.do]
+sources: [https://epostlife.go.kr/]
+credit: 출처: https://epostlife.go.kr/
 thumb: [아기가 태어났어요, 이름 등록은?]
 sub: 자주 묻는 보험 Q&A · 계약 관리
 pv1: qa/qa-fetal-name.png

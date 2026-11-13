@@ -8,7 +8,8 @@ keywords: [해외 병원 치료비 실손보험, 해외 의료비 실손, 해외
 tags: [해외병원실비, 해외의료비, 해외치료실손, 실손보험, 우체국실손보험, 실비청구, 우체국보험, 우체국보험길잡이, 보험QnA]
 written: 2026-11-13
 asOf: 2026-11-13
-sources: [https://www.epostlife.go.kr/IPCCFQ0001.do]
+sources: [https://epostlife.go.kr/]
+credit: 출처: https://epostlife.go.kr/
 thumb: [해외 병원 치료비, 실손 되나요?]
 sub: 자주 묻는 보험 Q&A · 사고보험금
 pv1: qa/qa-abroad-hospital.png

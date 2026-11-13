@@ -8,7 +8,8 @@ keywords: [우체국보험 이름 정정, 개명 보험 정정, 개명 후 보�
 tags: [개명, 개명보험, 이름변경, 보험정보변경, 주민등록초본, 기본증명서, 우체국보험, 우체국보험길잡이, 보험QnA]
 written: 2026-11-13
 asOf: 2026-11-13
-sources: [https://www.epostlife.go.kr/IPCCFQ0001.do]
+sources: [https://epostlife.go.kr/]
+credit: 출처: https://epostlife.go.kr/
 thumb: [개명했어요, 이름 정정은 어떻게?]
 sub: 자주 묻는 보험 Q&A · 계약 관리
 pv1: qa/qa-name-change.png

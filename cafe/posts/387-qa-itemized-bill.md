@@ -8,7 +8,8 @@ keywords: [진료비세부내역서, 실손 청구 서류, 진료비 세부내�
 tags: [진료비세부내역서, 실손청구서류, 실비청구서류, 진료비영수증, 실손보험청구, 병원서류, 우체국실손보험, 우체국보험, 우체국보험길잡이, 보험QnA]
 written: 2026-11-13
 asOf: 2026-11-13
-sources: [https://www.epostlife.go.kr/IPCCFQ0001.do]
+sources: [https://epostlife.go.kr/]
+credit: 출처: https://epostlife.go.kr/
 thumb: [진료비세부내역서, 무엇인가요?]
 sub: 자주 묻는 보험 Q&A · 사고보험금
 pv1: qa/qa-itemized-bill.png

@@ -8,7 +8,8 @@ keywords: [입·퇴원확인서, 병원 폐업 서류, 폐업 병원 진료기�
 tags: [병원폐업, 입퇴원확인서, 진료기록, 보건소, 보험금청구서류, 청구서류, 우체국보험, 우체국보험길잡이, 보험QnA]
 written: 2026-11-13
 asOf: 2026-11-13
-sources: [https://www.epostlife.go.kr/IPCCFQ0001.do]
+sources: [https://epostlife.go.kr/]
+credit: 출처: https://epostlife.go.kr/
 thumb: [병원이 폐업했어요, 서류는 어디서?]
 sub: 자주 묻는 보험 Q&A · 사고보험금
 pv1: qa/qa-closed-hospital.png

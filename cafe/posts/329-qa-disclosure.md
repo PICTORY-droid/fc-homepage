@@ -8,7 +8,8 @@ keywords: [보험 고지의무, 고지의무 위반, 우체국보험 고지의�
 tags: [고지의무, 고지의무위반, 보험계약해지, 보장제한, 우체국보험, 보험가입, 계약전알릴의무, 우체국보험길잡이, 보험QnA]
 written: 2026-11-13
 asOf: 2026-11-13
-sources: [https://www.epostlife.go.kr/IPCCFQ0001.do]
+sources: [https://epostlife.go.kr/]
+credit: 출처: https://epostlife.go.kr/
 thumb: [고지의무를 위반하면, 어떻게 되나요?]
 sub: 자주 묻는 보험 Q&A · 보험 가입
 pv1: qa/qa-disclosure.png

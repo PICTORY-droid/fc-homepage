@@ -1,6 +1,6 @@
 // 카페 원고 → 붙여넣기용 HTML (cafe/out). 검사를 통과해야 만듭니다. 사용: npm run cafe:build
 // out/index.html 을 열고 글을 눌러 → 본문 전체 선택(Ctrl+A) → 복사 → 카페 스마트에디터에 붙여 넣기
-import { mkdirSync, writeFileSync } from "node:fs";
+import { copyFileSync, existsSync, mkdirSync, rmSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { execFileSync } from "node:child_process";
 import { toHtml, toPlain } from "./lib/markdown.mjs";
@@ -52,6 +52,20 @@ ${meta.reviewNo ? `<p>심의필 ${esc(meta.reviewNo)}</p>` : ""}</div>`;
 }
 // 붙여넣기용 보통 글 묶음 — 게시판·제목·태그·대표 이미지·대체 텍스트·본문을 글마다 차례로
 const sep = "\n\n==================================================\n\n";
+// 사진 파일 이름은 한글로 — 저장소 원본(cafe/assets/hand·thumbs·qa, 영문 slug)은 그대로 두고,
+// cafe/out/사진/<게시판>/<글 제목>_<n>.png 로 복사해 원고의 [사진: …] 경로도 그 이름으로 씁니다.
+// (무료 양식 미리보기 '미리보기/…' 는 이미 한글 이름이라 그대로)
+const PHOTO_OUT = join(OUT, "사진");
+rmSync(PHOTO_OUT, { recursive: true, force: true });
+const safeName = (s) => String(s).replace(/[\\/:*?"<>|,]/g, "").replace(/\s+/g, "_").replace(/_+/g, "_").replace(/^_|_$/g, "");
+const koPhoto = (meta, src, n) => {
+  const from = join(CAFE, "assets", src);
+  if (!/^(hand|thumbs|qa)\//.test(src) || !existsSync(from)) return src;
+  const rel = `사진/${safeName(meta.menu)}/${safeName(meta.title)}_${n}.png`;
+  mkdirSync(join(OUT, "사진", safeName(meta.menu)), { recursive: true });
+  copyFileSync(from, join(OUT, rel));
+  return rel;
+};
 const plain = posts.map(({ meta, body }, i) => {
   const f = cfg.footer;
   const link = withUtm(meta.slug);
@@ -83,11 +97,11 @@ const plain = posts.map(({ meta, body }, i) => {
   const alt1 = `${end((meta.thumb ?? []).join(" "))} ${meta.sub ?? ""}`.trim();
   const cardLines = (meta.card ?? "").split("|").map((x) => x.trim()).filter(Boolean);
   const alt2 = `${meta.cardTitle}. ${cardLines.join(", ")}`;
-  const photo = (file, cap, alt) => `[사진: ${file}]\n[↑ 사진의 대체텍스트 칸에만 넣기 — 본문에 쓰지 않음] ${alt}\n${cap}`;
+  const photo = (file, cap, alt, n = 1) => `[사진: ${koPhoto(meta, file, n)}]\n[↑ 사진의 대체텍스트 칸에만 넣기 — 본문에 쓰지 않음] ${alt}\n${cap}`;
   // 머리말 pv1·pv2(+pvCap·pvAlt) → 손그림 대신 그 사진 두 장(무료 양식 미리보기), attach → 첨부할 파일 안내 줄
   const pv = Boolean(meta.pv1); // pv1 만 있으면 사진 한 장(Q&A 카드뉴스), pv2 까지 있으면 두 장
-  if (pv && meta.pv2) { const k = text.indexOf("\n【"); const mark = `\n${photo(meta.pv2, meta.pvCap2, meta.pvAlt2)}\n`; text = k > 0 ? text.slice(0, k) + mark + text.slice(k) : text + mark; }
-  else if (!pv && hand) { const k = text.indexOf("\n【"); const mark = `\n${photo(`hand/${meta.slug}-2.png`, meta.cardTitle, alt2)}\n`; text = k > 0 ? text.slice(0, k) + mark + text.slice(k) : text + mark; }
+  if (pv && meta.pv2) { const k = text.indexOf("\n【"); const mark = `\n${photo(meta.pv2, meta.pvCap2, meta.pvAlt2, 2)}\n`; text = k > 0 ? text.slice(0, k) + mark + text.slice(k) : text + mark; }
+  else if (!pv && hand) { const k = text.indexOf("\n【"); const mark = `\n${photo(`hand/${meta.slug}-2.png`, meta.cardTitle, alt2, 2)}\n`; text = k > 0 ? text.slice(0, k) + mark + text.slice(k) : text + mark; }
   text = pv ? `${photo(meta.pv1, meta.pvCap1, meta.pvAlt1)}\n${text}` : `${photo(img1, (meta.thumb ?? []).join(" "), hand ? alt1 : (meta.thumb ?? []).join(" "))}\n${text}`;
   // 본문에 [파일 첨부] 줄이 있으면 그 자리에, 없으면 글 끝에 첨부 안내를 둡니다
   if (meta.attach) {

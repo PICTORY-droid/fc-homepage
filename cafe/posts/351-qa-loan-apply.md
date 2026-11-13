@@ -8,7 +8,8 @@ keywords: [우체국보험 환급금대출 신청, 약관대출 신청, 환급�
 tags: [환급금대출신청, 약관대출신청, 보험대출신청, 스마트보험, 폰뱅킹, 우체국보험대출, 보험계약대출, 우체국보험, 우체국보험길잡이, 보험QnA]
 written: 2026-11-13
 asOf: 2026-11-13
-sources: [https://www.epostlife.go.kr/IPCCFQ0001.do]
+sources: [https://epostlife.go.kr/]
+credit: 출처: https://epostlife.go.kr/
 thumb: [환급금대출, 어떻게 신청하나요?]
 sub: 자주 묻는 보험 Q&A · 환급금대출
 pv1: qa/qa-loan-apply.png

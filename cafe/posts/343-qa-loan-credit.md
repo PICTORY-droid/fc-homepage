@@ -8,7 +8,8 @@ keywords: [우체국보험 환급금대출, 신용불량자 보험대출, 신용
 tags: [환급금대출, 신용불량자대출, 보험약관대출, 약관대출, 우체국보험대출, 해약환급금, 보험계약대출, 우체국보험, 우체국보험길잡이, 보험QnA]
 written: 2026-11-13
 asOf: 2026-11-13
-sources: [https://www.epostlife.go.kr/IPCCFQ0001.do]
+sources: [https://epostlife.go.kr/]
+credit: 출처: https://epostlife.go.kr/
 thumb: [신용불량이어도, 환급금대출 되나요?]
 sub: 자주 묻는 보험 Q&A · 환급금대출
 pv1: qa/qa-loan-credit.png

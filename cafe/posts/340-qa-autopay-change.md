@@ -8,7 +8,8 @@ keywords: [우체국보험 자동이체, 자동이체 변경, 보험료 자동�
 tags: [자동이체신청, 자동이체변경, 자동이체해지, 우체국보험자동이체, 스마트보험, 보험료계좌변경, 예금주, 우체국보험, 우체국보험길잡이, 보험QnA]
 written: 2026-11-13
 asOf: 2026-11-13
-sources: [https://www.epostlife.go.kr/IPCCFQ0001.do]
+sources: [https://epostlife.go.kr/]
+credit: 출처: https://epostlife.go.kr/
 thumb: [자동이체 신청·변경, 어떻게 하나요?]
 sub: 자주 묻는 보험 Q&A · 납입·자동이체
 pv1: qa/qa-autopay-change.png

@@ -8,7 +8,8 @@ keywords: [환급금대출, 건강관리자금 대출 공제, 건강관리자금
 tags: [건강관리자금, 환급금대출, 미납보험료, 생존보험금, 대출상환, 약관대출, 우체국보험, 우체국보험길잡이, 보험QnA]
 written: 2026-11-13
 asOf: 2026-11-13
-sources: [https://www.epostlife.go.kr/IPCCFQ0001.do]
+sources: [https://epostlife.go.kr/]
+credit: 출처: https://epostlife.go.kr/
 thumb: [대출이 있으면, 빼고 받을 수 있나요?]
 sub: 자주 묻는 보험 Q&A · 생존보험금
 pv1: qa/qa-health-fund-loan.png

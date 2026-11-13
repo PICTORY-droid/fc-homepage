@@ -8,7 +8,8 @@ keywords: [자녀 보험, 자녀 보험 부모 신청, 미성년자 보험 가�
 tags: [자녀보험, 어린이보험, 미성년자보험, 친권자동의, 우체국보험가입, 자녀보험가입, 보험가입서류, 우체국보험, 우체국보험길잡이, 보험QnA]
 written: 2026-11-13
 asOf: 2026-11-13
-sources: [https://www.epostlife.go.kr/IPCCFQ0001.do]
+sources: [https://epostlife.go.kr/]
+credit: 출처: https://epostlife.go.kr/
 thumb: [자녀 보험, 부모가 신청하면 되나요?]
 sub: 자주 묻는 보험 Q&A · 보험 가입
 pv1: qa/qa-minor-parent.png

@@ -8,7 +8,8 @@ keywords: [우체국보험 3대 기본 지키기, 보험 3대 기본 지키기, 
 tags: [3대기본지키기, 보험3대기본, 자필서명, 약관설명, 청약서부본, 우체국FC, 보험가입, 우체국보험, 우체국보험길잡이, 보험QnA]
 written: 2026-11-13
 asOf: 2026-11-13
-sources: [https://www.epostlife.go.kr/IPCCFQ0001.do]
+sources: [https://epostlife.go.kr/]
+credit: 출처: https://epostlife.go.kr/
 thumb: [3대 기본 지키기, 무엇인가요?]
 sub: 자주 묻는 보험 Q&A · 보험 가입
 pv1: qa/qa-three-basics.png

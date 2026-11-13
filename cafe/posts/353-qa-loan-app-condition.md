@@ -8,7 +8,8 @@ keywords: [환급금대출 신청 방법, 앱 대출 신청 조건, 환급금대
 tags: [환급금대출조건, 대출가능계좌, 스마트보험대출, 약관대출신청, 우체국보험대출, 부기명통장, ARS인증, 우체국보험, 우체국보험길잡이, 보험QnA]
 written: 2026-11-13
 asOf: 2026-11-13
-sources: [https://www.epostlife.go.kr/IPCCFQ0001.do]
+sources: [https://epostlife.go.kr/]
+credit: 출처: https://epostlife.go.kr/
 thumb: [앱 환급금대출, 신청 조건은?]
 sub: 자주 묻는 보험 Q&A · 환급금대출
 pv1: qa/qa-loan-app-condition.png

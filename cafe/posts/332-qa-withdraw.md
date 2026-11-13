@@ -8,7 +8,8 @@ keywords: [우체국보험 청약 철회, 보험 청약 철회 기간, 청약철
 tags: [청약철회, 보험청약철회, 청약철회기간, 우체국보험해지, 보험취소, 스마트보험, 우체국보험, 우체국보험길잡이, 보험QnA]
 written: 2026-11-13
 asOf: 2026-11-13
-sources: [https://www.epostlife.go.kr/IPCCFQ0001.do]
+sources: [https://epostlife.go.kr/]
+credit: 출처: https://epostlife.go.kr/
 thumb: [청약 철회, 며칠 안에 하나요?]
 sub: 자주 묻는 보험 Q&A · 보험 가입
 pv1: qa/qa-withdraw.png

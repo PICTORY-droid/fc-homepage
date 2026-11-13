@@ -8,7 +8,8 @@ keywords: [우체국보험 가입 후 직업, 보험 가입 후 직업 변경, �
 tags: [직업변경, 고지의무, 우체국보험, 보험직업, 보험부활, 실효부활, 보장내용, 우체국보험길잡이, 보험QnA]
 written: 2026-11-13
 asOf: 2026-11-13
-sources: [https://www.epostlife.go.kr/IPCCFQ0001.do]
+sources: [https://epostlife.go.kr/]
+credit: 출처: https://epostlife.go.kr/
 thumb: [가입 뒤 직업이 바뀌면, 알려야 하나요?]
 sub: 자주 묻는 보험 Q&A · 보험 가입
 pv1: qa/qa-job-change.png

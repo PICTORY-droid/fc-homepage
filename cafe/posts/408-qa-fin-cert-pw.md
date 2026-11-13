@@ -8,7 +8,8 @@ keywords: [금융인증서 비밀번호, 금융인증서 재발급, 금융인증
 tags: [금융인증서, 금융인증서비밀번호, 금융인증서재발급, 인증서분실, 금융결제원, 우체국보험앱, 스마트보험, 우체국보험, 우체국보험길잡이, 보험QnA]
 written: 2026-11-13
 asOf: 2026-11-13
-sources: [https://www.epostlife.go.kr/IPCCFQ0001.do]
+sources: [https://epostlife.go.kr/]
+credit: 출처: https://epostlife.go.kr/
 thumb: [금융인증서 비밀번호, 잊어버렸어요]
 sub: 자주 묻는 보험 Q&A · 로그인·인증
 pv1: qa/qa-fin-cert-pw.png

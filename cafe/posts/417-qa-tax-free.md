@@ -8,7 +8,8 @@ keywords: [저축성보험 비과세 조건, 연금보험 비과세, 보험 비�
 tags: [보험비과세, 저축성보험비과세, 연금보험비과세, 비과세조건, 10년비과세, 국세청, 우체국연금보험, 우체국보험, 우체국보험길잡이, 보험QnA]
 written: 2026-11-13
 asOf: 2026-11-13
-sources: [https://www.epostlife.go.kr/IPCCFQ0001.do]
+sources: [https://epostlife.go.kr/]
+credit: 출처: https://epostlife.go.kr/
 thumb: [연금·저축성보험, 비과세 조건은?]
 sub: 자주 묻는 보험 Q&A · 세금·공제
 pv1: qa/qa-tax-free.png

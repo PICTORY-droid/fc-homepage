@@ -8,7 +8,8 @@ keywords: [보험금 청구 사진 첨부, 앱 멈춤, 사진 첨부 오류]
 tags: [사진첨부오류, 앱멈춤, 보험금청구오류, 휴대폰최적화, 앱보험금청구, 우체국보험앱, 스마트보험, 우체국보험, 우체국보험길잡이, 보험QnA]
 written: 2026-11-13
 asOf: 2026-11-13
-sources: [https://www.epostlife.go.kr/IPCCFQ0001.do]
+sources: [https://epostlife.go.kr/]
+credit: 출처: https://epostlife.go.kr/
 thumb: [사진 첨부할 때, 앱이 멈춰요]
 sub: 자주 묻는 보험 Q&A · 앱 이용
 pv1: qa/qa-photo-freeze.png

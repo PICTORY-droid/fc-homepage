@@ -8,7 +8,8 @@ keywords: [갱신형 보험료, 갱신거절, 보험 갱신 거절 방법]
 tags: [갱신거절, 갱신형보험, 보험료인상, 갱신보험료, 잇다보험, 우체국보험앱, 보험갱신, 우체국보험, 우체국보험길잡이, 보험QnA]
 written: 2026-11-13
 asOf: 2026-11-13
-sources: [https://www.epostlife.go.kr/IPCCFQ0001.do]
+sources: [https://epostlife.go.kr/]
+credit: 출처: https://epostlife.go.kr/
 thumb: [보험료가 너무 올라, 갱신거절하고 싶어요]
 sub: 자주 묻는 보험 Q&A · 계약 관리
 pv1: qa/qa-renewal-refuse.png

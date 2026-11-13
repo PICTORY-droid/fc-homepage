@@ -8,7 +8,8 @@ keywords: [우체국보험 자동이체 출금일, 보험료 출금일, 우체�
 tags: [우체국보험자동이체, 보험료출금일, 자동이체출금일, 우체국보험료, 보험료납입, 출금일자, 우체국계좌, 우체국보험, 우체국보험길잡이, 보험QnA]
 written: 2026-11-13
 asOf: 2026-11-13
-sources: [https://www.epostlife.go.kr/IPCCFQ0001.do]
+sources: [https://epostlife.go.kr/]
+credit: 출처: https://epostlife.go.kr/
 thumb: [보험료 자동이체, 며칠에 빠져나가나요?]
 sub: 자주 묻는 보험 Q&A · 납입·자동이체
 pv1: qa/qa-debit-dates.png

@@ -8,7 +8,8 @@ keywords: [실효예고안내장, 실효취소, 보험 실효 취소]
 tags: [실효예고안내장, 실효취소, 보험실효, 연체보험료, 보험되살리기, 반송, 우체국보험, 우체국보험길잡이, 보험QnA]
 written: 2026-11-13
 asOf: 2026-11-13
-sources: [https://www.epostlife.go.kr/IPCCFQ0001.do]
+sources: [https://epostlife.go.kr/]
+credit: 출처: https://epostlife.go.kr/
 thumb: [안내장을 못 받아, 실효됐어요]
 sub: 자주 묻는 보험 Q&A · 계약 관리
 pv1: qa/qa-lapse-notice.png

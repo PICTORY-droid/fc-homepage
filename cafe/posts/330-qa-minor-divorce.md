@@ -8,7 +8,8 @@ keywords: [자녀 보험 가입, 친권자 서명, 미성년자 보험 친권자
 tags: [친권자서명, 미성년자보험, 자녀보험, 단독친권자, 어린이보험가입, 우체국보험, 보험가입서류, 우체국보험길잡이, 보험QnA]
 written: 2026-11-13
 asOf: 2026-11-13
-sources: [https://www.epostlife.go.kr/IPCCFQ0001.do]
+sources: [https://epostlife.go.kr/]
+credit: 출처: https://epostlife.go.kr/
 thumb: [부모가 이혼했다면, 친권자 서명은?]
 sub: 자주 묻는 보험 Q&A · 보험 가입
 pv1: qa/qa-minor-divorce.png

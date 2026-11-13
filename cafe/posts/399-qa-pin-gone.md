@@ -8,7 +8,8 @@ keywords: [우체국보험 앱 개인인증번호, 개인인증번호 사라짐,
 tags: [개인인증번호, 간편인증, 간편인증재등록, 앱재설치, 스마트보험, 우체국보험앱, 로그인오류, 우체국보험, 우체국보험길잡이, 보험QnA]
 written: 2026-11-13
 asOf: 2026-11-13
-sources: [https://www.epostlife.go.kr/IPCCFQ0001.do]
+sources: [https://epostlife.go.kr/]
+credit: 출처: https://epostlife.go.kr/
 thumb: [등록한 개인인증번호가, 사라졌어요]
 sub: 자주 묻는 보험 Q&A · 로그인·인증
 pv1: qa/qa-pin-gone.png

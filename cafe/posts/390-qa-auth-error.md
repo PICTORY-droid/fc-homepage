@@ -8,7 +8,8 @@ keywords: [인증번호 발송오류, 피보험자 동의 오류, 보험금 청�
 tags: [인증번호오류, 피보험자동의, 앱보험금청구, 휴대폰번호변경, 스마트보험오류, 보험금청구, 우체국보험앱, 우체국보험, 우체국보험길잡이, 보험QnA]
 written: 2026-11-13
 asOf: 2026-11-13
-sources: [https://www.epostlife.go.kr/IPCCFQ0001.do]
+sources: [https://epostlife.go.kr/]
+credit: 출처: https://epostlife.go.kr/
 thumb: [인증번호 발송오류, 어떻게 하나요?]
 sub: 자주 묻는 보험 Q&A · 사고보험금
 pv1: qa/qa-auth-error.png

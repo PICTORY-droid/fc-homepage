@@ -8,7 +8,8 @@ keywords: [보험료 2회 연체, 자동이체 변경 불가, 은행계좌 자�
 tags: [보험료연체, 자동이체변경, 은행계좌자동이체, 보험실효, 미납보험료, 금융결제원, 우체국보험, 우체국보험길잡이, 보험QnA]
 written: 2026-11-13
 asOf: 2026-11-13
-sources: [https://www.epostlife.go.kr/IPCCFQ0001.do]
+sources: [https://epostlife.go.kr/]
+credit: 출처: https://epostlife.go.kr/
 thumb: [2회 연체면 왜, 은행계좌로 못 바꾸나요?]
 sub: 자주 묻는 보험 Q&A · 납입·자동이체
 pv1: qa/qa-two-overdue.png

@@ -8,7 +8,8 @@ keywords: [우체국치아보험 스케일링, 스케일링 치료자금, 치아
 tags: [우체국치아보험, 스케일링치료자금, 치아보험스케일링, 생존보험금, 스마트보험, 치아보험, 우체국보험, 우체국보험길잡이, 보험QnA]
 written: 2026-11-13
 asOf: 2026-11-13
-sources: [https://www.epostlife.go.kr/IPCCFQ0001.do]
+sources: [https://epostlife.go.kr/]
+credit: 출처: https://epostlife.go.kr/
 thumb: [치아보험 스케일링, 치료자금은 어떻게?]
 sub: 자주 묻는 보험 Q&A · 생존보험금
 pv1: qa/qa-scaling.png

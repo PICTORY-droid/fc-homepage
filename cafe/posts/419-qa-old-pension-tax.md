@@ -8,7 +8,8 @@ keywords: [개인연금저축, 연금소득세, 연금저축 연금 수령 세�
 tags: [개인연금저축, 연금소득세, 연금저축과세, 연금수령세금, 비과세, 우체국연금저축, 세금, 우체국보험, 우체국보험길잡이, 보험QnA]
 written: 2026-11-13
 asOf: 2026-11-13
-sources: [https://www.epostlife.go.kr/IPCCFQ0001.do]
+sources: [https://epostlife.go.kr/]
+credit: 출처: https://epostlife.go.kr/
 thumb: [연금저축 연금 받을 때, 세금은 어떻게?]
 sub: 자주 묻는 보험 Q&A · 세금·공제
 pv1: qa/qa-old-pension-tax.png

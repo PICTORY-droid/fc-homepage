@@ -8,7 +8,8 @@ keywords: [우체국보험 청약심사, 청약심사 기간, 보험 가입 심�
 tags: [청약심사, 보험심사기간, 보험가입심사, 보험가입증서, 청약거절, 우체국보험가입, 우체국보험, 우체국보험길잡이, 보험QnA]
 written: 2026-11-13
 asOf: 2026-11-13
-sources: [https://www.epostlife.go.kr/IPCCFQ0001.do]
+sources: [https://epostlife.go.kr/]
+credit: 출처: https://epostlife.go.kr/
 thumb: [청약심사는, 얼마나 걸리나요?]
 sub: 자주 묻는 보험 Q&A · 보험 가입
 pv1: qa/qa-underwriting-days.png

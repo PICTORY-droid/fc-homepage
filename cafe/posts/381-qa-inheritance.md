@@ -8,7 +8,8 @@ keywords: [사망보험금 받는 사람, 사망보험금 상속, 법정상속�
 tags: [사망보험금, 사망보험금상속, 법정상속인, 상속순위, 보험수익자, 사망보험금청구, 우체국보험, 우체국보험길잡이, 보험QnA]
 written: 2026-11-13
 asOf: 2026-11-13
-sources: [https://www.epostlife.go.kr/IPCCFQ0001.do]
+sources: [https://epostlife.go.kr/]
+credit: 출처: https://epostlife.go.kr/
 thumb: [사망보험금 받는 사람이, 지정 안 됐다면?]
 sub: 자주 묻는 보험 Q&A · 사고보험금
 pv1: qa/qa-inheritance.png

@@ -8,7 +8,8 @@ keywords: [정액보험과 실손보험, 중복 보상, 실손 비례보상]
 tags: [중복보상, 비례보상, 정액보험, 실손보험, 암보험, 보험금청구, 우체국보험, 우체국보험길잡이, 보험QnA]
 written: 2026-11-13
 asOf: 2026-11-13
-sources: [https://www.epostlife.go.kr/IPCCFQ0001.do]
+sources: [https://epostlife.go.kr/]
+credit: 출처: https://epostlife.go.kr/
 thumb: [정액보험과 실손보험, 둘 다 받나요?]
 sub: 자주 묻는 보험 Q&A · 사고보험금
 pv1: qa/qa-double-benefit.png

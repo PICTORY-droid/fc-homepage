@@ -8,7 +8,8 @@ keywords: [환급금대출, 환급금대출 일부 상환, 원금부분상환]
 tags: [환급금대출일부상환, 원금부분상환, 이자부분상환, 약관대출상환, 스마트보험, 우체국보험대출, 대출상환, 우체국보험, 우체국보험길잡이, 보험QnA]
 written: 2026-11-13
 asOf: 2026-11-13
-sources: [https://www.epostlife.go.kr/IPCCFQ0001.do]
+sources: [https://epostlife.go.kr/]
+credit: 출처: https://epostlife.go.kr/
 thumb: [환급금대출, 일부만 갚을 수 있나요?]
 sub: 자주 묻는 보험 Q&A · 환급금대출
 pv1: qa/qa-loan-partial.png

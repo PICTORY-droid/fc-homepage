@@ -8,7 +8,8 @@ keywords: [우체국 실손보험 청구 서류, 실손 청구 서류, 실비 �
 tags: [실손청구서류, 실비청구서류, 실손보험청구, 통원의료비, 입원의료비, 진료비세부내역서, 우체국실손보험, 우체국보험, 우체국보험길잡이, 보험QnA]
 written: 2026-11-13
 asOf: 2026-11-13
-sources: [https://www.epostlife.go.kr/IPCCFQ0001.do]
+sources: [https://epostlife.go.kr/]
+credit: 출처: https://epostlife.go.kr/
 thumb: [실손보험 청구, 어떤 서류가 필요해요?]
 sub: 자주 묻는 보험 Q&A · 사고보험금
 pv1: qa/qa-silson-docs.png

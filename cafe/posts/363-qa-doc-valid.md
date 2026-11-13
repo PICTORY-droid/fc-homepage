@@ -8,7 +8,8 @@ keywords: [증명서 유효기간, 가족관계증명서 유효기간, 인감증
 tags: [증명서유효기간, 인감증명서, 가족관계증명서, 기본증명서, 본인서명사실확인서, 보험서류, 우체국보험, 우체국보험길잡이, 보험QnA]
 written: 2026-11-13
 asOf: 2026-11-13
-sources: [https://www.epostlife.go.kr/IPCCFQ0001.do]
+sources: [https://epostlife.go.kr/]
+credit: 출처: https://epostlife.go.kr/
 thumb: [우체국에 내는 증명서, 유효기간은?]
 sub: 자주 묻는 보험 Q&A · 계약 관리
 pv1: qa/qa-doc-valid.png

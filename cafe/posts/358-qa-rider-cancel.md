@@ -8,7 +8,8 @@ keywords: [우체국보험 특약만 해약, 특약 해지, 선택특약 해약]
 tags: [특약해지, 특약해약, 선택특약, 보험료줄이기, 보험리모델링, 우체국보험, 보험계약변경, 우체국보험길잡이, 보험QnA]
 written: 2026-11-13
 asOf: 2026-11-13
-sources: [https://www.epostlife.go.kr/IPCCFQ0001.do]
+sources: [https://epostlife.go.kr/]
+credit: 출처: https://epostlife.go.kr/
 thumb: [특약만, 해약할 수 있나요?]
 sub: 자주 묻는 보험 Q&A · 계약 관리
 pv1: qa/qa-rider-cancel.png

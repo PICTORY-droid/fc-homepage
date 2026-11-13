@@ -8,7 +8,8 @@ keywords: [우체국보험 폰뱅킹, 폰뱅킹 약정, 폰뱅킹 신청]
 tags: [폰뱅킹약정, 폰뱅킹신청, 우체국보험폰뱅킹, ARS보험서비스, 우체국보험고객센터, 우체국창구, 우체국보험, 우체국보험길잡이, 보험QnA]
 written: 2026-11-13
 asOf: 2026-11-13
-sources: [https://www.epostlife.go.kr/IPCCFQ0001.do]
+sources: [https://epostlife.go.kr/]
+credit: 출처: https://epostlife.go.kr/
 thumb: [폰뱅킹 보험서비스, 어떻게 시작하나요?]
 sub: 자주 묻는 보험 Q&A · 폰뱅킹
 pv1: qa/qa-phonebank-start.png

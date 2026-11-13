@@ -8,7 +8,8 @@ keywords: [우체국보험 완전판매모니터링, 완전판매모니터링 �
 tags: [완전판매모니터링, 우체국보험모니터링, 모니터링전화, 보험가입확인전화, 우체국보험가입, 보험가입확인, 보험청약, 우체국보험, 우체국보험길잡이, 보험QnA]
 written: 2026-11-13
 asOf: 2026-11-13
-sources: [https://www.epostlife.go.kr/IPCCFQ0001.do]
+sources: [https://epostlife.go.kr/]
+credit: 출처: https://epostlife.go.kr/
 thumb: [완전판매모니터링, 언제 어떻게 하나요?]
 sub: 자주 묻는 보험 Q&A · 보험 가입
 pv1: qa/qa-monitoring.png

@@ -8,7 +8,8 @@ keywords: [우체국보험 자동이체 할인율, 보험료 자동이체 할인
 tags: [자동이체할인, 보험료할인, 우체국보험료, 자동이체할인율, 우체국계좌, 은행계좌, 보험료절약, 우체국보험, 우체국보험길잡이, 보험QnA]
 written: 2026-11-13
 asOf: 2026-11-13
-sources: [https://www.epostlife.go.kr/IPCCFQ0001.do]
+sources: [https://epostlife.go.kr/]
+credit: 출처: https://epostlife.go.kr/
 thumb: [자동이체 할인율, 얼마인가요?]
 sub: 자주 묻는 보험 Q&A · 납입·자동이체
 pv1: qa/qa-autopay-discount.png

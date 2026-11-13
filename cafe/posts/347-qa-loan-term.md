@@ -8,7 +8,8 @@ keywords: [환급금대출 상환기간, 약관대출 상환, 보험대출 상�
 tags: [환급금대출상환, 약관대출상환, 상환기간, 수시상환, 우체국보험대출, 보험계약대출, 대출상환, 우체국보험, 우체국보험길잡이, 보험QnA]
 written: 2026-11-13
 asOf: 2026-11-13
-sources: [https://www.epostlife.go.kr/IPCCFQ0001.do]
+sources: [https://epostlife.go.kr/]
+credit: 출처: https://epostlife.go.kr/
 thumb: [환급금대출, 언제까지 갚아야 하나요?]
 sub: 자주 묻는 보험 Q&A · 환급금대출
 pv1: qa/qa-loan-term.png

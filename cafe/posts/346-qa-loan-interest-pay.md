@@ -8,7 +8,8 @@ keywords: [우체국보험 환급금대출 이자, 대출이자 납부, 약관�
 tags: [대출이자납부, 환급금대출이자, 약관대출이자, 자동이체, 이자부분상환, 우체국보험대출, 스마트보험, 우체국보험, 우체국보험길잡이, 보험QnA]
 written: 2026-11-13
 asOf: 2026-11-13
-sources: [https://www.epostlife.go.kr/IPCCFQ0001.do]
+sources: [https://epostlife.go.kr/]
+credit: 출처: https://epostlife.go.kr/
 thumb: [환급금대출 이자, 어떻게 내나요?]
 sub: 자주 묻는 보험 Q&A · 환급금대출
 pv1: qa/qa-loan-interest-pay.png

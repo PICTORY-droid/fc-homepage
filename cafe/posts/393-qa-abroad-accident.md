@@ -8,7 +8,8 @@ keywords: [해외에서 다쳤어요, 해외 사고 보험, 해외 사고 실손
 tags: [해외사고보험, 해외치료보험, 정액보험, 실손보험, 해외병원, 보험금청구, 우체국보험, 우체국보험길잡이, 보험QnA]
 written: 2026-11-13
 asOf: 2026-11-13
-sources: [https://www.epostlife.go.kr/IPCCFQ0001.do]
+sources: [https://epostlife.go.kr/]
+credit: 출처: https://epostlife.go.kr/
 thumb: [해외에서 생긴 사고, 보장되나요?]
 sub: 자주 묻는 보험 Q&A · 사고보험금
 pv1: qa/qa-abroad-accident.png

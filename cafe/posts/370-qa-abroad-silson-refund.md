@@ -8,7 +8,8 @@ keywords: [실손보험료, 해외 체류 실손보험료 환급, 해외 장기�
 tags: [실손보험료환급, 해외체류환급, 해외장기체류, 출입국사실증명, 우체국실손보험, 실비보험료환급, 우체국보험, 우체국보험길잡이, 보험QnA]
 written: 2026-11-13
 asOf: 2026-11-13
-sources: [https://www.epostlife.go.kr/IPCCFQ0001.do]
+sources: [https://epostlife.go.kr/]
+credit: 출처: https://epostlife.go.kr/
 thumb: [해외에 살다 왔어요, 실손보험료 환급은?]
 sub: 자주 묻는 보험 Q&A · 계약 관리
 pv1: qa/qa-abroad-silson-refund.png

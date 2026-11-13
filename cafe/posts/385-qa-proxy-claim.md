@@ -8,7 +8,8 @@ keywords: [보험금 청구, 보험금 대리 청구, 보험금 대리접수]
 tags: [보험금대리청구, 대리접수, 보험금청구, 보험금청구서, 대리인, 우체국창구, 우체국보험, 우체국보험길잡이, 보험QnA]
 written: 2026-11-13
 asOf: 2026-11-13
-sources: [https://www.epostlife.go.kr/IPCCFQ0001.do]
+sources: [https://epostlife.go.kr/]
+credit: 출처: https://epostlife.go.kr/
 thumb: [보험금 청구, 대신 접수할 수 있나요?]
 sub: 자주 묻는 보험 Q&A · 사고보험금
 pv1: qa/qa-proxy-claim.png

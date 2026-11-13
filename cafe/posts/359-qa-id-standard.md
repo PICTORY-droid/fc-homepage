@@ -8,7 +8,8 @@ keywords: [우체국보험 계약자 변경, 계약자 변경 신분증, 보험 
 tags: [계약자변경, 신분증, 주민등록증, 운전면허증, 여권, 보험계약변경, 우체국보험, 우체국보험길잡이, 보험QnA]
 written: 2026-11-13
 asOf: 2026-11-13
-sources: [https://www.epostlife.go.kr/IPCCFQ0001.do]
+sources: [https://epostlife.go.kr/]
+credit: 출처: https://epostlife.go.kr/
 thumb: [계약자 변경 때, 신분증은 무엇이 되나요?]
 sub: 자주 묻는 보험 Q&A · 계약 관리
 pv1: qa/qa-id-standard.png

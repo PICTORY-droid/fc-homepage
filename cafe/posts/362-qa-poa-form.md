@@ -8,7 +8,8 @@ keywords: [우체국보험 위임장 양식, 보험 위임장, 위임장 출력]
 tags: [위임장, 위임장양식, 보험위임장, 서식출력, 대리인, 우체국보험서식, 우체국보험, 우체국보험길잡이, 보험QnA]
 written: 2026-11-13
 asOf: 2026-11-13
-sources: [https://www.epostlife.go.kr/IPCCFQ0001.do]
+sources: [https://epostlife.go.kr/]
+credit: 출처: https://epostlife.go.kr/
 thumb: [위임장 양식, 어디서 출력하나요?]
 sub: 자주 묻는 보험 Q&A · 계약 관리
 pv1: qa/qa-poa-form.png

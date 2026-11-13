@@ -8,7 +8,8 @@ keywords: [환급금대출 한도, 앱 대출 한도, OTP 대출 한도]
 tags: [환급금대출한도, 대출한도, OTP, 디지털OTP, 보안카드, 스마트보험대출, 우체국보험대출, 우체국보험, 우체국보험길잡이, 보험QnA]
 written: 2026-11-13
 asOf: 2026-11-13
-sources: [https://www.epostlife.go.kr/IPCCFQ0001.do]
+sources: [https://epostlife.go.kr/]
+credit: 출처: https://epostlife.go.kr/
 thumb: [앱 환급금대출, 하루 얼마까지?]
 sub: 자주 묻는 보험 Q&A · 환급금대출
 pv1: qa/qa-loan-app-limit.png

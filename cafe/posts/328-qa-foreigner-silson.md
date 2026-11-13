@@ -8,7 +8,8 @@ keywords: [우체국 실손보험 가입, 외국인 실손보험, 외국인 실�
 tags: [외국인보험, 외국인실손보험, 외국인등록증, 건강보험증, 우체국실손보험, 외국인보험가입, 실손의료비보험, 우체국보험, 우체국보험길잡이, 보험QnA]
 written: 2026-11-13
 asOf: 2026-11-13
-sources: [https://www.epostlife.go.kr/IPCCFQ0001.do]
+sources: [https://epostlife.go.kr/]
+credit: 출처: https://epostlife.go.kr/
 thumb: [외국인도 실손보험, 가입할 수 있나요?]
 sub: 자주 묻는 보험 Q&A · 보험 가입
 pv1: qa/qa-foreigner-silson.png

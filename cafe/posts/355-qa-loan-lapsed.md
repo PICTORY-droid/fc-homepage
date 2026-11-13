@@ -8,7 +8,8 @@ keywords: [실효된 보험, 실효 보험 대출, 보험 부활 대출]
 tags: [보험실효, 실효보험대출, 보험부활, 부활청약, 환급금대출, 약관대출, 우체국보험대출, 우체국보험, 우체국보험길잡이, 보험QnA]
 written: 2026-11-13
 asOf: 2026-11-13
-sources: [https://www.epostlife.go.kr/IPCCFQ0001.do]
+sources: [https://epostlife.go.kr/]
+credit: 출처: https://epostlife.go.kr/
 thumb: [실효된 보험도, 대출받을 수 있나요?]
 sub: 자주 묻는 보험 Q&A · 환급금대출
 pv1: qa/qa-loan-lapsed.png

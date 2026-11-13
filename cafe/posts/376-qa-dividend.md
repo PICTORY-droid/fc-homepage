@@ -8,7 +8,8 @@ keywords: [우체국보험 배당금, 보험 배당금 지급, 배당금 조회]
 tags: [배당금, 보험배당금, 배당금조회, 배당금지급, 유배당보험, 폰뱅킹, 우체국보험, 우체국보험길잡이, 보험QnA]
 written: 2026-11-13
 asOf: 2026-11-13
-sources: [https://www.epostlife.go.kr/IPCCFQ0001.do]
+sources: [https://epostlife.go.kr/]
+credit: 출처: https://epostlife.go.kr/
 thumb: [배당금은, 어떻게 받나요?]
 sub: 자주 묻는 보험 Q&A · 생존보험금
 pv1: qa/qa-dividend.png

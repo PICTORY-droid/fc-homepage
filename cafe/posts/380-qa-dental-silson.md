@@ -8,7 +8,8 @@ keywords: [치과 통원치료 실손보험, 치과 실비, 치과 실손 청구
 tags: [치과실비, 치과실손, 치과통원, 실손보험청구, 비급여, 우체국실손보험, 실비청구, 우체국보험, 우체국보험길잡이, 보험QnA]
 written: 2026-11-13
 asOf: 2026-11-13
-sources: [https://www.epostlife.go.kr/IPCCFQ0001.do]
+sources: [https://epostlife.go.kr/]
+credit: 출처: https://epostlife.go.kr/
 thumb: [치과 통원치료, 실손 청구 되나요?]
 sub: 자주 묻는 보험 Q&A · 사고보험금
 pv1: qa/qa-dental-silson.png

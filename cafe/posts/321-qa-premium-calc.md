@@ -8,7 +8,8 @@ keywords: [우체국보험 보험료 계산, 우체국보험 간편설계, 보�
 tags: [우체국보험보험료, 보험료계산, 간편설계, 우체국보험다이렉트, 스마트보험, 보험료조회, 보험가입, 우체국보험, 우체국보험길잡이, 보험QnA]
 written: 2026-11-13
 asOf: 2026-11-13
-sources: [https://www.epostlife.go.kr/IPCCFQ0001.do]
+sources: [https://epostlife.go.kr/]
+credit: 출처: https://epostlife.go.kr/
 thumb: [가입 전에 보험료, 계산해 볼 수 있나요?]
 sub: 자주 묻는 보험 Q&A · 보험 가입
 pv1: qa/qa-premium-calc.png

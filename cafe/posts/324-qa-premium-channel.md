@@ -8,7 +8,8 @@ keywords: [우체국보험 가입 방법, 우체국보험 자동이체 할인, �
 tags: [우체국보험료, 자동이체할인, 온라인가입, 모바일가입, 보험료할인, 우체국보험가입, 할인율, 우체국보험, 우체국보험길잡이, 보험QnA]
 written: 2026-11-13
 asOf: 2026-11-13
-sources: [https://www.epostlife.go.kr/IPCCFQ0001.do]
+sources: [https://epostlife.go.kr/]
+credit: 출처: https://epostlife.go.kr/
 thumb: [가입 방법에 따라, 보험료가 다른가요?]
 sub: 자주 묻는 보험 Q&A · 보험 가입
 pv1: qa/qa-premium-channel.png

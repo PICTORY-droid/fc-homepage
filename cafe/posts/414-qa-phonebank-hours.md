@@ -8,7 +8,8 @@ keywords: [우체국보험 폰뱅킹 이용시간, 폰뱅킹 이용시간, 폰�
 tags: [폰뱅킹이용시간, 우체국보험폰뱅킹, 실시간이체, ARS청약인증, 우체국보험고객센터, 이용시간, 우체국보험, 우체국보험길잡이, 보험QnA]
 written: 2026-11-13
 asOf: 2026-11-13
-sources: [https://www.epostlife.go.kr/IPCCFQ0001.do]
+sources: [https://epostlife.go.kr/]
+credit: 출처: https://epostlife.go.kr/
 thumb: [폰뱅킹 이용시간, 24시간 되나요?]
 sub: 자주 묻는 보험 Q&A · 폰뱅킹
 pv1: qa/qa-phonebank-hours.png

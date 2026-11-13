@@ -8,7 +8,8 @@ keywords: [우체국보험 모바일, 우체국보험 다이렉트 가입, 인�
 tags: [우체국보험다이렉트, 다이렉트보험, 모바일보험가입, 인터넷보험가입, 다이렉트센터, 우체국보험앱, 우체국보험, 우체국보험길잡이, 보험QnA]
 written: 2026-11-13
 asOf: 2026-11-13
-sources: [https://www.epostlife.go.kr/IPCCFQ0001.do]
+sources: [https://epostlife.go.kr/]
+credit: 출처: https://epostlife.go.kr/
 thumb: [모바일·인터넷으로, 보험 가입하는 방법]
 sub: 자주 묻는 보험 Q&A · 앱 이용
 pv1: qa/qa-direct-join.png

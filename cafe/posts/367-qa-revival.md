@@ -8,7 +8,8 @@ keywords: [실효된 보험 부활, 보험 부활 방법, 보험 부활 기간]
 tags: [보험부활, 실효보험, 부활청약, 보험실효, 부활보험료, 우체국보험, 보험되살리기, 우체국보험길잡이, 보험QnA]
 written: 2026-11-13
 asOf: 2026-11-13
-sources: [https://www.epostlife.go.kr/IPCCFQ0001.do]
+sources: [https://epostlife.go.kr/]
+credit: 출처: https://epostlife.go.kr/
 thumb: [실효된 보험, 부활할 수 있나요?]
 sub: 자주 묻는 보험 Q&A · 계약 관리
 pv1: qa/qa-revival.png

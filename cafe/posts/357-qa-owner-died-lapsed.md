@@ -8,7 +8,8 @@ keywords: [계약자 변경, 계약자 사망 계약자 변경, 실효 보험 �
 tags: [계약자변경, 계약자사망, 보험실효, 보험계약변경, 우체국보험, 상속보험, 보험명의변경, 우체국보험길잡이, 보험QnA]
 written: 2026-11-13
 asOf: 2026-11-13
-sources: [https://www.epostlife.go.kr/IPCCFQ0001.do]
+sources: [https://epostlife.go.kr/]
+credit: 출처: https://epostlife.go.kr/
 thumb: [계약자 사망·실효 상태, 계약자 변경 되나요?]
 sub: 자주 묻는 보험 Q&A · 계약 관리
 pv1: qa/qa-owner-died-lapsed.png

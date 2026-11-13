@@ -8,7 +8,8 @@ keywords: [우체국보험 청약서 자필서명, 청약서 자필서명, 보�
 tags: [자필서명, 청약서서명, 보험계약무효, 우체국보험가입, 청약서, 보험서명, 3대기본지키기, 우체국보험, 우체국보험길잡이, 보험QnA]
 written: 2026-11-13
 asOf: 2026-11-13
-sources: [https://www.epostlife.go.kr/IPCCFQ0001.do]
+sources: [https://epostlife.go.kr/]
+credit: 출처: https://epostlife.go.kr/
 thumb: [청약서 자필서명, 꼭 해야 하나요?]
 sub: 자주 묻는 보험 Q&A · 보험 가입
 pv1: qa/qa-signature.png

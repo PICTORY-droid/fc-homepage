@@ -8,7 +8,8 @@ keywords: [우체국보험 폰뱅킹, 폰뱅킹 보험서비스, ARS 보험 서�
 tags: [우체국보험폰뱅킹, 폰뱅킹, ARS보험, 우체국보험고객센터, 납입증명서, 환급금대출, 우체국보험, 우체국보험길잡이, 보험QnA]
 written: 2026-11-13
 asOf: 2026-11-13
-sources: [https://www.epostlife.go.kr/IPCCFQ0001.do]
+sources: [https://epostlife.go.kr/]
+credit: 출처: https://epostlife.go.kr/
 thumb: [폰뱅킹으로, 무엇을 할 수 있나요?]
 sub: 자주 묻는 보험 Q&A · 폰뱅킹
 pv1: qa/qa-phonebank-services.png

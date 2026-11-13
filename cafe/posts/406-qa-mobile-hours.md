@@ -8,7 +8,8 @@ keywords: [우체국보험 모바일 서비스 이용시간, 스마트보험 이
 tags: [이용시간, 스마트보험이용시간, 보험료납부시간, 청약철회시간, 환급금대출시간, 우체국보험앱, 우체국보험, 우체국보험길잡이, 보험QnA]
 written: 2026-11-13
 asOf: 2026-11-13
-sources: [https://www.epostlife.go.kr/IPCCFQ0001.do]
+sources: [https://epostlife.go.kr/]
+credit: 출처: https://epostlife.go.kr/
 thumb: [모바일 서비스, 몇 시까지 되나요?]
 sub: 자주 묻는 보험 Q&A · 로그인·인증
 pv1: qa/qa-mobile-hours.png

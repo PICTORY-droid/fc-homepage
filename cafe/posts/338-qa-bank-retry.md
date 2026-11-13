@@ -8,7 +8,8 @@ keywords: [실효예정, 보험료 재출금일, 미납보험료 납입]
 tags: [실효예정, 보험료재출금, 미납보험료, 보험실효, 은행계좌자동이체, 보험료납입, 스마트보험, 우체국보험, 우체국보험길잡이, 보험QnA]
 written: 2026-11-13
 asOf: 2026-11-13
-sources: [https://www.epostlife.go.kr/IPCCFQ0001.do]
+sources: [https://epostlife.go.kr/]
+credit: 출처: https://epostlife.go.kr/
 thumb: [25일에 잔고가 없었어요, 말일에 넣으면 되나요?]
 sub: 자주 묻는 보험 Q&A · 납입·자동이체
 pv1: qa/qa-bank-retry.png

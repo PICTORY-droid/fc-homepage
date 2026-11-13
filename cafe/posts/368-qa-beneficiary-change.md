@@ -8,7 +8,8 @@ keywords: [수익자 변경, 보험 수익자 변경 방법, 보험금 받는 �
 tags: [수익자변경, 보험수익자, 보험금수령인, 보험계약변경, 위임장, 우체국창구, 우체국보험, 우체국보험길잡이, 보험QnA]
 written: 2026-11-13
 asOf: 2026-11-13
-sources: [https://www.epostlife.go.kr/IPCCFQ0001.do]
+sources: [https://epostlife.go.kr/]
+credit: 출처: https://epostlife.go.kr/
 thumb: [보험금 받는 사람, 바꾸고 싶어요]
 sub: 자주 묻는 보험 Q&A · 계약 관리
 pv1: qa/qa-beneficiary-change.png

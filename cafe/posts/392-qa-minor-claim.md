@@ -8,7 +8,8 @@ keywords: [미성년 자녀 보험금, 자녀 보험금 청구, 자녀 보험금
 tags: [자녀보험금청구, 어린이보험청구, 미성년자보험금, 앱보험금청구, 스마트보험, 보험금청구, 우체국보험앱, 우체국보험, 우체국보험길잡이, 보험QnA]
 written: 2026-11-13
 asOf: 2026-11-13
-sources: [https://www.epostlife.go.kr/IPCCFQ0001.do]
+sources: [https://epostlife.go.kr/]
+credit: 출처: https://epostlife.go.kr/
 thumb: [미성년 자녀 보험금, 앱으로 청구되나요?]
 sub: 자주 묻는 보험 Q&A · 사고보험금
 pv1: qa/qa-minor-claim.png

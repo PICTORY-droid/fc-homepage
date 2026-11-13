@@ -8,7 +8,8 @@ keywords: [장애인전용보험 세액공제, 장애인전용보험 공제 한�
 tags: [장애인전용보험, 장애인보험세액공제, 세액공제, 연말정산, 보험료공제, 15%세액공제, 우체국보험, 우체국보험길잡이, 보험QnA]
 written: 2026-11-13
 asOf: 2026-11-13
-sources: [https://www.epostlife.go.kr/IPCCFQ0001.do]
+sources: [https://epostlife.go.kr/]
+credit: 출처: https://epostlife.go.kr/
 thumb: [장애인전용보험, 공제 한도는?]
 sub: 자주 묻는 보험 Q&A · 세금·공제
 pv1: qa/qa-disabled-tax.png

@@ -8,7 +8,8 @@ keywords: [연금저축보험 소득공제, 연금저축 해약 서류, 소득�
 tags: [연금저축보험, 연금저축해지, 소득세액공제확인서, 홈택스, 연말정산, 우체국연금저축, 세액공제, 우체국보험, 우체국보험길잡이, 보험QnA]
 written: 2026-11-13
 asOf: 2026-11-13
-sources: [https://www.epostlife.go.kr/IPCCFQ0001.do]
+sources: [https://epostlife.go.kr/]
+credit: 출처: https://epostlife.go.kr/
 thumb: [연금저축 공제 안 받았다면, 어떤 서류가 필요해요?]
 sub: 자주 묻는 보험 Q&A · 세금·공제
 pv1: qa/qa-pension-docs.png
