@@ -15,6 +15,11 @@ body{width:1080px;height:1080px;overflow:hidden;background:#FFFBF4}
 .brand{font-family:Gaegu;font-size:42px;color:#A34506}
 .ct{font-family:Jua;font-size:62px;color:#3A3A3A}
 .li{font-family:Gaegu;font-size:54px;color:#3A3A3A}
+.qa-mark{font-family:Jua;font-size:104px}
+.qa-q{font-family:Jua;font-size:76px;color:#3A3A3A;letter-spacing:-1px}
+.qa-num{font-family:Jua;font-size:50px}
+.qa-li{font-family:Gaegu;font-size:52px;color:#3A3A3A}
+.qa-note{font-family:Gaegu;font-size:42px;color:#6B5E57}
 </style></head>
 <body><svg id="c" width="1080" height="1080" xmlns="http://www.w3.org/2000/svg"></svg>
 <script src="../assets/vendor/rough.js"></script>
@@ -526,5 +531,48 @@ function letterPaper(d, A) {
   const f = li(L.from, Y + H - 62, "end", X + W - 36); f.style.color = A.deep;
 }
 
-window.render = (d) => (d.kind === "form" ? formCard(d) : (applyTheme(d.menu), d.kind === "card" ? card(d) : thumb(d)), true);
+// 자주 묻는 보험 Q&A 카드뉴스(1080 정사각형) — 캐릭터 없이 글자 + 선·화살표(방향)만
+// d: { menu, cat, q[2], mode: "flow"(차례 ↓) | "check"(체크 목록), lines[2~4], note? }
+function qaCard(d) {
+  frame();
+  const chip = text("chip", d.menu, 92, 92);
+  add(rc.rectangle(70, 80, chip.getBoundingClientRect().width + 44, 72, { fill: TH.chipFill, fillStyle: "solid", stroke: TH.chipLine, strokeWidth: 3 }));
+  const cat = text("chip", d.cat, 990, 92, "end");
+  const cw = cat.getBoundingClientRect().width;
+  add(rc.rectangle(990 - cw - 22, 80, cw + 44, 72, { fill: "#fff", fillStyle: "solid", stroke: TH.chipLine, strokeWidth: 3, roughness: 1.6 }));
+  // Q
+  add(rc.circle(140, 290, 140, { fill: TH.chipFill, fillStyle: "solid", stroke: TH.chipLine, strokeWidth: 4, roughness: 1.4 }));
+  text("qa-mark", "Q", 140, 236, "middle").style.color = TH.t2;
+  const q1 = text("qa-q", d.q[0], 236, 196), q2 = text("qa-q", d.q[1] ?? "", 236, 290);
+  fitAll([q1, q2], 770);
+  const qw = Math.max(q1.getBoundingClientRect().width, q2.getBoundingClientRect().width);
+  add(rc.path(`M236 392 Q${236 + qw / 2} 380 ${236 + qw} 396`, { stroke: TH.under, strokeWidth: 14, roughness: 1.5 }));
+  add(rc.line(70, 428, 1010, 428, { stroke: TH.rule, strokeWidth: 3, roughness: 0.8, strokeLineDash: [14, 12] }));
+  // A
+  add(rc.circle(140, 530, 140, { fill: P.yellow, fillStyle: "solid", stroke: P.ink, strokeWidth: 3, roughness: 1.4 }));
+  text("qa-mark", "A", 140, 476, "middle").style.color = P.ink;
+  const n = Math.min(d.lines.length, 4), H = n === 4 ? 80 : 90, G = n === 4 ? 30 : 40, X = 236, W = 760;
+  d.lines.slice(0, 4).forEach((ln, i) => {
+    const y = 466 + i * (H + G);
+    if (d.mode === "flow") {
+      add(rc.rectangle(X, y, W, H, { fill: i === n - 1 ? TH.chipFill : "#fff", fillStyle: "solid", stroke: i === n - 1 ? TH.chipLine : P.ink, strokeWidth: 3, roughness: 1.2 }));
+      const num = text("qa-num", String(i + 1), X + 44, y + (H - 50) / 2, "middle"); num.style.color = TH.t2;
+      const t = text("qa-li", ln, X + 86, y + (H - 56) / 2); fitAll([t], W - 110);
+      if (i < n - 1) {
+        const ax = X + 44, y1 = y + H + 4, y2 = y + H + G - 4;
+        add(rc.line(ax, y1, ax, y2, { stroke: TH.t2, strokeWidth: 4, roughness: 0.6 }));
+        add(rc.path(`M${ax - 12} ${y2 - 14} L${ax} ${y2} L${ax + 12} ${y2 - 14}`, { stroke: TH.t2, strokeWidth: 4, roughness: 0.6 }));
+      }
+    } else {
+      add(rc.rectangle(X, y + 14, 50, 50, { fill: "#fff", fillStyle: "solid", stroke: P.ink, strokeWidth: 3, roughness: 1.1 }));
+      add(rc.path(`M${X + 10} ${y + 40} L${X + 24} ${y + 54} L${X + 46} ${y + 20}`, { stroke: TH.t2, strokeWidth: 6, roughness: 0.8 }));
+      const t = text("qa-li", ln, X + 74, y + (H - 56) / 2); fitAll([t], W - 80);
+      if (i < n - 1) add(rc.line(X + 74, y + H + G / 2, X + W, y + H + G / 2, { stroke: TH.rule, strokeWidth: 2, roughness: 0.6 }));
+    }
+  });
+  if (d.note) { const nt = text("qa-note", "※ " + d.note, 96, 892); fitAll([nt], 900); }
+  text("brand", "우체국보험 공식 FAQ 기준 · 우체국보험 길잡이 카페", 990, 950, "end");
+}
+
+window.render = (d) => (d.kind === "form" ? formCard(d) : (applyTheme(d.menu), d.kind === "card" ? card(d) : d.kind === "qa" ? qaCard(d) : thumb(d)), true);
 </script></body></html>

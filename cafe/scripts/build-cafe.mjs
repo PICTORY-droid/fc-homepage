@@ -85,9 +85,9 @@ const plain = posts.map(({ meta, body }, i) => {
   const alt2 = `${meta.cardTitle}. ${cardLines.join(", ")}`;
   const photo = (file, cap, alt) => `[사진: ${file}]\n[↑ 사진의 대체텍스트 칸에만 넣기 — 본문에 쓰지 않음] ${alt}\n${cap}`;
   // 머리말 pv1·pv2(+pvCap·pvAlt) → 손그림 대신 그 사진 두 장(무료 양식 미리보기), attach → 첨부할 파일 안내 줄
-  const pv = Boolean(meta.pv1 && meta.pv2);
-  if (pv) { const k = text.indexOf("\n【"); const mark = `\n${photo(meta.pv2, meta.pvCap2, meta.pvAlt2)}\n`; text = k > 0 ? text.slice(0, k) + mark + text.slice(k) : text + mark; }
-  else if (hand) { const k = text.indexOf("\n【"); const mark = `\n${photo(`hand/${meta.slug}-2.png`, meta.cardTitle, alt2)}\n`; text = k > 0 ? text.slice(0, k) + mark + text.slice(k) : text + mark; }
+  const pv = Boolean(meta.pv1); // pv1 만 있으면 사진 한 장(Q&A 카드뉴스), pv2 까지 있으면 두 장
+  if (pv && meta.pv2) { const k = text.indexOf("\n【"); const mark = `\n${photo(meta.pv2, meta.pvCap2, meta.pvAlt2)}\n`; text = k > 0 ? text.slice(0, k) + mark + text.slice(k) : text + mark; }
+  else if (!pv && hand) { const k = text.indexOf("\n【"); const mark = `\n${photo(`hand/${meta.slug}-2.png`, meta.cardTitle, alt2)}\n`; text = k > 0 ? text.slice(0, k) + mark + text.slice(k) : text + mark; }
   text = pv ? `${photo(meta.pv1, meta.pvCap1, meta.pvAlt1)}\n${text}` : `${photo(img1, (meta.thumb ?? []).join(" "), hand ? alt1 : (meta.thumb ?? []).join(" "))}\n${text}`;
   // 본문에 [파일 첨부] 줄이 있으면 그 자리에, 없으면 글 끝에 첨부 안내를 둡니다
   if (meta.attach) {
