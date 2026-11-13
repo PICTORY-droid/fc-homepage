@@ -12,8 +12,9 @@ const cfg = loadConfig();
 const OUT = join(CAFE, "out");
 mkdirSync(OUT, { recursive: true });
 const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
-// 꼬리말의 공식 정보·출처 주소는 카페 에디터가 링크로 바꾸지 않게, 보이지 않는 폭 없는 공백(U+200B)을 '://'와 '.' 뒤에 넣어 글자로만 둡니다.
-const noLink = (s) => String(s).replace(/https?:\/\/[^\s]+/g, (u) => u.replace("://", ":\u200B//").replace(/\./g, ".\u200B"));
+// 꼬리말의 공식 정보·출처 주소(https://… 와 epostlife.go.kr 같은 도메인)는 카페 에디터가 링크로 바꾸지 않게,
+// 보이지 않는 폭 없는 공백(U+200B)을 '://'와 '.' 뒤에 넣어 글자로만 둡니다. 화면에는 똑같이 보입니다.
+const noLink = (s) => String(s).replace(/(?:https?:\/\/)?(?:[a-z0-9-]+\.)+[a-z]{2,}(?:\/[^\s,]*)?/gi, (u) => u.replace("://", ":\u200B//").replace(/\./g, ".\u200B"));
 
 /** 홈페이지 링크에만 유입 표시(UTM)를 붙입니다 — 관리자 통계에서 카페 유입·상담 전환을 글별로 봅니다. */
 const withUtm = (slug) => (u) => {
